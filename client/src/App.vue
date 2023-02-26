@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <Header />
-    <router-view></router-view>
+    <div class="auth-wrapper">
+      <div class="auth-inner">
+        <router-view></router-view>
+      </div>
+    </div>
   </div>
 </template>
 

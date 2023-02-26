@@ -4,10 +4,13 @@ import { createWebHistory, createRouter } from "vue-router";
 import Home from '../pages/Home.vue';
 import Login from '../pages/Login.vue';
 import Menu from '../pages/Menu.vue';
+import About from '../pages/About.vue';
+import Promotion from '../pages/Promotion.vue';
+import Table from '../pages/Table.vue';
 
 const routes = [
   {
-    path: "/home",
+    path: "/",
     name: "Home",
     component: Home,
   },
@@ -20,6 +23,21 @@ const routes = [
     path: "/menu",
     name: "Menu",
     component: Menu,
+  },
+  {
+    path: "/about",
+    name: "About",
+    component: About,
+  },
+  {
+    path: "/promotion",
+    name: "Promotion",
+    component: Promotion,
+  },
+  {
+    path: "/table",
+    name: "Table",
+    component: Table,
   },
 ];
 

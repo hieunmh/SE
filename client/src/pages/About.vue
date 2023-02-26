@@ -1,12 +1,13 @@
 <template>
   <div>
-    <h1>Menu page</h1>
-    <RouterLink to="/">home</RouterLink>
+    <h1>About page</h1>
   </div>
 </template>
 
 <script>
-
+  export default {
+    
+  }
 </script>
 
 <style scoped>
