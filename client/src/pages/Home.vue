@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="">
     <div class="home-main">
       <div class="content">
         <span>Home page</span>
@@ -16,40 +16,40 @@
     
     <div class="home-category">
       <RouterLink to="/" class="box">
-        <img src="../assets/images/taco-img.png" alt="">
+        <img src="../assets/images/banhxeo.png" alt="">
         <h3>Banh xeo</h3>
       </RouterLink>
 
       <RouterLink to="/" class="box">
-          <img src="../assets/images/taco-img.png" alt="">
-          <h3>Banh xeo</h3>
+				<img src="../assets/images/banhxeo.png" alt="">
+				<h3>Banh xeo</h3>
         </RouterLink>
 
       <RouterLink to="/" class="box">
-        <img src="../assets/images/taco-img.png" alt="">
-        <h3>Banh xeo</h3>
+        <img src="../assets/images/dessert.png" alt="">
+        <h3>Salad</h3>
       </RouterLink>
 
       <RouterLink to="/" class="box">
-        <img src="../assets/images/taco-img.png" alt="">
-        <h3>Banh xeo</h3>
+        <img src="../assets/images/dessert.png" alt="">
+        <h3>Salad</h3>
       </RouterLink>
 
       <RouterLink to="/" class="box">
-        <img src="../assets/images/taco-img.png" alt="">
-        <h3>Banh xeo</h3>
+        <img src="../assets/images/drink.png" alt="">
+        <h3>7 Up</h3>
       </RouterLink>
 
       <RouterLink to="/" class="box">
-        <img src="../assets/images/taco-img.png" alt="">
-        <h3>Banh xeo</h3>
+        <img src="../assets/images/drink.png" alt="">
+        <h3>7 Up</h3>
       </RouterLink>
     </div>
 
     <div class="home-banner">
       <div class="grid-banner row">
         <div class="grid col-md-4">
-          <img src="../assets/images/dis-1.jpg" alt="">
+          <img src="../assets/images/banhxeo-banner.jpg" alt="">
           <div class="content">
             <span>Giam gia dac biet</span>
             <h3>len den 50%</h3>
@@ -58,7 +58,7 @@
         </div>
 
         <div class="grid col-md-4">
-          <img src="../assets/images/dis-1.jpg" alt="">
+          <img src="../assets/images/salad-banner.jpg" alt="">
           <div class="content">
             <span>Giam gia dac biet</span>
             <h3>len den 50%</h3>
@@ -67,7 +67,7 @@
         </div>
 
         <div class="grid col-md-4">
-        <img src="../assets/images/dis-1.jpg" alt="">
+        	<img src="../assets/images/drink-banner.jpg" alt="">
           <div class="content">
             <span>Giam gia dac biet</span>
             <h3>len den 50%</h3>
@@ -85,6 +85,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
 /** home main */
 .home-main {
 	padding: 2rem 9%;
@@ -139,8 +140,9 @@ export default {
 	.box {
 		padding: 2rem;
 		text-align: center;
-		border-radius: .5rem;
-		background: #f7f7f7;
+		border-radius: 0.5rem;
+		background: #f1f1f1;
+		color: #27ae60;
 		&:hover {
 			background: #27ae60;
 			h3 {
@@ -186,18 +188,21 @@ export default {
 	}
 	.grid-banner {
 		.grid {
-			border-radius: 1rem;
+			display: block;
+			border-radius: 3rem;
+			padding: 0rem;
 			overflow: hidden;
-			height: 45rem;
+			height: 40rem;
+			border: 1rem solid white;
+			img {
+				border-radius: 1rem;
+				height: 100%;
+				width: 100%;
+			}
 			&:hover {
 				img {
 					transform: scale(1.2);
 				}
-			}
-			img {
-				height: 100%;
-				width: 100%;
-				object-fit: cover;
 			}
 			.content {
 				position: absolute;
