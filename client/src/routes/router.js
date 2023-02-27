@@ -7,6 +7,7 @@ import Menu from '../pages/Menu.vue';
 import About from '../pages/About.vue';
 import Promotion from '../pages/Promotion.vue';
 import Table from '../pages/Table.vue';
+import Register from '../pages/Register.vue';
 
 const routes = [
   {
@@ -39,6 +40,11 @@ const routes = [
     name: "Table",
     component: Table,
   },
+  {
+    path: "/register",
+    name: "Register",
+    component: Register,
+  }
 ];
 
 const router = createRouter({

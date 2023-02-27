@@ -1,4 +1,5 @@
 const mysql = require("mysql");
+
 const dtb = mysql.createConnection({
   host: "localhost",
   user: "root",

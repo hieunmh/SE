@@ -96,7 +96,7 @@ export default {
 	position: relative;
 	overflow: hidden;
 	.content {
-		flex: 1 1 40rem;
+		flex: 1 1 41rem;
 		span {
 			font-size: 2rem;
 			color: #27ae60;
@@ -114,20 +114,20 @@ export default {
 		}
 	}
 	.image {
-		flex: 1 1 40rem;
+		flex: 1 1 41rem;
 		margin: 2rem 0;
 		pointer-events: none;
 		.home-img-1 {
 			width: 100%;
 			margin-top: 5rem;
 		}
-		.home-img-2 {
+	}
+	.home-img-2 {
 			position: absolute;
 			top: -15rem;
 			right: -15rem;
 			width: 80vw;
 		}
-	}
 }
 
 /** home category */
@@ -236,9 +236,6 @@ export default {
 
 
 @media (max-width: 768px) {
-	#menu-btn {
-		display: inline-block;
-	}
 	.home-main {
 		.home-img-2 {
 			top: 0;

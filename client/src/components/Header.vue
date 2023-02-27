@@ -1,8 +1,8 @@
 <template>
   <div class="header">
-    <RouterLink to="/" class="logo"><img src="../assets/images/taco-logo.png">Hieuhub</RouterLink>
+    <RouterLink to="/" class="logo"><img src="../assets/images/taco-logo.png" />Hieuhub</RouterLink>
 
-    <nav class="nav-bar">
+    <nav class="navbar">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/about">About</RouterLink>
       <RouterLink to="/menu">Menu</RouterLink>
@@ -11,7 +11,7 @@
     </nav>
 
     <div class="icons">
-      <!-- <div id="menu-btn" class="fas fa-bars menu-btn"></div> -->
+      <div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu"></div>
 			<RouterLink	to="/cart"><div class="fas fa-shopping-cart cart"></div></RouterLink>
 
 			<div v-if="!user" class="fas fa-user account">
@@ -37,7 +37,10 @@ import { mapState } from 'vuex';
 export default{
 	name: 'Header',
 	methods: {
-
+		showMenu() {
+			let nav_bar = document.querySelector('.header .navbar');
+			nav_bar.classList.toggle('active');
+		}
 	},
 	computed: {
 		...mapState(['user'])
@@ -46,6 +49,10 @@ export default{
 </script>
 
 <style lang="scss" scoped>
+
+#menu-btn {
+	display: none;
+}
 
 .header {
 	position: sticky;
@@ -62,21 +69,22 @@ export default{
 
   /** Header logo */
 	.logo {
-		font-size: 2.5rem;
+		font-size: 2rem;
 		font-weight: bolder;
 		color: #130f40;
 		img {
-			padding-right: .5rem;
+			padding-right: 0.5rem;
 			color: #27ae60;
 		}
 	}
 
   /** Header nav-bar */
-	.nav-bar {
+	.navbar {
 		a {
 			font-size: 1.7rem;
 			margin: 0 1rem;
 			color: #666;
+
 			&:hover {
 				color: #27ae60;
 			}
@@ -95,8 +103,8 @@ export default{
 			font-size: 2rem;
 			background: #f7f7f7;
 			color: #130f40;
-			border-radius: .5rem;
-			margin-left: .3rem;
+			border-radius: 0.5rem;
+			margin-left: 0.3rem;
 			cursor: pointer;
 			text-align: center;
 			&:hover {
@@ -145,7 +153,7 @@ export default{
 		}
 	}
 }
-@media (min-width: 768px) {
+@media (min-width: 769px) {
 	.header .icons .account:hover .drop-down-select {
     display: block;
   }
@@ -153,7 +161,7 @@ export default{
 
 @media (max-width: 768px) {
 	.header {
-		.nav-bar {
+		.navbar {
 			position: absolute;
 			top: 99%;
 			left: 0;
@@ -164,17 +172,20 @@ export default{
 			clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
 			a {
 				font-size: 2rem;
-				margin: 2rem;
+				margin: 1rem;
 				display: block;
 			}
 		}
-		.nav-bar.active {
+		.navbar.active {
 			clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
 		}
 	}
+	#menu-btn {
+		display: inline-block;
+	}
 }
 @media (max-width: 576px) {
-	.header .nav-bar a {
+	.header .navbar a {
 		font-size: 1.5rem;
 		margin: 0;
 	}

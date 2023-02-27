@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1>Menu page</h1>
-    <RouterLink to="/">home</RouterLink>
   </div>
 </template>
 
