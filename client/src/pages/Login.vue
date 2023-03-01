@@ -5,7 +5,7 @@
         <h3>Hieuhub</h3>
         <div class = "form-group">
           <span class = "fas fa-user"></span>
-          <input type="email" class = "form-control" id="" placeholder="Nhap mail cua ban">
+          <input type="email" class = "form-control" id="" placeholder="Nhap sudmail cua ban">
         </div>
 
         <div class = "form-group">
@@ -14,7 +14,7 @@
         </div>
 
         <div class = "form-group">
-          <input type="submit" class = "btnn" id="" value="Dang nhap">
+          <input type="submit " class = "btnn" id="" value="Dang nhap" @click.stop.prevent="submit()">
           <p>Chua co tai khoa? <RouterLink to="/register">Dang ky tai day</RouterLink></p>
         </div>
       </form>
@@ -23,7 +23,13 @@
 </template>
 <script>
 export default {
-  name: 'Login'
+  name: 'Login',
+  methods: {
+    submit() {
+      this.$router.push('/')
+;    }
+  }
+
 }
 </script>
 <style lang="scss">
@@ -69,7 +75,7 @@ export default {
         padding: 2rem 3.5rem;
         font-size: 1.5rem;
         color: #130f40;
-        transform: none;
+        text-transform: none;
         width: 100%;
         border: none;
         box-shadow: inset 0.2rem 0.2rem 0.2rem #b3b3b3, inset -0.2rem -0.2rem 0.2rem #fff;
@@ -79,6 +85,7 @@ export default {
         margin-top: 1rem;
         margin-bottom: 1rem;
         border-radius: 1rem;
+        text-align: center;
       }
       p {
         text-align: center;
