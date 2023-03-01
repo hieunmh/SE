@@ -192,7 +192,7 @@ export default {
 			border-radius: 3rem;
 			padding: 0rem;
 			overflow: hidden;
-			height: 40rem;
+			max-height: 40rem;
 			border: 1rem solid white;
 			img {
 				border-radius: 1rem;

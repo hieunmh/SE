@@ -54,6 +54,10 @@
         <a href="https://twitter.com/" class="fab fa-twitter"></a>
         <a href="https://www.tiktok.com/" class="fab fa-tiktok"></a>
       </div>
+
+      <div class="share">
+        <div class="far fa-copyright"> Copyright by Nguyen Minh Hieu</div>
+      </div>
     </div>
   </div>
 </template>
