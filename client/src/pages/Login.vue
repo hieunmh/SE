@@ -5,7 +5,7 @@
         <h3>Hieuhub</h3>
         <div class = "form-group">
           <span class = "fas fa-user"></span>
-          <input type="email" class = "form-control" id="" placeholder="Nhap sudmail cua ban">
+          <input type="email" class = "form-control" id="" placeholder="Nhap email cua ban">
         </div>
 
         <div class = "form-group">

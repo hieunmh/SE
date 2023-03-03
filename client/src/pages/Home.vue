@@ -159,7 +159,7 @@ export default {
 .home-banner {
   padding: 2rem 9%;
 	.row-banner {
-		background: url(../assets/images/row-banner.png) no-repeat;
+		// background: url(../assets/images/row-banner.png) no-repeat;
 		height: 45rem;
 		background-size: cover;
 		background-position: center;
