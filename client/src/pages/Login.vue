@@ -4,17 +4,19 @@
       <form action="">
         <h3>Hieuhub</h3>
         <div class = "form-group">
-          <span class = "fas fa-user"></span>
-          <input type="email" class = "form-control" id="" placeholder="Nhap email cua ban">
+          <input type="email" class = "form-control" id="" placeholder="">
+          <i class="fa-regular fa-envelope"></i>
+          <span>nhap mail cua ban</span>
         </div>
 
         <div class = "form-group">
-          <span class = "fas fa-lock"></span>
-          <input type="password" class = "form-control" id="" placeholder="Nhap mat khau cua ban">
+          <input type="password" class = "form-control" id="" placeholder="">
+          <i class="fas fa-lock"></i>
+          <span>nhap mat khau cua ban</span>
         </div>
 
         <div class = "form-group">
-          <input type="submit " class = "btnn" id="" value="Dang nhap" @click.stop.prevent="submit()">
+          <input type="submit" class = "btnn" id="" value="Dang nhap" @click.stop.prevent="submit()">
           <p>Chua co tai khoa? <RouterLink to="/register">Dang ky tai day</RouterLink></p>
         </div>
       </form>
@@ -34,14 +36,13 @@ export default {
 </script>
 <style lang="scss">
 .login {
-  position: relative;
   padding: 2rem 9%;
   .login-form {
     background-color: #fff;
     height: 90vh;
     form {
       background-color: #f4f4f4;
-      position: absolute;
+      position: relative;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
@@ -52,13 +53,36 @@ export default {
       padding: 2rem;
       border-radius: 1rem;
       animation: fadeUp 0.4s linear;
-      span {
-        position: absolute;
-        left: 3rem;
-        width: 4rem;
-        height: 4rem;
-        line-height: 4rem;
-        font-size: 1.5rem;
+      .form-group {
+        position: relative;
+        i {
+          font-size: 2rem;
+          position: absolute;
+          top: 1.5rem;
+          left: 1rem;
+          color: #27ae60;
+        }
+        span {
+          font-size: 2rem;
+          position: absolute;
+          top: 1rem;
+          left: 4rem;
+          color: rgba($color: #000000, $alpha: 0.3);
+          pointer-events: none;
+        }
+        input {
+          &:focus {
+            ~ span {
+              background-color: #f4f4f4;
+              color: #27ae60;
+              transform: translateX(-2rem) translateY(-2.5rem);
+              border: 2px solid #27ae60;
+              font-size: 1.5rem;
+              border-radius: 20px;
+              padding: 0 8px;
+            }
+          }
+        }
       }
       h3 {
         padding-bottom: 1rem;
@@ -69,7 +93,8 @@ export default {
         margin: 0;
       }
       .form-control {
-        margin: 0.7rem 0;
+        height: 5rem;
+        margin: 3rem 0;
         border-radius: 1rem;
         background-color: #f4f4f4;
         padding: 2rem 3.5rem;
