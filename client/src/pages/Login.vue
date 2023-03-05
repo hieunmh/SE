@@ -17,16 +17,19 @@
 
         <div class = "form-group">
           <input type="submit" class = "btnn" id="" value="Dang nhap" @click.stop.prevent="submit()">
-          <p>Chua co tai khoa? <RouterLink to="/register">Dang ky tai day</RouterLink></p>
+          <p>Chua co tai khoa? <RouterLink @click="scrollToTop()" to="/register">Dang ky tai day</RouterLink></p>
         </div>
       </form>
     </div>
   </div>
 </template>
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   name: 'Login',
   methods: {
+    ...mapMutations(['scrollToTop']),
     submit() {
       this.$router.push('/')
 ;    }
