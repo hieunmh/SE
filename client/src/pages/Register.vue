@@ -5,37 +5,37 @@
         <h3>Tao tai khoan</h3>
 
         <div class = "form-group">
-          <input type="text" class = "form-control" id="userName" placeholder="">
+          <input type="text" class = "form-control" required="require">
           <i class="fa-solid fa-user"></i>
-          <span>Nhap ten cua ban</span>
+          <span class="sp">Nhap ten cua ban</span>
         </div>
         
         <div class = "form-group">
-          <input type="email" class = "form-control" id="userEmail" placeholder="">
+          <input type="text" class = "form-control" required="require">
           <i class="fa-regular fa-envelope"></i>
-          <span>Nhap gmail cua ban</span>
+          <span class="sp">Nhap gmail cua ban</span>
         </div>
 
         <div class = "form-group">
-          <input type="text" class = "form-control" id="userPass" placeholder="">
+          <input type="text" class = "form-control" required="require">
           <i class="fa-solid fa-lock"></i>
           <span>Nhap mat khau cua ban</span>
         </div>
 
         <div class = "form-group">
-          <input type="password" class = "form-control" id="userPassconfirm" placeholder="">
+          <input type="password" class = "form-control" required="require">
           <i class="fa-solid fa-lock"></i>
           <span>Nhap lai mat khau cua ban</span>
         </div>
 
         <div class = "form-group">
-          <input type="tel" class = "form-control" id="userPhonenumber" placeholder="">
+          <input type="tel" class = "form-control" required="require">
           <i class="fa-solid fa-phone"></i>
           <span>Nhap so dien thoai cua ban</span>
         </div>
 
         <div class = "form-group">
-          <input type="text" onfocus="(this.type='date')" onblur="if(!this.value) this.type = 'text'" class = "form-control" id="userBirth" placeholder="">
+          <input type="text" onfocus="(this.type='date')" onblur="if(!this.value) this.type = 'text'" class = "form-control" required="require">
           <i class="fa-solid fa-calendar"></i>
           <span>Nhap ngay sinh cua ban</span>
         </div>
@@ -52,7 +52,6 @@
 
 <script>
 import { mapMutations } from 'vuex';
-
   export default {
     name: "Register",
     data() {
@@ -129,6 +128,17 @@ import { mapMutations } from 'vuex';
               font-size: 1.5rem;
               border-radius: 20px;
               padding: 0px 8px;
+            }
+          }
+          &:valid {
+            ~ span {
+              background-color: #f4f4f4;
+              color: #27ae60;
+              transform: translateX(-2rem) translateY(-2.5rem);
+              border: 2px solid #27ae60;
+              font-size: 1.5rem;
+              border-radius: 20px;
+              padding: 0 8px;
             }
           }
         }

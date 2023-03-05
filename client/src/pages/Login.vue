@@ -4,13 +4,13 @@
       <form action="">
         <h3>Hieuhub</h3>
         <div class = "form-group">
-          <input type="email" class = "form-control" id="" placeholder="">
+          <input type="text" class = "form-control" id="" required="require">
           <i class="fa-regular fa-envelope"></i>
           <span>nhap mail cua ban</span>
         </div>
 
         <div class = "form-group">
-          <input type="password" class = "form-control" id="" placeholder="">
+          <input type="password" class = "form-control" id="" required="require">
           <i class="fas fa-lock"></i>
           <span>nhap mat khau cua ban</span>
         </div>
@@ -75,6 +75,17 @@ export default {
         }
         input {
           &:focus {
+            ~ span {
+              background-color: #f4f4f4;
+              color: #27ae60;
+              transform: translateX(-2rem) translateY(-2.5rem);
+              border: 2px solid #27ae60;
+              font-size: 1.5rem;
+              border-radius: 20px;
+              padding: 0 8px;
+            }
+          }
+          &:valid {
             ~ span {
               background-color: #f4f4f4;
               color: #27ae60;

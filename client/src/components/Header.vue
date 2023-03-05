@@ -16,8 +16,8 @@
 
 			<div v-if="!user" class="fas fa-user account">
 				<ul class="drop-down-select">
-					<li><RouterLink to="/login">Dang nhap</RouterLink></li>
-					<li><RouterLink to="/register">Dang ky</RouterLink></li>
+					<li><RouterLink @click="scrollToTop()" to="/login">Dang nhap</RouterLink></li>
+					<li><RouterLink @click="scrollToTop()" to="/register">Dang ky</RouterLink></li>
 				</ul>
 			</div>
 
@@ -33,10 +33,11 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 export default{
 	name: 'Header',
 	methods: {
+		...mapMutations(['scrollToTop']),
 		showMenu() {
 			let nav_bar = document.querySelector('.header .navbar');
 			nav_bar.classList.toggle('active');
