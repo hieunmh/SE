@@ -5,42 +5,39 @@
         <h3>Tao tai khoan</h3>
 
         <div class = "form-group">
-          <label for="userName">Nhap ten cua ban:</label>
-          <input type="text" class = "form-control" id="userName" placeholder="VD: Nguyen Minh Hieu">
+          <input type="text" class = "form-control" id="userName" placeholder="">
+          <i class="fa-solid fa-user"></i>
+          <span>Nhap ten cua ban</span>
         </div>
         
         <div class = "form-group">
-          <label for="userEmail">Nhap email cua ban:</label>
-          <input type="email" class = "form-control" id="userEmail" placeholder="VD: hieu@gmail.com">
+          <input type="email" class = "form-control" id="userEmail" placeholder="">
+          <i class="fa-regular fa-envelope"></i>
+          <span>Nhap gmail cua ban</span>
         </div>
 
         <div class = "form-group">
-          <label for="userPass">Nhap mat khau cua ban:</label>
-          <input type="text" class = "form-control" id="userPass" placeholder="Nhap mat khau cua ban">
+          <input type="text" class = "form-control" id="userPass" placeholder="">
+          <i class="fa-solid fa-lock"></i>
+          <span>Nhap mat khau cua ban</span>
         </div>
 
         <div class = "form-group">
-          <label for="userPassConfirm">Nhap lai mat khau cua ban:</label>
-          <input type="password" class = "form-control" id="userPassconfirm" placeholder="Nhap lai mat khau cua ban">
+          <input type="password" class = "form-control" id="userPassconfirm" placeholder="">
+          <i class="fa-solid fa-lock"></i>
+          <span>Nhap lai mat khau cua ban</span>
         </div>
 
         <div class = "form-group">
-          <label for="userPhonenumber">Nhap so dien thoai cua ban:</label>
-          <input type="tel" class = "form-control" id="userPhonenumber" placeholder="VD: 0123456789">
+          <input type="tel" class = "form-control" id="userPhonenumber" placeholder="">
+          <i class="fa-solid fa-phone"></i>
+          <span>Nhap so dien thoai cua ban</span>
         </div>
 
         <div class = "form-group">
-          <label for="userBirth">Nhap ngay sinh cua ban:</label>
-          <input type="date" class = "form-control" id="userBirth" placeholder="Nhap ngay sinh cua ban">
-        </div>
-
-        <div class = "form-group">
-          <label for="">Chon gioi tinh cua ban</label>
-          <div>
-            <input type="radio" name="gender" id="maleGender"><span>Nam</span>
-            <input type="radio" name="gender" id="femaleGender"><span>Nu</span>
-            <input type="radio" name="gender" id="otherGender"><span>Khac</span>
-          </div>
+          <input type="text" onfocus="(this.type='date')" onblur="if(!this.value) this.type = 'text'" class = "form-control" id="userBirth" placeholder="">
+          <i class="fa-solid fa-calendar"></i>
+          <span>Nhap ngay sinh cua ban</span>
         </div>
 
         <div class="form-group">
@@ -78,14 +75,6 @@
       padding: 2rem;
       border-radius: 1rem;
       animation: fadeUp 0.4s linear;
-      span {
-        width: 4rem;
-        height: 4rem;
-        line-height: 4rem;
-        font-size: 1.5rem;
-        padding-left: 0.7rem;
-        padding-right: 3rem;
-      }
       h3 {
         padding-bottom: 1rem;
         font-size: 2rem;
@@ -94,29 +83,65 @@
         color: #130f40;
         margin: 0;
       }
-      .form-control {
-        margin: 0.7rem 0;
-        border-radius: 1rem;
-        background-color: #f4f4f4;
-        padding: 2rem 1rem;
-        font-size: 1.5rem;
-        color: #130f40;
-        text-transform: none;
-        width: 100%;
-        border: none;
-        box-shadow: inset 0.2rem 0.2rem 0.2rem #b3b3b3, inset -0.2rem -0.2rem 0.2rem #fff;
-      }
+      
       .btnn {
         width: 100%;
         margin-top: 1rem;
         margin-bottom: 1rem;
         border-radius: 1rem;
       }
-      label {
-        font-size: 1.8rem;
+      
+      .form-group {
         margin: 0;
-        padding: 0;
-        margin-left: 0.5rem;
+        position: relative;
+        .form-control {
+          height: 5rem;
+          margin: 3rem 0;
+          border-radius: 1rem;
+          background-color: #f4f4f4;
+          padding: 2rem 1rem;
+          padding-left: 4rem;
+          font-size: 1.5rem;
+          color: #130f40;
+          text-transform: none;
+          width: 100%;
+          border: none;
+          box-shadow: inset 0.2rem 0.2rem 0.2rem #b3b3b3, inset -0.2rem -0.2rem 0.2rem #fff;
+        }
+        i {
+          color: #27ae60;
+          font-size: 2rem;
+          position: absolute;
+          top: 1.5rem;
+          left: 1rem;
+        }
+        span {
+          font-size: 2rem;
+          position: absolute;
+          top: 1rem;
+          left: 1rem;
+          padding-left: 4rem;
+          color: rgba($color: #000000, $alpha: 0.3);
+          pointer-events: none;
+        }
+        input {
+          &:focus {
+            ~ span {
+              background-color: #f4f4f4;
+              color: #27ae60;
+              transform: translateX(-0rem) translateY(-2.5rem);
+              border: 2px solid #27ae60;
+              font-size: 1.5rem;
+              border-radius: 20px;
+              padding: 0 8px;
+            }
+          }
+          .gender {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+          }
+        }
       }
       p {
         text-align: center;
@@ -132,9 +157,7 @@
           }
         }
       }
-      .form-group {
-        margin: 0;
-      }
+
     }
   }
 }

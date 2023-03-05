@@ -198,7 +198,7 @@ input[type="button"] {
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 575px) {
   .search-box, .filter-heading, .filter-section {
     width: auto;
   }
