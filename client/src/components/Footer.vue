@@ -35,8 +35,8 @@
         </div>
 
         <div v-else>
-          <RouterLink to="/login"><i class="fas fa-arrow-right"></i> Dang nhap</RouterLink>
-          <RouterLink to="/register"><i class="fas fa-arrow-right"></i> Dang ky</RouterLink>
+          <RouterLink @click="scrollToTop()" to="/login"><i class="fas fa-arrow-right"></i> Dang nhap</RouterLink>
+          <RouterLink @click="scrollToTop()" to="/register"><i class="fas fa-arrow-right"></i> Dang ky</RouterLink>
         </div>
       </div>
 
@@ -63,11 +63,11 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 export default {
   name: 'Footer',
   methods: {
-
+    ...mapMutations(['scrollToTop'])
   },
   computed: {
     ...mapState(['user'])
