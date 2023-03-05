@@ -53,7 +53,7 @@
           <div class="content">
             <span>Giam gia dac biet</span>
             <h3>len den 50%</h3>
-            <RouterLink to="/menu" class="btnn">order now</RouterLink>
+            <RouterLink @click="scrollToTop()" to="/menu" class="btnn">order now</RouterLink>
           </div>
         </div>
 
@@ -62,7 +62,7 @@
           <div class="content">
             <span>Giam gia dac biet</span>
             <h3>len den 50%</h3>
-            <RouterLink to="/menu" class="btnn">order now</RouterLink>
+            <RouterLink @click="scrollToTop()" to="/menu" class="btnn">order now</RouterLink>
           </div>
         </div>
 
@@ -71,7 +71,7 @@
           <div class="content">
             <span>Giam gia dac biet</span>
             <h3>len den 50%</h3>
-            <RouterLink to="/menu" class="btnn">order now</RouterLink>
+            <RouterLink @click="scrollToTop()" to="/menu" class="btnn">order now</RouterLink>
           </div>
         </div>
       </div>
@@ -80,8 +80,19 @@
   </div>
 </template>
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
-  name: 'Home'
+  name: 'Home',
+	data() {
+		return {
+
+		}
+	},
+	methods: {
+		...mapMutations(['scrollToTop'])
+	}
+	
 }
 </script>
 <style lang="scss" scoped>

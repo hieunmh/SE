@@ -1,7 +1,7 @@
 <template>
   <div class = "register">
     <div class = "register-form">
-      <form id="registerForm" action="">
+      <form action="">
         <h3>Tao tai khoan</h3>
 
         <div class = "form-group">
@@ -42,7 +42,7 @@
 
         <div class="form-group">
           <input type="submit" value="Dang ky" class="btnn">
-          <p>Ban da co tai khoan? <RouterLink to="/login">Dang nhap</RouterLink></p>
+          <p>Ban da co tai khoan? <RouterLink @click="scrollToTop()" to="/login">Dang nhap</RouterLink></p>
         </div>
 
       </form>
@@ -51,8 +51,18 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
   export default {
-    
+    name: "Register",
+    data() {
+      return {
+
+      }
+    },
+    methods: {
+      ...mapMutations(['scrollToTop']),
+    }
   }
 </script>
 
@@ -92,22 +102,7 @@
       }
       
       .form-group {
-        margin: 0;
         position: relative;
-        .form-control {
-          height: 5rem;
-          margin: 3rem 0;
-          border-radius: 1rem;
-          background-color: #f4f4f4;
-          padding: 2rem 1rem;
-          padding-left: 4rem;
-          font-size: 1.5rem;
-          color: #130f40;
-          text-transform: none;
-          width: 100%;
-          border: none;
-          box-shadow: inset 0.2rem 0.2rem 0.2rem #b3b3b3, inset -0.2rem -0.2rem 0.2rem #fff;
-        }
         i {
           color: #27ae60;
           font-size: 2rem;
@@ -119,30 +114,38 @@
           font-size: 2rem;
           position: absolute;
           top: 1rem;
-          left: 1rem;
-          padding-left: 4rem;
+          left: 4rem;
           color: rgba($color: #000000, $alpha: 0.3);
           pointer-events: none;
+          margin: 0;
         }
         input {
           &:focus {
             ~ span {
               background-color: #f4f4f4;
               color: #27ae60;
-              transform: translateX(-0rem) translateY(-2.5rem);
+              transform: translateX(-2rem) translateY(-2.5rem);
               border: 2px solid #27ae60;
               font-size: 1.5rem;
               border-radius: 20px;
-              padding: 0 8px;
+              padding: 0px 8px;
             }
-          }
-          .gender {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
           }
         }
       }
+      .form-control {
+        height: 5rem;
+        margin: 3rem 0;
+        border-radius: 1rem;
+        background-color: #f4f4f4;
+        padding: 2rem 3.5rem;
+        font-size: 1.5rem;
+        color: #130f40;
+        text-transform: none;
+        width: 100%;
+        border: none;
+        box-shadow: inset 0.2rem 0.2rem 0.2rem #b3b3b3, inset -0.2rem -0.2rem 0.2rem #fff;
+        }
       p {
         text-align: center;
         padding-top: 1rem;
