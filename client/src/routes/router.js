@@ -8,6 +8,9 @@ import About from '../pages/About.vue';
 import Promotion from '../pages/Promotion.vue';
 import Table from '../pages/Table.vue';
 import Register from '../pages/Register.vue';
+import Myorder from '../pages/Myorder.vue';
+import Cart from '../pages/Cart.vue';
+
 
 const routes = [
   {
@@ -44,7 +47,17 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register,
-  }
+  },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: Cart,
+  },
+  {
+    path: "/Myorder",
+    name: "Myorder",
+    component: Myorder,
+  },
 ];
 
 const router = createRouter({
