@@ -1,0 +1,6 @@
+controllers
+  fileName + Controller
+models
+  filename + Model
+routes
+  filename + Route
