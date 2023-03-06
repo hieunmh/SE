@@ -10,6 +10,13 @@
           <i class="fas fa-magnifying-glass"></i>
           <input type="text" class="search-input" placeholder=". . .">
         </div>
+
+        <div class="row filter-dropdown">
+          <p @click="displayFilter()">Loc 
+            <i v-if="showDropDown" class="fa-solid fa-caret-up"></i>
+            <i v-else class="fa-solid fa-caret-down"></i>
+          </p>
+        </div>
          
         <div class="row filter-heading">
           <h1>Khoang gia</h1>
@@ -73,11 +80,26 @@ export default {
   name: "Menu",
   data() {
     return {
-
+      showDropDown: false
     };
   },
   methods: {
+    displayFilter: function() {
+      let div1 = document.getElementsByClassName('filter-heading');
+      let div2 = document.getElementsByClassName('filter-section');
 
+      for (let i = 0; i < div1.length; i++) {
+        if (this.showDropDown) {
+          div1[i].style.display = "none";
+          div2[i].style.display = "none";
+        } 
+        else {
+          div1[i].style.display = "block";
+          div2[i].style.display = "block";
+        }
+      }
+      this.showDropDown = !this.showDropDown;
+    }
   },
   computed: {
 
@@ -171,7 +193,6 @@ input[type="button"] {
     background-color: #27ae60;
     border-radius: 1rem;
     .menu-tab-item {
-      // display: inline-block;
       cursor: pointer;
       padding: 5px 30px;
       border-radius: 10rem;
@@ -192,6 +213,10 @@ input[type="button"] {
   }
 }
 
+.filter-dropdown {
+    display: none;
+  }
+
 @media (min-width: 576px) {
   .filter-heading, .filter-section {
     display: block !important;
@@ -202,8 +227,32 @@ input[type="button"] {
   .search-box, .filter-heading, .filter-section {
     width: auto;
   }
+  .filter-heading, .filter-section {
+    display: none;
+  }
   .filter-option {
     width: 100%;
+  }
+  .filter-dropdown {
+    display: block;
+    border-radius: 1rem;
+    background-color: #27ae60;
+    color: #fff;
+    font-weight: 400;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    p {
+      font-size:2.5rem;
+      padding: 5px 5px;
+      margin: 0;
+      display: flex;
+      justify-content: space-between;
+      i {
+        font-size: 3rem;
+        padding-right: 10px;
+        padding-top: 3px;
+      }
+    }
   }
   
 }

@@ -21,9 +21,9 @@
 				</ul>
 			</div>
 
-			<div v-else class="fas fa-user account">
+			<div v-else style="background: #f38609; color: white;" class="fas fa-user account">
 				<ul class="drop-down-select">
-					<li><RouterLink to="/">Don hang cua ban</RouterLink></li>
+					<li><RouterLink to="/myorder">Gio hang</RouterLink></li>
 					<li><RouterLink to="/">Log out</RouterLink></li>
 				</ul>
 			</div>
@@ -85,13 +85,13 @@ export default{
 			font-size: 1.7rem;
 			margin: 0 1rem;
 			color: #666;
-
+			z-index: 1;
 			&:hover {
 				color: #27ae60;
 			}
 		}
 		a.router-link-exact-active {
-			color: #f38609;
+			color: #f38609
 		}
 	}
 
