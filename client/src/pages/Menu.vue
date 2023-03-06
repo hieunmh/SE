@@ -9,13 +9,9 @@
         <div class="row search-box">
           <i class="fas fa-magnifying-glass"></i>
           <input type="text" class="search-input" placeholder=". . .">
-        </div>
-
-        <div class="row filter-dropdown">
-          <p @click="displayFilter()">Loc 
-            <i v-if="showDropDown" class="fa-solid fa-caret-up"></i>
-            <i v-else class="fa-solid fa-caret-down"></i>
-          </p>
+          <div class="row filter-dropdown" @click="displayFilter()">
+            <div class="fa-solid fa-caret-down dropDown"></div>
+          </div>
         </div>
          
         <div class="row filter-heading">
@@ -84,21 +80,16 @@ export default {
     };
   },
   methods: {
-    displayFilter: function() {
-      let div1 = document.getElementsByClassName('filter-heading');
-      let div2 = document.getElementsByClassName('filter-section');
-
+    displayFilter() {
+      let div1 = document.querySelectorAll('.filter-heading');
+      let div2 = document.querySelectorAll('.filter-section');
+      let dropdown = document.querySelector('.dropDown');
+      
       for (let i = 0; i < div1.length; i++) {
-        if (this.showDropDown) {
-          div1[i].style.display = "none";
-          div2[i].style.display = "none";
-        } 
-        else {
-          div1[i].style.display = "block";
-          div2[i].style.display = "block";
-        }
+        div1[i].classList.toggle('active');
+        div2[i].classList.toggle('active');
       }
-      this.showDropDown = !this.showDropDown;
+      dropdown.classList.toggle('active')
     }
   },
   computed: {
@@ -154,9 +145,8 @@ input[type="button"] {
 
 .search-box {
   width: 100%;
-  // justify-content: center;
   position: relative;
-  // display: flex;
+  margin-bottom: 15px;
   i {
     position: absolute;
     top: 13px;
@@ -214,8 +204,8 @@ input[type="button"] {
 }
 
 .filter-dropdown {
-    display: none;
-  }
+  display: none;
+}
 
 @media (min-width: 576px) {
   .filter-heading, .filter-section {
@@ -230,6 +220,10 @@ input[type="button"] {
   .filter-heading, .filter-section {
     display: none;
   }
+  .filter-heading.active, .filter-section.active  {
+    display: block;
+    
+  }
   .filter-option {
     width: 100%;
   }
@@ -240,18 +234,17 @@ input[type="button"] {
     color: #fff;
     font-weight: 400;
     margin-bottom: 15px;
-    margin-top: 15px;
-    p {
+    position: relative;
+    div {
+      position: absolute;
+      top: 1.2rem;
+      right: -1.2rem;
+      width: 2.5rem;
+      height: 2.5rem;
       font-size:2.5rem;
-      padding: 5px 5px;
-      margin: 0;
-      display: flex;
-      justify-content: space-between;
-      i {
-        font-size: 3rem;
-        padding-right: 10px;
-        padding-top: 3px;
-      }
+    }
+    div.active {
+      transform: rotateX(180deg);
     }
   }
   

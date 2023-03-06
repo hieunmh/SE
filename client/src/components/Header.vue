@@ -3,11 +3,11 @@
     <RouterLink to="/" class="logo"><img src="../assets/images/taco-logo.png" />Hieuhub</RouterLink>
 
     <nav class="navbar">
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
-      <RouterLink to="/menu">Menu</RouterLink>
-      <RouterLink to="/promotion">Promotions</RouterLink>
-      <RouterLink to="/table">Table</RouterLink>
+      <RouterLink @click="scrollToTop()" to="/">Home</RouterLink>
+      <RouterLink @click="scrollToTop()" to="/about">About</RouterLink>
+      <RouterLink @click="scrollToTop()" to="/menu">Menu</RouterLink>
+      <RouterLink @click="scrollToTop()" to="/promotion">Promotions</RouterLink>
+      <RouterLink @click="scrollToTop()" to="/table">Table</RouterLink>
     </nav>
 
     <div class="icons">
@@ -33,15 +33,20 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapState } from 'vuex';
 export default{
 	name: 'Header',
 	methods: {
-		...mapMutations(['scrollToTop']),
 		showMenu() {
 			let nav_bar = document.querySelector('.header .navbar');
 			nav_bar.classList.toggle('active');
+		},
+		scrollToTop() {
+			let nav_bar = document.querySelector('.header .navbar');
+			nav_bar.classList.remove('active');
+			window.scrollTo(0, 0);
 		}
+
 	},
 	computed: {
 		...mapState(['user'])
