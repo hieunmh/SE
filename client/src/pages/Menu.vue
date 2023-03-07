@@ -15,7 +15,7 @@
         </div>
          
         <div class="row filter-heading">
-          <h1>Khoang gia</h1>
+          <h1>Khoảng giá</h1>
         </div>
 
         <div class="row filter-section">
@@ -33,19 +33,19 @@
         </div>
 
         <div class="row filter-heading"> 
-          <h1>Phan loai</h1>
+          <h1>Phân loại</h1>
         </div>
 
         <div class="row filter-section">
           <ul class="filter-option">
             <li>
               <input type="button" value="food" id="foodType" hidden>
-              <label for="footType" class="d-flex justify-content-between">Do an<button class="unselect-btn">X</button></label>
+              <label for="footType" class="d-flex justify-content-between">Đồ ăn<button class="unselect-btn">X</button></label>
             </li>
 
             <li>
               <input type="button" value="drink" id="drinkType" hidden>
-              <label for="drinkType" class="d-flex justify-content-between">Do uong<button class="unselect-btn">X</button></label>
+              <label for="drinkType" class="d-flex justify-content-between">Đồ uống<button class="unselect-btn">X</button></label>
             </li>
           </ul>
         </div>
@@ -54,12 +54,12 @@
       <div class="col-sm-8">
         <div class="row">
           <div class="menu-tabs">
-            <input type="button" name="allFood" id="allFood" value="Tat ca"  class="menu-tab-item">
-            <input type="button" name="allFood" id="Banh ngot" value="Banh ngot"  class="menu-tab-item">
-            <input type="button" name="allFood" id="Do an nhanh" value="Do an"  class="menu-tab-item">
-            <input type="button" name="allFood" id="Ruou" value="Nuoc ngot"  class="menu-tab-item">
+            <input type="button" name="allFood" id="allFood" value="Tất cả"  class="menu-tab-item">
+            <input type="button" name="allFood" id="Banh ngot" value="Bánh"  class="menu-tab-item">
+            <input type="button" name="allFood" id="Do an nhanh" value="Đồ ăn"  class="menu-tab-item">
+            <input type="button" name="allFood" id="Ruou" value="Nước lọc"  class="menu-tab-item">
             <input type="button" name="allFood" id="Bia" value="Bia"  class="menu-tab-item">
-            <input type="button" name="allFood" id="Ruou" value="Ruou"  class="menu-tab-item">
+            <input type="button" name="allFood" id="Ruou" value="Rượu"  class="menu-tab-item">
           </div>
         </div>
 
@@ -191,7 +191,7 @@ input[type="button"] {
       font-weight: 500;
       text-transform: capitalize;
       transition: all 0.3s ease;
-      margin: 0;
+      // margin: 0;
       &:hover {
         background-color: #f38609 !important;
       }
@@ -247,7 +247,12 @@ input[type="button"] {
       transform: rotateX(180deg);
     }
   }
-  
+}
+
+@media (max-width: 324px) {
+  .menu .menu-tabs .menu-tab-item {
+    font-size: 1.8rem;
+  }
 }
 
 

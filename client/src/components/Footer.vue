@@ -1,18 +1,18 @@
 <template>
   <div class="footer">
     <div class="letter">
-      <h3>Nhan thong bao su kien</h3>
+      <h3>Nhận thông báo sự kiện</h3>
       <form action="#">
-        <input type="email" placeholder="Nhap mail cua ban">
-        <input type="submit" name="">
+        <input type="email" placeholder="Nhập mail của bạn">
+        <input type="submit" name="" value="Gửi">
       </form>
     </div>
 
     <div class="box-container">
       <div class="box">
         <h3>Menu</h3>
-        <RouterLink to="/menu"><i class="fas fa-arrow-right"></i> Banh xeo</RouterLink>
-        <RouterLink to="/menu"><i class="fas fa-arrow-right"></i> Banh xeo</RouterLink>
+        <RouterLink to="/menu"><i class="fas fa-arrow-right"></i>Bánh xèo</RouterLink>
+        <RouterLink to="/menu"><i class="fas fa-arrow-right"></i>Bánh xèo</RouterLink>
         <RouterLink to="/menu"><i class="fas fa-arrow-right"></i> Salad</RouterLink>
         <RouterLink to="/menu"><i class="fas fa-arrow-right"></i> Salad</RouterLink>
         <RouterLink to="/menu"><i class="fas fa-arrow-right"></i> Seven up</RouterLink>
@@ -31,18 +31,18 @@
       <div class="box">
         <h3>link</h3>
         <div v-if="user">
-          <RouterLink to="/cart"><i class="fas fa-arrow-right"></i> Gio hang cua ban</RouterLink>
+          <RouterLink to="/cart"><i class="fas fa-arrow-right"></i> Giỏ hàng</RouterLink>
         </div>
 
         <div v-else>
-          <RouterLink @click="scrollToTop()" to="/login"><i class="fas fa-arrow-right"></i> Dang nhap</RouterLink>
-          <RouterLink @click="scrollToTop()" to="/register"><i class="fas fa-arrow-right"></i> Dang ky</RouterLink>
+          <RouterLink @click="scrollToTop()" to="/login"><i class="fas fa-arrow-right"></i> Đăng nhập</RouterLink>
+          <RouterLink @click="scrollToTop()" to="/register"><i class="fas fa-arrow-right"></i> Đăng ký</RouterLink>
         </div>
       </div>
 
       <div class="box">
-        <h3>Gio mo cua</h3>
-        <p>Hang ngay tu 7h den 22h (ke ca thu 7, CN)</p>
+        <h3>Giờ mở cửa</h3>
+        <p>Hằng ngày từ 7h đến 22h (kể cả thứ 7, CN trừ những ngày lễ)</p>
       </div>
     </div>
 
