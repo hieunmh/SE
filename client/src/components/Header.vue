@@ -11,20 +11,20 @@
     </nav>
 
     <div class="icons">
-      <div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu"></div>
+      <div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu"></div>	
 			<RouterLink	to="/cart"><div class="fas fa-shopping-cart cart"></div></RouterLink>
 
 			<div v-if="!user" class="fas fa-user account">
 				<ul class="drop-down-select">
-					<li><RouterLink @click="scrollToTop()" to="/login">Dang nhap</RouterLink></li>
-					<li><RouterLink @click="scrollToTop()" to="/register">Dang ky</RouterLink></li>
+					<li><RouterLink @click="scrollToTop()" to="/login">Đăng nhập</RouterLink></li>
+					<li><RouterLink @click="scrollToTop()" to="/register">Đăng ký</RouterLink></li>
 				</ul>
 			</div>
 
 			<div v-else style="background: #f38609; color: white;" class="fas fa-user account">
 				<ul class="drop-down-select">
-					<li><RouterLink to="/myorder">Gio hang</RouterLink></li>
-					<li><RouterLink to="/">Log out</RouterLink></li>
+					<li><RouterLink to="/myorder">Giỏ hàng</RouterLink></li>
+					<li><RouterLink to="/">Đăng xuất</RouterLink></li>
 				</ul>
 			</div>
       

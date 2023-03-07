@@ -2,47 +2,47 @@
   <div class = "register">
     <div class = "register-form">
       <form action="">
-        <h3>Tao tai khoan</h3>
+        <h3>Tạo tài khoản</h3>
 
         <div class = "form-group">
           <input type="text" class = "form-control" required="require">
           <i class="fa-solid fa-user"></i>
-          <span class="sp">Nhap ten cua ban</span>
+          <span class="sp">Nhập tên của bạn</span>
         </div>
         
         <div class = "form-group">
           <input type="text" class = "form-control" required="require">
           <i class="fa-regular fa-envelope"></i>
-          <span class="sp">Nhap gmail cua ban</span>
+          <span class="sp">Nhập mail của bạn</span>
         </div>
 
         <div class = "form-group">
           <input type="text" class = "form-control" required="require">
           <i class="fa-solid fa-lock"></i>
-          <span>Nhap mat khau cua ban</span>
+          <span>Nhập mật khẩu của bạn</span>
         </div>
 
         <div class = "form-group">
           <input type="password" class = "form-control" required="require">
           <i class="fa-solid fa-lock"></i>
-          <span>Nhap lai mat khau cua ban</span>
+          <span>Nhập lại mật khẩu của bạn</span>
         </div>
 
         <div class = "form-group">
           <input type="tel" class = "form-control" required="require">
           <i class="fa-solid fa-phone"></i>
-          <span>Nhap so dien thoai cua ban</span>
+          <span>Nhập số điện thoại của bạn</span>
         </div>
 
         <div class = "form-group">
           <input type="text" onfocus="(this.type='date')" onblur="if(!this.value) this.type = 'text'" class = "form-control" required="require">
           <i class="fa-solid fa-calendar"></i>
-          <span>Nhap ngay sinh cua ban</span>
+          <span>Nhập ngày sinh của bạn</span>
         </div>
 
         <div class="form-group">
-          <input type="submit" value="Dang ky" class="btnn">
-          <p>Ban da co tai khoan? <RouterLink @click="scrollToTop()" to="/login">Dang nhap</RouterLink></p>
+          <input type="submit" value="Đăng ký" class="btnn">
+          <p>Đã có tài khoản? <RouterLink @click="scrollToTop()" to="/login">Đăng nhập</RouterLink></p>
         </div>
 
       </form>
@@ -172,6 +172,46 @@ import { mapMutations } from 'vuex';
       }
 
     }
+  }
+}
+
+@media (max-width: 360px) {
+  .register .register-form form .form-group span {
+    font-size: 1.5rem;
+    margin-top: 0.6rem;  
+  }
+  .register .register-form form .form-group input:focus ~ span {
+    background-color: #f4f4f4;
+    color: #27ae60;
+    transform: translateX(-2rem) translateY(-2.5rem);
+    border: 2px solid #27ae60;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    padding: 0px 8px;
+  }
+
+  .register .register-form form .form-group input:valid ~ span {
+    background-color: #f4f4f4;
+    color: #27ae60;
+    transform: translateX(-2rem) translateY(-2.5rem);
+    border: 2px solid #27ae60;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    padding: 0px 8px;
+  }
+}
+@media (max-width: 280px) {
+  .register .register-form form .form-group span {
+    font-size: 1.3rem;
+  }
+  .register .register-form form .form-group input:focus ~ span {
+    background-color: #f4f4f4;
+    color: #27ae60;
+    transform: translateX(-2rem) translateY(-2.5rem);
+    border: 2px solid #27ae60;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    padding: 0px 8px;
   }
 }
 

@@ -6,18 +6,18 @@
         <div class = "form-group">
           <input type="text" class = "form-control" id="" required="require">
           <i class="fa-regular fa-envelope"></i>
-          <span>nhap mail cua ban</span>
+          <span>Nhập mail của bạn</span>
         </div>
 
         <div class = "form-group">
           <input type="password" class = "form-control" id="" required="require">
           <i class="fas fa-lock"></i>
-          <span>nhap mat khau cua ban</span>
+          <span>Nhập mật khẩu của bạn</span>
         </div>
 
         <div class = "form-group">
-          <input type="submit" class = "btnn" id="" value="Dang nhap" @click.stop.prevent="submit()">
-          <p>Chua co tai khoa? <RouterLink @click="scrollToTop()" to="/register">Dang ky tai day</RouterLink></p>
+          <input type="submit" class = "btnn" id="" value="Đăng nhập" @click.stop.prevent="submit()">
+          <p>Chưa có tài khoản? <RouterLink @click="scrollToTop()" to="/register">Đăng ký</RouterLink></p>
         </div>
       </form>
     </div>
@@ -66,7 +66,7 @@ export default {
           color: #27ae60;
         }
         span {
-          font-size: 2rem;
+          font-size: 2em;
           position: absolute;
           top: 1rem;
           left: 4rem;
@@ -141,6 +141,32 @@ export default {
         }
       }
     }
+  }
+}
+
+@media (max-width: 324px) {
+  .login .login-form form .form-group span {
+    font-size: 1.5rem;
+    margin-top: 0.6rem; 
+  }
+  .login .login-form form .form-group input:focus ~ span {
+    background-color: #f4f4f4;
+    color: #27ae60;
+    transform: translateX(-2rem) translateY(-2.5rem);
+    border: 2px solid #27ae60;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    padding: 0px 8px;
+  }
+
+  .login .login-form form .form-group input:valid ~ span {
+    background-color: #f4f4f4;
+    color: #27ae60;
+    transform: translateX(-2rem) translateY(-2.5rem);
+    border: 2px solid #27ae60;
+    font-size: 1.2rem;
+    border-radius: 20px;
+    padding: 0px 8px;
   }
 }
 

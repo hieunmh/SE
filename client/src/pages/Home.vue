@@ -17,12 +17,12 @@
     <div class="home-category">
       <RouterLink to="/" class="box">
         <img src="../assets/images/banhxeo.png" alt="">
-        <h3>Banh xeo</h3>
+        <h3>Bánh xèo</h3>
       </RouterLink>
 
       <RouterLink to="/" class="box">
 				<img src="../assets/images/banhxeo.png" alt="">
-				<h3>Banh xeo</h3>
+				<h3>Bánh xèo</h3>
         </RouterLink>
 
       <RouterLink to="/" class="box">
@@ -51,27 +51,27 @@
         <div class="grid col-md-4">
           <img src="../assets/images/banhxeo-banner.jpg" alt="">
           <div class="content">
-            <span>Giam gia dac biet</span>
-            <h3>len den 50%</h3>
-            <RouterLink @click="scrollToTop()" to="/menu" class="btnn">order now</RouterLink>
+            <span>Giảm giá đặc biệt</span>
+            <h3>lên đến 50%</h3>
+            <RouterLink @click="scrollToTop()" to="/menu" class="btnn">Mua ngay</RouterLink>
           </div>
         </div>
 
         <div class="grid col-md-4">
           <img src="../assets/images/salad-banner.jpg" alt="">
           <div class="content">
-            <span>Giam gia dac biet</span>
-            <h3>len den 50%</h3>
-            <RouterLink @click="scrollToTop()" to="/menu" class="btnn">order now</RouterLink>
+            <span>Giảm giá đặc biệt</span>
+            <h3>lên đến 50%</h3>
+            <RouterLink @click="scrollToTop()" to="/menu" class="btnn">Mua ngay</RouterLink>
           </div>
         </div>
 
         <div class="grid col-md-4">
         	<img src="../assets/images/drink-banner.jpg" alt="">
           <div class="content">
-            <span>Giam gia dac biet</span>
-            <h3>len den 50%</h3>
-            <RouterLink @click="scrollToTop()" to="/menu" class="btnn">order now</RouterLink>
+            <span>Giảm giá đặc biệt</span>
+            <h3>lên đến 50%</h3>
+            <RouterLink @click="scrollToTop()" to="/menu" class="btnn">Mua ngay</RouterLink>
           </div>
         </div>
       </div>
