@@ -1,18 +1,14 @@
 import express from 'express';
-import { getProducts } from './config/db';
 import morgan from 'morgan';
+import routesInit from './routes/indexRoute';
 
 
 const app = express();
 
 //http logger
-// app.use(morgan('combined'));
+app.use(morgan('combined'));
 
-
-app.get('/products', async (req,res) => {
-    const result = await getProducts();
-    res.status(200).send(result);
-});
+routesInit(app);
 
 app.use(function (err, req, res, next) {
   console.error(err.stack);

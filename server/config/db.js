@@ -11,13 +11,11 @@ const pool = mysql.createPool({
 }).promise()
 
 // Test function
-async function getProducts() {
-  const [rows] = await pool.query("SELECT * FROM notes")
-  return rows
+async function query(sql, params) {
+  const [rows] = await pool.query(sql);
+  return rows;
 }
 
-
-
 export {
-  getProducts,
+  query,
 };
