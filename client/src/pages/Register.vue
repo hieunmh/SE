@@ -1,41 +1,43 @@
 <template>
   <div class = "register">
     <div class = "register-form">
-      <form action="">
+      <form @submit="handleSubmit" novalidate autocapitalize="off">
         <h3>Tạo tài khoản</h3>
 
         <div class = "form-group">
-          <input type="text" class = "form-control" required="require">
+          <input type="text" class = "form-control" required="require" v-model="registerForm.name">
           <i class="fa-solid fa-user"></i>
           <span class="sp">Nhập tên của bạn</span>
+          <p class="error-mess" v-if="errors.nameErr.length >0">{{  errors.nameErr[0]  }}</p>
         </div>
         
         <div class = "form-group">
-          <input type="text" class = "form-control" required="require">
+          <input type="text" class = "form-control" required="require" v-model="registerForm.email">
           <i class="fa-regular fa-envelope"></i>
           <span class="sp">Nhập mail của bạn</span>
+          <!-- <p class="error-mess"></p> -->
         </div>
 
         <div class = "form-group">
-          <input type="text" class = "form-control" required="require">
+          <input type="text" class = "form-control" required="require" v-model="registerForm.password">
           <i class="fa-solid fa-lock"></i>
           <span>Nhập mật khẩu của bạn</span>
         </div>
 
         <div class = "form-group">
-          <input type="password" class = "form-control" required="require">
+          <input type="password" class = "form-control" required="require" v-model="registerForm.confirm">
           <i class="fa-solid fa-lock"></i>
           <span>Nhập lại mật khẩu của bạn</span>
         </div>
 
         <div class = "form-group">
-          <input type="tel" class = "form-control" required="require">
+          <input type="tel" class = "form-control" required="require" v-model="registerForm.phone">
           <i class="fa-solid fa-phone"></i>
           <span>Nhập số điện thoại của bạn</span>
         </div>
 
         <div class = "form-group">
-          <input type="text" onfocus="(this.type='date')" onblur="if(!this.value) this.type = 'text'" class = "form-control" required="require">
+          <input type="text" onfocus="(this.type='date')" onblur="if(!this.value) this.type = 'text'" class = "form-control" required="require" v-model="registerForm.birth">
           <i class="fa-solid fa-calendar"></i>
           <span>Nhập ngày sinh của bạn</span>
         </div>
@@ -56,7 +58,6 @@ import { mapMutations } from 'vuex';
     name: "Register",
     data() {
       return {
-
       }
     },
     methods: {
