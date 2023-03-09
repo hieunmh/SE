@@ -8,38 +8,42 @@
           <input type="text" class = "form-control" required="require" v-model="registerForm.name">
           <i class="fa-solid fa-user"></i>
           <span class="sp">Nhập tên của bạn</span>
-          <p class="error-mess" v-if="errors.nameErr.length >0">{{  errors.nameErr[0]  }}</p>
+          <p class="error-mess" v-if="errorObj.nameErr.length >0">{{  errorObj.nameErr[0]  }}</p>
         </div>
         
         <div class = "form-group">
           <input type="text" class = "form-control" required="require" v-model="registerForm.email">
           <i class="fa-regular fa-envelope"></i>
           <span class="sp">Nhập mail của bạn</span>
-          <!-- <p class="error-mess"></p> -->
+          <p class="error-mess" v-if="errorObj.emailErr.length > 0">{{  errorObj.emailErr[0] }}</p>
         </div>
 
         <div class = "form-group">
-          <input type="text" class = "form-control" required="require" v-model="registerForm.password">
+          <input type="password" class = "form-control" required="require" v-model="registerForm.password">
           <i class="fa-solid fa-lock"></i>
           <span>Nhập mật khẩu của bạn</span>
+          <p class="error-mess" v-if="errorObj.passwordErr.length > 0">{{ errorObj.passwordErr[0] }}</p>
         </div>
 
         <div class = "form-group">
           <input type="password" class = "form-control" required="require" v-model="registerForm.confirm">
           <i class="fa-solid fa-lock"></i>
           <span>Nhập lại mật khẩu của bạn</span>
+          <p class="error-mess" v-if="errorObj.confirmErr.length > 0">{{ errorObj.confirmErr[0] }}</p>
         </div>
 
         <div class = "form-group">
           <input type="tel" class = "form-control" required="require" v-model="registerForm.phone">
           <i class="fa-solid fa-phone"></i>
           <span>Nhập số điện thoại của bạn</span>
+          <p class="error-mess" v-if="errorObj.phoneErr.length > 0">{{ errorObj.phoneErr[0] }}</p>
         </div>
 
         <div class = "form-group">
-          <input type="text" onfocus="(this.type='date')" onblur="if(!this.value) this.type = 'text'" class = "form-control" required="require" v-model="registerForm.birth">
+          <input type="text" onfocus="(this.type='date')" id="uBirth" onblur="if(!this.value) this.type = 'text'" class = "form-control" required="require" v-model="registerForm.birth">
           <i class="fa-solid fa-calendar"></i>
           <span>Nhập ngày sinh của bạn</span>
+          <p class="error-mess" v-if="errorObj.birthErr.length > 0">{{ errorObj.birthErr[0] }}</p>
         </div>
 
         <div class="form-group">
@@ -58,10 +62,110 @@ import { mapMutations } from 'vuex';
     name: "Register",
     data() {
       return {
+        registerForm: {
+          name: "",
+          email: "",
+          password: "",
+          confirm: "",
+          phone: "",
+          birth: ""
+        },
+        errorObj: {nameErr: [], emailErr: [], passwordErr: [], confirmErr: [], phoneErr: [], birthErr: [] },
+        matchUser: undefined
       }
     },
+
     methods: {
       ...mapMutations(['scrollToTop']),
+
+      resetCheckErr() {
+        this.errorObj.nameErr = [];
+        this.errorObj.emailErr = [];
+        this.errorObj.passwordErr = [];
+        this.errorObj.confirmErr = [];
+        this.errorObj.phoneErr = [];
+        this.errorObj.birthErr = [];
+      },
+
+      checkEmptyErr() {
+        for (var i in this.errorObj) {
+          if (this.errorObj[i].length != 0) {
+            return false;
+          }
+        }
+        return true;
+      },
+      
+      checkForm() {
+        this.resetCheckErr();
+
+        // name validate
+        if (!this.registerForm.name) {
+          this.errorObj.nameErr.push('Vui lòng nhập tên của bạn');
+        }
+        else if (!/^[A-Za-z]+$/.test(this.registerForm.name.replace(/\s/g, ""))) {
+          this.errorObj.nameErr.push('Tên chỉ được chứa ký tự chữ cái');
+        }
+
+        // email validate
+        if (!this.registerForm.email) {
+          this.errorObj.emailErr.push('Vui lòng nhập email của bạn');
+        }
+        else if (!/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.registerForm.email)) {
+          this.errorObj.emailErr.push('Vui lòng nhập email hợp lệ');
+        }
+
+        // password validate
+        if (!this.registerForm.password) {
+          this.errorObj.passwordErr.push('Vui lòng nhập mật khẩu của bạn');
+        }
+        else if (!/[!@#$%^&*]/.test(this.registerForm.password)) {
+          this.errorObj.passwordErr.push('Mật khẩu chỉ được chứa nhiều nhất 1 ký tự đặc biệt');
+        }
+        else if (this.registerForm.password.length < 8) {
+          this.errorObj.passwordErr.push('Mật khẩu phải chứa ít nhất 8 ký tự');
+        }
+
+        // confirm validate
+        if (!this.registerForm.confirm) {
+          this.errorObj.confirmErr.push('Vui lòng nhập lại mật khẩu của bạn');
+        }
+        else if (this.registerForm.confirm !== this.registerForm.password) {
+          this.errorObj.confirmErr.push('Mật khẩu nhập lại không đúng');
+        }
+        
+
+        // phone validate
+        if (!this.registerForm.phone) {
+          this.errorObj.phoneErr.push('Vui lòng nhập số điện thoại của bạn');
+        }
+        else if (!this.registerForm.phone.startsWith('0')) {
+          this.errorObj.phoneErr.push('Số điện thoại phải bắt đầu bằng 0');
+        }
+        else if (this.registerForm.phone.length != 10) {
+          this.errorObj.phoneErr.push('Số điện thoại chỉ được chứa 10 chữ số');
+        }
+        else if (!/[0-9]{10}/.test(this.registerForm.phone)) {
+          this.errorObj.phoneErr.push('Số điện thoại chỉ được chứa chữ số')
+        }
+
+        // Birth validate
+        if (!this.registerForm.birth) {
+          this.errorObj.birthErr.push('Vui lòng nhập ngày sinh của bạn');
+        }
+      },
+
+      async handleSubmit(event) {
+        this.checkForm();
+        
+        if (!this.checkEmptyErr()) {
+          event.preventDefault();
+        }
+        else {
+          event.preventDefault();
+          this.$router.push('/');
+        }
+      }
     }
   }
 </script>
@@ -103,6 +207,12 @@ import { mapMutations } from 'vuex';
       
       .form-group {
         position: relative;
+        .error-mess {
+          font-size: 1.5rem;
+          color: rgba($color: #f32f2f, $alpha: 1.0);
+          margin: 0;
+          padding-top: 5px;
+        }
         i {
           color: #27ae60;
           font-size: 2rem;
@@ -120,6 +230,8 @@ import { mapMutations } from 'vuex';
           margin: 0;
         }
         input {
+          // margin-top: 2rem;
+          margin-bottom: 0;
           &:focus {
             ~ span {
               background-color: #f4f4f4;
@@ -129,6 +241,7 @@ import { mapMutations } from 'vuex';
               font-size: 1.5rem;
               border-radius: 20px;
               padding: 0px 8px;
+              
             }
           }
           &:valid {
@@ -200,6 +313,13 @@ import { mapMutations } from 'vuex';
     border-radius: 20px;
     padding: 0px 8px;
   }
+
+  .register .register-form form .form-group .error-mess {
+    font-size: 1.5rem;
+    color: rgba($color: #f32f2f, $alpha: 1.0);
+    margin: 0;
+    padding: 0;
+  }
 }
 @media (max-width: 280px) {
   .register .register-form form .form-group span {
@@ -213,6 +333,16 @@ import { mapMutations } from 'vuex';
     font-size: 1.2rem;
     border-radius: 20px;
     padding: 0px 8px;
+  }
+
+  .register .register-form form .form-group .error-mess {
+    font-size: 1.5rem;
+    color: rgba($color: #f32f2f, $alpha: 1.0);
+    margin: 0;
+    padding: 0;
+  }
+  .register .register-form form .form-group input {
+    margin-top: 1rem;
   }
 }
 
