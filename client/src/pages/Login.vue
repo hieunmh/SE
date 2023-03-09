@@ -1,22 +1,29 @@
 <template>
   <div class = "login">
     <div class = "login-form">
-      <form action="">
+      <form @submit="handleSubmit" novalidate autocomplete="off">
         <h3>Hieuhub</h3>
+
+        <div v-if="errors.length" class="error-box">
+          <ul>
+            <li v-for="error in errors" :key="error">{{ error }}</li>
+          </ul>
+        </div>
+
         <div class = "form-group">
-          <input type="text" class = "form-control" id="" required="require">
+          <input type="text" class = "form-control" id="" required="require" v-model="loginForm.email">
           <i class="fa-regular fa-envelope"></i>
           <span>Nhập mail của bạn</span>
         </div>
 
         <div class = "form-group">
-          <input type="password" class = "form-control" id="" required="require">
+          <input type="password" class = "form-control" id="" required="require" v-model="loginForm.password">
           <i class="fas fa-lock"></i>
           <span>Nhập mật khẩu của bạn</span>
         </div>
 
         <div class = "form-group">
-          <input type="submit" class = "btnn" id="" value="Đăng nhập" @click.stop.prevent="submit()">
+          <input type="submit" class = "btnn" id="" value="Đăng nhập">
           <p>Chưa có tài khoản? <RouterLink @click="scrollToTop()" to="/register">Đăng ký</RouterLink></p>
         </div>
       </form>
@@ -28,11 +35,41 @@ import { mapMutations } from 'vuex';
 
 export default {
   name: 'Login',
+  data() {
+    return {
+      loginForm: {email: "", password: ""},
+      matchUser: undefined, // check user trong database thôi
+      errors: []
+    }
+  },  
   methods: {
     ...mapMutations(['scrollToTop']),
-    submit() {
-      this.$router.push('/')
-;    }
+
+    async handleSubmit(event) { 
+      this.errors = [];
+      
+      //email validate
+      if (!this.loginForm.email) {
+        this.errors.push('Vui lòng nhập email của bạn');
+      }
+      else if (!/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.loginForm.email)) {
+        this.errors.push('Email không hợp lệ');
+      }
+
+      //password validate
+      if (!this.loginForm.password) {
+        this.errors.push('Vui lòng nhập mật khẩu');
+      }
+      if (!this.errors.length == 0) {
+        event.preventDefault();
+      }
+      else {
+        event.preventDefault();
+        // ìf (match user không giống trong data thì làm gì)
+        this.$router.push('/');
+        // else không đúng email hoặc mật khẩu
+      }
+    }
   }
 
 }
@@ -56,6 +93,23 @@ export default {
       padding: 2rem;
       border-radius: 1rem;
       animation: fadeUp 0.4s linear;
+      .error-box {
+        background-color: #fff9fa;
+        box-sizing: border-box;
+        border: 2px solid rgba($color: #ff424f, $alpha: 0.2);
+        border-radius: 1rem;
+        font-size: 12px;
+        margin-bottom: 20px;
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 10px 0;
+          li {
+            padding-left: 10px;
+            color: rgb(182, 0, 0);
+          }
+        }
+      }
       .form-group {
         position: relative;
         i {
