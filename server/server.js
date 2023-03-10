@@ -2,14 +2,19 @@ import express from 'express';
 import morgan from 'morgan';
 import routesInit from './routes/indexRoute';
 
-
+// init app
 const app = express();
 
-//http logger
-app.use(morgan('combined'));
+// Middleware
+app.use(express.json()); // parse json bodies in the request object
 
+//http logger
+// app.use(morgan('combined'));
+
+// handle router
 routesInit(app);
 
+// default error
 app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).send('Something broke!');
