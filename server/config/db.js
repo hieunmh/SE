@@ -12,7 +12,7 @@ const pool = mysql.createPool({
 
 // Test function
 async function query(sql, params) {
-  const [rows] = await pool.query(sql);
+  const [rows] = await pool.query(sql, params);
   return rows;
 }
 
