@@ -3,12 +3,14 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Connect to database
-const pool = mysql.createPool({
-  host: process.env.MYSQL_HOST,
-  user: process.env.MYSQL_USER,
-  password: process.env.MYSQL_PASSWORD,
-  database: process.env.MYSQL_DATABASE,
-}).promise()
+const pool = mysql
+  .createPool({
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
+  })
+  .promise();
 
 // Test function
 async function query(sql, params) {
@@ -16,6 +18,4 @@ async function query(sql, params) {
   return rows;
 }
 
-export {
-  query,
-};
+export { query };

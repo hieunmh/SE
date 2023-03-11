@@ -1,8 +1,7 @@
-import {query} from '../config/db';
+import { query } from '../config/db';
 import Model from './Model';
 import TABLES from './CONFIG_DB_INFO';
 import mysql from 'mysql2/promise';
-
 
 class ProductModel extends Model {
   constructor(tableName) {
@@ -10,17 +9,18 @@ class ProductModel extends Model {
   }
 
   async insertProduct(params) {
-    const {title, contents} = params;
+    const { title, contents } = params;
 
-    const result =  await query(`INSERT INTO ${this.tableName} SET ?`,{title, contents});
+    const result = await query(`INSERT INTO ${this.tableName} SET ?`, {
+      title,
+      contents,
+    });
     if (result.affectedRows) {
-      console.log("delete success");
+      console.log('delete success');
     } else {
-      console.log("delete fail");
-      
+      console.log('delete fail');
     }
     return result;
-  
   }
 
   async updateProduct(params) {
@@ -28,17 +28,19 @@ class ProductModel extends Model {
     const IDProduct = mysql.escape(params.IDProduct);
     const contents = mysql.escape(params.contents);
 
-    const result =  await query(
+    const result = await query(
       `UPDATE ${this.tableName}\
         SET title = IF(${title} IS NULL, title, ${title}),\
             contents = IF(${contents} IS NULL, contents, ${contents})\
-      WHERE id = ${IDProduct}`
+      WHERE id = ${IDProduct}`,
     );
     return result;
   }
 
   async deleteProduct(IDProduct) {
-    const result = await query(`DELETE FROM ${this.tableName} WHERE id = ${IDProduct}`);
+    const result = await query(
+      `DELETE FROM ${this.tableName} WHERE id = ${IDProduct}`,
+    );
     return result;
   }
 }
