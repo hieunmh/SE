@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --experimental-specifier-resolution=node server.js"
+    "start": "nodemon --experimental-specifier-resolution=node server.js",
+    "beautify": "prettier --single-quote --trailing-comma all --write **/*.{js,json}"
   },
   "author": "",
   "license": "ISC",
@@ -19,6 +20,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mysql2": "^3.2.0",
-    "nodemon": "^2.0.21"
+    "nodemon": "^2.0.21",
+    "prettier": "^2.8.4"
   }
 }
