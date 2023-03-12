@@ -1,4 +1,5 @@
 export default {
   user: undefined,
-  admin: undefined
+  admin: undefined,
+  allFoods: []
 };

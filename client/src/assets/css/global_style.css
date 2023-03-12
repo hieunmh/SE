@@ -43,7 +43,7 @@ html::-webkit-scrollbar-thumb {
 }
 
 .heading span {
-    font-family: 'Satisfy', cursive;
+    /* font-family: 'Satisfy', cursive; */
     font-size: 3rem;
     color: #27ae60;
 }
