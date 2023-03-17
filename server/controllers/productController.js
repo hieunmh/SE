@@ -1,7 +1,7 @@
 import path from 'path';
 import productModel from '../models/productModel';
 
-class testController {
+class productController {
   // [GET] /products
   async getAllProducts(req, res, next) {
     try {
@@ -109,4 +109,4 @@ class testController {
   }
 }
 
-export default new testController();
+export default new productController();

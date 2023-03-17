@@ -1,5 +1,6 @@
 const TABLES = Object.freeze({
-  NOTES: 'notes',
+  USERS: 'user',
+  PRODUCTS: 'product',
 });
 
 export default TABLES;
