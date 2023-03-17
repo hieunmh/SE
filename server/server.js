@@ -2,11 +2,19 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import routesInit from './routes/indexRoute';
+import session from 'express-session';
+
 
 // init app
 const app = express();
 
 // Middleware
+
+app.use(session({
+  secret: 'thisisoursecret',
+  resave: true,
+  saveUninitialized: true,
+}))
 
 // app.use(cors);
 

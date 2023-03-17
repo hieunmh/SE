@@ -45,4 +45,4 @@ class ProductModel extends Model {
   }
 }
 
-export default new ProductModel(TABLES.NOTES);
+export default new ProductModel(TABLES.PRODUCTS);
