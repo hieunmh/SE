@@ -237,8 +237,8 @@ input[type="button"] {
     position: relative;
     div {
       position: absolute;
-      top: 1.2rem;
-      right: -1.2rem;
+      top: -3.7rem;
+      right: 1rem;
       width: 2.5rem;
       height: 2.5rem;
       font-size:2.5rem;
