@@ -51,5 +51,4 @@ class ProductModel extends Model {
   }
 }
 
-// export default new ProductModel(TABLES.PRODUCTS);
-module.exports = new ProductModel(TABLES.PRODUCTS);
+module.exports = new ProductModel(TABLES.PRODUCT);
