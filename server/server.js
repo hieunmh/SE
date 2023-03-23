@@ -1,9 +1,14 @@
-import express from 'express';
-import morgan from 'morgan';
-import cors from 'cors';
-import routesInit from './routes/indexRoute';
-import session from 'express-session';
+// import express from 'express';
+// import morgan from 'morgan';
+// import cors from 'cors';
+// import routesInit from './routes/indexRoute';
+// import session from 'express-session';
 
+const express = require('express'); 
+const cors = require('cors');
+const session = require('express-session');
+
+const routesInit = require('./routes/indexRoute');
 
 // init app
 const app = express();

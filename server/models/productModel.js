@@ -1,7 +1,13 @@
-import { query } from '../config/db';
-import Model from './Model';
-import TABLES from './CONFIG_DB_INFO';
-import mysql from 'mysql2/promise';
+// import { query } from '../config/db';
+// import Model from './Model';
+// import TABLES from './CONFIG_DB_INFO';
+// import mysql from 'mysql2/promise';
+
+const query = require('../config/db');
+const Model = require('./Model');
+const TABLES = require('./CONFIG_DB_INFO');
+const mysql = require('mysql2/promise');
+
 
 class ProductModel extends Model {
   constructor(tableName) {
@@ -45,4 +51,5 @@ class ProductModel extends Model {
   }
 }
 
-export default new ProductModel(TABLES.PRODUCTS);
+// export default new ProductModel(TABLES.PRODUCTS);
+module.exports = new ProductModel(TABLES.PRODUCTS);
