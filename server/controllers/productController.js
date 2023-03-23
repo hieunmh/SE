@@ -1,5 +1,6 @@
-import path from 'path';
-import productModel from '../models/productModel';
+// import path from 'path';
+// import productModel from '../models/productModel';
+const productModel = require('../models/productModel');
 
 class productController {
   // [GET] /products
@@ -109,4 +110,5 @@ class productController {
   }
 }
 
-export default new productController();
+// export default new productController();
+module.exports = new productController();

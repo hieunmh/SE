@@ -1,5 +1,7 @@
-import mysql from 'mysql2';
-import dotenv from 'dotenv';
+// import mysql from 'mysql2';
+// import dotenv from 'dotenv';
+const mysql = require('mysql2');
+const dotenv = require('dotenv');
 dotenv.config();
 
 // Connect to database
@@ -18,4 +20,5 @@ async function query(sql, params) {
   return rows;
 }
 
-export { query };
+// export { query };
+module.exports = query;

@@ -3,4 +3,4 @@ const TABLES = Object.freeze({
   PRODUCTS: 'product',
 });
 
-export default TABLES;
+module.exports = TABLES;

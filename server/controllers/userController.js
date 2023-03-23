@@ -1,5 +1,7 @@
-import path from 'path';
-import userModel from '../models/userModel';
+// import path from 'path';
+// import userModel from '../models/userModel';
+const path = require('path');
+const userModel = require('../models/userModel');
 
 class userController {
   
@@ -67,4 +69,5 @@ class userController {
   }
 }
 
-export default new userController();
+// export default new userController();
+module.exports = new userController();

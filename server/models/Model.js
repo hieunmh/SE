@@ -1,5 +1,8 @@
-import mysql from 'mysql2/promise';
-import { query } from '../config/db';
+// import mysql from 'mysql2/promise';
+// import { query } from '../config/db';
+
+const mysql = require('mysql2/promise');
+const query = require('../config/db');
 
 class Model {
   constructor(tableName) {
@@ -50,4 +53,5 @@ class Model {
   }
 }
 
-export default Model;
+// export default Model;
+module.exports = Model;
