@@ -1,6 +1,6 @@
 const TABLES = Object.freeze({
-  USERS: 'user',
-  PRODUCTS: 'product',
+  CUSTOMER: 'customer',
+  PRODUCT: 'product',
 });
 
 module.exports = TABLES;
