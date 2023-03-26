@@ -16,11 +16,13 @@ const path = require('path');
 const app = express();
 
 // Middleware
-app.use(session({
-  secret: 'thisisoursecret',
-  resave: true,
-  saveUninitialized: true,
-}))
+app.use(
+  session({
+    secret: 'thisisoursecret',
+    resave: true,
+    saveUninitialized: true,
+  }),
+);
 
 app.use(cors());
 
@@ -45,7 +47,6 @@ app.use(function (err, req, res, next) {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
-
 
 // Listen on pc port
 const PORT = process.env.PORT || 5000;

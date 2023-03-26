@@ -14,7 +14,7 @@ const pool = mysql
   })
   .promise();
 
-  console.log('Connect to MYSQL success');
+console.log('Connect to MYSQL success');
 // Test function
 async function query(sql, params) {
   const [rows] = await pool.query(sql, params);

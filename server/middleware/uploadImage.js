@@ -14,7 +14,7 @@ const storage = (folder) => {
 };
 
 function upload(folder) {
-  return multer({ storage: storage(folder)});
+  return multer({ storage: storage(folder) });
 }
 
 module.exports = upload;

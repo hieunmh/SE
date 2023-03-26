@@ -1,1 +1,1 @@
-const testUploadController = require
+const testUploadController = require;
