@@ -7,8 +7,8 @@
     <div class="row">
       <div class="col-sm-4 col-12 filter-box">
         <div class="row search-box">
-          <i class="fas fa-magnifying-glass"></i>
-          <input type="text" class="search-input" placeholder=". . .">
+          <i class="fa-solid fa-magnifying-glass" @click=""></i>
+          <input type="text" class="search-input" placeholder="Tìm kiếm . . .">
           <div class="row filter-dropdown" @click="displayFilter()">
             <div class="fa-solid fa-caret-down dropDown"></div>
           </div>
@@ -118,7 +118,7 @@ input[type="button"] {
 }
 
 .filter-section {
-  width: inherit;
+  width: 100%;
 }
 
 .filter-heading {
@@ -149,23 +149,28 @@ input[type="button"] {
   margin-bottom: 15px;
   i {
     position: absolute;
-    top: 13px;
+    width: 3.2rem;
+    border-top: 5px solid #27ae60;
+    border-bottom: 5px solid #27ae60;
+    border-radius: 5px;
+    top: 15%;
     left: 1rem;
     font-size: 1.8rem;
+    background-color: #27ae60;
     color: white;
   }
   .search-input {
-    margin: 0;
-    padding: 0 4rem;
+    padding-left: 4.5rem;
     width: 100%;
     height: 40px;
-    font-size: 20px;
-    color: white;
+    font-size: 15px;
+    color: #27ae60;
     text-transform: none;
-    background-color: #27ae60;
+    background-color: #fff;
+    border: 2px solid #27ae60;
     border-radius: 1rem;
     &::placeholder {
-      color: white;
+      color: #27ae60;
     }
   }
 }
@@ -231,7 +236,7 @@ input[type="button"] {
     display: block;
     border-radius: 1rem;
     background-color: #27ae60;
-    color: #fff;
+    color: #27ae60;
     font-weight: 400;
     margin-bottom: 15px;
     position: relative;
