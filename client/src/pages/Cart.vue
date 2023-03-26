@@ -13,7 +13,7 @@
             <div class="box">
               <div class="box-title item-total row">
                 <h3>
-                  <p style="font-size: 15px;">{{ filterFoods.length.toString() }}
+                  <p style="font-size: 2rem;">{{ filterFoods.length.toString() }}
                     <span v-if="filterFoods.length < 2">sản phẩm</span>
                     <span v-else>sản phẩm</span> trong giỏ hàng
                   </p>
@@ -85,7 +85,7 @@
                 <h3>Hóa Đơn</h3>
               </div>
 
-              <div class="box-content">
+              <div class="box-content pay">
                 <span>Giá trị sản phẩm</span>
                 <h3 class="font-bold total-first-price">{{  }}</h3>
 
@@ -117,7 +117,7 @@
                 <h3>Đường dây nóng</h3>
               </div>
 
-              <div class="box-content text-center">
+              <div class="box-content pay text-center">
                 <h3><i class="fa fa-phone"> 091 511 57 01</i></h3>
                 <span class="small">Liên hệ với chúng tôi nếu bạn có câu hỏi. Chúng tôi luôn có mặt 24/24</span>
               </div>
@@ -170,6 +170,15 @@ export default {
   color: #27ae60;
 }
 
+.box .box-content.pay {
+  span {
+    font-size: 1.5rem;
+  }
+  h3 {
+    font-size: 2em;
+  }
+}
+
 
 .cart-product-img {
   text-align: center;
@@ -203,6 +212,9 @@ export default {
     margin-bottom: 0;
     padding: 14px 15px 7px;
     min-height: 78px;
+    h3 {
+      font-size: 2rem;
+    }
   }
   .box-content {
     background-color: inherit;
@@ -308,9 +320,10 @@ export default {
 
   .in-cart .box-content {
     color: white;
-    margin-left: -25px;
     border: none;
     display: flex;
+    margin-left: 2rem;
+    margin-right: 2rem;
     .btn-group {
       margin-top: 5px;
       display: inline-flex;
