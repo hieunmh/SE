@@ -1,7 +1,7 @@
 <template>
   <div class = "login">
     <div class = "login-form">
-      <form @submit="handleSubmit" novalidate autocomplete="off">
+      <form @submit.prevent="handleSubmit" novalidate autocomplete="off">
         <h3>Hieuhub</h3>
 
         <div v-if="errors.length" class="error-box">
@@ -11,7 +11,7 @@
         </div>
 
         <div class = "form-group">
-          <input type="text" class = "form-control" id="" required="require" v-model="loginForm.email">
+          <input type="text" class = "form-control" id="" required="require" v-model="loginForm.username">
           <i class="fa-regular fa-envelope"></i>
           <span>Nhập mail của bạn</span>
         </div>
@@ -38,25 +38,25 @@ export default {
   name: 'Login',
   data() {
     return {
-      loginForm: {email: "", password: ""},
+      loginForm: {username: "", password: ""},
       matchUser: undefined, // check user trong database thôi
       errors: []
     }
   },  
   methods: {
-    ...mapMutations(['scrollToTop']),
+    ...mapMutations(['scrollToTop', 'setUser']),
 
     async getMatchUser() {
-      let data = axios.post('/login/');
+      let data = await axios.post('/login', this.loginForm);
+      this.matchUser = data.data;
       console.log(data.data);
     },  
 
     async handleSubmit(event) { 
-      this.getMatchUser();
       this.errors = [];
       
       //email validate
-      if (!this.loginForm.email) {
+      if (!this.loginForm.username) {
         this.errors.push('Vui lòng nhập email của bạn');
       }
       // else if (!/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.loginForm.email)) {
@@ -72,6 +72,10 @@ export default {
       }
       else {
         event.preventDefault();
+        await this.getMatchUser();
+
+        this.setUser(this.matchUser);
+
         // ìf (match user không giống trong data thì làm gì)
         this.$router.push('/');
         // else không đúng email hoặc mật khẩu
