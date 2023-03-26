@@ -4,7 +4,8 @@
 // import routesInit from './routes/indexRoute';
 // import session from 'express-session';
 
-const express = require('express'); 
+const express = require('express');
+// Cross Origin Resource Sharing
 const cors = require('cors');
 const session = require('express-session');
 
@@ -14,7 +15,6 @@ const routesInit = require('./routes/indexRoute');
 const app = express();
 
 // Middleware
-
 app.use(session({
   secret: 'thisisoursecret',
   resave: true,

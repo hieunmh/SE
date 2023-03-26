@@ -6,11 +6,11 @@ const productController = require('../controllers/productController');
 
 const router = express.Router();
 
-router.get('/products/:id', productController.getProduct);
-router.post('/products/add', productController.addProduct);
-router.put('/products/:id/modify', productController.modifyProduct);
-router.delete('/products/:id/delete', productController.deleteProduct);
-router.get('/products', productController.getAllProducts);
+router.get('/:id', productController.getProduct);
+router.post('/add', productController.addProduct);
+router.put('/:id/modify', productController.modifyProduct);
+router.delete('/:id/delete', productController.deleteProduct);
+router.get('/', productController.getAllProducts);
 
 // export default router;
 module.exports = router
