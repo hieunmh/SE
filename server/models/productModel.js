@@ -8,7 +8,6 @@ const Model = require('./Model');
 const TABLES = require('./CONFIG_DB_INFO');
 const mysql = require('mysql2/promise');
 
-
 class ProductModel extends Model {
   constructor(tableName) {
     super(tableName);
