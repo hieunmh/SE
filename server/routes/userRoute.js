@@ -11,7 +11,5 @@ router.post('/login', userController.login);
 router.post('/logout', userController.logout);
 router.post('/register', userController.register);
 
-
-
 // export default router;
 module.exports = router;
