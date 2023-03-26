@@ -74,7 +74,7 @@ export default {
         event.preventDefault();
         await this.getMatchUser();
 
-        this.setUser(this.matchUser);
+        this.setUser(this.loginForm.username);
 
         // ìf (match user không giống trong data thì làm gì)
         this.$router.push('/');

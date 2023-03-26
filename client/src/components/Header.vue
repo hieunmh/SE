@@ -12,7 +12,7 @@
 
     <div class="icons">
       <div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu"></div>	
-			<RouterLink	to="/cart"><div class="fas fa-shopping-cart cart"></div></RouterLink>
+			<RouterLink @click="scrollToTop()"	to="/cart"><div class="fas fa-shopping-cart cart"></div></RouterLink>
 
 			<div v-if="!user" class="fas fa-user account">
 				<ul class="drop-down-select">
@@ -24,7 +24,7 @@
 			<div v-else style="background: #f38609; color: white;" class="fas fa-user account">
 				<ul class="drop-down-select">
 					<li><RouterLink to="/myorder">Giỏ hàng</RouterLink></li>
-					<li><RouterLink to="/">Đăng xuất</RouterLink></li>
+					<li><RouterLink @click="handleLogout" to="/">Đăng xuất</RouterLink></li>
 				</ul>
 			</div>
       
@@ -33,10 +33,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-export default{
+import { mapMutations, mapState } from 'vuex';
+export default {
 	name: 'Header',
 	methods: {
+		...mapMutations(['setUser']),
+
 		showMenu() {
 			let nav_bar = document.querySelector('.header .navbar');
 			nav_bar.classList.toggle('active');
@@ -45,6 +47,9 @@ export default{
 			let nav_bar = document.querySelector('.header .navbar');
 			nav_bar.classList.remove('active');
 			window.scrollTo(0, 0);
+		},
+		handleLogout() {
+			this.setUser("");
 		}
 
 	},
@@ -96,13 +101,14 @@ export default{
 			}
 		}
 		a.router-link-exact-active {
-			color: #f38609
+			color: #f38609;
 		}
 	}
 
   /**Header icons */
 	.icons {
 		div {
+			position: relative;
 			height: 4.5rem;
 			width: 4.5rem;
 			line-height: 4.5rem;
@@ -118,6 +124,12 @@ export default{
 				background: #27ae60 !important;
 			}
 		}
+		a.router-link-exact-active {
+			.cart {
+				background-color: #f38609;
+				color: white;
+			}
+		}
 		.account {
 			.drop-down-select {
 				display: none;
@@ -126,7 +138,8 @@ export default{
 				list-style-type: none;
 				a {
 					text-decoration: none;
-					color: #130f40;
+					background: #27ae60;
+					color: white;
 					font-size: 15px;
 					font-weight: 500;
 					float: left;
@@ -148,7 +161,7 @@ export default{
 				.drop-down-select {
 					display: block;
 					a {
-						background-color: #f7f7f7;
+						// background-color: #f7f7f7;
 						&:hover {
 							background-color: #f38609;
 							color: white;
