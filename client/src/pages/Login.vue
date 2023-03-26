@@ -32,6 +32,7 @@
 </template>
 <script>
 import { mapMutations } from 'vuex';
+import axios from 'axios'
 
 export default {
   name: 'Login',
@@ -45,16 +46,22 @@ export default {
   methods: {
     ...mapMutations(['scrollToTop']),
 
+    async getMatchUser() {
+      let data = axios.post('/login/');
+      console.log(data.data);
+    },  
+
     async handleSubmit(event) { 
+      this.getMatchUser();
       this.errors = [];
       
       //email validate
       if (!this.loginForm.email) {
         this.errors.push('Vui lòng nhập email của bạn');
       }
-      else if (!/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.loginForm.email)) {
-        this.errors.push('Email không hợp lệ');
-      }
+      // else if (!/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/.test(this.loginForm.email)) {
+      //   this.errors.push('Email không hợp lệ');
+      // }
 
       //password validate
       if (!this.loginForm.password) {

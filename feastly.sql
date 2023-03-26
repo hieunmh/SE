@@ -58,10 +58,9 @@ CREATE TABLE product (
 
 CREATE TABLE customer (
     id INT(10) NOT NULL AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
     password TEXT NOT NULL,
-    first_name VARCHAR(10) NOT NULL,
-    last_name VARCHAR(10) NOT NULL,
+    name VARCHAR(10) NOT NULL,
     telephone VARCHAR(10) NOT NULL,
     role BOOLEAN NOT NULL,
     PRIMARY KEY (id)
@@ -150,8 +149,6 @@ CREATE TABLE cart_item (
 CREATE TABLE customer_address (
     id INT(10) NOT NULL AUTO_INCREMENT,
     customer_id INT(10) DEFAULT '0', 
-    address_line1 VARCHAR(100) NOT NULL,
-    address_line2 VARCHAR(100) NOT NULL,
     city VARCHAR(100) NOT NULL,
     country VARCHAR(100) NOT NULL,
     telephone VARCHAR(10) NOT NULL,
@@ -159,7 +156,7 @@ CREATE TABLE customer_address (
     CONSTRAINT `fk_customer_usad`
         FOREIGN KEY (`customer_id`)
         REFERENCES customer (`id`)
-        ON DELETE SET NULL
+        ON DELETE SET NULL 
         ON UPDATE SET NULL
 );
 
