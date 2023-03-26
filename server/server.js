@@ -5,6 +5,7 @@
 // import session from 'express-session';
 
 const express = require('express');
+// Cross Origin Resource Sharing
 const cors = require('cors');
 const session = require('express-session');
 const bodyParser = require('body-parser');
@@ -15,7 +16,6 @@ const path = require('path');
 const app = express();
 
 // Middleware
-
 app.use(session({
   secret: 'thisisoursecret',
   resave: true,
@@ -45,8 +45,6 @@ app.use(function (err, req, res, next) {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
-
-
 
 
 // Listen on pc port

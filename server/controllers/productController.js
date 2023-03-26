@@ -39,7 +39,7 @@ class productController {
   async addProduct(req, res, next) {
     const { title, contents } = req.body;
     if (!title || !contents) {
-      return res.status(400).json({ message: 'fill all attributes' });
+      return res.status(400).json({ message: 'All filled must be required' });
     }
     try {
       const result = await productModel.insertProduct({
@@ -107,6 +107,14 @@ class productController {
       console.log('cant delete product! ');
       next(error);
     }
+  }
+
+  async getProductByCategory(req, res) {
+
+  }
+
+  async getProductByPrice(req, res) {
+
   }
 }
 
