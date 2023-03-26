@@ -13,4 +13,4 @@ router.delete('/products/:id/delete', productController.deleteProduct);
 router.get('/products', productController.getAllProducts);
 
 // export default router;
-module.exports = router
+module.exports = router;

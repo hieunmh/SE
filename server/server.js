@@ -4,7 +4,7 @@
 // import routesInit from './routes/indexRoute';
 // import session from 'express-session';
 
-const express = require('express'); 
+const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
 
@@ -15,11 +15,13 @@ const app = express();
 
 // Middleware
 
-app.use(session({
-  secret: 'thisisoursecret',
-  resave: true,
-  saveUninitialized: true,
-}))
+app.use(
+  session({
+    secret: 'thisisoursecret',
+    resave: true,
+    saveUninitialized: true,
+  }),
+);
 
 // app.use(cors);
 
