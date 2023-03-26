@@ -13,10 +13,10 @@ class UserModel extends Model {
   }
 
   async registerAccount(params) {
-    const { username, password, first_name, last_name, telephone } = params;
+    const { email, password, name, telephone } = params;
     // default role = 0 =>  user
-    const sql = `INSERT INTO ${this.tableName} (username, password, first_name, last_name, telephone, role)\
-                  VALUES ('${username}', '${password}', '${first_name}', '${last_name}', '${telephone}', 0)`;
+    const sql = `INSERT INTO ${this.tableName} (email, password, name, telephone, role)\
+                  VALUES ('${email}', '${password}', '${name}', '${telephone}', 0)`;
     return await query(sql);
   }
 }

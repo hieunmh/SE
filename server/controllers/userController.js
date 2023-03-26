@@ -12,7 +12,7 @@ class userController {
     // check whether or not login
     if (req.session.authorized) {
       console.log(req.session);
-      return res.status(200).send(`Hello ${req.session.user.username}`);
+      return res.status(200).send(`Hello ${req.session.user}`);
     }
     res.status(401).json({
       msg: 'You need to log in first',
@@ -32,34 +32,43 @@ class userController {
 
   // [POST] /login
   async login(req, res, next) {
-    const { username, password } = req.body;
-    if (username && password) {
+    console.log("cookie: " + req.headers.cookie);
+    const { email, password } = req.body;
+    if (email && password) {
       try {
         const hashedPwd = await bcrypt.hash(password, saltRounds);
         const userPassword = await userModel.findOne({
           attributes: ['password'],
           where: {
-            username,
+            email,
           },
         });
-        const checkPassword = await bcrypt.compareSync(
-          password,
-          userPassword.password,
-        );
-        if (checkPassword) {
-          // attach session id to user
-          req.session.user = username;
-          req.session.authorized = true;
-          return res.status(200).json({
-            msg: 'login was successful',
-            redirect: '/info',
-          });
-          
+
+        if (userPassword) {
+          const checkPassword = await bcrypt.compareSync(
+            password,
+            userPassword.password,
+          );
+          if (checkPassword) {
+            // attach session id to user
+            req.session.user = email;
+            req.session.authorized = true;
+            return res.status(200).json({
+              msg: 'login was successful',
+              redirect: '/info',
+            });
+            
+          } else {
+            return res.status(401).json({
+              msg: 'wrong email or password',
+            });
+          }
         } else {
           return res.status(401).json({
-            msg: 'wrong username or password',
-          });
+            msg: 'wrong email or password',
+          })
         }
+   
       } catch (error) {
         next(error);
       }
@@ -81,19 +90,19 @@ class userController {
 
   // [POST] /register
   async register(req, res, next) {
-    const { username, password, first_name, last_name, telephone } = req.body;
+    const { email, password, name, telephone } = req.body;
     try {
-      if (!username || !password) {
+      if (!email || !password || !name) {
         res.status(400).json({
-          msg: 'Please fill username, password',
+          msg: 'Please fill email, password, name',
         });
       } else {
-        const check_Username_Exist = await userModel.checkExistence({
+        const check_email_Exist = await userModel.checkExistence({
           where: {
-            username,
+            email,
           },
         });
-        if (!check_Username_Exist) {
+        if (!check_email_Exist) {
           //Encrypt password with bcrypt
           const hashedPwd = await bcrypt.hash(password, saltRounds);
           if (!hashedPwd) {
@@ -101,22 +110,21 @@ class userController {
           }
 
           const result = await userModel.registerAccount({
-            username,
+            email,
             password: hashedPwd,
-            first_name,
-            last_name,
+            name,
             telephone,
           });
 
           if (result) {
             return res.status(201).json({
               msg: 'Register Account Success',
-              username: username,
+              email: email,
             });
           }
         } else {
           res.status(400).json({
-            msg: 'Username have existed',
+            msg: 'email have existed',
           });
         }
       }

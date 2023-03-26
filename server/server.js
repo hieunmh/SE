@@ -7,13 +7,16 @@
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
-
+const bodyParser = require('body-parser');
 const routesInit = require('./routes/indexRoute');
+const path = require('path');
 
 // init app
 const app = express();
 
 // Middleware
+const staticFolder = path.join(__dirname, 'public');
+app.use(express.static(staticFolder));
 
 app.use(
   session({
@@ -23,13 +26,13 @@ app.use(
   }),
 );
 
-app.use(cors);
+// app.use(cors);
 
 // parse requests of content-type - application/json
-app.use(express.json());
+app.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //http logger
 // app.use(morgan('combined'));
@@ -42,6 +45,13 @@ app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
+
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+
+
 
 // Listen on pc port
 const PORT = process.env.PORT || 5000;
