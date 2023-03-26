@@ -12,7 +12,7 @@
 
     <div class="icons">
       <div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu"></div>	
-			<RouterLink	to="/cart"><div class="fas fa-shopping-cart cart"></div></RouterLink>
+			<RouterLink @click="scrollToTop()"	to="/cart"><div class="fas fa-shopping-cart cart"></div></RouterLink>
 
 			<div v-if="!user" class="fas fa-user account">
 				<ul class="drop-down-select">
@@ -21,10 +21,10 @@
 				</ul>
 			</div>
 
-			<div v-else style="background: #f38609; color: white;" class="fas fa-user account">
+			<div v-else class="fas fa-user account logined" style="background: #f38609; color: white;">
 				<ul class="drop-down-select">
 					<li><RouterLink to="/myorder">Giỏ hàng</RouterLink></li>
-					<li><RouterLink to="/">Đăng xuất</RouterLink></li>
+					<li><RouterLink @click="handleLogout" to="/">Đăng xuất</RouterLink></li>
 				</ul>
 			</div>
       
@@ -33,10 +33,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-export default{
+import { mapMutations, mapState } from 'vuex';
+export default {
 	name: 'Header',
 	methods: {
+		...mapMutations(['setUser']),
+
 		showMenu() {
 			let nav_bar = document.querySelector('.header .navbar');
 			nav_bar.classList.toggle('active');
@@ -45,6 +47,9 @@ export default{
 			let nav_bar = document.querySelector('.header .navbar');
 			nav_bar.classList.remove('active');
 			window.scrollTo(0, 0);
+		},
+		handleLogout() {
+			this.setUser("");
 		}
 
 	},
@@ -96,19 +101,21 @@ export default{
 			}
 		}
 		a.router-link-exact-active {
-			color: #f38609
+			color: #f38609;
 		}
 	}
 
   /**Header icons */
 	.icons {
 		div {
+			position: relative;
 			height: 4.5rem;
 			width: 4.5rem;
 			line-height: 4.5rem;
 			font-size: 2rem;
-			background: #f7f7f7;
-			color: #130f40;
+			background: #fff;
+			color: #27ae60;
+			border: 2px solid #27ae60;
 			border-radius: 0.5rem;
 			margin-left: 0.3rem;
 			cursor: pointer;
@@ -118,33 +125,43 @@ export default{
 				background: #27ae60 !important;
 			}
 		}
+		a.router-link-exact-active {
+			.cart {
+				background-color: #f38609;
+				border-color: #f38609;
+				color: white;
+			}
+			:hover {
+				border: 2px solid #27ae60;
+			}
+		}
+
+		.account.logined {
+			border-color: #f38609;
+		}
+
 		.account {
+
 			.drop-down-select {
 				display: none;
+				padding: 0;
 				position: absolute;
-				margin-left: -50px;
+				margin-left: -65%;
 				list-style-type: none;
+				border: 2px solid #27ae60;
+				border-radius: 10px;
 				a {
 					text-decoration: none;
-					color: #130f40;
+					color: #27ae60;
 					font-size: 15px;
-					font-weight: 500;
+					font-weight: 300;
 					float: left;
-					width: 95px;
-					border-radius: 5%;
-				}
-			}
-			.drop-down-select.active {
-				display: block !important;
-				a {
-					background-color: #f7f7f7;
-					&:hover {
-						background-color: #f38609;
-						color: white;
-					}
+					width: 100px;
+					border-radius: 8px;
 				}
 			}
 			&:hover {
+				border:2px solid #27ae60;
 				.drop-down-select {
 					display: block;
 					a {

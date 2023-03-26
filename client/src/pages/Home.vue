@@ -3,7 +3,8 @@
     <div class="home-main">
       <div class="content">
         <span>Home page</span>
-        <h3>SIUUUUUUUUUUUU</h3>
+        <h3 v-if="user">Xin chào {{ user }}</h3>
+				<h3 v-else>SIUUUUUU</h3>
         <p>Welcome to the League of Draven</p>
         <RouterLink to="/menu" class="btnn">Menu</RouterLink>
       </div>
@@ -80,7 +81,7 @@
   </div>
 </template>
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 
 export default {
   name: 'Home',
@@ -91,6 +92,9 @@ export default {
 	},
 	methods: {
 		...mapMutations(['scrollToTop'])
+	},
+	computed: {
+		...mapState(['user'])
 	}
 	
 }
