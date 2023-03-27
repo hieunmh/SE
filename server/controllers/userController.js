@@ -1,8 +1,7 @@
-// import path from 'path';
-// import userModel from '../models/userModel';
 const path = require('path');
 const userModel = require('../models/userModel');
 const bcrypt = require('bcrypt');
+const session = require('express-session');
 
 // bcrypt
 const saltRounds = 10;
@@ -12,7 +11,7 @@ class userController {
     // check whether or not login
     if (req.session.authorized) {
       console.log(req.session);
-      return res.status(200).send(`Hello ${req.session.user}`);
+      return res.status(200).send(`Hello ${req.session.userId}`);
     }
     res.status(401).json({
       msg: 'You need to log in first',
@@ -32,38 +31,32 @@ class userController {
 
   // [POST] /login
   async login(req, res, next) {
-    console.log("cookie: " + req.headers.cookie);
     const { email, password } = req.body;
     if (email && password) {
       try {
         const hashedPwd = await bcrypt.hash(password, saltRounds);
-        const userPassword = await userModel.findOne({
-          attributes: ['password'],
+        const findUser = await userModel.findOne({
+          attributes: ['id', 'password', 'name'],
           where: {
             email,
           },
         });
+        console.log(findUser);
 
-        const userName = await userModel.findOne({
-          attributes: ['name'],
-          where: {
-            email
-          }
-        })
-
-        if (userPassword) {
+        if (findUser) {
           const checkPassword = await bcrypt.compareSync(
             password,
-            userPassword.password,
+            findUser.password,
           );
           if (checkPassword) {
             // attach session id to user
-            req.session.user = email;
+            req.session.userId = findUser.id;
             req.session.authorized = true;
+            console.log(req.sessionID);
             return res.status(200).json({
               msg: 'login was successful',
               redirect: '/info',
-              userName: userName
+              userName: findUser.name,
             });
             
           } else {
@@ -89,7 +82,16 @@ class userController {
 
   // [POST] /logout
   async logout(req, res, next) {
-    req.session.destroy(); // destroy session
+    req.session.destroy(err => {
+      if (err) {
+        return res.json({
+          msg: "Error: Destroy session",
+          redirect : '/home'
+        })
+      }
+    }); // destroy session
+
+    res.clearCookie('sid');
     return res.status(200).json({
       msg: 'Logout successful',
       redirect: '/login',
@@ -124,7 +126,10 @@ class userController {
             telephone,
           });
 
-          if (result) {
+          if (result.affectedRows > 0) {
+            req.session.userId = result.insertId;
+            req.session.authorized = true;
+
             return res.status(201).json({
               msg: 'Register Account Success',
               email: email,
