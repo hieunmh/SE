@@ -44,6 +44,13 @@ class userController {
           },
         });
 
+        const userName = await userModel.findOne({
+          attributes: ['name'],
+          where: {
+            email
+          }
+        })
+
         if (userPassword) {
           const checkPassword = await bcrypt.compareSync(
             password,
@@ -56,16 +63,17 @@ class userController {
             return res.status(200).json({
               msg: 'login was successful',
               redirect: '/info',
+              userName: userName
             });
             
           } else {
-            return res.status(401).json({
-              msg: 'wrong email or password',
+            return res.status(200).json({
+              msg: 'Sai email hoặc mật khẩu',
             });
           }
         } else {
-          return res.status(401).json({
-            msg: 'wrong email or password',
+          return res.status(200).json({
+            msg: 'Sai email hoặc mật khẩu',
           })
         }
    
@@ -120,6 +128,7 @@ class userController {
             return res.status(201).json({
               msg: 'Register Account Success',
               email: email,
+              name: name
             });
           }
         } else {

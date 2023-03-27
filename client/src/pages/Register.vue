@@ -68,10 +68,11 @@ import { mapMutations } from 'vuex';
     },
 
     methods: {
-      ...mapMutations(['scrollToTop']),
+      ...mapMutations(['scrollToTop', 'setUser']),
 
       async register() {
-        await axios.post('/register', this.registerForm);
+        let data = await axios.post('/register', this.registerForm);
+        this.setUser(data.data.name);
       },
 
       resetCheckErr() {
@@ -155,7 +156,7 @@ import { mapMutations } from 'vuex';
         else {
           event.preventDefault();
           this.register();
-          this.$router.push('/login');
+          this.$router.push('/');
         }
       }
     }
