@@ -33,19 +33,11 @@
         </div>
 
         <div class = "form-group">
-          <input type="tel" class = "form-control" required="require" v-model="registerForm.phone">
+          <input type="tel" class = "form-control" required="require" v-model="registerForm.telephone">
           <i class="fa-solid fa-phone"></i>
           <span>Nhập số điện thoại của bạn</span>
           <p class="error-mess" v-if="errorObj.phoneErr.length > 0">{{ errorObj.phoneErr[0] }}</p>
         </div>
-
-        <div class = "form-group">
-          <input type="text" onfocus="(this.type='date')" id="uBirth" onblur="if(!this.value) this.type = 'text'" class = "form-control" required="require" v-model="registerForm.birth">
-          <i class="fa-solid fa-calendar"></i>
-          <span>Nhập ngày sinh của bạn</span>
-          <p class="error-mess" v-if="errorObj.birthErr.length > 0">{{ errorObj.birthErr[0] }}</p>
-        </div>
-
         <div class="form-group">
           <input type="submit" value="Đăng ký" class="btnn">
           <p>Đã có tài khoản? <RouterLink @click="scrollToTop()" to="/login">Đăng nhập</RouterLink></p>
@@ -57,26 +49,30 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapMutations } from 'vuex';
   export default {
     name: "Register",
     data() {
       return {
         registerForm: {
-          name: "",
           email: "",
           password: "",
+          name: "",
           confirm: "",
-          phone: "",
-          birth: ""
+          telephone: "",
         },
-        errorObj: {nameErr: [], emailErr: [], passwordErr: [], confirmErr: [], phoneErr: [], birthErr: [] },
+        errorObj: {nameErr: [], emailErr: [], passwordErr: [], confirmErr: [], phoneErr: [] },
         matchUser: undefined
       }
     },
 
     methods: {
       ...mapMutations(['scrollToTop']),
+
+      async register() {
+        await axios.post('/register', this.registerForm);
+      },
 
       resetCheckErr() {
         this.errorObj.nameErr = [];
@@ -119,12 +115,12 @@ import { mapMutations } from 'vuex';
         if (!this.registerForm.password) {
           this.errorObj.passwordErr.push('Vui lòng nhập mật khẩu của bạn');
         }
-        else if (!/[!@#$%^&*]/.test(this.registerForm.password)) {
-          this.errorObj.passwordErr.push('Mật khẩu chỉ được chứa nhiều nhất 1 ký tự đặc biệt');
-        }
-        else if (this.registerForm.password.length < 8) {
-          this.errorObj.passwordErr.push('Mật khẩu phải chứa ít nhất 8 ký tự');
-        }
+        // else if (!/[!@#$%^&*]/.test(this.registerForm.password)) {
+        //   this.errorObj.passwordErr.push('Mật khẩu chỉ được chứa nhiều nhất 1 ký tự đặc biệt');
+        // }
+        // else if (this.registerForm.password.length < 8) {
+        //   this.errorObj.passwordErr.push('Mật khẩu phải chứa ít nhất 8 ký tự');
+        // }
 
         // confirm validate
         if (!this.registerForm.confirm) {
@@ -136,22 +132,17 @@ import { mapMutations } from 'vuex';
         
 
         // phone validate
-        if (!this.registerForm.phone) {
+        if (!this.registerForm.telephone) {
           this.errorObj.phoneErr.push('Vui lòng nhập số điện thoại của bạn');
         }
-        else if (!this.registerForm.phone.startsWith('0')) {
+        else if (!this.registerForm.telephone.startsWith('0')) {
           this.errorObj.phoneErr.push('Số điện thoại phải bắt đầu bằng 0');
         }
-        else if (this.registerForm.phone.length != 10) {
+        else if (this.registerForm.telephone.length != 10) {
           this.errorObj.phoneErr.push('Số điện thoại chỉ được chứa 10 chữ số');
         }
-        else if (!/[0-9]{10}/.test(this.registerForm.phone)) {
+        else if (!/[0-9]{10}/.test(this.registerForm.telephone)) {
           this.errorObj.phoneErr.push('Số điện thoại chỉ được chứa chữ số')
-        }
-
-        // Birth validate
-        if (!this.registerForm.birth) {
-          this.errorObj.birthErr.push('Vui lòng nhập ngày sinh của bạn');
         }
       },
 
@@ -163,7 +154,8 @@ import { mapMutations } from 'vuex';
         }
         else {
           event.preventDefault();
-          this.$router.push('/');
+          this.register();
+          this.$router.push('/login');
         }
       }
     }

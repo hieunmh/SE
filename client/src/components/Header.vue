@@ -146,7 +146,7 @@ export default {
 				display: none;
 				padding: 0;
 				position: absolute;
-				margin-left: -65%;
+				margin-left: -30px;
 				list-style-type: none;
 				border: 2px solid #27ae60;
 				border-radius: 10px;
@@ -200,7 +200,9 @@ export default {
 			}
 		}
 		.navbar.active {
-			clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+			clip-path: polygon(0 0, 100% 0%, 100% 100%, 0% 100%);
+			display: flex;
+			justify-content: space-evenly;
 		}
 	}
 	#menu-btn {
@@ -211,6 +213,10 @@ export default {
 	.header .navbar a {
 		font-size: 1.5rem;
 		margin: 0;
+	}
+
+	.header .icons .account .drop-down-select {
+		margin-left: -50px;
 	}
 }
 
