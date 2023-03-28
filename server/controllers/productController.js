@@ -36,16 +36,23 @@ class productController {
   }
 
   // [POST] /products/add
+
+  //To do
   async addProduct(req, res, next) {
-    const { title, contents } = req.body;
-    if (!title || !contents) {
+    const { name, desc, category_id, price, 
+      discount_id, sold_number} = req.body;
+    
+    const file_path = (req.file) ? path.join('upload', 'productImage', req.file.filename) : null;
+    if (!name || !desc || !file_path) {
       return res.status(400).json({ message: 'fill all attributes' });
     }
     try {
       const result = await productModel.insertProduct({
-        title: title,
-        contents: contents,
+        name: name,
+        desc: desc,
+        image: formatMediaURL(file_path),
       });
+
       return res.status(200).send(result);
     } catch (error) {
       console.log('Cant add product!');
@@ -56,9 +63,9 @@ class productController {
   // [PUT] /products/:id/modify
   async modifyProduct(req, res, next) {
     const IDProduct = req.params.id;
-    const { title, contents } = req.body;
+    const { name, desc } = req.body;
 
-    if (!title && !contents) {
+    if (!name && !desc) {
       res.status(400).json({ message: 'Nothing changed' });
     }
 
@@ -75,8 +82,8 @@ class productController {
       } else {
         const result = productModel.updateProduct({
           IDProduct,
-          title,
-          contents,
+          name,
+          desc,
         });
         return res.status(200).send('Modify product: Success!');
       }
