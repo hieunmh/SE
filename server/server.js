@@ -14,16 +14,15 @@ const app = express();
 
 // Middleware
 const staticFolder = path.join(__dirname, 'public');
-app.use('/', express.static(staticFolder));
+app.use('/static', express.static(staticFolder));
 
 app.use(
   session({
     name: process.env.SES_NAME,
     cookie: {
       maxAge: 1000* 60 * 60,
-      sameSite: 'NONE',
+      sameSite: true,
       // secure: process.env.NODE_ENV, 
-      secure: true, 
     },
     resave: false,
     saveUninitialized: false,
@@ -32,9 +31,10 @@ app.use(
   }),
 );
 
+
 app.use(cors({
-  origin: "http://192.168.101.131:8080",
-  credentials: true, 
+  origin: "http://192.168.0.101:8080",
+  credentials: true
 }));
 
 // parse requests of content-type - application/json
