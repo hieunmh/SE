@@ -53,16 +53,15 @@
       
       <div class="col-sm-8">
         <div class="row">
-          <div class="menu-tabs">
-            <input type="button" name="allFood" id="allFood" value="Tất cả"  class="menu-tab-item">
-            <input type="button" name="allFood" id="Banh ngot" value="Bánh"  class="menu-tab-item">
-            <input type="button" name="allFood" id="Do an nhanh" value="Đồ ăn"  class="menu-tab-item">
-            <input type="button" name="allFood" id="Ruou" value="Nước lọc"  class="menu-tab-item">
-            <input type="button" name="allFood" id="Bia" value="Bia"  class="menu-tab-item">
-            <input type="button" name="allFood" id="Ruou" value="Rượu"  class="menu-tab-item">
+          <div class="menu-tabs ">
+            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" name="allFood" value="Tất cả">
+            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" name="allFood" value="Bánh">
+            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" name="allFood" value="Đồ ăn">
+            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" name="allFood" value="Nước">
+            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" name="allFood" value="Bia">
+            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" name="allFood" value="Rượu">
           </div>
         </div>
-
         <div class="row box-cotainer">
   
         </div>
@@ -152,9 +151,9 @@ input[type="button"] {
     width: 3.2rem;
     border-top: 5px solid #27ae60;
     border-bottom: 5px solid #27ae60;
-    border-radius: 5px;
+    border-radius: 8px;
     top: 15%;
-    left: 1rem;
+    left: 0.7rem;
     font-size: 1.8rem;
     background-color: #27ae60;
     color: white;
@@ -178,9 +177,6 @@ input[type="button"] {
 .menu {
   padding: 2rem 9%;
   .menu-tabs {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
     margin-bottom: 30px;
     flex: 0 0 100%;
     max-width: 100%;

@@ -7,7 +7,7 @@ const userModel = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-class Auth {
+class userController {
   // [POST] /login
   async login(req, res, next) {
     console.log('cookie: ' + req.headers.cookie);
@@ -133,12 +133,13 @@ class Auth {
     });
   }
 
-  // /admin/users
+  // [GET] /admin/users
   async getAllUsers(req, res, next) { }
 
-  //admin/user/:id
+  // [GET] /admin/user/:id
   async getUserDetails(req, res, next) { }
 
+  // {DELETE} /admin/user/:id
   async deleteUser(req, res, next) { }
 
   // [GET] /login
@@ -153,5 +154,4 @@ class Auth {
   }
 }
 
-const authController = new Auth();
-module.exports = authController;
+module.exports = new userController();

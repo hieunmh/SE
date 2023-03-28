@@ -1,14 +1,14 @@
 // import productRouter from './productRoute';
 // import userRouter from './userRoute';
 
-const authRouter = require('./authRoute');
+const userRoute = require('./userRoute');
 const productRouter = require('./productRoute');
 const paymentRouter = require('./paymentRoute');
 const orderRouter = require('./orderRoute');
 
 function routesInit(app) {
   app.use('/', productRouter);
-  app.use('/', authRouter);
+  app.use('/', userRoute);
   app.use('/', paymentRouter);
   app.use('/', orderRouter);
 }

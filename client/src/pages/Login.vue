@@ -48,8 +48,9 @@ export default {
 
     async login() {
       let data = await axios.post('/login', this.loginForm);
-      // this.matchUser = data.data;
-      // console.log(data);
+      let err = data.data.msg;
+      this.errors.push(err);
+      this.setUser(data.data.userName.name);
     },  
 
     async handleSubmit(event) { 
@@ -73,8 +74,6 @@ export default {
       else {
         event.preventDefault();
         await this.login();
-
-        this.setUser(this.loginForm.email);
 
         // ìf (match user không giống trong data thì làm gì)
         this.$router.push('/');

@@ -2,6 +2,7 @@
 // import dotenv from 'dotenv';
 const mysql = require('mysql2');
 const dotenv = require('dotenv');
+const { get } = require('../routes/userRoute');
 dotenv.config();
 
 // Connect to database
