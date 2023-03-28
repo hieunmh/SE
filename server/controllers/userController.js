@@ -9,18 +9,13 @@ class userController {
   // [GET] /info
   getInfo(req, res, next) {
     // check whether or not login
-    if (req.session.authorized) {
-      console.log(req.session);
-      return res.status(200).send(`Hello ${req.session.userId}`);
-    }
-    res.status(401).json({
-      msg: 'You need to log in first',
-    });
+    console.log(req.session);
+    return res.status(200).send(`Hello ${req.session.userId}`);
   }
 
   // [GET] /login
   getLoginPage(req, res, next) {
-    if (req.session.authorized) {
+    if (req.session.userId) {
       return res.status(200).json({
         msg: 'Already logged in',
         redirect: '/info',
@@ -36,7 +31,7 @@ class userController {
       try {
         const hashedPwd = await bcrypt.hash(password, saltRounds);
         const findUser = await userModel.findOne({
-          attributes: ['id', 'password', 'name'],
+          attributes: ['id', 'password', 'name', 'role'],
           where: {
             email,
           },
@@ -51,12 +46,15 @@ class userController {
           if (checkPassword) {
             // attach session id to user
             req.session.userId = findUser.id;
-            req.session.authorized = true;
-            console.log(req.sessionID);
+            req.session.role = findUser.role;
+            // DEBUG
+            console.log(req.headers.cookie);
+
             return res.status(200).json({
               msg: 'login was successful',
               redirect: '/info',
               userName: findUser.name,
+              cookie: req.headers.cookie,
             });
             
           } else {
@@ -128,7 +126,7 @@ class userController {
 
           if (result.affectedRows > 0) {
             req.session.userId = result.insertId;
-            req.session.authorized = true;
+            req.session.role = '0'; // default user
 
             return res.status(201).json({
               msg: 'Register Account Success',
@@ -145,6 +143,12 @@ class userController {
     } catch (error) {
       next(error);
     }
+  }
+
+  // [POST] /updateInfo  : update name, telephone
+  async updateUserInfo(req, res, next) {
+    const {name, telephone} = req.body;
+
   }
 }
 

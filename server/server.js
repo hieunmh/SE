@@ -31,7 +31,11 @@ app.use(
   }),
 );
 
-app.use(cors());
+
+app.use(cors({
+  origin: "http://192.168.0.101:8080", // thay doi theo url cua Network client
+  credentials: true
+}));
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());

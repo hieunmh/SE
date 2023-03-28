@@ -47,7 +47,7 @@ export default {
     ...mapMutations(['scrollToTop', 'setUser']),
 
     async login() {
-      let data = await axios.post('/login', this.loginForm);
+      let data = await axios.post('/login', this.loginForm, {withCredentials: true});
       let err = data.data.msg;
       this.errors.push(err);
       this.setUser(data.data.userName.name);
