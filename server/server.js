@@ -1,9 +1,3 @@
-// import express from 'express';
-// import morgan from 'morgan';
-// import cors from 'cors';
-// import routesInit from './routes/indexRoute';
-// import session from 'express-session';
-
 const express = require('express');
 // Cross Origin Resource Sharing
 const cors = require('cors');
@@ -12,19 +6,37 @@ const bodyParser = require('body-parser');
 const routesInit = require('./routes/indexRoute');
 const path = require('path');
 
+//temporary: save session into folder session
+const fileStore = require("session-file-store")(session);
+
+
 // init app
 const app = express();
 
 // Middleware
+const staticFolder = path.join(__dirname, 'public');
+app.use('/static', express.static(staticFolder));
+
 app.use(
   session({
-    secret: 'thisisoursecret',
-    resave: true,
-    saveUninitialized: true,
+    name: process.env.SES_NAME,
+    cookie: {
+      maxAge: 1000 * 60 * 60,
+      sameSite: true,
+      // secure: process.env.NODE_ENV, 
+    },
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.SES_SECRET,
+    store: new fileStore()
   }),
 );
 
-app.use(cors());
+
+app.use(cors({
+  origin: "http://192.168.0.101:8080", // thay doi theo url cua Network client
+  credentials: true
+}));
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());

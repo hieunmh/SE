@@ -20,10 +20,15 @@ class ProductModel extends Model {
       name,
       desc,
       image,
+      name,
+      desc,
+      image,
     });
     if (result.affectedRows) {
       console.log('add success');
+      console.log('add success');
     } else {
+      console.log('add fail');
       console.log('add fail');
     }
     return result;
@@ -31,11 +36,15 @@ class ProductModel extends Model {
 
   async updateProduct(params) {
     const name = mysql.escape(params.name);
+    const name = mysql.escape(params.name);
     const IDProduct = mysql.escape(params.IDProduct);
+    const desc = mysql.escape(params.desc);
     const desc = mysql.escape(params.desc);
 
     const result = await query(
       `UPDATE ${this.tableName}\
+        SET name = IF(${name} IS NULL, name, ${name}),\
+            desc = IF(${desc} IS NULL, desc, ${desc})\
         SET name = IF(${name} IS NULL, name, ${name}),\
             desc = IF(${desc} IS NULL, desc, ${desc})\
       WHERE id = ${IDProduct}`,
