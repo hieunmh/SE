@@ -8,6 +8,12 @@ const path = require('path');
 //temporary: save session into folder session
 const fileStore = require("session-file-store")(session);
 
+//database
+const db = require('./models');
+(async () => {
+  await db.sequelize.sync();
+})();
+
 
 // init app
 const app = express();
@@ -33,7 +39,7 @@ app.use(
 
 
 app.use(cors({
-  origin: "http://192.168.0.101:8080", // thay doi theo url cua Network client
+  origin: "http://localhost:8080", // thay doi theo url cua Network client
   credentials: true
 }));
 
@@ -58,9 +64,6 @@ app.use(function (err, req, res, next) {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
-
-
-
 
 // Listen on pc port
 const PORT = process.env.PORT || 5000;

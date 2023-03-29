@@ -13,6 +13,7 @@ class UserModel extends Model {
   }
 
   async registerAccount(params) {
+    console.log("regist");
     const { email, password, name, telephone } = params;
     // default role = 0 =>  user
     const sql = `INSERT INTO ${this.tableName} (email, password, name, telephone, role)\

@@ -1,7 +1,7 @@
 const path = require('path');
-const userModel = require('../models/userModel');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
+const { models: { User } } = require('../models');
 
 // bcrypt
 const saltRounds = 10;
@@ -30,7 +30,7 @@ class userController {
     if (email && password) {
       try {
         const hashedPwd = await bcrypt.hash(password, saltRounds);
-        const findUser = await userModel.findOne({
+        const findUser = await User.findOne({
           attributes: ['id', 'password', 'name', 'role'],
           where: {
             email,
@@ -105,35 +105,31 @@ class userController {
           msg: 'Please fill email, password, name',
         });
       } else {
-        const check_email_Exist = await userModel.checkExistence({
-          where: {
-            email,
-          },
-        });
+        const check_email_Exist = await User.findOne({ where: { email } });
         if (!check_email_Exist) {
           //Encrypt password with bcrypt
           const hashedPwd = await bcrypt.hash(password, saltRounds);
           if (!hashedPwd) {
             throw new Error('Error hashing pw');
           }
-
-          const result = await userModel.registerAccount({
+          await User.create({
             email,
             password: hashedPwd,
             name,
             telephone,
-          });
-
-          if (result.affectedRows > 0) {
-            req.session.userId = result.insertId;
+          }).then((data) => {
+            console.log(data.null); // user id 
+            req.session.userId = data.null;
             req.session.role = '0'; // default user
-
             return res.status(201).json({
               msg: 'Register Account Success',
               email: email,
               name: name
             });
-          }
+          }).catch((err) => {
+
+          });
+
         } else {
           res.status(400).json({
             msg: 'email have existed',
