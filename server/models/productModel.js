@@ -14,29 +14,30 @@ class ProductModel extends Model {
   }
 
   async insertProduct(params) {
-    const { title, contents } = params;
+    const { name, desc, image } = params;
 
     const result = await query(`INSERT INTO ${this.tableName} SET ?`, {
-      title,
-      contents,
+      name,
+      desc,
+      image,
     });
     if (result.affectedRows) {
-      console.log('delete success');
+      console.log('add success');
     } else {
-      console.log('delete fail');
+      console.log('add fail');
     }
     return result;
   }
 
   async updateProduct(params) {
-    const title = mysql.escape(params.title);
+    const name = mysql.escape(params.name);
     const IDProduct = mysql.escape(params.IDProduct);
-    const contents = mysql.escape(params.contents);
+    const desc = mysql.escape(params.desc);
 
     const result = await query(
       `UPDATE ${this.tableName}\
-        SET title = IF(${title} IS NULL, title, ${title}),\
-            contents = IF(${contents} IS NULL, contents, ${contents})\
+        SET name = IF(${name} IS NULL, name, ${name}),\
+            desc = IF(${desc} IS NULL, desc, ${desc})\
       WHERE id = ${IDProduct}`,
     );
     return result;
