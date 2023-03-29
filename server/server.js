@@ -20,7 +20,7 @@ app.use(
   session({
     name: process.env.SES_NAME,
     cookie: {
-      maxAge: 1000* 60 * 60,
+      maxAge: 1000 * 60 * 60,
       sameSite: true,
       // secure: process.env.NODE_ENV, 
     },

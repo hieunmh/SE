@@ -56,7 +56,7 @@ class userController {
               userName: findUser.name,
               cookie: req.headers.cookie,
             });
-            
+
           } else {
             return res.status(200).json({
               msg: 'Sai email hoặc mật khẩu',
@@ -67,7 +67,7 @@ class userController {
             msg: 'Sai email hoặc mật khẩu',
           })
         }
-   
+
       } catch (error) {
         next(error);
       }
@@ -84,7 +84,7 @@ class userController {
       if (err) {
         return res.json({
           msg: "Error: Destroy session",
-          redirect : '/home'
+          redirect: '/home'
         })
       }
     }); // destroy session
@@ -147,7 +147,7 @@ class userController {
 
   // [POST] /updateInfo  : update name, telephone
   async updateUserInfo(req, res, next) {
-    const {name, telephone} = req.body;
+    const { name, telephone } = req.body;
 
   }
 }
