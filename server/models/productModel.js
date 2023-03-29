@@ -36,9 +36,7 @@ class ProductModel extends Model {
 
   async updateProduct(params) {
     const name = mysql.escape(params.name);
-    const name = mysql.escape(params.name);
     const IDProduct = mysql.escape(params.IDProduct);
-    const desc = mysql.escape(params.desc);
     const desc = mysql.escape(params.desc);
 
     const result = await query(

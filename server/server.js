@@ -1,5 +1,4 @@
 const express = require('express');
-// Cross Origin Resource Sharing
 const cors = require('cors');
 const session = require('express-session');
 const bodyParser = require('body-parser');
@@ -59,6 +58,9 @@ app.use(function (err, req, res, next) {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
+
+
+
 
 // Listen on pc port
 const PORT = process.env.PORT || 5000;

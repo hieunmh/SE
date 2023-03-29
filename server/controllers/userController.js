@@ -80,7 +80,16 @@ class userController {
 
   // [POST] /logout
   async logout(req, res, next) {
-    req.session.destroy(); // destroy session
+    req.session.destroy(err => {
+      if (err) {
+        return res.json({
+          msg: "Error: Destroy session",
+          redirect: '/home'
+        })
+      }
+    }); // destroy session
+
+    res.clearCookie('sid');
     return res.status(200).json({
       msg: 'Logout successful',
       redirect: '/login',
@@ -134,6 +143,12 @@ class userController {
     } catch (error) {
       next(error);
     }
+  }
+
+  // [POST] /updateInfo  : update name, telephone
+  async updateUserInfo(req, res, next) {
+    const { name, telephone } = req.body;
+
   }
 }
 
