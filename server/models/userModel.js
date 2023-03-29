@@ -19,8 +19,6 @@ class UserModel extends Model {
                   VALUES ('${email}', '${password}', '${name}', '${telephone}', 0)`;
     return await query(sql);
   }
-
-
 }
 
 module.exports = new UserModel(TABLES.CUSTOMER);

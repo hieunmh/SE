@@ -1,27 +1,15 @@
+
 const express = require('express');
+const userController = require('../controllers/userController');
+const { isAdmin, isAuth, isAlreadyLogin } = require('../middleware/authenticate');
+
 const router = express.Router();
 
-const userController = require('../controllers/userController');
-//const { loginCheck, isAuth, isAdmin } = require("../middleware/auth");
+router.get('/info', isAuth, userController.getInfo);
+router.get('/login', isAlreadyLogin, userController.getLoginPage);
+router.post('/login', isAlreadyLogin, userController.login);
+router.post('/logout', isAuth, userController.logout);
+router.post('/register', isAlreadyLogin, userController.register);
 
-router.post('/register', userController.register);
-router.post('/login', userController.login);
-
-router.post('/password/forgot', userController.forgotPassword);
-router.put('/password/reset/:token', userController.resetPassword);
-
-router.post('/logout', userController.logout);
-
-router.get('/me', userController.getUserProfile);
-router.put('/password/update', userController.updatePassword);
-router.put('/me/update', userController.updateProfile);
-
-router.get('/admin/users', userController.getAllUsers);
-router.route('/admin/user/:id')
-  .get(userController.getUserDetails)
-  .delete(userController.deleteUser);
-
-
-//router.post("/user", loginCheck, isAuth, isAdmin, userController.allUser);
-
+// export default router;
 module.exports = router;

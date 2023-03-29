@@ -3,27 +3,6 @@
 const productModel = require('../models/productModel');
 
 class productController {
-  // [POST] /admin/product/add
-  async addProduct(req, res, next) {
-    const { title, contents } = req.body;
-    if (!title || !contents) {
-      return res.status(400).json({ message: 'All filled must be required' });
-    }
-    try {
-      const result = await productModel.insertProduct({
-        title: title,
-        contents: contents,
-      });
-      return res.status(200).send(result);
-    } catch (error) {
-      console.log('Cant add product!');
-      next(error);
-    }
-  }
-
-  // [GET] /products?keyword=....
-  async getProducts(req, res, next) { }
-
   // [GET] /products
   async getAllProducts(req, res, next) {
     try {
@@ -35,8 +14,8 @@ class productController {
     }
   }
 
-  // [GET] /product/:id
-  async getSingleProduct(req, res, next) {
+  // [GET] /products/:id
+  async getProduct(req, res, next) {
     const id = req.params.id;
     try {
       const result = await productModel.findOne({
@@ -56,7 +35,25 @@ class productController {
     }
   }
 
-  // [PUT] /admin/product/:id
+  // [POST] /products/add
+  async addProduct(req, res, next) {
+    const { title, contents } = req.body;
+    if (!title || !contents) {
+      return res.status(400).json({ message: 'fill all attributes' });
+    }
+    try {
+      const result = await productModel.insertProduct({
+        title: title,
+        contents: contents,
+      });
+      return res.status(200).send(result);
+    } catch (error) {
+      console.log('Cant add product!');
+      next(error);
+    }
+  }
+
+  // [PUT] /products/:id/modify
   async modifyProduct(req, res, next) {
     const IDProduct = req.params.id;
     const { title, contents } = req.body;
@@ -89,7 +86,7 @@ class productController {
     }
   }
 
-  // [DELETE] /admin/product/:id
+  // [DELETE] /products/:id/delete
   async deleteProduct(req, res, next) {
     const IDProduct = req.params.id;
     try {
@@ -111,10 +108,6 @@ class productController {
       next(error);
     }
   }
-
-  // Create new review
-  // Get product reviews
-  // Delete product reviews
 }
 
 // export default new productController();

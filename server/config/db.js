@@ -2,7 +2,6 @@
 // import dotenv from 'dotenv';
 const mysql = require('mysql2');
 const dotenv = require('dotenv');
-const { get } = require('../routes/userRoute');
 dotenv.config();
 
 // Connect to database
@@ -15,7 +14,7 @@ const pool = mysql
   })
   .promise();
 
-console.log('Connect to MYSQL success');
+  console.log('Connect to MYSQL success');
 // Test function
 async function query(sql, params) {
   const [rows] = await pool.query(sql, params);

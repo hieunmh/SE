@@ -1,50 +1,73 @@
-// import path from 'path';
-// import userModel from '../models/userModel';
 const path = require('path');
 const userModel = require('../models/userModel');
+const bcrypt = require('bcrypt');
+const session = require('express-session');
 
 // bcrypt
-const bcrypt = require('bcrypt');
 const saltRounds = 10;
-
 class userController {
+  // [GET] /info
+  getInfo(req, res, next) {
+    // check whether or not login
+    console.log(req.session);
+    return res.status(200).send(`Hello ${req.session.userId}`);
+  }
+
+  // [GET] /login
+  getLoginPage(req, res, next) {
+    if (req.session.userId) {
+      return res.status(200).json({
+        msg: 'Already logged in',
+        redirect: '/info',
+      });
+    }
+    return res.send('Hello, Please fill login form');
+  }
+
   // [POST] /login
   async login(req, res, next) {
-    console.log('cookie: ' + req.headers.cookie);
     const { email, password } = req.body;
     if (email && password) {
       try {
         const hashedPwd = await bcrypt.hash(password, saltRounds);
-        const userPassword = await userModel.findOne({
-          attributes: ['password'],
+        const findUser = await userModel.findOne({
+          attributes: ['id', 'password', 'name', 'role'],
           where: {
             email,
           },
         });
+        console.log(findUser);
 
-        if (userPassword) {
+        if (findUser) {
           const checkPassword = await bcrypt.compareSync(
             password,
-            userPassword.password,
+            findUser.password,
           );
           if (checkPassword) {
             // attach session id to user
-            req.session.user = email;
-            req.session.authorized = true;
+            req.session.userId = findUser.id;
+            req.session.role = findUser.role;
+            // DEBUG
+            console.log(req.headers.cookie);
+
             return res.status(200).json({
               msg: 'login was successful',
               redirect: '/info',
+              userName: findUser.name,
+              cookie: req.headers.cookie,
             });
+
           } else {
-            return res.status(401).json({
-              msg: 'wrong email or password',
+            return res.status(200).json({
+              msg: 'Sai email hoặc mật khẩu',
             });
           }
         } else {
-          return res.status(401).json({
-            msg: 'wrong email or password',
-          });
+          return res.status(200).json({
+            msg: 'Sai email hoặc mật khẩu',
+          })
         }
+
       } catch (error) {
         next(error);
       }
@@ -53,6 +76,24 @@ class userController {
         msg: 'Please fill all ',
       });
     }
+  }
+
+  // [POST] /logout
+  async logout(req, res, next) {
+    req.session.destroy(err => {
+      if (err) {
+        return res.json({
+          msg: "Error: Destroy session",
+          redirect: '/home'
+        })
+      }
+    }); // destroy session
+
+    res.clearCookie('sid');
+    return res.status(200).json({
+      msg: 'Logout successful',
+      redirect: '/login',
+    });
   }
 
   // [POST] /register
@@ -83,10 +124,14 @@ class userController {
             telephone,
           });
 
-          if (result) {
+          if (result.affectedRows > 0) {
+            req.session.userId = result.insertId;
+            req.session.role = '0'; // default user
+
             return res.status(201).json({
               msg: 'Register Account Success',
               email: email,
+              name: name
             });
           }
         } else {
@@ -100,58 +145,12 @@ class userController {
     }
   }
 
-  // [POST] /password/forgot
-  async forgotPassword(req, res, next) { }
+  // [POST] /updateInfo  : update name, telephone
+  async updateUserInfo(req, res, next) {
+    const { name, telephone } = req.body;
 
-  // [PUT] /password/reset/:token
-  async resetPassword(req, res, next) { }
-
-  // [GET] /me
-  async getUserProfile(req, res, next) {
-    // check whether or not login
-    if (req.session.authorized) {
-      console.log(req.session);
-      return res.status(200).send(`Hello ${req.session.user}`);
-    }
-    res.status(401).json({
-      msg: 'You need to log in first',
-    });
-  }
-
-  // [PUT] /password/update
-  async updatePassword(req, res, next) { }
-
-  // [PUT] /me/update
-  async updateProfile(req, res, next) { }
-
-  // [POST] /logout
-  async logout(req, res, next) {
-    req.session.destroy(); // destroy session
-    return res.status(200).json({
-      msg: 'Logout successful',
-      redirect: '/login',
-    });
-  }
-
-  // [GET] /admin/users
-  async getAllUsers(req, res, next) { }
-
-  // [GET] /admin/user/:id
-  async getUserDetails(req, res, next) { }
-
-  // {DELETE} /admin/user/:id
-  async deleteUser(req, res, next) { }
-
-  // [GET] /login
-  getLoginPage(req, res, next) {
-    if (req.session.authorized) {
-      return res.status(200).json({
-        msg: 'Already logged in',
-        redirect: '/info',
-      });
-    }
-    return res.send('Hello, Please fill login form');
   }
 }
 
+// export default new userController();
 module.exports = new userController();
