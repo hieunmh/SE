@@ -12,7 +12,7 @@ const db = {};
 db.sequelize = sequelize;
 db.models = {};
 db.models.User = require('./user')(sequelize, Sequelize.DataTypes);
-db.models.User = require('./product')(sequelize, Sequelize.DataTypes);
+db.models.Product = require('./product')(sequelize, Sequelize.DataTypes);
 
 
 module.exports = db;
