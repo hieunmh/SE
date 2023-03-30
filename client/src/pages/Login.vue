@@ -43,14 +43,20 @@ export default {
       errors: []
     }
   },  
+  mounted() {
+    this.checkLogin();
+  },
   methods: {
     ...mapMutations(['scrollToTop', 'setUser']),
+     async checkLogin() {
+      let cookie = window.localStorage.getItem('cookie');
+    },
 
     async login() {
       let data = await axios.post('/login', this.loginForm, {withCredentials: true});
       let err = data.data.msg;
       this.errors.push(err);
-      this.setUser(data.data.userName.name);
+      this.setUser(data.data.userName);
     },  
 
     async handleSubmit(event) { 

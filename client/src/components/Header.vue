@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapMutations, mapState } from 'vuex';
 export default {
 	name: 'Header',
@@ -48,7 +49,9 @@ export default {
 			nav_bar.classList.remove('active');
 			window.scrollTo(0, 0);
 		},
-		handleLogout() {
+		async handleLogout() {
+			let data = await axios.get('/login', {withCredentials: true});
+			await axios.post('/logout', data, {withCredentials: true});
 			this.setUser("");
 		}
 

@@ -71,7 +71,7 @@ import { mapMutations } from 'vuex';
       ...mapMutations(['scrollToTop', 'setUser']),
 
       async register() {
-        let data = await axios.post('/register', this.registerForm);
+        let data = await axios.post('/register', this.registerForm, {withCredentials: true});
         this.setUser(data.data.name);
       },
 
