@@ -33,7 +33,7 @@ app.use(
 
 
 app.use(cors({
-  origin: "http://192.168.0.101:8080", // thay doi theo url cua Network client
+  origin: "http://localhost:8080", // thay doi theo url cua Network client
   credentials: true
 }));
 
