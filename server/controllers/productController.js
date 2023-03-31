@@ -1,12 +1,12 @@
 // import path from 'path';
 // import productModel from '../models/productModel';
-const productModel = require('../models/productModel');
+const { models: { Product } } = require('../models');
 
 class productController {
   // [GET] /products
   async getAllProducts(req, res, next) {
     try {
-      const result = await productModel.findAll();
+      const result = await Product.findAll();
       return res.status(200).send(result);
     } catch (error) {
       console.log("can't render all products");
@@ -18,7 +18,7 @@ class productController {
   async getProduct(req, res, next) {
     const id = req.params.id;
     try {
-      const result = await productModel.findOne({
+      const result = await Product.findOne({
         where: {
           id,
         },
@@ -42,7 +42,7 @@ class productController {
       return res.status(400).json({ message: 'fill all attributes' });
     }
     try {
-      const result = await productModel.insertProduct({
+      const result = await Product.findOrCreate({
         title: title,
         contents: contents,
       });
@@ -64,7 +64,7 @@ class productController {
 
     try {
       // check whether product exist or not
-      const checkIdExist = await productModel.checkExistence({
+      const checkIdExist = await Product.findOne({
         where: {
           id: IDProduct,
         },
@@ -73,11 +73,12 @@ class productController {
       if (!checkIdExist) {
         return res.status(404).json({ message: 'Cant detect product! ' });
       } else {
-        const result = productModel.updateProduct({
-          IDProduct,
-          title,
-          contents,
-        });
+        const result = Product.update({ title, contents }, {
+          where: {
+            id: IDProduct
+          }
+        }
+        );
         return res.status(200).send('Modify product: Success!');
       }
     } catch (error) {
@@ -91,7 +92,7 @@ class productController {
     const IDProduct = req.params.id;
     try {
       // check whether product exist or not
-      const checkIdExist = await productModel.checkExistence({
+      const checkIdExist = await Product.findOne({
         where: {
           id: IDProduct,
         },
@@ -100,7 +101,7 @@ class productController {
       if (!checkIdExist) {
         return res.status(404).json({ message: 'Cant detect product! ' });
       } else {
-        const result = productModel.deleteProduct(IDProduct);
+        const result = Product.destroy({ where: { id: IDProduct } });
         return res.status(200).send(result);
       }
     } catch (error) {
