@@ -7,10 +7,20 @@ const session = require('express-session');
 const saltRounds = 10;
 class userController {
   // [GET] /info
-  getInfo(req, res, next) {
+  async getInfo(req, res, next) {
     // check whether or not login
     console.log(req.session);
-    return res.status(200).send(`Hello ${req.session.userId}`);
+    let id = req.session.userId;
+    const findUser = await userModel.findOne({
+      attributes: ['name', 'role'],
+      where: {
+        id,
+      },
+    });
+    // return res.status(200).send(`Hello ${req.session.userId}`);
+    return res.status(200).json({
+      userName: findUser.name
+    })
   }
 
   // [GET] /login
@@ -19,6 +29,7 @@ class userController {
       return res.status(200).json({
         msg: 'Already logged in',
         redirect: '/info',
+        cookie: res.headers.cookie
       });
     }
     return res.send('Hello, Please fill login form');

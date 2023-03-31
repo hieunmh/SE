@@ -43,14 +43,9 @@ export default {
       errors: []
     }
   },  
-  mounted() {
-    this.checkLogin();
-  },
+  
   methods: {
     ...mapMutations(['scrollToTop', 'setUser']),
-     async checkLogin() {
-      let cookie = window.localStorage.getItem('cookie');
-    },
 
     async login() {
       let data = await axios.post('/login', this.loginForm, {withCredentials: true});
