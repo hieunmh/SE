@@ -1,6 +1,11 @@
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
+  class User extends Model {
+    // custom method
 
-  const User = sequelize.define('customer',
+  }
+
+  User.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -9,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       email: {
         type: DataTypes.STRING(100),
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
       password: {
         type: DataTypes.TEXT,
@@ -29,10 +35,9 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     {
-      freezeTableName: true,
+      sequelize,
+      modelName: 'users',
       timestamps: false
     });
-
   return User;
-
 };

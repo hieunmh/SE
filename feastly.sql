@@ -27,7 +27,7 @@ CREATE TABLE discount (
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
-CREATE TABLE product (
+CREATE TABLE products (
     id INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL,
     `desc` TEXT NOT NULL,
@@ -56,14 +56,15 @@ CREATE TABLE product (
         ON UPDATE SET NULL
 ) ENGINE=InnoDB;
 
-CREATE TABLE customer (
+CREATE TABLE users (
     id INT NOT NULL AUTO_INCREMENT,
     email VARCHAR(100) NOT NULL,
     password TEXT NOT NULL,
     name VARCHAR(30) NOT NULL,
     telephone VARCHAR(10) NOT NULL,
     role BOOLEAN NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    UNIQUE (email)
 ) ENGINE=InnoDB;
 
 CREATE TABLE payment_details (
@@ -78,14 +79,14 @@ CREATE TABLE payment_details (
 
 CREATE TABLE order_details (
     id INT NOT NULL AUTO_INCREMENT,
-    customer_id INT DEFAULT '0',
+    user_id INT DEFAULT '0',
     total DECIMAL(2) NOT NULL, 
     payment_id INT DEFAULT '0',
     created_at TIMESTAMP NOT NULL,
     PRIMARY KEY (`id`),
-    CONSTRAINT `fk_customer_details`
-        FOREIGN KEY (`customer_id`)
-        REFERENCES customer (`id`)
+    CONSTRAINT `fk_user_details`
+        FOREIGN KEY (`user_id`)
+        REFERENCES users (`id`)
         ON DELETE SET NULL
         ON UPDATE SET NULL,
     CONSTRAINT `fk_orde_pade`
@@ -109,20 +110,20 @@ CREATE TABLE order_items (
         ON UPDATE SET NULL,
     CONSTRAINT `fk_prod_orderitem`
         FOREIGN KEY (`product_id`)
-        REFERENCES product (`id`)
+        REFERENCES products (`id`)
         ON DELETE SET NULL
         ON UPDATE SET NULL
 ) ENGINE=InnoDB;
 
 CREATE TABLE shopping_session (
     id INT NOT NULL AUTO_INCREMENT,
-    customer_id INT DEFAULT '0',
+    user_id INT DEFAULT '0',
     total DECIMAL(2) NOT NULL,
     created_at TIMESTAMP NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT `fk_customer_shse`
-        FOREIGN KEY (`customer_id`)
-        REFERENCES customer (`id`)
+    CONSTRAINT `fk_user_shse`
+        FOREIGN KEY (`user_id`)
+        REFERENCES users (`id`)
         ON DELETE SET NULL
         ON UPDATE SET NULL
 );
@@ -136,7 +137,7 @@ CREATE TABLE cart_item (
     PRIMARY KEY (id),
     CONSTRAINT `fk_prod_cait`
         FOREIGN KEY (`product_id`)
-        REFERENCES product (`id`)
+        REFERENCES products (`id`)
         ON DELETE SET NULL
         ON UPDATE SET NULL,
     CONSTRAINT `fk_prod_shse`
@@ -146,31 +147,31 @@ CREATE TABLE cart_item (
         ON UPDATE SET NULL
 );
 
-CREATE TABLE customer_address (
+CREATE TABLE user_address (
     id INT NOT NULL AUTO_INCREMENT,
-    customer_id INT DEFAULT '0', 
+    user_id INT DEFAULT '0', 
     city VARCHAR(100) NOT NULL,
     country VARCHAR(100) NOT NULL,
     telephone VARCHAR(10) NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT `fk_customer_usad`
-        FOREIGN KEY (`customer_id`)
-        REFERENCES customer (`id`)
+    CONSTRAINT `fk_user_usad`
+        FOREIGN KEY (`user_id`)
+        REFERENCES users (`id`)
         ON DELETE SET NULL 
         ON UPDATE SET NULL
 );
 
-CREATE TABLE customer_payment (
+CREATE TABLE user_payment (
     id INT NOT NULL AUTO_INCREMENT,
-    customer_id INT DEFAULT '0', 
+    user_id INT DEFAULT '0', 
     payment_type VARCHAR(100) NOT NULL,
     provider VARCHAR(100) NOT NULL,
     account_no INT NOT NULL,
     expiry DATE NOT NULL,
     PRIMARY KEY (id),
-    CONSTRAINT `fk_customer_uspa`
-        FOREIGN KEY (`customer_id`)
-        REFERENCES customer (`id`)
+    CONSTRAINT `fk_user_uspa`
+        FOREIGN KEY (`user_id`)
+        REFERENCES users (`id`)
         ON DELETE SET NULL
         ON UPDATE SET NULL
 );  
