@@ -72,7 +72,14 @@ import { mapMutations } from 'vuex';
 
       async register() {
         let data = await axios.post('/register', this.registerForm, {withCredentials: true});
-        this.setUser(data.data.name);
+        let err = data.data.msg;
+        if (err === 'Email đã tồn tại') {
+          this.errorObj.emailErr.push(err);
+        }
+        else {
+          this.setUser(data.data.name);
+          this.$router.push('/');
+        }
       },
 
       resetCheckErr() {
@@ -156,7 +163,7 @@ import { mapMutations } from 'vuex';
         else {
           event.preventDefault();
           this.register();
-          this.$router.push('/');
+
         }
       }
     }
