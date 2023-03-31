@@ -146,8 +146,8 @@ class userController {
             });
           }
         } else {
-          res.status(400).json({
-            msg: 'email have existed',
+          res.status(200).json({
+            msg: 'Email đã tồn tại',
           });
         }
       }
