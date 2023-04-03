@@ -11,7 +11,7 @@ class userController {
     // check whether or not login
     console.log(req.session);
     let id = req.session.userId;
-    const findUser = await userModel.findOne({
+    const findUser = await User.findOne({
       attributes: ['name', 'role', 'email', 'telephone'],
       where: {
         id,
