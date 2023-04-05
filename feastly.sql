@@ -10,13 +10,6 @@ CREATE TABLE product_category (
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
-CREATE TABLE product_inventory (
-    id INT NOT NULL AUTO_INCREMENT,
-    quantity INT DEFAULT '0' NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    PRIMARY KEY (`id`)
-) ENGINE=InnoDB;
-
 CREATE TABLE discount (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
@@ -32,21 +25,16 @@ CREATE TABLE products (
     `name` VARCHAR(100) NOT NULL,
     `desc` TEXT NOT NULL,
     `category_id` INT,
-    inventory_id INT,
     `price` DECIMAL(10, 2) NOT NULL,
     `discount_id` INT,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     sold_number INT DEFAULT '0' NOT NULL,
+    quantity INT DEFAULT '0' NOT NULL,
     image VARCHAR(150),
     PRIMARY KEY (`id`),
     CONSTRAINT `fk_prod_discount`
         FOREIGN KEY (`discount_id`)
         REFERENCES discount (`id`)
-        ON DELETE SET NULL
-        ON UPDATE SET NULL,
-    CONSTRAINT `fk_prod_inventory`
-        FOREIGN KEY (`inventory_id`)
-        REFERENCES product_inventory (`id`)
         ON DELETE SET NULL
         ON UPDATE SET NULL,
     CONSTRAINT `fk_prod_category`
@@ -180,5 +168,4 @@ CREATE TABLE user_payment (
 
 -- data
 INSERT INTO `feastly`.`product_category` (`id`, `name`) VALUES ('1', 'Cơm');
-INSERT INTO `feastly`.`product_inventory` (`id`, `quantity`) VALUES ('1', '50');
 INSERT INTO `feastly`.`discount` (`id`, `name`, `description`, `discount_percent`) VALUES ('1', 'NONE', 'DEO GIAM', '0');
