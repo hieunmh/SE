@@ -8,6 +8,13 @@ const path = require('path');
 //temporary: save session into folder session
 const fileStore = require("session-file-store")(session);
 
+//database
+const db = require('./models');
+(async () => {
+  await db.sequelize.sync();
+  // await db.sequelize.sync({ alter: true });
+})();
+
 
 // init app
 const app = express();
@@ -58,9 +65,6 @@ app.use(function (err, req, res, next) {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
-
-
-
 
 // Listen on pc port
 const PORT = process.env.PORT || 5000;
