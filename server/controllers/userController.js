@@ -1,7 +1,7 @@
 const path = require('path');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
-const { models: { User } } = require('../models');
+const { models: { User } } = require('../models/');
 
 // bcrypt
 const saltRounds = 10;
@@ -32,11 +32,8 @@ class userController {
         const hashedPwd = await bcrypt.hash(password, saltRounds);
         const findUser = await User.findOne({
           attributes: ['id', 'password', 'name', 'role'],
-          where: {
-            email,
-          },
+          where: { email, },
         });
-        console.log(findUser);
 
         if (findUser) {
           const checkPassword = await bcrypt.compareSync(
@@ -67,7 +64,6 @@ class userController {
             msg: 'Sai email hoặc mật khẩu',
           })
         }
-
       } catch (error) {
         next(error);
       }
@@ -112,6 +108,7 @@ class userController {
           if (!hashedPwd) {
             throw new Error('Error hashing pw');
           }
+
           await User.create({
             email,
             password: hashedPwd,
@@ -127,7 +124,7 @@ class userController {
               name: name
             });
           }).catch((err) => {
-
+            console.log(err);
           });
 
         } else {
@@ -143,7 +140,13 @@ class userController {
 
   // [POST] /updateInfo  : update name, telephone
   async updateUserInfo(req, res, next) {
-    const { name, telephone } = req.body;
+    const { name, email, telephone } = req.body;
+    await User.update({
+      name, telephone,
+    }, {
+      where: { email }
+    });
+
 
   }
 }

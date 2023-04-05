@@ -1,4 +1,6 @@
 const { Model } = require('sequelize');
+
+
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
 
@@ -9,45 +11,59 @@ module.exports = (sequelize, DataTypes) => {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoincrement: true
+        autoincrement: true,
       },
       name: {
         type: DataTypes.STRING(100),
-        allowNull: false
+        allowNull: false,
       },
       desc: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: false,
       },
       category_id: {
         type: DataTypes.INTEGER,
-        defaultValue: 0
+        references: {
+          model: 'Product_category',
+          key: 'id',
+
+        }
       },
       inventory_id: {
         type: DataTypes.INTEGER,
-        defaultValue: 0
+        references: {
+          model: 'Product_inventory',
+          key: 'id',
+
+        }
       },
       price: {
-        type: DataTypes.DECIMAL(6, 0),
-        allowNull: false
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
       },
       discount_id: {
         type: DataTypes.INTEGER,
-        defaultValue: 0
+        references: {
+          model: 'Discount',
+          key: 'id',
+
+        }
       },
       sold_number: {
         type: DataTypes.INTEGER,
-        defaultValue: 0
+        allowNull: false,
+        defaultValue: 0,
       },
       image: {
-        type: DataTypes.TEXT
+        type: DataTypes.STRING(150),
       }
     },
     {
       sequelize,
       modelName: 'products',
       timestamps: true,
-      updateAt: false
+      updatedAt: false,
+      createdAt: 'created_at',
     });
 
   return Product;

@@ -1,44 +1,41 @@
 const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    // custom method
+  class Discount extends Model {
 
   }
 
-  User.init(
+  Discount.init(
     {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoincrement: true,
       },
-      email: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        unique: true,
-      },
-      password: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
       name: {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
-      telephone: {
-        type: DataTypes.STRING(10),
+      description: {
+        type: DataTypes.TEXT,
         allowNull: false,
       },
-      role: {
+      discount_percent: {
+        type: DataTypes.DECIMAL(4, 2),
+        allowNull: false
+      },
+      active: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        defaultValue: true,
         allowNull: false,
       }
     },
     {
       sequelize,
-      modelName: 'users',
-      timestamps: false,
+      modelName: 'discount',
+      timestamps: true,
+      updatedAt: false,
+      createdAt: 'created_at',
     });
-  return User;
-};
+  return Discount;
+}

@@ -5,15 +5,15 @@ USE feastly;
 CREATE TABLE product_category (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
-    description TEXT NOT NULL,
-    created_at TIMESTAMP NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 CREATE TABLE product_inventory (
     id INT NOT NULL AUTO_INCREMENT,
-    quantity INT NOT NULL,
-    created_at TIMESTAMP NOT NULL,
+    quantity INT DEFAULT '0' NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
@@ -21,9 +21,9 @@ CREATE TABLE discount (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     description TEXT NOT NULL,
-    discount_percent DECIMAL(2) NOT NULL,
-    active BOOLEAN NOT NULL,
-    created_at TIMESTAMP NOT NULL,
+    discount_percent DECIMAL(4, 2) NOT NULL,
+    active BOOLEAN DEFAULT true NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
@@ -31,13 +31,13 @@ CREATE TABLE products (
     id INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL,
     `desc` TEXT NOT NULL,
-    `category_id` INT DEFAULT '0',
-    inventory_id INT DEFAULT '0',
-    `price` DECIMAL(6) NOT NULL,
-    `discount_id` INT DEFAULT '0',
-    `created_at` TIMESTAMP NOT NULL,
-    sold_number INT DEFAULT '0',
-    image VARCHAR(50),
+    `category_id` INT,
+    inventory_id INT,
+    `price` DECIMAL(10, 2) NOT NULL,
+    `discount_id` INT,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    sold_number INT DEFAULT '0' NOT NULL,
+    image VARCHAR(150),
     PRIMARY KEY (`id`),
     CONSTRAINT `fk_prod_discount`
         FOREIGN KEY (`discount_id`)
@@ -67,13 +67,15 @@ CREATE TABLE users (
     UNIQUE (email)
 ) ENGINE=InnoDB;
 
+-- done above 
+
 CREATE TABLE payment_details (
     id INT NOT NULL AUTO_INCREMENT,
-    order_id INT DEFAULT '0',
+    order_id INT,
     amount INT NOT NULL, 
     provider VARCHAR(10) NOT NULL,
     status VARCHAR(10) NOT NULL,
-    created_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -82,7 +84,7 @@ CREATE TABLE order_details (
     user_id INT DEFAULT '0',
     total DECIMAL(2) NOT NULL, 
     payment_id INT DEFAULT '0',
-    created_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (`id`),
     CONSTRAINT `fk_user_details`
         FOREIGN KEY (`user_id`)
@@ -101,7 +103,7 @@ CREATE TABLE order_items (
     order_id INT DEFAULT '0',
     product_id INT DEFAULT '0',
     quantity INT NOT NULL,
-    created_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT `fk_details_items`
         FOREIGN KEY (`order_id`)
@@ -119,7 +121,7 @@ CREATE TABLE shopping_session (
     id INT NOT NULL AUTO_INCREMENT,
     user_id INT DEFAULT '0',
     total DECIMAL(2) NOT NULL,
-    created_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT `fk_user_shse`
         FOREIGN KEY (`user_id`)
@@ -133,7 +135,7 @@ CREATE TABLE cart_item (
     session_id INT DEFAULT '0',
     product_id INT DEFAULT '0',
     quantity INT NOT NULL,
-    created_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT `fk_prod_cait`
         FOREIGN KEY (`product_id`)
@@ -175,3 +177,8 @@ CREATE TABLE user_payment (
         ON DELETE SET NULL
         ON UPDATE SET NULL
 );  
+
+-- data
+INSERT INTO `feastly`.`product_category` (`id`, `name`) VALUES ('1', 'Cơm');
+INSERT INTO `feastly`.`product_inventory` (`id`, `quantity`) VALUES ('1', '50');
+INSERT INTO `feastly`.`discount` (`id`, `name`, `description`, `discount_percent`) VALUES ('1', 'NONE', 'DEO GIAM', '0');

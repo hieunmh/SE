@@ -1,6 +1,6 @@
 // import path from 'path';
 // import productModel from '../models/productModel';
-const { models: { Product } } = require('../models');
+const { models: { Product } } = require('../models/');
 
 class productController {
   // [GET] /products
@@ -43,8 +43,10 @@ class productController {
     }
     try {
       const result = await Product.findOrCreate({
-        title: title,
-        contents: contents,
+        where: {
+          title: title,
+          contents: contents,
+        }
       });
       return res.status(200).send(result);
     } catch (error) {
