@@ -1,28 +1,35 @@
 <template>
-  <div class="editInfo">
-    <div class="editInfo-form">
+  <div class="changePass">
+    <div class="changePass-form">
       <form @submit="handleSubmit" novalidate autocapitalize="off">
-        <h3>Chỉnh sửa thông tin</h3>
+        <h3>Đổi mật khẩu</h3>
 
         <div class="form-group">
-          <input type="text" class="form-control" required="require" v-model="editInfoForm.name">
-          <i class="fa-solid fa-user"></i>
-          <span>Nhập tên của bạn</span>
-          <p class="error-mess" v-if="errorObj.nameErr.length > 0">{{ errorObj.nameErr[0] }}</p>
+          <input type="text" class="form-control" required="require" v-model="changePassForm.oldPass">
+          <i class="fa-solid fa-lock"></i>
+          <span>Nhập mật khẩu cũ của bạn</span>
+          <p class="error-mess" v-if="errorObj.oldPassErr.length > 0">{{ errorObj.nameErr[0] }}</p>
         </div>
 
         <div class="form-group">
-          <input type="tel" class="form-control" required="require" v-model="editInfoForm.telephone">
-          <i class="fa-solid fa-phone"></i>
-          <span>Nhập số điện thoại của bạn</span>
-          <p class="error-mess" v-if="errorObj.phoneErr.length > 0">{{ errorObj.phoneErr[0] }}</p>
+          <input type="tel" class="form-control" required="require" v-model="changePassForm.newPass">
+          <i class="fa-solid fa-lock"></i>
+          <span>Nhập mật khẩu mới của bạn</span>
+          <p class="error-mess" v-if="errorObj.newPassErr.length > 0">{{ errorObj.phoneErr[0] }}</p>
         </div>
 
         <div class="form-group">
-          <button @click.prevent="scrollToTop" class="btnn">
+          <input type="tel" class="form-control" required="require" v-model="changePassForm.confirmPass">
+          <i class="fa-solid fa-lock"></i>
+          <span>Nhập lại mật khẩu mới của bạn</span>
+          <p class="error-mess" v-if="errorObj.confirmPassErr.length > 0">{{ errorObj.phoneErr[0] }}</p>
+        </div>
+
+        <div class="form-group">
+          <button @click.prevent="scrollToTop()" class="btnn">
             <RouterLink to="/">Lưu</RouterLink>
           </button>
-          
+
           <slot></slot>
         </div>
 
@@ -37,11 +44,12 @@ export default {
   name: "editInfo",
   data() {
     return {
-      editInfoForm: {
-        name: "",
-        telephone: "",
+      changePassForm: {
+        oldPass: "",
+        newPass: "",
+        confirmPass: "",
       },
-      errorObj: { nameErr: [], phoneErr: [] },
+      errorObj: { oldPassErr: [], newPassErr: [], confirmPassErr: [] },
     }
   },
 
@@ -52,7 +60,7 @@ export default {
 </script>
 
 <style lang="scss">
-.editInfo {
+.changePass {
   z-index: 99;
   position: fixed;
   top: 0;
@@ -65,7 +73,7 @@ export default {
   align-items: center;
   justify-content: center;
 
-  .editInfo-form {
+  .changePass-form {
     background-color: transparent;
     height: 45vh;
 
@@ -194,12 +202,12 @@ export default {
 }
 
 @media (max-width: 360px) {
-  .editInfo .editInfo-form form .form-group span {
+  .changePass .changePass-form form .form-group span {
     font-size: 1.5rem;
     margin-top: 0.6rem;
   }
 
-  .editInfo .editInfo-form form .form-group input:focus~span {
+  .changePass .changePass-form form .form-group input:focus~span {
     background-color: #f4f4f4;
     color: #27ae60;
     transform: translateX(-2rem) translateY(-2.5rem);
@@ -209,7 +217,7 @@ export default {
     padding: 0px 8px;
   }
 
-  .editInfo .editInfo-form form .form-group input:valid~span {
+  .changePass .changePass-form form .form-group input:valid~span {
     background-color: #f4f4f4;
     color: #27ae60;
     transform: translateX(-2rem) translateY(-2.5rem);
@@ -219,7 +227,7 @@ export default {
     padding: 0px 8px;
   }
 
-  .editInfo .editInfo-form form .form-group .error-mess {
+  .changePass .changePass-form form .form-group .error-mess {
     font-size: 1.5rem;
     color: rgba($color: #f32f2f, $alpha: 1.0);
     margin: 0;
@@ -228,11 +236,11 @@ export default {
 }
 
 @media (max-width: 280px) {
-  .editInfo .editInfo-form form .form-group span {
+  .changePass .changePass-form form .form-group span {
     font-size: 1.3rem;
   }
 
-  .editInfo .editInfo-form form .form-group input:focus~span {
+  .changePass .changePass-form form .form-group input:focus~span {
     background-color: #f4f4f4;
     color: #27ae60;
     transform: translateX(-2rem) translateY(-2.5rem);
@@ -242,14 +250,14 @@ export default {
     padding: 0px 8px;
   }
 
-  .editInfo .editInfo-form form .form-group .error-mess {
+  .changePass .changePass-form form .form-group .error-mess {
     font-size: 1.5rem;
     color: rgba($color: #f32f2f, $alpha: 1.0);
     margin: 0;
     padding: 0;
   }
 
-  .editInfo .editInfo-form form .form-group input {
+  .changePass .changePass-form form .form-group input {
     margin-top: 1rem;
   }
 }

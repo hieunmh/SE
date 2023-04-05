@@ -23,7 +23,7 @@
 
 			<div v-else class="fas fa-user account logined" style="background: #f38609; color: white;">
 				<ul class="drop-down-select">
-					<li><RouterLink to="/info">Tài khoản</RouterLink></li>
+					<li><RouterLink @click.prevent="scrollToTop()" to="/info">Tài khoản</RouterLink></li>
 					<li><RouterLink to="/myorder">Giỏ hàng</RouterLink></li>
 					<li><RouterLink @click="handleLogout" to="/">Đăng xuất</RouterLink></li>
 				</ul>
