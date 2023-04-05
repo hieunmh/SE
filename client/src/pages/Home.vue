@@ -15,33 +15,33 @@
       </div>
     </div>
     
-    <div class="home-category">
-      <RouterLink to="/" class="box">
+    <div class="home-category row">
+      <RouterLink to="/" class="box col-lg-2 col-md-4 col-sm-6">
         <img src="../assets/images/banhxeo.png" alt="">
         <h3>Bánh xèo</h3>
       </RouterLink>
 
-      <RouterLink to="/" class="box">
+      <RouterLink to="/" class="box col-lg-2 col-md-4 col-sm-6">
 				<img src="../assets/images/banhxeo.png" alt="">
 				<h3>Bánh xèo</h3>
-        </RouterLink>
+      </RouterLink>
 
-      <RouterLink to="/" class="box">
+      <RouterLink to="/" class="box col-lg-2 col-md-4 col-sm-6">
         <img src="../assets/images/dessert.png" alt="">
         <h3>Salad</h3>
       </RouterLink>
 
-      <RouterLink to="/" class="box">
+      <RouterLink to="/" class="box col-lg-2 col-md-4 col-sm-6">
         <img src="../assets/images/dessert.png" alt="">
         <h3>Salad</h3>
       </RouterLink>
 
-      <RouterLink to="/" class="box">
+      <RouterLink to="/" class="box col-lg-2 col-md-4 col-sm-6">
         <img src="../assets/images/drink.png" alt="">
         <h3>7 Up</h3>
       </RouterLink>
 
-      <RouterLink to="/" class="box">
+      <RouterLink to="/" class="box col-lg-2 col-md-4 col-sm-6">
         <img src="../assets/images/drink.png" alt="">
         <h3>7 Up</h3>
       </RouterLink>
@@ -53,7 +53,7 @@
           <img src="../assets/images/banhxeo-banner.jpg" alt="">
           <div class="content">
             <span>Giảm giá đặc biệt</span>
-            <h3>lên đến 50%</h3>
+            <p>lên đến 50%</p>
             <RouterLink @click="scrollToTop()" to="/menu" class="btnn">Mua ngay</RouterLink>
           </div>
         </div>
@@ -62,7 +62,7 @@
           <img src="../assets/images/salad-banner.jpg" alt="">
           <div class="content">
             <span>Giảm giá đặc biệt</span>
-            <h3>lên đến 50%</h3>
+            <p>lên đến 50%</p>
             <RouterLink @click="scrollToTop()" to="/menu" class="btnn">Mua ngay</RouterLink>
           </div>
         </div>
@@ -71,7 +71,7 @@
         	<img src="../assets/images/drink-banner.jpg" alt="">
           <div class="content">
             <span>Giảm giá đặc biệt</span>
-            <h3>lên đến 50%</h3>
+            <p>lên đến 50%</p>
             <RouterLink @click="scrollToTop()" to="/menu" class="btnn">Mua ngay</RouterLink>
           </div>
         </div>
@@ -147,9 +147,12 @@ export default {
 
 /** home category */
 .home-category {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-	gap: 1.5rem;
+	display: flex;
+	justify-content: space-around;
+	flex-wrap: wrap;
+	// grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+	// gap: 1.5rem;
+	// margin: 1.5rem;
 	padding-bottom: 5rem;
   padding: 2rem 9%;
 	.box {
@@ -158,6 +161,7 @@ export default {
 		border-radius: 0.5rem;
 		background: #f1f1f1;
 		color: #27ae60;
+		margin: 0;	
 		&:hover {
 			background: #27ae60;
 			h3 {
@@ -227,7 +231,7 @@ export default {
 					font-size: 2.5rem;
 					color: #fff;
 				}
-				h3 {
+				p {
 					font-size: 3rem;
 					color: #fff;
 					padding-top: .5rem;
@@ -247,7 +251,15 @@ export default {
 	}
 }
 
+@media (max-width: 992px) {
+	.home-banner .grid-banner .grid .content p {
+		font-size: 1.5rem;
+	}
 
+	.home-banner .grid-banner .grid .content span {
+		font-size: 1.6rem;
+	}
+}
 
 
 @media (max-width: 768px) {
@@ -260,11 +272,6 @@ export default {
 	}
   .home-banner {
     .grid-banner {
-      .content {
-        h3 {
-          font-size: 15px !important;
-        }
-      }
       .content.center {
         padding-left: 0px !important;
       }

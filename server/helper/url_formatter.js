@@ -10,7 +10,7 @@ const { isValidHttpUrl } = require('./is_Valid_http_url');
 
 const formatMediaURL = (input) => {
     if (!isValidHttpUrl(input)) {
-        return url.parse('localhost:8000' + '/public' + input).href;
+        return url.parse(input).href;
     }
     return input;
 }

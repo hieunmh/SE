@@ -10,6 +10,7 @@ import Table from '../pages/Table.vue';
 import Register from '../pages/Register.vue';
 import Myorder from '../pages/Myorder.vue';
 import Cart from '../pages/Cart.vue';
+import Info from '../pages/Info.vue';
 
 
 const routes = [
@@ -54,10 +55,15 @@ const routes = [
     component: Cart,
   },
   {
-    path: "/Myorder",
+    path: "/myorder",
     name: "Myorder",
     component: Myorder,
   },
+  {
+    path: "/info",
+    name: "Info",
+    component: Info,
+  }
 ];
 
 const router = createRouter({

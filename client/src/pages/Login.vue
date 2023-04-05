@@ -43,20 +43,20 @@ export default {
       errors: []
     }
   },  
-  mounted() {
-    this.checkLogin();
-  },
+  
   methods: {
     ...mapMutations(['scrollToTop', 'setUser']),
-     async checkLogin() {
-      let cookie = window.localStorage.getItem('cookie');
-    },
 
     async login() {
-      let data = await axios.post('/login', this.loginForm, {withCredentials: true});
+      let data = await axios.post('/login', this.loginForm, { withCredentials: true });
       let err = data.data.msg;
-      this.errors.push(err);
-      this.setUser(data.data.userName);
+      if (err === 'Sai email hoặc mật khẩu') {
+        this.errors.push(err);
+      }
+      else {
+        this.setUser(data.data.userName);
+        this.$router.push('/');
+      }
     },  
 
     async handleSubmit(event) { 
@@ -80,10 +80,6 @@ export default {
       else {
         event.preventDefault();
         await this.login();
-
-        // ìf (match user không giống trong data thì làm gì)
-        this.$router.push('/');
-        // else không đúng email hoặc mật khẩu
       }
     }
   }

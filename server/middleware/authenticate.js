@@ -16,7 +16,8 @@ const isAlreadyLogin = (req, res, next) => {
   if (req.session.userId) {
     return res.status(200).json({
       msg: "Already login!",
-      redirect: "/info"
+      redirect: "/info",
+      cookie: req.headers.cookie
     });
   } else {
     next();
@@ -25,7 +26,7 @@ const isAlreadyLogin = (req, res, next) => {
 }
 
 const isAdmin = (req, res, next) => {
-  if (req.session.role == "1") {
+  if (req.session.role == 1) {
     next();
   } else {
     return res.status(401).json({

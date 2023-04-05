@@ -8,9 +8,16 @@
  
   <!--   PHOTO-->
  
-<form action="/upload/photo" enctype="multipart/form-data" method="POST"> 
+<form action="/admin/product/add" enctype="multipart/form-data" method="POST"> 
+  <p>
+    <input type="text" id="name" name="name">
+    <input type="text" id="desc" name="desc">
+    <input type="number" id="price" name="price">
+  </p>
   Select photo:<input type="file" name="myImage" accept="image/*" />
-  <input type="submit" value="Upload Photo"/>
+  <p>
+    <input type="submit" value="Upload Product"/>
+  </p>
 </form>
  
  

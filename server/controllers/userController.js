@@ -7,10 +7,23 @@ const { models: { User } } = require('../models/');
 const saltRounds = 10;
 class userController {
   // [GET] /info
-  getInfo(req, res, next) {
+  async getInfo(req, res, next) {
     // check whether or not login
     console.log(req.session);
-    return res.status(200).send(`Hello ${req.session.userId}`);
+    let id = req.session.userId;
+    const findUser = await User.findOne({
+      attributes: ['name', 'role', 'email', 'telephone'],
+      where: {
+        id,
+      },
+    });
+
+    return res.status(200).json({
+      userName: findUser.name,
+      email: findUser.email,
+      telephone: findUser.telephone,
+      role: findUser.role,
+    })
   }
 
   // [GET] /login
@@ -19,6 +32,7 @@ class userController {
       return res.status(200).json({
         msg: 'Already logged in',
         redirect: '/info',
+        cookie: res.headers.cookie
       });
     }
     return res.send('Hello, Please fill login form');
@@ -51,6 +65,7 @@ class userController {
               msg: 'login was successful',
               redirect: '/info',
               userName: findUser.name,
+              role: findUser.role,
               cookie: req.headers.cookie,
             });
 
@@ -94,6 +109,7 @@ class userController {
 
   // [POST] /register
   async register(req, res, next) {
+    const defaultUserRole = 0;
     const { email, password, name, telephone } = req.body;
     try {
       if (!email || !password || !name) {
@@ -117,19 +133,20 @@ class userController {
           }).then((data) => {
             console.log(data.null); // user id 
             req.session.userId = data.null;
-            req.session.role = '0'; // default user
+            req.session.role = defaultUserRole; // default user
             return res.status(201).json({
               msg: 'Register Account Success',
               email: email,
-              name: name
+              name: name,
+              role: defaultUserRole,
             });
           }).catch((err) => {
             console.log(err);
           });
 
         } else {
-          res.status(400).json({
-            msg: 'email have existed',
+          res.status(200).json({
+            msg: 'Email đã tồn tại',
           });
         }
       }
@@ -140,14 +157,85 @@ class userController {
 
   // [POST] /updateInfo  : update name, telephone
   async updateUserInfo(req, res, next) {
-    const { name, email, telephone } = req.body;
-    await User.update({
-      name, telephone,
-    }, {
-      where: { email }
-    });
+    const { name, telephone } = req.body;
 
+    if (!name && !telephone) {
+      return res.status(400).json({
+        msg: "Nothing changes",
+      })
+    } else {
+      // check if name or telephone value is null
+      // need to update what
+      const result = await User.update({ name, telephone }, {
+        where: {
+          id: req.session.userId
+        }
+      }).then((data) => {
+        console.log(data)
+      }).catch((err) => {
+        console.log(err);
+        next(err);
+      })
+    }
 
+    return res.status(200).json({
+      msg: "Update success! ",
+    })
+  }
+
+  // [POST] /updatePassword  : change password
+  async updatePassword(req, res, next) {
+    const { oldPW, newPW } = req.body;
+
+    if (!oldPW && !newPW) {
+      return res.status(400).json({
+        msg: "Bad request! ",
+      })
+    } else {
+      // check coincidence
+      if (oldPW === newPW) {
+        return res.status(400).json({
+          msg: "Bad request! ",
+        })
+      }
+      // check oldPW
+      const getPW = await User.findOne({
+        attributes: ['password'],
+        where: {
+          id: req.session.userId,
+        },
+      });
+      const checkOldPW = await bcrypt.compareSync(
+        oldPW,
+        getPW.password,
+      );
+
+      if (!checkOldPW) {
+        return res.status(400).json({
+          msg: "Incorrect password",
+        })
+      }
+
+      // create hashedPW
+      const hashedPwd = await bcrypt.hash(newPW, saltRounds);
+      if (!hashedPwd) {
+        throw new Error('Error hashing pw');
+      }
+
+      const result = await User.update({ password: hashedPwd }, {
+        where: {
+          id: req.session.userId
+        }
+      }).then((data) => {
+        console.log(data)
+        return res.status(200).json({
+          msg: "Update success! ",
+        })
+      }).catch((err) => {
+        console.log(err);
+        next(err);
+      })
+    }
   }
 }
 
