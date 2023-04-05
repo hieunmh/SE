@@ -25,13 +25,20 @@
 
         <div class="form-group">
           <button @click.prevent="setShowEditInfo" class="btnn">Chỉnh sửa thông tin</button>
+          <button @click.prevent="setShowEditPass" class="btnn">Đổi mật khẩu</button>
           <button class="btnn"><RouterLink to="/" @click.prevent="scrollToTop">Đến trang chủ</RouterLink></button>
         </div>
 
         <div class="form-group">
-          <EditInfo v-if="show">
+          <EditInfo v-if="showEditInfo">
             <button @click.prevent="setShowEditInfo" class="btnn">Hủy</button>
           </EditInfo>
+        </div>
+
+        <div class="form-group">
+          <ChangePass v-if="showEditPass">
+            <button @click.prevent="setShowEditPass" class="btnn">Hủy</button>
+          </ChangePass>
         </div>
 
       </form>
@@ -42,6 +49,7 @@
 <script>
 import { mapMutations } from 'vuex';
 import EditInfo from '../components/EditInfo.vue';
+import ChangePass from '../components/ChangePass.vue';
 import axios from 'axios';
 
 export default {
@@ -54,14 +62,18 @@ export default {
                 telephone: "",
             },
             matchUser: undefined,
-            show: false
+            showEditInfo: false,
+            showEditPass: false,
         };
     }, 
     methods: {
       ...mapMutations(['scrollToTop', 'setUser']),
       
       setShowEditInfo() {
-        this.show = !this.show;
+        this.showEditInfo = !this.showEditInfo;
+      },
+      setShowEditPass() {
+        this.showEditPass = !this.showEditPass;
       }
       
     },
@@ -72,7 +84,8 @@ export default {
       this.userInfo.telephone = data.data.telephone;
     },
     components: { 
-      EditInfo 
+      EditInfo,
+      ChangePass,
     }
 }
 </script>
