@@ -85,7 +85,7 @@ CREATE TABLE users (
         PRIMARY KEY (`id`),
         CONSTRAINT `fk_user_details`
             FOREIGN KEY (`user_id`)
-            REFERENCES user (`id`)
+            REFERENCES users (`id`)
             ON DELETE SET NULL
             ON UPDATE SET NULL,
         CONSTRAINT `fk_orde_pade`
@@ -122,7 +122,7 @@ CREATE TABLE order_items (
         PRIMARY KEY (id),
         CONSTRAINT `fk_user_shse`
             FOREIGN KEY (`user_id`)
-            REFERENCES user (`id`)
+            REFERENCES users (`id`)
             ON DELETE SET NULL
             ON UPDATE SET NULL
     );
@@ -171,7 +171,7 @@ CREATE TABLE cart_item (
         PRIMARY KEY (id),
         CONSTRAINT `fk_user_uspa`
             FOREIGN KEY (`user_id`)
-            REFERENCES user (`id`)
+            REFERENCES users (`id`)
             ON DELETE SET NULL
             ON UPDATE SET NULL
     ); 
