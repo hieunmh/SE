@@ -28,7 +28,6 @@ db.models.Shopping_session = require('./shopping_session')(sequelize, Sequelize.
 
 db.models.Discount = require('./discount')(sequelize, Sequelize.DataTypes);
 db.models.Product_category = require('./product_category')(sequelize, Sequelize.DataTypes);
-db.models.Product_inventory = require('./product_inventory')(sequelize, Sequelize.DataTypes);
 db.models.Product = require('./product')(sequelize, Sequelize.DataTypes);
 
 db.models.User = require('./user')(sequelize, Sequelize.DataTypes);

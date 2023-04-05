@@ -29,14 +29,6 @@ module.exports = (sequelize, DataTypes) => {
 
         }
       },
-      inventory_id: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'Product_inventory',
-          key: 'id',
-
-        }
-      },
       price: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
@@ -48,6 +40,11 @@ module.exports = (sequelize, DataTypes) => {
           key: 'id',
 
         }
+      },
+      quantity: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false,
       },
       sold_number: {
         type: DataTypes.INTEGER,
