@@ -54,7 +54,7 @@ CREATE TABLE products (
         REFERENCES product_category (`id`)
         ON DELETE SET NULL
         ON UPDATE SET NULL
-) ENGINE=InnoDB;
+    ) ENGINE=InnoDB;
 
 CREATE TABLE users (
     id INT NOT NULL AUTO_INCREMENT,
@@ -67,34 +67,33 @@ CREATE TABLE users (
     UNIQUE (email)
 ) ENGINE=InnoDB;
 
-CREATE TABLE payment_details (
-    id INT NOT NULL AUTO_INCREMENT,
-    order_id INT DEFAULT '0',
-    amount INT NOT NULL, 
-    provider VARCHAR(10) NOT NULL,
-    status VARCHAR(10) NOT NULL,
-    created_at TIMESTAMP NOT NULL,
-    PRIMARY KEY (id)
-);
+    CREATE TABLE payment_details (
+        id INT(10) NOT NULL AUTO_INCREMENT,
+        amount INT(255) NOT NULL, 
+        provider VARCHAR(10) NOT NULL,
+        status VARCHAR(10) NOT NULL,
+        created_at TIMESTAMP NOT NULL,
+        PRIMARY KEY (id)
+    );
 
-CREATE TABLE order_details (
-    id INT NOT NULL AUTO_INCREMENT,
-    user_id INT DEFAULT '0',
-    total DECIMAL(2) NOT NULL, 
-    payment_id INT DEFAULT '0',
-    created_at TIMESTAMP NOT NULL,
-    PRIMARY KEY (`id`),
-    CONSTRAINT `fk_user_details`
-        FOREIGN KEY (`user_id`)
-        REFERENCES users (`id`)
-        ON DELETE SET NULL
-        ON UPDATE SET NULL,
-    CONSTRAINT `fk_orde_pade`
-        FOREIGN KEY (`payment_id`)
-        REFERENCES payment_details (`id`)
-        ON DELETE SET NULL
-        ON UPDATE SET NULL
-) ENGINE=InnoDB;
+    CREATE TABLE order_details (
+        id INT(10) NOT NULL AUTO_INCREMENT,
+        user_id INT(10) DEFAULT '0',
+        total DECIMAL(2) NOT NULL, 
+        payment_id INT(10) DEFAULT '0',
+        created_at TIMESTAMP NOT NULL,
+        PRIMARY KEY (`id`),
+        CONSTRAINT `fk_user_details`
+            FOREIGN KEY (`user_id`)
+            REFERENCES user (`id`)
+            ON DELETE SET NULL
+            ON UPDATE SET NULL,
+        CONSTRAINT `fk_orde_pade`
+            FOREIGN KEY (`payment_id`)
+            REFERENCES payment_details (`id`)
+            ON DELETE SET NULL
+            ON UPDATE SET NULL
+    ) ENGINE=InnoDB;
 
 CREATE TABLE order_items (
     id INT NOT NULL AUTO_INCREMENT,
@@ -115,18 +114,19 @@ CREATE TABLE order_items (
         ON UPDATE SET NULL
 ) ENGINE=InnoDB;
 
-CREATE TABLE shopping_session (
-    id INT NOT NULL AUTO_INCREMENT,
-    user_id INT DEFAULT '0',
-    total DECIMAL(2) NOT NULL,
-    created_at TIMESTAMP NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT `fk_user_shse`
-        FOREIGN KEY (`user_id`)
-        REFERENCES users (`id`)
-        ON DELETE SET NULL
-        ON UPDATE SET NULL
-);
+    CREATE TABLE shopping_session (
+        id INT(10) NOT NULL AUTO_INCREMENT,
+        user_id INT(10) DEFAULT '0',
+        total DECIMAL(2) NOT NULL,
+        created_at TIMESTAMP NOT NULL,
+        PRIMARY KEY (id),
+        CONSTRAINT `fk_user_shse`
+            FOREIGN KEY (`user_id`)
+            REFERENCES user (`id`)
+            ON DELETE SET NULL
+            ON UPDATE SET NULL
+    );
+
 
 CREATE TABLE cart_item (
     id INT NOT NULL AUTO_INCREMENT,
@@ -147,31 +147,31 @@ CREATE TABLE cart_item (
         ON UPDATE SET NULL
 );
 
-CREATE TABLE user_address (
-    id INT NOT NULL AUTO_INCREMENT,
-    user_id INT DEFAULT '0', 
-    city VARCHAR(100) NOT NULL,
-    country VARCHAR(100) NOT NULL,
-    telephone VARCHAR(10) NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT `fk_user_usad`
-        FOREIGN KEY (`user_id`)
-        REFERENCES users (`id`)
-        ON DELETE SET NULL 
-        ON UPDATE SET NULL
-);
+    CREATE TABLE user_address (
+        id INT(10) NOT NULL AUTO_INCREMENT,
+        user_id INT(10) DEFAULT '0', 
+        city VARCHAR(100) NOT NULL,
+        country VARCHAR(100) NOT NULL,
+        telephone VARCHAR(10) NOT NULL,
+        PRIMARY KEY (id),
+        CONSTRAINT `fk_user_usad`
+            FOREIGN KEY (`user_id`)
+            REFERENCES user (`id`)
+            ON DELETE SET NULL 
+            ON UPDATE SET NULL
+    );
 
-CREATE TABLE user_payment (
-    id INT NOT NULL AUTO_INCREMENT,
-    user_id INT DEFAULT '0', 
-    payment_type VARCHAR(100) NOT NULL,
-    provider VARCHAR(100) NOT NULL,
-    account_no INT NOT NULL,
-    expiry DATE NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT `fk_user_uspa`
-        FOREIGN KEY (`user_id`)
-        REFERENCES users (`id`)
-        ON DELETE SET NULL
-        ON UPDATE SET NULL
-);  
+    CREATE TABLE user_payment (
+        id INT(10) NOT NULL AUTO_INCREMENT,
+        user_id INT(10) DEFAULT '0', 
+        payment_type VARCHAR(100) NOT NULL,
+        provider VARCHAR(100) NOT NULL,
+        account_no INT(255) NOT NULL,
+        expiry DATE NOT NULL,
+        PRIMARY KEY (id),
+        CONSTRAINT `fk_user_uspa`
+            FOREIGN KEY (`user_id`)
+            REFERENCES user (`id`)
+            ON DELETE SET NULL
+            ON UPDATE SET NULL
+    ); 
