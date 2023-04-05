@@ -26,7 +26,7 @@ const isAlreadyLogin = (req, res, next) => {
 }
 
 const isAdmin = (req, res, next) => {
-  if (req.session.role == "1") {
+  if (req.session.role == 1) {
     next();
   } else {
     return res.status(401).json({
