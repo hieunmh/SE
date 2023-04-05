@@ -17,11 +17,12 @@ class userController {
         id,
       },
     });
-    // return res.status(200).send(`Hello ${req.session.userId}`);
+    
     return res.status(200).json({
       userName: findUser.name,
       email: findUser.email,
-      telephone: findUser.telephone
+      telephone: findUser.telephone,
+      role: findUser.role,
     })
   }
 
@@ -67,6 +68,7 @@ class userController {
               msg: 'login was successful',
               redirect: '/info',
               userName: findUser.name,
+              role: findUser.role,
               cookie: req.headers.cookie,
             });
 
@@ -111,6 +113,7 @@ class userController {
 
   // [POST] /register
   async register(req, res, next) {
+    const defaultUserRole = 0;
     const { email, password, name, telephone } = req.body;
     try {
       if (!email || !password || !name) {
@@ -133,11 +136,12 @@ class userController {
           }).then((data) => {
             console.log(data.null); // user id 
             req.session.userId = data.null;
-            req.session.role = '0'; // default user
+            req.session.role = defaultUserRole; // default user
             return res.status(201).json({
               msg: 'Register Account Success',
               email: email,
-              name: name
+              name: name,
+              role: defaultUserRole,
             });
           }).catch((err) => {
 
@@ -157,7 +161,84 @@ class userController {
   // [POST] /updateInfo  : update name, telephone
   async updateUserInfo(req, res, next) {
     const { name, telephone } = req.body;
+    
+    if (!name && !telephone) {
+      return res.status(400).json({
+        msg: "Nothing changes",
+      })
+    } else {
+      // check if name or telephone value is null
+      // need to update what
+      const result = await User.update({name, telephone}, {
+        where: {
+          id: req.session.userId
+        }
+      }).then((data) => {
+        console.log(data)
+      }).catch((err) => {
+        console.log(err);
+        next(err);
+      })
+    }
 
+    return res.status(200).json({
+      msg: "Update success! ",
+    })
+  }
+
+  // [POST] /updatePassword  : change password
+  async updatePassword(req, res, next) {
+    const { oldPW, newPW } = req.body;
+    
+    if (!oldPW && !newPW) {
+      return res.status(400).json({
+        msg: "Bad request! ",
+      })
+    } else {
+      // check coincidence
+      if (oldPW === newPW) {
+        return res.status(400).json({
+          msg: "Bad request! ",
+        })
+      }
+      // check oldPW
+      const getPW = await User.findOne({
+        attributes: ['password'],
+        where: {
+          id: req.session.userId,
+        },
+      });
+      const checkOldPW = await bcrypt.compareSync(
+        oldPW,
+        getPW.password,
+      );
+
+      if (!checkOldPW) {
+        return res.status(400).json({
+          msg: "Incorrect password",
+        })
+      }
+
+      // create hashedPW
+      const hashedPwd = await bcrypt.hash(newPW, saltRounds);
+      if (!hashedPwd) {
+        throw new Error('Error hashing pw');
+      }
+
+      const result = await User.update({password: hashedPwd}, {
+        where: {
+          id: req.session.userId
+        }
+      }).then((data) => {
+        console.log(data)
+        return res.status(200).json({
+          msg: "Update success! ",
+        })
+      }).catch((err) => {
+        console.log(err);
+        next(err);
+      })
+    }
   }
 }
 

@@ -12,9 +12,9 @@ const sequelize = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_US
   dialect: 'mysql',
   define: {
     freezeTableName: true,
-    noPrimaryKey: true
-    // logging: (...msg) => console.log(msg)
-  }
+    noPrimaryKey: true,
+  },
+  logging: false
 });
 
 db.sequelize = sequelize;
