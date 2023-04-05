@@ -11,15 +11,17 @@ class userController {
     // check whether or not login
     console.log(req.session);
     let id = req.session.userId;
-    const findUser = await userModel.findOne({
-      attributes: ['name', 'role'],
+    const findUser = await User.findOne({
+      attributes: ['name', 'role', 'email', 'telephone'],
       where: {
         id,
       },
     });
     // return res.status(200).send(`Hello ${req.session.userId}`);
     return res.status(200).json({
-      userName: findUser.name
+      userName: findUser.name,
+      email: findUser.email,
+      telephone: findUser.telephone
     })
   }
 
