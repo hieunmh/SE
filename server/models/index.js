@@ -14,13 +14,25 @@ const sequelize = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_US
     freezeTableName: true,
     noPrimaryKey: true,
   },
-  logging: false
+  logging: false,
 });
 
 db.sequelize = sequelize;
 db.models = {};
-db.models.User = require('./user')(sequelize, Sequelize.DataTypes);
+
+db.models.Cart_item = require('./cart_item')(sequelize, Sequelize.DataTypes);
+db.models.Order_details = require('./order_details')(sequelize, Sequelize.DataTypes);
+db.models.Order_items = require('./order_items')(sequelize, Sequelize.DataTypes);
+db.models.Payment_details = require('./payment_details')(sequelize, Sequelize.DataTypes);
+db.models.Shopping_session = require('./shopping_session')(sequelize, Sequelize.DataTypes);
+
+db.models.Discount = require('./discount')(sequelize, Sequelize.DataTypes);
+db.models.Product_category = require('./product_category')(sequelize, Sequelize.DataTypes);
+db.models.Product_inventory = require('./product_inventory')(sequelize, Sequelize.DataTypes);
 db.models.Product = require('./product')(sequelize, Sequelize.DataTypes);
 
+db.models.User = require('./user')(sequelize, Sequelize.DataTypes);
+db.models.User_address = require('./user_address')(sequelize, Sequelize.DataTypes);
+db.models.User_payment = require('./user_payment')(sequelize, Sequelize.DataTypes);
 
 module.exports = db;

@@ -1,7 +1,7 @@
 const path = require('path');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
-const { models: { User } } = require('../models');
+const { models: { User } } = require('../models/');
 
 // bcrypt
 const saltRounds = 10;
@@ -17,7 +17,7 @@ class userController {
         id,
       },
     });
-    
+
     return res.status(200).json({
       userName: findUser.name,
       email: findUser.email,
@@ -46,11 +46,8 @@ class userController {
         const hashedPwd = await bcrypt.hash(password, saltRounds);
         const findUser = await User.findOne({
           attributes: ['id', 'password', 'name', 'role'],
-          where: {
-            email,
-          },
+          where: { email, },
         });
-        console.log(findUser);
 
         if (findUser) {
           const checkPassword = await bcrypt.compareSync(
@@ -82,7 +79,6 @@ class userController {
             msg: 'Sai email hoặc mật khẩu',
           })
         }
-
       } catch (error) {
         next(error);
       }
@@ -128,6 +124,7 @@ class userController {
           if (!hashedPwd) {
             throw new Error('Error hashing pw');
           }
+
           await User.create({
             email,
             password: hashedPwd,
@@ -144,7 +141,7 @@ class userController {
               role: defaultUserRole,
             });
           }).catch((err) => {
-
+            console.log(err);
           });
 
         } else {
@@ -161,7 +158,7 @@ class userController {
   // [POST] /updateInfo  : update name, telephone
   async updateUserInfo(req, res, next) {
     const { name, telephone } = req.body;
-    
+
     if (!name && !telephone) {
       return res.status(400).json({
         msg: "Nothing changes",
@@ -169,7 +166,7 @@ class userController {
     } else {
       // check if name or telephone value is null
       // need to update what
-      const result = await User.update({name, telephone}, {
+      const result = await User.update({ name, telephone }, {
         where: {
           id: req.session.userId
         }
@@ -189,7 +186,7 @@ class userController {
   // [POST] /updatePassword  : change password
   async updatePassword(req, res, next) {
     const { oldPW, newPW } = req.body;
-    
+
     if (!oldPW && !newPW) {
       return res.status(400).json({
         msg: "Bad request! ",
@@ -225,7 +222,7 @@ class userController {
         throw new Error('Error hashing pw');
       }
 
-      const result = await User.update({password: hashedPwd}, {
+      const result = await User.update({ password: hashedPwd }, {
         where: {
           id: req.session.userId
         }
