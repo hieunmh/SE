@@ -58,6 +58,7 @@ class userController {
               msg: 'login was successful',
               redirect: '/info',
               userName: findUser.name,
+              email: email,
               role: findUser.role,
               cookie: req.headers.cookie,
             });

@@ -10,6 +10,8 @@ router.get('/login', isAlreadyLogin, userController.getLoginPage);
 router.post('/login', isAlreadyLogin, userController.login);
 router.post('/logout', isAuth, userController.logout);
 router.post('/register', isAlreadyLogin, userController.register);
+router.post('/edit-info', isAuth, userController.updateUserInfo);
+router.post('/change-password', isAuth, userController.updatePassword);
 
 // export default router;
 module.exports = router;
