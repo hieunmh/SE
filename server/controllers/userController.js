@@ -124,8 +124,8 @@ class userController {
             name,
             telephone,
           }).then((data) => {
-            console.log(data.null); // user id 
-            req.session.userId = data.null;
+            console.log(data.id); // user id 
+            req.session.userId = data.id;
             req.session.role = defaultUserRole; // default user
             return res.status(201).json({
               msg: 'Register Account Success',
