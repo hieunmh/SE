@@ -21,7 +21,7 @@ const app = express();
 
 // Middleware
 const staticFolder = path.join(__dirname, 'public');
-app.use('/static', express.static(staticFolder));
+app.use('/', express.static(staticFolder));
 
 app.use(
   session({
