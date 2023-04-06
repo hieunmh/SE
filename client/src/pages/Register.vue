@@ -154,7 +154,7 @@ import { mapMutations } from 'vuex';
         }
       },
 
-      async handleSubmit(event) {
+      handleSubmit(event) {
         this.checkForm();
         
         if (!this.checkEmptyErr()) {

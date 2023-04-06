@@ -45,7 +45,7 @@ export default {
   },  
   
   methods: {
-    ...mapMutations(['scrollToTop', 'setUser']),
+    ...mapMutations(['scrollToTop', 'setUser', 'setEmail']),
 
     async login() {
       let data = await axios.post('/login', this.loginForm, { withCredentials: true });
@@ -55,6 +55,7 @@ export default {
       }
       else {
         this.setUser(data.data.userName);
+        this.setEmail(data.data.email);
         this.$router.push('/');
       }
     },  

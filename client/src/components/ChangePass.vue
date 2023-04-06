@@ -5,28 +5,28 @@
         <h3>Đổi mật khẩu</h3>
 
         <div class="form-group">
-          <input type="text" class="form-control" required="require" v-model="changePassForm.oldPass">
+          <input type="text" class="form-control" required="require" v-model="changePassForm.oldPW">
           <i class="fa-solid fa-lock"></i>
           <span>Nhập mật khẩu cũ của bạn</span>
           <p class="error-mess" v-if="errorObj.oldPassErr.length > 0">{{ errorObj.nameErr[0] }}</p>
         </div>
 
         <div class="form-group">
-          <input type="tel" class="form-control" required="require" v-model="changePassForm.newPass">
+          <input type="tel" class="form-control" required="require" v-model="changePassForm.newPW">
           <i class="fa-solid fa-lock"></i>
           <span>Nhập mật khẩu mới của bạn</span>
           <p class="error-mess" v-if="errorObj.newPassErr.length > 0">{{ errorObj.phoneErr[0] }}</p>
         </div>
 
         <div class="form-group">
-          <input type="tel" class="form-control" required="require" v-model="changePassForm.confirmPass">
+          <input type="tel" class="form-control" required="require" v-model="changePassForm.confirmPW">
           <i class="fa-solid fa-lock"></i>
           <span>Nhập lại mật khẩu mới của bạn</span>
           <p class="error-mess" v-if="errorObj.confirmPassErr.length > 0">{{ errorObj.phoneErr[0] }}</p>
         </div>
 
         <div class="form-group">
-          <RouterLink to="/"><button class="btnn">Lưu</button></RouterLink>
+          <RouterLink @click="handleChangePass" to="/"><button class="btnn">Lưu</button></RouterLink>
           <slot></slot>
         </div>
 
@@ -36,15 +36,16 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapMutations } from 'vuex';
 export default {
   name: "editInfo",
   data() {
     return {
       changePassForm: {
-        oldPass: "",
-        newPass: "",
-        confirmPass: "",
+        oldPW: "",
+        newPW: "",
+        confirmPW: "",
       },
       errorObj: { oldPassErr: [], newPassErr: [], confirmPassErr: [] },
     }
@@ -52,6 +53,15 @@ export default {
 
   methods: {
     ...mapMutations(['scrollToTop', 'setUser']),
+
+    async changePass() {
+      await axios.post('change-password', this.changePassForm, {withCredentials: true});
+    },
+
+    handleChangePass() {
+      this.changePass();
+    }
+
   }
 }
 </script>

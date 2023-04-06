@@ -3,7 +3,7 @@
     <div class="home-main">
       <div class="content">
         <span>Home page</span>
-        <h3 v-if="user">Xin chào {{ user }}</h3>
+        <h3 v-if="email">Xin chào {{ user }}</h3>
 				<h3 v-else>SIUUUUUU</h3>
         <p>Welcome to the League of Draven</p>
         <RouterLink to="/menu" class="btnn">Menu</RouterLink>
@@ -94,7 +94,7 @@ export default {
 		...mapMutations(['scrollToTop'])
 	},
 	computed: {
-		...mapState(['user'])
+		...mapState(['user', 'email'])
 	}
 	
 }

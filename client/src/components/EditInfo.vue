@@ -19,7 +19,8 @@
         </div>
 
         <div class="form-group">
-          <RouterLink to="/"><button class="btnn">Lưu</button></RouterLink>
+          <!-- <RouterLink @click="handleEdit" to="/"><button class="btnn">Lưu</button></RouterLink> -->
+          <a @click="handleEdit" href="/"><button class="btnn">Lưu</button></a>
           <slot></slot>
         </div>
 
@@ -29,6 +30,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapMutations } from 'vuex';
 export default {
   name: "editInfo",
@@ -43,7 +45,24 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['scrollToTop', 'setUser']),
+    ...mapMutations(['scrollToTop', 'setEmail']),
+
+    async edit() {
+      let data = await axios.get('info', { withCredentials: true });
+      if (!this.editInfoForm.name) {
+        this.editInfoForm.name = data.data.userName;
+      }
+      if (!this.editInfoForm.telephone) {
+        this.editInfoForm.telephone = data.data.telephone;
+      }
+      alert('Chỉnh sửa thông tin thành công');
+      await axios.post('edit-info', this.editInfoForm, { withCredentials: true });
+    },
+
+    handleEdit(event) {
+      this.edit();
+    },
+
   }
 }
 </script>

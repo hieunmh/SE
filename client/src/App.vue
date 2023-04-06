@@ -25,13 +25,14 @@ export default {
     Footer,
   },
   methods: {
-    ...mapMutations(['setUser']),
+    ...mapMutations(['setEmail', 'setUser']),
 
     async checkLogin() {
       let res = await axios.get('login', {withCredentials: true});
       if (res.data.cookie) {
         let data = await axios.get('info', { withCredentials: true });  
         this.setUser(data.data.userName);
+        this.setEmail(data.data.email);
       }
     }
   },

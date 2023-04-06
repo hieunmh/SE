@@ -4,5 +4,8 @@ export default {
   },
   setUser(state, matchUser) {
     state.user = matchUser;
+  },
+  setEmail(state, userEmail) {
+    state.email = userEmail;
   }
 }
