@@ -19,10 +19,7 @@
         </div>
 
         <div class="form-group">
-          <button @click.prevent="scrollToTop" class="btnn">
-            <RouterLink to="/">Lưu</RouterLink>
-          </button>
-          
+          <RouterLink to="/"><button class="btnn">Lưu</button></RouterLink>
           <slot></slot>
         </div>
 
