@@ -1,14 +1,17 @@
 const { models: { Product } } = require('../models');
 const path = require('path');
 const { formatMediaURL } = require('../helper/url_formatter');
-const { DATE } = require('sequelize');
-
+const discount = require('../models/discount');
 class adminController {
 
   // [POST] /admin/product/add
   async addProduct(req, res, next) {
-    const {name, desc, price} = req.body;
-    console.log(name, desc, price);
+    // need category_id, discount_id, quantity, sold 
+    //to do
+
+    let {name, desc, price} = req.body;
+    price = parseInt(price);
+
     if (!name || !desc || !price) {
       return res.status(400).json({
         msg: "Please fill all !!!"
@@ -17,25 +20,30 @@ class adminController {
       const file_path = (req.file) ? path.join('upload', 'productImage', req.file.filename) : null;
       console.log(formatMediaURL(file_path));
 
-      //cant create product, error to insert into product table
-      //to do
-
-
-      // const result = await Product.findOrCreate({
-      //   where: {
-      //     name,
-      //     desc,
-      //     price,
-      //   },
-      //   image: file_path,
-      // }).then( (data) => {
-      //   console.log(data);
-      // }).catch((err) => {
-      //   console.log(err);
-      //   next(err);
-      // })
-      
-      // return res.status(200).send(result);
+      const result = await Product.findOrCreate({
+        where: {
+          name,
+          desc,
+          price,
+        },
+        defaults: {
+          image: formatMediaURL(file_path),
+        }
+      }).then( (data) => {
+        console.log(data[0]);
+        if (data[0]._options.isNewRecord) {
+          return res.status(200).json({
+                msg: "Upload Success !!"
+              });
+        } else {
+          return res.status(200).json({
+                msg: "Already Had !!"
+              })
+        }
+      }).catch((err) => {
+        console.log(err);
+        next(err);
+      })
     }
   }
 

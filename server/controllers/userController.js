@@ -28,14 +28,7 @@ class userController {
 
   // [GET] /login
   getLoginPage(req, res, next) {
-    if (req.session.userId) {
-      return res.status(200).json({
-        msg: 'Already logged in',
-        redirect: '/info',
-        cookie: res.headers.cookie
-      });
-    }
-    return res.send('Hello, Please fill login form');
+    return res.status(200).send('Hello, Please fill login form');
   }
 
   // [POST] /login
