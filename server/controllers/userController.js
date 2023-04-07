@@ -182,14 +182,14 @@ class userController {
     const { oldPW, newPW } = req.body;
 
     if (!oldPW && !newPW) {
-      return res.status(400).json({
+      return res.status(200).json({
         msg: "Bad request! ",
       })
     } else {
       // check coincidence
       if (oldPW === newPW) {
-        return res.status(400).json({
-          msg: "Bad request! ",
+        return res.status(200).json({
+          msg: "Mật khẩu mới không đúng giống mật khẩu cũ",
         })
       }
       // check oldPW
@@ -205,8 +205,8 @@ class userController {
       );
 
       if (!checkOldPW) {
-        return res.status(400).json({
-          msg: "Incorrect password",
+        return res.status(200).json({
+          msg: "Mật khẩu cũ không đúng",
         })
       }
 
@@ -223,7 +223,7 @@ class userController {
       }).then((data) => {
         console.log(data)
         return res.status(200).json({
-          msg: "Update success! ",
+          msg: "Đổi mật khẩu thành công!",
         })
       }).catch((err) => {
         console.log(err);

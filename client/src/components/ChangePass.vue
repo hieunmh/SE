@@ -8,25 +8,25 @@
           <input type="text" class="form-control" required="require" v-model="changePassForm.oldPW">
           <i class="fa-solid fa-lock"></i>
           <span>Nhập mật khẩu cũ của bạn</span>
-          <p class="error-mess" v-if="errorObj.oldPassErr.length > 0">{{ errorObj.nameErr[0] }}</p>
+          <p class="error-mess" v-if="errorObj.oldPassErr.length > 0">{{ errorObj.oldPassErr[0] }}</p>
         </div>
 
         <div class="form-group">
           <input type="tel" class="form-control" required="require" v-model="changePassForm.newPW">
           <i class="fa-solid fa-lock"></i>
           <span>Nhập mật khẩu mới của bạn</span>
-          <p class="error-mess" v-if="errorObj.newPassErr.length > 0">{{ errorObj.phoneErr[0] }}</p>
+          <p class="error-mess" v-if="errorObj.newPassErr.length > 0">{{ errorObj.newPassErr[0] }}</p>
         </div>
 
         <div class="form-group">
           <input type="tel" class="form-control" required="require" v-model="changePassForm.confirmPW">
           <i class="fa-solid fa-lock"></i>
           <span>Nhập lại mật khẩu mới của bạn</span>
-          <p class="error-mess" v-if="errorObj.confirmPassErr.length > 0">{{ errorObj.phoneErr[0] }}</p>
+          <p class="error-mess" v-if="errorObj.confirmPassErr.length > 0">{{ errorObj.confirmPassErr[0] }}</p>
         </div>
 
         <div class="form-group">
-          <RouterLink @click="handleChangePass" to="/"><button class="btnn">Lưu</button></RouterLink>
+          <RouterLink @click="handleChangePass" to="/info"><button class="btnn">Lưu</button></RouterLink>
           <slot></slot>
         </div>
 
@@ -53,15 +53,64 @@ export default {
 
   methods: {
     ...mapMutations(['scrollToTop', 'setUser']),
-
+    
     async changePass() {
-      await axios.post('change-password', this.changePassForm, {withCredentials: true});
+      let res = await axios.post('change-password', this.changePassForm, {withCredentials: true});
+      console.log(res.data);
+      
+      let err = res.data.msg;
+      if (err === 'Mật khẩu cũ không đúng') {
+        this.errorObj.oldPassErr.push('Mật khẩu cũ không đúng');
+      }
+      else if (err === 'Mật khẩu mới không giống mật khẩu cũ') {
+        this.errorObj.newPassErr.push('Mật khẩu mới không giống mật khẩu cũ');
+      }
+      else {
+        alert(res.data.msg);
+        window.location.reload();
+      }
     },
 
-    handleChangePass() {
-      this.changePass();
-    }
+    resetCheckErr() {
+      this.errorObj.oldPassErr = [];
+      this.errorObj.newPassErr = [];
+      this.errorObj.confirmPassErr = [];
+    },
 
+    checkEmptyErr() {
+      for (var i in this.errorObj) {
+        if (this.errorObj[i].length != 0) {
+          return false;
+        }
+      }
+      return true;
+    },
+
+    checkForm() {
+      this.resetCheckErr();
+
+      if (!this.changePassForm.newPW) {
+        this.errorObj.newPassErr.push('Vui lòng nhập mật khẩu mới');
+      }
+
+      if (this.changePassForm.confirmPW != this.changePassForm.newPW) {
+        this.errorObj.confirmPassErr.push('Mật khẩu cũ không đúng');
+      }
+    },
+ 
+    handleChangePass(event) {
+      //this.changePass();
+
+      this.checkForm();
+
+      if (!this.checkEmptyErr()) {
+        event.preventDefault();
+      }  
+      else {
+        event.preventDefault();
+        this.changePass();
+      }
+    }
   }
 }
 </script>
