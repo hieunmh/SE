@@ -70,11 +70,11 @@
         </div>
 
         <div class="action-row">
-          <button v-if="pageNum != 0" @click="previousToFirst()" class="action-btn">
+          <button @click="previousToFirst()" class="action-btn">
             <i class="fa-solid fa-angles-left"></i>
           </button>
 
-          <button v-if="pageNum != 0"  @click="previous()" class="action-btn">
+          <button  @click="previous()" class="action-btn">
             <i class="fa-solid fa-angle-left"></i>
           </button>
 
@@ -83,11 +83,11 @@
             <button v-else @click="setPage(index)">{{ index + 1 }}</button>
           </div>
 
-          <button v-if="pageNum != calculatePages - 1" @click="next()" class="action-btn">
+          <button @click="next()" class="action-btn">
             <i class="fa-solid fa-angle-right"></i>   
           </button>
 
-          <button v-if="pageNum != calculatePages - 1" @click="nextToLast()" class="action-btn">
+          <button @click="nextToLast()" class="action-btn">
             <i class="fa-solid fa-angles-right"></i>   
           </button>
         </div>
@@ -130,7 +130,12 @@ export default {
     },  
 
     previous() {
-      this.pageNum--;
+      if (this.pageNum < 0) {
+        this.pageNum = 0;
+      }
+      else {
+        this.pageNum--;
+      }
     },
 
     previousToFirst() {
@@ -138,7 +143,12 @@ export default {
     },
 
     next() {
-      this.pageNum++;
+      if (this.pageNum > this.calculatePages - 1) {
+        this.pageNum = this.calculatePages - 1;
+      }
+      else {
+        this.pageNum++;
+      }
     },
 
     nextToLast() {
