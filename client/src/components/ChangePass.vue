@@ -56,14 +56,13 @@ export default {
     
     async changePass() {
       let res = await axios.post('change-password', this.changePassForm, {withCredentials: true});
-      console.log(res.data);
       
       let err = res.data.msg;
       if (err === 'Mật khẩu cũ không đúng') {
         this.errorObj.oldPassErr.push('Mật khẩu cũ không đúng');
       }
-      else if (err === 'Mật khẩu mới không giống mật khẩu cũ') {
-        this.errorObj.newPassErr.push('Mật khẩu mới không giống mật khẩu cũ');
+      else if (err === 'Mật khẩu mới không được giống mật khẩu cũ') {
+        this.errorObj.newPassErr.push('Mật khẩu mới không được giống mật khẩu cũ');
       }
       else {
         alert(res.data.msg);
@@ -89,17 +88,20 @@ export default {
     checkForm() {
       this.resetCheckErr();
 
-      if (!this.changePassForm.newPW) {
+      if (!this.changePassForm.oldPW) {
+        this.errorObj.oldPassErr.push('Vui lòng nhập mật khẩu cũ');
+      }
+
+      else if (!this.changePassForm.newPW) {
         this.errorObj.newPassErr.push('Vui lòng nhập mật khẩu mới');
       }
 
       if (this.changePassForm.confirmPW != this.changePassForm.newPW) {
-        this.errorObj.confirmPassErr.push('Mật khẩu cũ không đúng');
+        this.errorObj.confirmPassErr.push('Mật khẩu nhập lại không đúng');
       }
     },
  
     handleChangePass(event) {
-      //this.changePass();
 
       this.checkForm();
 

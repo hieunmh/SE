@@ -189,7 +189,7 @@ class userController {
       // check coincidence
       if (oldPW === newPW) {
         return res.status(200).json({
-          msg: "Mật khẩu mới không đúng giống mật khẩu cũ",
+          msg: "Mật khẩu mới không được giống mật khẩu cũ",
         })
       }
       // check oldPW
