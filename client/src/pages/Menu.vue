@@ -70,11 +70,11 @@
         </div>
 
         <div class="action-row">
-          <button @click="previousToFirst()" class="action-btn">
+          <button @click="previousToFirst()" class="action-btn decrease-btn">
             <i class="fa-solid fa-angles-left"></i>
           </button>
 
-          <button  @click="previous()" class="action-btn">
+          <button  @click="previous()" class="action-btn decrease-btn">
             <i class="fa-solid fa-angle-left"></i>
           </button>
 
@@ -83,11 +83,11 @@
             <button v-else @click="setPage(index)">{{ index + 1 }}</button>
           </div>
 
-          <button @click="next()" class="action-btn">
+          <button @click="next()" class="action-btn increase-btn">
             <i class="fa-solid fa-angle-right"></i>   
           </button>
 
-          <button @click="nextToLast()" class="action-btn">
+          <button @click="nextToLast()" class="action-btn increase-btn">
             <i class="fa-solid fa-angles-right"></i>   
           </button>
         </div>
@@ -130,10 +130,11 @@ export default {
     },  
 
     previous() {
-      if (this.pageNum < 0) {
-        this.pageNum = 0;
+      if (this.pageNum == 0) {
+        document.querySelectorAll('.decrease-btn').disabled = true;
       }
       else {
+        document.querySelectorAll('.decrease-btn').disabled = false;
         this.pageNum--;
       }
     },
@@ -143,10 +144,11 @@ export default {
     },
 
     next() {
-      if (this.pageNum > this.calculatePages - 1) {
-        this.pageNum = this.calculatePages - 1;
+      if (this.pageNum == this.calculatePages - 1) {
+        document.querySelectorAll('.increase-btn').disabled = true; 
       }
       else {
+        document.querySelectorAll('.increase-btn').disabled = false;
         this.pageNum++;
       }
     },
