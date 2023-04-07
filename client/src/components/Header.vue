@@ -14,7 +14,7 @@
       <div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu"></div>	
 			<RouterLink @click="scrollToTop()"	to="/cart"><div class="fas fa-shopping-cart cart"></div></RouterLink>
 
-			<div v-if="!email" class="fas fa-user account">
+			<div v-if="!user" class="fas fa-user account">
 				<ul class="drop-down-select">
 					<li><RouterLink @click="scrollToTop()" to="/login">Đăng nhập</RouterLink></li>
 					<li><RouterLink @click="scrollToTop()" to="/register">Đăng ký</RouterLink></li>
