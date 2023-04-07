@@ -1,7 +1,7 @@
 <template>
   <div class="editInfo">
     <div class="editInfo-form">
-      <form @submit="handleSubmit" novalidate autocapitalize="off">
+      <form novalidate autocapitalize="off">
         <h3>Chỉnh sửa thông tin</h3>
 
         <div class="form-group">
@@ -19,12 +19,11 @@
         </div>
 
         <div class="form-group">
-          <!-- <RouterLink @click="handleEdit" to="/"><button class="btnn">Lưu</button></RouterLink> -->
-          <a @click="handleEdit" href="/"><button class="btnn">Lưu</button></a>
+          <RouterLink to="/"><button @click="handleEdit" class="btnn">Lưu</button></RouterLink>
           <slot></slot>
         </div>
 
-      </form>
+      </form>k
     </div>
   </div>
 </template>
@@ -57,10 +56,62 @@ export default {
       }
       alert('Chỉnh sửa thông tin thành công');
       await axios.post('edit-info', this.editInfoForm, { withCredentials: true });
+      window.location.reload();
+      // console.log(res);
+    },
+
+    resetCheckErr() {
+      this.errorObj.nameErr = [],
+      this.errorObj.phoneErr = []
+    },
+
+    checkEmptyErr() {
+      for (var i in this.errorObj) {
+        if (this.errorObj[i].length != 0) {
+          return false;
+        }
+      }
+      return true;
+    },
+
+    checkForm() {
+      this.resetCheckErr();
+
+      //name validate
+      if (this.editInfoForm.name) {
+        if (!/^[A-Za-z]+$/.test(this.editInfoForm.name.replace(/\s/g, ""))) {
+        this.errorObj.nameErr.push('Tên chỉ được chứa ký tự chữ cái');
+      }
+      }
+
+      //telephone validate
+      if (this.editInfoForm.telephone) {
+        if (!this.editInfoForm.telephone.startsWith('0')) {
+          this.errorObj.phoneErr.push('Số điện thoại phải bắt đầu bằng 0');
+        }
+
+        else if (this.editInfoForm.telephone.length != 10) {
+          this.errorObj.phoneErr.push('Số điện thoại chỉ được chứa 10 chữ số');
+        }
+
+        else if (!/[0-9]{10}/.test(this.editInfoForm.telephone)) {
+          this.errorObj.phoneErr.push('Số điện thoại chỉ được chứa chữ số');
+        }
+        
+      }
     },
 
     handleEdit(event) {
-      this.edit();
+
+      this.checkForm();
+
+      if (!this.checkEmptyErr()) {
+        event.preventDefault();
+      }
+      else {
+        event.preventDefault();
+        this.edit();
+      }
     },
 
   }
