@@ -8,9 +8,29 @@ module.exports = (sequelize, DataTypes) => {
   User_address.init(
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
+      },
+      user_id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        // allowNull: false,
+        references: {
+          model: 'User',
+          key: 'id',
+        }
+      },
+      city: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      country: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      telephone: {
+        type: DataTypes.STRING(10),
+        allowNull: false,
       },
     },
     {

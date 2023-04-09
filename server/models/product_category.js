@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   Product_category.init(
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
       },

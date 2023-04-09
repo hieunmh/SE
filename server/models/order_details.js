@@ -8,9 +8,29 @@ module.exports = (sequelize, DataTypes) => {
   Order_details.init(
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
+      },
+      user_id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        // allowNull: false,
+        references: {
+          model: 'User',
+          key: 'id',
+        },
+      },
+      total: {
+        type: DataTypes.DECIMAL(15, 2),
+        allowNull: false,
+      },
+      provider: {
+        type: DataTypes.STRING(10),
+        allowNull: false,
+      },
+      status: {
+        type: DataTypes.STRING(10),
+        allowNull: false,
       },
     },
     {

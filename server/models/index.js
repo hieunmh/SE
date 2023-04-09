@@ -23,8 +23,6 @@ db.models = {};
 db.models.Cart_item = require('./cart_item')(sequelize, Sequelize.DataTypes);
 db.models.Order_details = require('./order_details')(sequelize, Sequelize.DataTypes);
 db.models.Order_items = require('./order_items')(sequelize, Sequelize.DataTypes);
-db.models.Payment_details = require('./payment_details')(sequelize, Sequelize.DataTypes);
-db.models.Shopping_session = require('./shopping_session')(sequelize, Sequelize.DataTypes);
 
 db.models.Discount = require('./discount')(sequelize, Sequelize.DataTypes);
 db.models.Product_category = require('./product_category')(sequelize, Sequelize.DataTypes);
