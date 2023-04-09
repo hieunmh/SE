@@ -94,7 +94,7 @@ export default {
 		...mapMutations(['scrollToTop'])
 	},
 	computed: {
-		...mapState(['user'])
+		...mapState(['user', 'email'])
 	}
 	
 }

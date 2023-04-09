@@ -32,6 +32,8 @@
           </ul>
         </div>
 
+        <hr/>
+
         <div class="row filter-heading"> 
           <h1>Phân loại</h1>
         </div>
@@ -62,8 +64,32 @@
             <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" name="allFood" value="Rượu">
           </div>
         </div>
+
         <div class="row box-cotainer">
   
+        </div>
+
+        <div class="action-row">
+          <button @click="previousToFirst()" class="action-btn decrease-btn">
+            <i class="fa-solid fa-angles-left"></i>
+          </button>
+
+          <button  @click="previous()" class="action-btn decrease-btn">
+            <i class="fa-solid fa-angle-left"></i>
+          </button>
+
+          <div v-for="(page, index) in calculatePages" :key="index" class="d-inline">
+            <button v-if="index == pageNum" class="highlight" @click="setPage(index)">{{ index + 1 }}</button>
+            <button v-else @click="setPage(index)">{{ index + 1 }}</button>
+          </div>
+
+          <button @click="next()" class="action-btn increase-btn">
+            <i class="fa-solid fa-angle-right"></i>   
+          </button>
+
+          <button @click="nextToLast()" class="action-btn increase-btn">
+            <i class="fa-solid fa-angles-right"></i>   
+          </button>
         </div>
       </div>
     </div>
@@ -71,14 +97,22 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: "Menu",
   data() {
     return {
-      showDropDown: false
+      showDropDown: false,
+      pageNum: 0,
+      perPage: 6,
+      productObj: {name: "", category: "", price: "", type: ""}
     };
   },
+
   methods: {
+    ...mapState(['allFoods']),
+
     displayFilter() {
       let div1 = document.querySelectorAll('.filter-heading');
       let div2 = document.querySelectorAll('.filter-section');
@@ -89,15 +123,65 @@ export default {
         div2[i].classList.toggle('active');
       }
       dropdown.classList.toggle('active')
-    }
-  },
-  computed: {
+    },
 
+    setPage(value) {
+      this.pageNum = value;   
+    },  
+
+    previous() {
+      if (this.pageNum == 0) {
+        document.querySelectorAll('.decrease-btn').disabled = true;
+      }
+      else {
+        document.querySelectorAll('.decrease-btn').disabled = false;
+        this.pageNum--;
+      }
+    },
+
+    previousToFirst() {
+      this.pageNum = 0;
+    },
+
+    next() {
+      if (this.pageNum == this.calculatePages - 1) {
+        document.querySelectorAll('.increase-btn').disabled = true; 
+      }
+      else {
+        document.querySelectorAll('.increase-btn').disabled = false;
+        this.pageNum++;
+      }
+    },
+
+    nextToLast() {
+      this.pageNum = this.calculatePages - 1;
+    }
+
+  },
+
+  computed: {
+    filterFoods() {
+
+    },
+
+    calculatePages() {
+      // if (this.filterFoods.length % this.perPage != 0) {
+      //   return Math.floor((this.filterFoods.length) / this.perPage) + 1;
+      // }
+      // else {
+      //   return this.filterFoods.length / this.perPage;
+      // }
+      return 6;
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+hr {
+  border-top: 3px solid #057835fa;
+  width: 100%;
+}
 input[type="button"] {
   background: none;
   color: inherit;
@@ -133,10 +217,13 @@ input[type="button"] {
   label {
     width: 100%;
     font-size: 15px;
-    padding: 3px 0;
+    padding: 5px 0;
+    padding-left: 1rem;
+    border-radius: 1rem;
     &:hover {
       color: #fff;
       background-color: #f38609 !important;
+      border-radius: 1rem;
       transition: all 0.5s ease;
     }
   }
@@ -186,19 +273,47 @@ input[type="button"] {
     .menu-tab-item {
       cursor: pointer;
       padding: 5px 30px;
-      border-radius: 10rem;
+      border-radius: 1rem;
       font-size: 20px;
       color: whitesmoke;
       font-weight: 500;
       text-transform: capitalize;
       transition: all 0.3s ease;
-      // margin: 0;
       &:hover {
         background-color: #f38609 !important;
       }
       p {
         padding: none;
         margin: none;
+      }
+    }
+  }
+  .action-row {
+    padding-top: 30px;
+    width: 100%;
+    text-align: center;
+    font-size: 2.5rem;
+    .action-btn {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 4rem;
+      color: white;
+      i {
+        color: #27ae60;
+      }
+    }
+    button.highlight {
+      color: #fff;
+      background-color: #27ae60;
+      border-radius: 2rem;
+    }
+    button {
+      background-color: #fff;
+      width: 4rem;
+      height: 4rem;
+      margin: 0rem 2rem;
+      &:hover {
+        cursor: pointer;
       }
     }
   }

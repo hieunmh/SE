@@ -39,7 +39,7 @@ import { mapMutations, mapState } from 'vuex';
 export default {
 	name: 'Header',
 	methods: {
-		...mapMutations(['setUser']),
+		...mapMutations(['setUser', 'setEmail']),
 
 		showMenu() {
 			let nav_bar = document.querySelector('.header .navbar');
@@ -54,11 +54,12 @@ export default {
 			let data = await axios.get('/login', {withCredentials: true});
 			await axios.post('/logout', data, {withCredentials: true});
 			this.setUser("");
+			this.setEmail("");
 		}
 
 	},
 	computed: {
-		...mapState(['user'])
+		...mapState(['user', 'email'])
 	}
 }
 </script>

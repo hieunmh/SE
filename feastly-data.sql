@@ -1,7 +1,7 @@
 use feastly;
 
 INSERT INTO `product_category` (`name`, `description`) VALUES 
-('Kem', 'Ngon trê từng vị kem'), 
+('Kem', 'Ngon trên từng vị kem'), 
 ('Bánh', 'Ngọt'), 
 ('Đồ ăn', 'Tùy loại'), 
 ('Nước', ''), 
