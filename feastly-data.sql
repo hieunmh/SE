@@ -1,13 +1,26 @@
-INSERT INTO product_category VALUES (1, 'Kem', 'Ngon tren tung vi kem', NULL), 
-(2, 'Banh', 'Ngot', NULL),
-(3, 'Đo an', 'Tuy loai', NULL),
-(4, 'Nuoc', '', NULL),
-(5, 'Bia', 'Khong say khong ve', NULL),
-(6, 'Ruou', 'Thuc uong cho ke si tinh', NULL);
+use feastly;
 
-INSERT INTO discount VALUES (1, 'Giam 10%', 'Giam 10% gia san pham', 0.1, 1, NULL),
-(2, 'Giam 20%', 'Giảm 20% gia san pham', 0.2, 1, NULL),
-(3, 'Giam 50%', 'Giam 50% gia san pham', 0.5, 1, NULL),
-(4, 'Giam 75%', 'Giam 75% gia san pham', 0.75, 1, NULL);
-INSERT INTO product VALUES (1, 'KEM OC QUE', 'KEM', 1, 1, '10.000', 1, NULL, 10, NULL),
-(2, 'Banh sinh nhat', 'Banh', 2, 2, '200.000', 2, NULL, 10, NULL);
+INSERT INTO `product_category` (`name`, `description`) VALUES 
+('Kem', 'Ngon trên từng vị kem'), 
+('Bánh', 'Ngọt'), 
+('Đồ ăn', 'Tùy loại'), 
+('Nước', ''), 
+('Bia', 'Không say không về'), 
+('Rượu', 'Thức uống cho kẻ sỉ tinh');
+
+INSERT INTO `discount` (`name`, `description`, `discount_percent`) VALUES 
+('NONE', 'Đéo giảm', 0),
+('Giảm 10%', 'Giảm 10% giá sản phẩm', 0.1),
+('Giảm 20%', 'Giảm 20% giá sản phẩm', 0.2),
+('Giảm 30%', 'Giảm 30% giá sản phẩm', 0.3),
+('Giảm 40%', 'Giảm 40% giá sản phẩm', 0.4),
+('Giảm 50%', 'Giảm 50% giá sản phẩm', 0.5),
+('Giảm 75%', 'Giảm 75% giá sản phẩm', 0.75);
+
+INSERT INTO `products` (`name`, `desc`, `category_id`, `discount_id`, `price`, `sold_number`, `quantity`) VALUES 
+('Kem ốc quê', 'Kem có em', 1, 1, '10000', 1, 10),
+('Bánh sinh nhật', 'Bánh có anh', 2, 2, '200000', 2, 10);
+
+INSERT INTO `users` (`email`, `password`, `name`, `telephone`, `role`) VALUES 
+('admin@gmail.com', '$2b$10$iDOGulq.CY.YtBD96mA7lO0pPZHZ14i054D0E7AluwYXP1kkvJ0Ya', 'admin', '0987654321', 1), -- password = 123456
+('vinh@gmail.com', '$2b$10$iDOGulq.CY.YtBD96mA7lO0pPZHZ14i054D0E7AluwYXP1kkvJ0Ya', 'Vinh', '0123456789', 0);

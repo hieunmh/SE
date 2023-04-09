@@ -8,9 +8,30 @@ module.exports = (sequelize, DataTypes) => {
   Cart_item.init(
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
+      },
+      user_id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        // allowNull: false,
+        references: {
+          model: 'User',
+          key: 'id',
+        },
+      },
+      product_id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        // allowNull: false,
+        references: {
+          model: 'Product',
+          key: 'id',
+        },
+      },
+      quantity: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+        defaultValue: 1,
       },
     },
     {

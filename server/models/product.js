@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   Product.init(
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
       },
@@ -22,34 +22,32 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       category_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         references: {
           model: 'Product_category',
           key: 'id',
-
+        }
+      },
+      discount_id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        references: {
+          model: 'Discount',
+          key: 'id',
         }
       },
       price: {
         type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
       },
-      discount_id: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'Discount',
-          key: 'id',
-
-        }
+      sold_number: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        allowNull: false,
+        defaultValue: 0,
       },
       quantity: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         defaultValue: 0,
         allowNull: false,
-      },
-      sold_number: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 0,
       },
       image: {
         type: DataTypes.STRING(150),

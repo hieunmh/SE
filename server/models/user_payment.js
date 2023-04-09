@@ -8,10 +8,34 @@ module.exports = (sequelize, DataTypes) => {
   User_payment.init(
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
       },
+      user_id: {
+        type: DataTypes.INTEGER.UNSIGNED,
+        // allowNull: false,
+        references: {
+          model: 'User',
+          key: 'id',
+        },
+      },
+      payment_type: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      provider: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
+      account_no: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      expiry: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      }
     },
     {
       sequelize,
