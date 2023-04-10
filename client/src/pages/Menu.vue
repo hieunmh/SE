@@ -66,7 +66,7 @@
         </div>
 
         <div class="row box-cotainer">
-  
+          <img :src="`${imgUrl}1680757738151.jpg`" alt="">
         </div>
 
         <div class="action-row">
@@ -98,6 +98,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import serverUrl from '@/axios';
 
 export default {
   name: "Menu",
@@ -106,12 +107,12 @@ export default {
       showDropDown: false,
       pageNum: 0,
       perPage: 6,
-      productObj: {name: "", category: "", price: "", type: ""}
+      productObj: {name: "", category: "", price: "", type: ""},
+      imgUrl: serverUrl + "/upload/productImage/"
     };
   },
 
   methods: {
-    ...mapState(['allFoods']),
 
     displayFilter() {
       let div1 = document.querySelectorAll('.filter-heading');
@@ -160,6 +161,8 @@ export default {
   },
 
   computed: {
+    ...mapState(['allFoods']),
+    
     filterFoods() {
 
     },

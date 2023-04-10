@@ -24,6 +24,7 @@
 			<div v-else class="fas fa-user account logined" style="background: #f38609; color: white;">
 				<ul class="drop-down-select">
 					<li><RouterLink @click.prevent="scrollToTop()" to="/info">Tài khoản</RouterLink></li>
+					<li v-if="admin"><RouterLink @click.prevent="scrollToTop()" to="/admin">Quản lý</RouterLink></li>
 					<li><RouterLink to="/myorder">Giỏ hàng</RouterLink></li>
 					<li><RouterLink @click="handleLogout" to="/">Đăng xuất</RouterLink></li>
 				</ul>
@@ -39,7 +40,7 @@ import { mapMutations, mapState } from 'vuex';
 export default {
 	name: 'Header',
 	methods: {
-		...mapMutations(['setUser', 'setEmail']),
+		...mapMutations(['setUser', 'setEmail', 'setAdmin']),
 
 		showMenu() {
 			let nav_bar = document.querySelector('.header .navbar');
@@ -55,11 +56,12 @@ export default {
 			await axios.post('/logout', data, {withCredentials: true});
 			this.setUser("");
 			this.setEmail("");
+			this.setAdmin("");
 		}
 
 	},
 	computed: {
-		...mapState(['user', 'email'])
+		...mapState(['user', 'email', 'admin'])
 	}
 }
 </script>
