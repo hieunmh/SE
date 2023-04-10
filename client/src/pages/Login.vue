@@ -39,16 +39,17 @@ export default {
   data() {
     return {
       loginForm: {email: "", password: ""},
-      matchUser: undefined, // check user trong database thôi
+      matchUser: undefined,
       errors: []
     }
   },  
   
   methods: {
-    ...mapMutations(['scrollToTop', 'setUser', 'setEmail']),
+    ...mapMutations(['scrollToTop', 'setUser', 'setEmail', 'setAdmin']),
 
     async login() {
       let data = await axios.post('/login', this.loginForm, { withCredentials: true });
+      console.log(data);
       let err = data.data.msg;
       if (err === 'Sai email hoặc mật khẩu') {
         this.errors.push(err);
@@ -56,6 +57,9 @@ export default {
       else {
         this.setUser(data.data.userName);
         this.setEmail(data.data.email);
+        if (data.data.role) {
+          this.setAdmin("admin");
+        }
         this.$router.push('/');
       }
     },  
