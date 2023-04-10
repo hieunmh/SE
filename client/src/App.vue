@@ -16,7 +16,7 @@
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import axios from 'axios';
-import { mapMutations } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 
 export default {
   name: 'App',
@@ -26,6 +26,7 @@ export default {
   },
   methods: {
     ...mapMutations(['setEmail', 'setUser']),
+    ...mapActions(['getProducts']),
 
     async checkLogin() {
       let res = await axios.get('login', {withCredentials: true});
@@ -36,8 +37,10 @@ export default {
       }
     }
   },
-  mounted() {
+  
+  created() {
     this.checkLogin();
+    this.getProducts();
   }
 }
 </script>
