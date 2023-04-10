@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       price: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
       },
       sold_number: {

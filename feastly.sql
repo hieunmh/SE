@@ -26,7 +26,7 @@ CREATE TABLE products (
     `desc` TEXT NOT NULL,
     `category_id` INT UNSIGNED,
     `discount_id` INT UNSIGNED,
-    `price` DECIMAL(10, 2) NOT NULL,
+    `price` INT UNSIGNED NOT NULL,
     `sold_number` INT UNSIGNED DEFAULT '0' NOT NULL,
     `quantity` INT UNSIGNED DEFAULT '0' NOT NULL,
     `image` VARCHAR(150),
