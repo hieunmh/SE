@@ -1,9 +1,7 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Order_items extends Model {
-
-  }
+  class Order_items extends Model {}
 
   Order_items.init(
     {
@@ -40,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
       updatedAt: false,
       createdAt: 'created_at',
-    });
+    },
+  );
   return Order_items;
-}
+};

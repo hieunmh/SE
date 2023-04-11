@@ -1,9 +1,7 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class User_payment extends Model {
-
-  }
+  class User_payment extends Model {}
 
   User_payment.init(
     {
@@ -35,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       expiry: {
         type: DataTypes.DATE,
         allowNull: false,
-      }
+      },
     },
     {
       sequelize,
@@ -43,6 +41,7 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
       updatedAt: false,
       createdAt: 'created_at',
-    });
+    },
+  );
   return User_payment;
-}
+};

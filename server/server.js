@@ -6,7 +6,7 @@ const routesInit = require('./routes/indexRoute');
 const path = require('path');
 
 //temporary: save session into folder session
-const fileStore = require("session-file-store")(session);
+const fileStore = require('session-file-store')(session);
 
 //database
 const db = require('./models');
@@ -14,7 +14,6 @@ const db = require('./models');
   await db.sequelize.sync();
   // await db.sequelize.sync({ alter: true });
 })();
-
 
 // init app
 const app = express();
@@ -29,20 +28,21 @@ app.use(
     cookie: {
       maxAge: 1000 * 60 * 60,
       sameSite: true,
-      // secure: process.env.NODE_ENV, 
+      // secure: process.env.NODE_ENV,
     },
     resave: false,
     saveUninitialized: false,
     secret: process.env.SES_SECRET,
-    store: new fileStore()
+    store: new fileStore(),
   }),
 );
 
-
-app.use(cors({
-  origin: "http://localhost:8080", // thay doi theo url cua Network client
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.FRONTEND_HOST, // thay doi theo url cua Network client
+    credentials: true,
+  }),
+);
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());

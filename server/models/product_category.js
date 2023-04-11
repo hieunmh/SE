@@ -1,9 +1,7 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Product_category extends Model {
-
-  }
+  class Product_category extends Model {}
 
   Product_category.init(
     {
@@ -19,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
       description: {
         type: DataTypes.TEXT,
       },
-
     },
     {
       sequelize,
@@ -27,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
       updatedAt: false,
       createdAt: 'created_at',
-    });
+    },
+  );
   return Product_category;
-}
+};

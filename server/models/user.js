@@ -2,7 +2,6 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     // custom method
-
   }
 
   User.init(
@@ -33,12 +32,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: false,
-      }
+      },
     },
     {
       sequelize,
       modelName: 'users',
       timestamps: false,
-    });
+    },
+  );
   return User;
 };

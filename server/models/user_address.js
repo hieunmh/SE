@@ -1,9 +1,7 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class User_address extends Model {
-
-  }
+  class User_address extends Model {}
 
   User_address.init(
     {
@@ -18,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         references: {
           model: 'User',
           key: 'id',
-        }
+        },
       },
       city: {
         type: DataTypes.STRING(100),
@@ -39,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
       updatedAt: false,
       createdAt: 'created_at',
-    });
+    },
+  );
   return User_address;
-}
+};
