@@ -1,9 +1,7 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Discount extends Model {
-
-  }
+  class Discount extends Model {}
 
   Discount.init(
     {
@@ -22,13 +20,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       discount_percent: {
         type: DataTypes.DECIMAL(4, 2),
-        allowNull: false
+        allowNull: false,
       },
       active: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
         allowNull: false,
-      }
+      },
     },
     {
       sequelize,
@@ -36,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
       updatedAt: false,
       createdAt: 'created_at',
-    });
+    },
+  );
   return Discount;
-}
+};
