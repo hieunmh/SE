@@ -49,7 +49,6 @@ export default {
 
     async login() {
       let data = await axios.post('/login', this.loginForm, { withCredentials: true });
-      console.log(data);
       let err = data.data.msg;
       if (err === 'Sai email hoặc mật khẩu') {
         this.errors.push(err);

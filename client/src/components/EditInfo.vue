@@ -31,6 +31,8 @@
 <script>
 import axios from 'axios';
 import { mapMutations } from 'vuex';
+import filterVN from '@/filterVN';
+
 export default {
   name: "editInfo",
   data() {
@@ -79,9 +81,9 @@ export default {
 
       //name validate
       if (this.editInfoForm.name) {
-        if (!/^[A-Za-z]+$/.test(this.editInfoForm.name.replace(/\s/g, ""))) {
-        this.errorObj.nameErr.push('Tên chỉ được chứa ký tự chữ cái');
-      }
+        if (!/^[A-Za-z]+$/.test(filterVN(this.editInfoForm.name.replace(/\s/g, "")))) {
+          this.errorObj.nameErr.push('Tên chỉ được chứa ký tự chữ cái');
+        }
       }
 
       //telephone validate
