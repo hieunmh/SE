@@ -1,23 +1,30 @@
-const { models: { Product } } = require('../models');
+const {
+  models: { Product },
+} = require('../models');
 const path = require('path');
 const { formatMediaURL } = require('../helper/url_formatter');
 const discount = require('../models/discount');
 class adminController {
-
   // [POST] /admin/product/add
   async addProduct(req, res, next) {
-    // need category_id, discount_id, quantity, sold 
+    // need category_id, discount_id, quantity, sold
     //to do
+    //handle category and discount
+    // admin pick one of all categories and pick discount
+    // search for category id in table product_category and discount_id in discount
+    // get foreign key
 
-    let {name, desc, price} = req.body;
+    let { name, desc, price, quantity, sold_number } = req.body;
     price = parseInt(price);
 
-    if (!name || !desc || !price) {
+    if (!name || !desc || !price || !quantity || !sold_number) {
       return res.status(400).json({
-        msg: "Please fill all !!!"
-      })
+        msg: 'Please fill all !!!',
+      });
     } else {
-      const file_path = (req.file) ? path.join('upload', 'productImage', req.file.filename) : null;
+      const file_path = req.file
+        ? path.join('upload', 'productImage', req.file.filename)
+        : null;
       console.log(formatMediaURL(file_path));
 
       const result = await Product.findOrCreate({
@@ -28,22 +35,24 @@ class adminController {
         },
         defaults: {
           image: formatMediaURL(file_path),
-        }
-      }).then( (data) => {
-        console.log(data[0]);
-        if (data[0]._options.isNewRecord) {
-          return res.status(200).json({
-                msg: "Upload Success !!"
-              });
-        } else {
-          return res.status(200).json({
-                msg: "Already Had !!"
-              })
-        }
-      }).catch((err) => {
-        console.log(err);
-        next(err);
+        },
       })
+        .then((data) => {
+          console.log(data[0]);
+          if (data[0]._options.isNewRecord) {
+            return res.status(200).json({
+              msg: 'Upload Success !!',
+            });
+          } else {
+            return res.status(200).json({
+              msg: 'Already Had !!',
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          next(err);
+        });
     }
   }
 
@@ -75,16 +84,14 @@ class adminController {
         // Update discount_id in product table
         // to do
 
-
-
-
-      
         // if one of this values isn't changed, what will be updated ?
-        const result = Product.update({ name, desc, price, discountPercent }, {
-          where: {
-            id: IDProduct
-          }
-        }
+        const result = Product.update(
+          { name, desc, price, discountPercent },
+          {
+            where: {
+              id: IDProduct,
+            },
+          },
         );
         return res.status(200).send('Modify product: Success!');
       }
@@ -116,7 +123,6 @@ class adminController {
       next(error);
     }
   }
-
 }
 
 module.exports = new adminController();

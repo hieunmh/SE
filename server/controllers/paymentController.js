@@ -1,6 +1,3 @@
-
-class paymentController {
-
-}
+class paymentController {}
 
 module.exports = new paymentController();

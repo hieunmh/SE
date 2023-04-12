@@ -46,12 +46,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: false,
-      }
+      },
     },
     {
       sequelize,
       modelName: 'users',
       timestamps: false,
-    });
+    },
+  );
   return User;
 };

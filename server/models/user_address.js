@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         references: {
           model: 'User',
           key: 'id',
-        }
+        },
       },
       city: {
         type: DataTypes.STRING(100),
@@ -44,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
       updatedAt: false,
       createdAt: 'created_at',
-    });
+    },
+  );
   return User_address;
-}
+};

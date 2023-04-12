@@ -25,7 +25,7 @@ export default {
     Footer,
   },
   methods: {
-    ...mapMutations(['setEmail', 'setUser']),
+    ...mapMutations(['setEmail', 'setUser', 'setAdmin']),
     ...mapActions(['getProducts']),
 
     async checkLogin() {
@@ -34,6 +34,9 @@ export default {
         let data = await axios.get('info', { withCredentials: true });  
         this.setUser(data.data.userName);
         this.setEmail(data.data.email);
+        if (data.data.role) {
+          this.setAdmin("admin");
+        }
       }
     }
   },

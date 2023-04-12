@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       expiry: {
         type: DataTypes.DATE,
         allowNull: false,
-      }
+      },
     },
     {
       sequelize,
@@ -48,6 +48,7 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
       updatedAt: false,
       createdAt: 'created_at',
-    });
+    },
+  );
   return User_payment;
-}
+};

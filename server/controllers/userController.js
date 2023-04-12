@@ -1,7 +1,9 @@
 const path = require('path');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
-const { models: { User } } = require('../models/');
+const {
+  models: { User },
+} = require('../models/');
 
 // bcrypt
 const saltRounds = 10;
@@ -23,7 +25,7 @@ class userController {
       email: findUser.email,
       telephone: findUser.telephone,
       role: findUser.role,
-    })
+    });
   }
 
   // [GET] /login
@@ -39,7 +41,7 @@ class userController {
         const hashedPwd = await bcrypt.hash(password, saltRounds);
         const findUser = await User.findOne({
           attributes: ['id', 'password', 'name', 'role'],
-          where: { email, },
+          where: { email },
         });
 
         if (findUser) {
@@ -62,7 +64,6 @@ class userController {
               role: findUser.role,
               cookie: req.headers.cookie,
             });
-
           } else {
             return res.status(200).json({
               msg: 'Sai email hoặc mật khẩu',
@@ -71,7 +72,7 @@ class userController {
         } else {
           return res.status(200).json({
             msg: 'Sai email hoặc mật khẩu',
-          })
+          });
         }
       } catch (error) {
         next(error);
@@ -85,12 +86,12 @@ class userController {
 
   // [POST] /logout
   async logout(req, res, next) {
-    req.session.destroy(err => {
+    req.session.destroy((err) => {
       if (err) {
         return res.json({
-          msg: "Error: Destroy session",
-          redirect: '/home'
-        })
+          msg: 'Error: Destroy session',
+          redirect: '/home',
+        });
       }
     }); // destroy session
 
@@ -124,20 +125,21 @@ class userController {
             password: hashedPwd,
             name,
             telephone,
-          }).then((data) => {
-            console.log(data.id); // user id 
-            req.session.userId = data.id;
-            req.session.role = defaultUserRole; // default user
-            return res.status(201).json({
-              msg: 'Register Account Success',
-              email: email,
-              name: name,
-              role: defaultUserRole,
+          })
+            .then((data) => {
+              console.log(data.id); // user id
+              req.session.userId = data.id;
+              req.session.role = defaultUserRole; // default user
+              return res.status(201).json({
+                msg: 'Register Account Success',
+                email: email,
+                name: name,
+                role: defaultUserRole,
+              });
+            })
+            .catch((err) => {
+              console.log(err);
             });
-          }).catch((err) => {
-            console.log(err);
-          });
-
         } else {
           res.status(200).json({
             msg: 'Email đã tồn tại',
@@ -155,26 +157,31 @@ class userController {
 
     if (!name && !telephone) {
       return res.status(400).json({
-        msg: "Nothing changes",
-      })
+        msg: 'Nothing changes',
+      });
     } else {
       // check if name or telephone value is null
       // need to update what
-      const result = await User.update({ name, telephone }, {
-        where: {
-          id: req.session.userId
-        }
-      }).then((data) => {
-        console.log(data)
-      }).catch((err) => {
-        console.log(err);
-        next(err);
-      })
+      const result = await User.update(
+        { name, telephone },
+        {
+          where: {
+            id: req.session.userId,
+          },
+        },
+      )
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+          next(err);
+        });
     }
 
     return res.status(200).json({
-      msg: "Update success! ",
-    })
+      msg: 'Update success! ',
+    });
   }
 
   // [POST] /updatePassword  : change password
@@ -183,14 +190,14 @@ class userController {
 
     if (!oldPW && !newPW) {
       return res.status(200).json({
-        msg: "Bad request! ",
-      })
+        msg: 'Bad request! ',
+      });
     } else {
       // check coincidence
       if (oldPW === newPW) {
         return res.status(200).json({
-          msg: "Mật khẩu mới không được giống mật khẩu cũ",
-        })
+          msg: 'Mật khẩu mới không được giống mật khẩu cũ',
+        });
       }
       // check oldPW
       const getPW = await User.findOne({
@@ -199,15 +206,12 @@ class userController {
           id: req.session.userId,
         },
       });
-      const checkOldPW = await bcrypt.compareSync(
-        oldPW,
-        getPW.password,
-      );
+      const checkOldPW = await bcrypt.compareSync(oldPW, getPW.password);
 
       if (!checkOldPW) {
         return res.status(200).json({
-          msg: "Mật khẩu cũ không đúng",
-        })
+          msg: 'Mật khẩu cũ không đúng',
+        });
       }
 
       // create hashedPW
@@ -216,19 +220,24 @@ class userController {
         throw new Error('Error hashing pw');
       }
 
-      const result = await User.update({ password: hashedPwd }, {
-        where: {
-          id: req.session.userId
-        }
-      }).then((data) => {
-        console.log(data)
-        return res.status(200).json({
-          msg: "Đổi mật khẩu thành công!",
+      const result = await User.update(
+        { password: hashedPwd },
+        {
+          where: {
+            id: req.session.userId,
+          },
+        },
+      )
+        .then((data) => {
+          console.log(data);
+          return res.status(200).json({
+            msg: 'Đổi mật khẩu thành công!',
+          });
         })
-      }).catch((err) => {
-        console.log(err);
-        next(err);
-      })
+        .catch((err) => {
+          console.log(err);
+          next(err);
+        });
     }
   }
 }

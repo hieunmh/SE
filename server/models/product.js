@@ -1,6 +1,5 @@
 const { Model } = require('sequelize');
 
-
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
 
@@ -34,14 +33,14 @@ module.exports = (sequelize, DataTypes) => {
         references: {
           model: 'Product_category',
           key: 'id',
-        }
+        },
       },
       discount_id: {
         type: DataTypes.INTEGER.UNSIGNED,
         references: {
           model: 'Discount',
           key: 'id',
-        }
+        },
       },
       price: {
         type: DataTypes.INTEGER.UNSIGNED,
@@ -59,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       image: {
         type: DataTypes.STRING(150),
-      }
+      },
     },
     {
       sequelize,
@@ -67,7 +66,8 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
       updatedAt: false,
       createdAt: 'created_at',
-    });
+    },
+  );
 
   return Product;
 };

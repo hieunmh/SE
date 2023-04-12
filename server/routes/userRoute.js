@@ -1,7 +1,10 @@
-
 const express = require('express');
 const userController = require('../controllers/userController');
-const { isAdmin, isAuth, isAlreadyLogin } = require('../middleware/authenticate');
+const {
+  isAdmin,
+  isAuth,
+  isAlreadyLogin,
+} = require('../middleware/authenticate');
 
 const router = express.Router();
 
