@@ -8,7 +8,7 @@
       <div class="col-sm-4 col-12 filter-box">
         <div class="row search-box">
           <i class="fa-solid fa-magnifying-glass" @click=""></i>
-          <input type="text" class="search-input" placeholder="Tìm kiếm . . .">
+          <input type="text" class="search-input" v-model="productObj.name" placeholder="Tìm kiếm . . .">
           <div class="row filter-dropdown" @click="displayFilter()">
             <div class="fa-solid fa-caret-down dropDown"></div>
           </div>
@@ -56,17 +56,34 @@
       <div class="col-sm-8">
         <div class="row">
           <div class="menu-tabs ">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" name="allFood" value="Tất cả">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" name="allFood" value="Bánh">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" name="allFood" value="Đồ ăn">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" name="allFood" value="Nước">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" name="allFood" value="Bia">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" name="allFood" value="Rượu">
+            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Tất cả">
+            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Bánh">
+            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Đồ ăn">
+            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Nước">
+            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Bia">
+            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Rượu">
           </div>
         </div>
 
-        <div class="row box-cotainer">
-          <img :src="`${imgUrl}1680757738151.jpg`" alt="">
+        <div class="row box-container">
+          <div v-for="(p, index) in currentPage" :key="index" class="col-lg-4 col-md-6 col-sm-12">
+            <div class="box">
+              <div class="image">
+                <img :src="`${p.image}`" alt="">
+                <!-- <img :src="`${imgUrl}${p.image}`" alt=""> -->
+              </div>
+
+              <div class="content">
+                <h3>{{ p.name }}</h3>
+
+                <div class="price">
+                  {{ parseFloat(p.price) }} VND
+                  <span></span>
+                  <button class="btnn" @click="">Thêm vào giỏ hàng</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div class="action-row">
@@ -99,6 +116,7 @@
 <script>
 import { mapState } from 'vuex';
 import serverUrl from '@/axios';
+import filterVN from '@/filterVN';
 
 export default {
   name: "Menu",
@@ -106,7 +124,8 @@ export default {
     return {
       showDropDown: false,
       pageNum: 0,
-      perPage: 6,
+      perPage: 9,
+      prevCategoryClicked: "",
       productObj: {name: "", category: "", price: "", type: ""},
       imgUrl: serverUrl + "/upload/productImage/"
     };
@@ -156,26 +175,41 @@ export default {
 
     nextToLast() {
       this.pageNum = this.calculatePages - 1;
-    }
+    },
 
+    filterProduct(event) {
+      this.pageNum = 0;
+      if (this.productObj.category != event.target.value && this.prevCategoryClicked != "") {
+        this.prevCategoryClicked.target.style.background = "#27ae60";
+      }
+      this.productObj.category = event.target.value;
+      console.log(this.productObj.category);
+      this.prevCategoryClicked = event;
+      event.target.style.background = "#057835fa";
+    }
   },
 
   computed: {
     ...mapState(['allFoods']),
     
     filterFoods() {
+      this.pageNum = 0;
+      return this.allFoods.filter((p) => filterVN(p.name).toLowerCase().match(filterVN(this.productObj.name).toLowerCase()) 
+      && (this.productObj.category.toLowerCase() == "tất cả" || this.productObj.category == ""));
+    },
 
+    currentPage() {
+      return this.filterFoods.slice(this.pageNum * this.perPage, this.pageNum * this.perPage + this.perPage);
     },
 
     calculatePages() {
-      // if (this.filterFoods.length % this.perPage != 0) {
-      //   return Math.floor((this.filterFoods.length) / this.perPage) + 1;
-      // }
-      // else {
-      //   return this.filterFoods.length / this.perPage;
-      // }
-      return 6;
-    }
+      if (this.filterFoods.length % this.perPage != 0) {
+        return Math.floor((this.filterFoods.length) / this.perPage) + 1;
+      }
+      else {
+        return this.filterFoods.length / this.perPage;
+      }
+    },
   }
 }
 </script>
@@ -266,6 +300,7 @@ input[type="button"] {
 
 .menu {
   padding: 2rem 9%;
+  background-color: #f2f2f2;
   .menu-tabs {
     margin-bottom: 30px;
     flex: 0 0 100%;
@@ -288,6 +323,38 @@ input[type="button"] {
       p {
         padding: none;
         margin: none;
+      }
+    }
+  }
+
+  .box-container {
+    .box {
+      border-radius: 1rem;
+      position: relative;
+      background-color: #fff;
+      padding: 10px;
+      text-align: center;
+      &:hover {
+        box-shadow: 10px 10px 10px rgba($color: #000000, $alpha: 0.2), -10px -10px 10px rgba($color: #000000, $alpha: 0.2) ;
+      }
+      .image {
+        // margin: 1rem 0;
+        width: 100%;
+        img {
+          width: 100%;
+        }
+      }
+
+      .content {
+        h3 {
+          font-size: 2rem;
+          height: 5rem;
+          color: #130f40;
+        }
+        .price  {
+          font-size: 2rem;
+          color: #130f40;
+        }
       }
     }
   }

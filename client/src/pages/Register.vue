@@ -51,6 +51,8 @@
 <script>
 import axios from 'axios';
 import { mapMutations } from 'vuex';
+import filterVN from '@/filterVN';
+
   export default {
     name: "Register",
     data() {
@@ -107,7 +109,7 @@ import { mapMutations } from 'vuex';
         if (!this.registerForm.name) {
           this.errorObj.nameErr.push('Vui lòng nhập tên của bạn');
         }
-        else if (!/^[A-Za-z]+$/.test(this.registerForm.name.replace(/\s/g, ""))) {
+        else if (!/^[A-Za-z]+$/.test(filterVN(this.registerForm.name.replace(/\s/g, "")))) {
           this.errorObj.nameErr.push('Tên chỉ được chứa ký tự chữ cái');
         }
 
