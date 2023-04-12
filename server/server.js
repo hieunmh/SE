@@ -7,6 +7,22 @@ const path = require('path');
 
 //temporary: save session into folder session
 const fileStore = require('session-file-store')(session);
+// const redis = require('redis');
+// const connectRedis = require('connect-redis');
+// const RedisStore = connectRedis(session);
+
+// const redisClient = redis.createClient({
+//   host: 'localhost',
+//   port: 6379
+// })
+
+// const sessionStore = new RedisStore({ client: redisClient });
+// redisClient.on('error', function (err) {
+//   console.log('Could not establish a connection with redis. ' + err);
+// });
+// redisClient.on('connect', function (err) {
+//   console.log('Connected to redis successfully');
+// });
 
 //database
 const db = require('./models');
@@ -14,6 +30,7 @@ const db = require('./models');
   await db.sequelize.sync();
   // await db.sequelize.sync({ alter: true });
 })();
+
 
 // init app
 const app = express();
@@ -25,15 +42,14 @@ app.use('/', express.static(staticFolder));
 app.use(
   session({
     name: process.env.SES_NAME,
-    cookie: {
-      maxAge: 1000 * 60 * 60,
-      sameSite: true,
-      // secure: process.env.NODE_ENV,
-    },
     resave: false,
     saveUninitialized: false,
     secret: process.env.SES_SECRET,
     store: new fileStore(),
+    cookie: {
+      maxAge: Date.now() + 1000 * 60 * 60,
+      sameSite: true,
+    },
   }),
 );
 

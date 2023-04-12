@@ -6,6 +6,7 @@ const userRouter = require('./userRoute');
 const mainRouter = require('./mainRoute');
 const adminRouter = require('./adminRoute');
 const categoryRouter = require('./categoryRoute');
+const cartRouter = require('./cartRoute');
 
 function routesInit(app) {
   app.use('/admin', adminRouter);
@@ -13,6 +14,7 @@ function routesInit(app) {
   app.use('/', userRouter);
   app.use('/', mainRouter);
   app.use('/', categoryRouter);
+  app.use('/', cartRouter);
 }
 
 // export default routesInit;
