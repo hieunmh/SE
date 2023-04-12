@@ -5,12 +5,12 @@
     </div>
 
     <div class="row">
-      <div class="col-sm-4 col-12 filter-box">
+      <div class="col-12 filter-box">
         <div class="row search-box">
           <i class="fa-solid fa-magnifying-glass" @click=""></i>
           <input type="text" class="search-input" v-model="productObj.name" placeholder="Tìm kiếm . . .">
           <div class="row filter-dropdown" @click="displayFilter()">
-            <div class="fa-solid fa-caret-down dropDown"></div>
+            <div class="fa fa-sliders dropDown"></div>
           </div>
         </div>
          
@@ -32,7 +32,6 @@
           </ul>
         </div>
 
-        <hr/>
 
         <div class="row filter-heading"> 
           <h1>Phân loại</h1>
@@ -53,20 +52,18 @@
         </div>
       </div>
       
-      <div class="col-sm-8">
-        <div class="row">
-          <div class="menu-tabs ">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Tất cả">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Bánh">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Đồ ăn">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Nước">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Bia">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Rượu">
-          </div>
+      <div class="col-12">
+        <div class="row menu-tabs">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" name="allFood" value="Tất cả">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" name="allFood" value="Mì phở">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" name="allFood" value="Cơm hộp">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" name="allFood" value="Bánh Mì">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" name="allFood" value="Bia">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" name="allFood" value="Trà sữa">
         </div>
 
         <div class="row box-container">
-          <div v-for="(p, index) in currentPage" :key="index" class="col-lg-4 col-md-6 col-sm-12">
+          <div v-for="(p, index) in currentPage" :key="index" class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
             <div class="box">
               <div class="image">
                 <img :src="`${p.image}`" alt="">
@@ -79,8 +76,9 @@
                 <div class="price">
                   {{ parseFloat(p.price) }} VND
                   <span></span>
-                  <button class="btnn" @click="">Thêm vào giỏ hàng</button>
                 </div>
+
+                <button class="btnn" @click=""><i class="fa-solid fa-cart-plus"></i>  Thêm vào giỏ hàng</button>
               </div>
             </div>
           </div>
@@ -114,7 +112,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import serverUrl from '@/axios';
 import filterVN from '@/filterVN';
 
@@ -124,7 +122,7 @@ export default {
     return {
       showDropDown: false,
       pageNum: 0,
-      perPage: 9,
+      perPage: 12,
       prevCategoryClicked: "",
       productObj: {name: "", category: "", price: "", type: ""},
       imgUrl: serverUrl + "/upload/productImage/"
@@ -132,8 +130,9 @@ export default {
   },
 
   methods: {
+    ...mapMutations(['scrollToTop']),
 
-    displayFilter() {
+      displayFilter() {
       let div1 = document.querySelectorAll('.filter-heading');
       let div2 = document.querySelectorAll('.filter-section');
       let dropdown = document.querySelector('.dropDown');
@@ -147,6 +146,7 @@ export default {
 
     setPage(value) {
       this.pageNum = value;   
+      this.scrollToTop();
     },  
 
     previous() {
@@ -161,6 +161,7 @@ export default {
 
     previousToFirst() {
       this.pageNum = 0;
+      this.scrollToTop();
     },
 
     next() {
@@ -175,6 +176,7 @@ export default {
 
     nextToLast() {
       this.pageNum = this.calculatePages - 1;
+      this.scrollToTop();
     },
 
     filterProduct(event) {
@@ -215,10 +217,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-hr {
-  border-top: 3px solid #057835fa;
-  width: 100%;
-}
 input[type="button"] {
   background: none;
   color: inherit;
@@ -269,6 +267,7 @@ input[type="button"] {
 .search-box {
   width: 100%;
   position: relative;
+  margin: 0;
   margin-bottom: 15px;
   i {
     position: absolute;
@@ -296,13 +295,32 @@ input[type="button"] {
       color: #27ae60;
     }
   }
+  .filter-dropdown {
+    display: block;
+    border-radius: 1rem;
+    background-color: #27ae60;
+    color: #27ae60;
+    font-weight: 400;
+    margin-bottom: 0rem;
+    position: relative;
+    div {
+      position: absolute;
+      top: -3rem;
+      right: 1rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size:2rem;
+    }
+  }
 }
 
 .menu {
-  padding: 2rem 9%;
-  background-color: #f2f2f2;
+  padding: 2rem 20%;
+  // background-color: #fff;
+  
   .menu-tabs {
-    margin-bottom: 30px;
+    margin: 0;
+    margin-bottom: 2rem;
     flex: 0 0 100%;
     max-width: 100%;
     text-align: center;
@@ -310,9 +328,9 @@ input[type="button"] {
     border-radius: 1rem;
     .menu-tab-item {
       cursor: pointer;
-      padding: 5px 30px;
+      padding: 0.8rem 0;
       border-radius: 1rem;
-      font-size: 20px;
+      font-size: 1.7rem;
       color: whitesmoke;
       font-weight: 500;
       text-transform: capitalize;
@@ -328,41 +346,48 @@ input[type="button"] {
   }
 
   .box-container {
+    padding: 0;
     .box {
       border-radius: 1rem;
       position: relative;
-      background-color: #fff;
-      padding: 10px;
+      background-color: #f2f2f2;
       text-align: center;
       &:hover {
-        box-shadow: 10px 10px 10px rgba($color: #000000, $alpha: 0.2), -10px -10px 10px rgba($color: #000000, $alpha: 0.2) ;
+        box-shadow: 0px 5px 5px rgba($color: #000000, $alpha: 0.3);
       }
       .image {
-        // margin: 1rem 0;
-        width: 100%;
         img {
           width: 100%;
+          border-radius: 1rem;
         }
       }
 
       .content {
         h3 {
-          font-size: 2rem;
-          height: 5rem;
-          color: #130f40;
+          font-size: 1.8rem;
+          height: 4rem;
+          color: #000;
+          margin: 0 1rem;
+          margin-top: 1rem;
         }
         .price  {
-          font-size: 2rem;
-          color: #130f40;
+          font-size: 1.8rem;
+          color: #ee4d2d;
+          // padding: 0 2rem;
+          padding-bottom: 1rem;
+        }
+        button {
+          margin: 0 1rem;
+          margin-bottom: 1rem;
         }
       }
     }
   }
   .action-row {
     padding-top: 30px;
-    width: 100%;
+    max-width: 100%;
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 2rem;
     .action-btn {
       width: 4rem;
       height: 4rem;
@@ -379,8 +404,42 @@ input[type="button"] {
     }
     button {
       background-color: #fff;
-      width: 4rem;
-      height: 4rem;
+        width: 4rem;
+        height: 4rem;
+        margin: 0rem 2rem;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.filter-heading, .filter-section {
+  display: none;
+}
+
+.filter-heading.active, .filter-section.active  {
+  display: block;
+  
+}
+
+@media (max-width: 575px) {
+  .search-box, .filter-heading, .filter-section {
+    width: auto;
+  }
+  .filter-option {
+    width: 100%;
+  }
+  .menu .action-row {
+    font-size: 1.5rem;
+    .action-btn {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 3rem;
+    }
+    button {
+      width: 3rem;
+      height: 3rem;
       margin: 0rem 2rem;
       &:hover {
         cursor: pointer;
@@ -389,55 +448,11 @@ input[type="button"] {
   }
 }
 
-.filter-dropdown {
-  display: none;
-}
-
-@media (min-width: 576px) {
-  .filter-heading, .filter-section {
-    display: block !important;
-  }
-}
-
-@media (max-width: 575px) {
-  .search-box, .filter-heading, .filter-section {
-    width: auto;
-  }
-  .filter-heading, .filter-section {
-    display: none;
-  }
-  .filter-heading.active, .filter-section.active  {
-    display: block;
-    
-  }
-  .filter-option {
-    width: 100%;
-  }
-  .filter-dropdown {
-    display: block;
-    border-radius: 1rem;
-    background-color: #27ae60;
-    color: #27ae60;
-    font-weight: 400;
-    margin-bottom: 15px;
-    position: relative;
-    div {
-      position: absolute;
-      top: -3.7rem;
-      right: 1rem;
-      width: 2.5rem;
-      height: 2.5rem;
-      font-size:2.5rem;
-    }
-    div.active {
-      transform: rotateX(180deg);
-    }
-  }
-}
-
 @media (max-width: 324px) {
   .menu .menu-tabs .menu-tab-item {
-    font-size: 1.8rem;
+    text-align: center;
+    padding: auto auto;
+    font-size: 1.4rem;
   }
 }
 
