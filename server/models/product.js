@@ -1,7 +1,17 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Product extends Model {}
+  class Product extends Model {
+
+    static associate(models) {
+      Product.belongsTo(models.Product_category, {
+        foreignKey: 'category_id',
+      });
+      Product.belongsTo(models.Discount, {
+        foreignKey: 'discount_id',
+      });
+    }
+  }
 
   Product.init(
     {

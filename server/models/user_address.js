@@ -1,7 +1,14 @@
 const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class User_address extends Model {}
+  class User_address extends Model {
+
+    static associate(models) {
+      User_address.belongsTo(models.User, {
+        foreignKey: 'user_id',
+      });
+    }
+  }
 
   User_address.init(
     {
