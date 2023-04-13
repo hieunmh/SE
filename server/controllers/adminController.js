@@ -41,7 +41,7 @@ class adminController {
           console.log(data[0]);
           if (data[0]._options.isNewRecord) {
             return res.status(200).json({
-              msg: 'Upload Success !!',
+              success: 'Uploaded Success !!',
             });
           } else {
             return res.status(200).json({
@@ -93,7 +93,7 @@ class adminController {
             },
           },
         );
-        return res.status(200).send('Modify product: Success!');
+        return res.status(200).json({ success: 'Modify product: Success!' });
       }
     } catch (error) {
       console.log('cant modify product! ');
@@ -115,11 +115,13 @@ class adminController {
       if (!checkIdExist) {
         return res.status(404).json({ message: 'Cant detect product!' });
       } else {
-        const result = Product.destroy({ where: { id: IDProduct } });
-        return res.status(200).send(result);
+        const result = await Product.destroy({ where: { id: IDProduct } });
+        return res.status(200).json({
+          success: 'Deleted success!',
+        });
       }
     } catch (error) {
-      console.log('cant delete product! ');
+      console.log('Cant delete product! ');
       next(error);
     }
   }

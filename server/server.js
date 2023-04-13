@@ -31,7 +31,6 @@ const db = require('./models');
   // await db.sequelize.sync({ alter: true });
 })();
 
-
 // init app
 const app = express();
 

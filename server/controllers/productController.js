@@ -42,7 +42,7 @@ class productController {
     try {
       if (!categoryID) {
         return res.status(400).json({
-          msg: 'Please fill all',
+          msg: 'All filled must be required',
         });
       } else {
         const result = await Product.findAll({
