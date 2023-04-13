@@ -1,14 +1,14 @@
 use feastly;
 
 INSERT INTO `product_category` (`name`, `description`) VALUES 
-('Mỳ tôm sú', 'Siuuuuuuuuuu'), 
-('Bánh mì', 'Bán bánh bánh mì lo lo cho em'),
-('Đồ chiên', 'Chưa chắc đã giòn đâu'),
-('Đồ uống', ''), 
-('Đồ ăn', 'Tùy loại'), 
-('Nước', ''), 
-('Bia', 'Không say không về'), 
-('Rượu', 'Thức uống cho kẻ sỉ tinh');
+('Mỳ Phở', 'Siuuuuuuuuuu'), 
+('Cơm Hộp', 'Em ăn cơm chưa'),
+('Bánh Mì', 'Bán bánh bánh mì lo lo cho em'),
+('Bia, Rượu', 'Không say không về'), 
+('Trà Sữa', 'Thức uống cho kẻ sỉ tinh'),
+('Đồ Ăn', 'Tùy loại'),
+('Đồ Uống', ''),
+('Đồ Chiên', 'Chưa chắc đã giòn đâu');
 
 INSERT INTO `discount` (`name`, `description`, `discount_percent`) VALUES 
 ('NONE', 'Đéo giảm', 0),
