@@ -12,21 +12,24 @@ import Myorder from '../pages/Myorder.vue';
 import Cart from '../pages/Cart.vue';
 import Info from '../pages/Info.vue';
 import Admin from '../pages/Admin.vue';
+import ProductDetail from '../components/ProductDetail.vue';
+
 import axios from "axios";
 
 
 const routes = [
-  { path: "/", name: "Home", component: Home, },
-  { path: "/login", name: "Login", component: Login, },
+  { path: "/", name: "Home", component: Home },
+  { path: "/login", name: "Login", component: Login },
   { path: "/menu", name: "Menu", component: Menu, },
-  { path: "/about", name: "About", component: About, },
-  { path: "/promotion", name: "Promotion", component: Promotion, },
-  { path: "/table", name: "Table", component: Table, },
-  { path: "/register", name: "Register", component: Register, },
-  { path: "/cart", name: "Cart", component: Cart, },
-  { path: "/myorder", name: "Myorder", component: Myorder, },
-  { path: "/info", name: "Info", component: Info, },
-  { path: "/admin", name: "Admin", component: Admin, },
+  { path: "/menu/:id", name: "ProductDetail", component: ProductDetail, props: true },
+  { path: "/about", name: "About", component: About },
+  { path: "/promotion", name: "Promotion", component: Promotion },
+  { path: "/table", name: "Table", component: Table },
+  { path: "/register", name: "Register", component: Register },
+  { path: "/cart", name: "Cart", component: Cart },
+  { path: "/myorder", name: "Myorder", component: Myorder },
+  { path: "/info", name: "Info", component: Info },
+  { path: "/admin", name: "Admin", component: Admin },
 ];
 
 const router = createRouter({
