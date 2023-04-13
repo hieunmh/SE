@@ -19,7 +19,7 @@ class categoryController {
     const { nameCategory, description } = req.body;
     if (!nameCategory || !description) {
       return res.status(400).json({
-        msg: 'Please fill all attributes',
+        msg: 'All filled must be required',
       });
     } else {
       try {
@@ -32,7 +32,7 @@ class categoryController {
 
         if (result[0]._options.isNewRecord) {
           return res.status(200).json({
-            msg: 'Add category success',
+            success: 'Added category success',
           });
         } else {
           return res.status(200).json({
