@@ -1,13 +1,28 @@
-const { Op, NUMBER } = require('sequelize');
+const { Op } = require('sequelize');
 const {
-  models: { Product },
+  models: { Product, Discount },
+  sequelize,
 } = require('../models');
 
 class productController {
   // [GET] /products
   async getAllProducts(req, res, next) {
     try {
-      const result = await Product.findAll();
+      const result = await Product.findAll({
+        attributes: [
+          'id',
+          'name',
+          'sold_number',
+          'quantity',
+          'image',
+          'price',
+          [sequelize.literal('price*(1-discount_percent)'), 'salePrice'],
+        ],
+        include: {
+          model: Discount,
+          attributes: { exclude: ['created_at'] },
+        },
+      });
       return res.status(200).send(result);
     } catch (error) {
       console.log("can't render all products");
@@ -20,8 +35,21 @@ class productController {
     const id = req.params.id;
     try {
       const result = await Product.findOne({
+        attributes: [
+          'id',
+          'name',
+          'sold_number',
+          'quantity',
+          'image',
+          'price',
+          [sequelize.literal('price*(1-discount_percent)'), 'salePrice'],
+        ],
         where: {
           id,
+        },
+        include: {
+          model: Discount,
+          attributes: { exclude: ['created_at'] },
         },
       });
 

@@ -1,11 +1,13 @@
-const { json } = require('body-parser');
 const sequelize = require('sequelize');
 const {
   models: { Cart_item, Product, Discount },
 } = require('../models');
 
 class cartController {
-  constructor() {}
+  constructor() {
+    this.addToCart = this.addToCart.bind(this);
+    this.getCart = this.getCart.bind(this);
+  }
 
   isProductInCart(cart, product_id) {
     for (let i = 0; i < cart.length; i++) {
@@ -32,7 +34,7 @@ class cartController {
   // [GET] /cart
   async getCart(req, res, next) {
     var cart = [];
-    var total = 0;
+    // var total = 0;
     var amountOfProducts = 0;
 
     if (!req.session.cart) {
@@ -42,18 +44,27 @@ class cartController {
         attributes: [
           'user_id',
           'product_id',
-          'quantity',
+          sequelize.col('Product.name'),
+          sequelize.col('Product.price'),
           [sequelize.literal('price*(1-discount_percent)'), 'salePrice'],
+          'quantity',
+          sequelize.col('Product.image'),
         ],
         where: {
           user_id: req.session.userId,
         },
         include: {
           model: Product,
+          attributes: [],
+          required: true,
           include: {
             model: Discount,
+            attributes: [],
+            require: true,
           },
         },
+        raw: true,
+        nest: true,
       });
       //check existence
       if (getCartInDB.length) {
@@ -61,87 +72,129 @@ class cartController {
         cart = getCartInDB;
         req.session.cart = cart;
 
+        // first add req.session.amountProducts
+        req.session.amountProducts = cart.length;
         // add total amount products
-        amountOfProducts = getCartInDB.length;
-        req.session.amountProducts = amountOfProducts;
-
-        // var total = this.getCalculateTotal(cart);
-        req.session.TotalPrice = total;
+        amountOfProducts = cart.length;
       }
     } else {
       console.log(2);
       cart = req.session.cart;
-      amountOfProducts = req.session.amountProducts;
-      total = req.session.TotalPrice;
+      amountOfProducts = cart.length;
     }
+    // total money
+    var total = this.getCalculateTotal(cart);
 
     return res.status(200).json({
       AmountOfProducts: amountOfProducts,
       ProductsInCart: cart,
-      TotalPrice: total,
+      TotalMoney: total,
     });
   }
 
   // [POST] /add-to-cart
   async addToCart(req, res, next) {
-    const { id, name, price, salePrice, quantity, image } = req.body;
+    const { product_id, name, price, salePrice, quantity, image } = req.body;
+    const user_id = req.session.userId;
+    if (
+      !user_id ||
+      !product_id ||
+      !name ||
+      !price ||
+      !salePrice ||
+      !quantity ||
+      !image
+    ) {
+      return res.status(400).json({
+        msg: 'All filled must be required',
+      });
+    }
 
-    var product = { id, name, price, salePrice, quantity, image };
+    var product = {
+      user_id,
+      product_id,
+      name,
+      price,
+      salePrice,
+      quantity,
+      image,
+    };
     var cart = [];
     if (req.session.cart) {
       cart = req.session.cart;
 
       // O(n) : slow
       // find new solution
-      var index = this.isProductInCart(cart, id);
+      var index = this.isProductInCart(cart, product_id);
       if (index < 0) {
+        console.log('k co trong gio hang');
         cart.push(product);
       } else {
+        console.log('co trong gio hang');
         cart[index].quantity += quantity;
       }
       req.session.cart = cart;
     } else {
+      console.log('Gio hang con trong');
       req.session.cart = [product];
       cart = req.session.cart;
     }
-
-    // var total = this.getCalculateTotal(cart);
 
     return res.status(200).json({
       success: 'Uploaded success! ',
     });
   }
 
-  // [DELETE] /
+  // [DELETE] /remove-product-cart
   async removeProduct(req, res, next) {
-    var id = req.body.id;
-    var cart = req.session.cart;
+    const product_id = req.body.product_id;
+    const user_id = req.session.userId;
+    let hasDeletedProduct = false;
+    let cart = req.session.cart;
 
-    for (let i = 0; i < cart.length; i++) {
-      if (cart[i].id == id) {
-        cart.splice(cart.indexof(i), 1);
-      }
+    if (!product_id || !cart || !user_id) {
+      return res.status(400).json({
+        msg: 'Bad request! ',
+      });
     }
 
-    // var total = getCalculateTotal(cart);
-    req.session.TotalPrice = total;
-    req.session.cart = cart;
-    res.status(200).json({
-      success: 'Removed success! ',
-    });
+    for (let i = 0; i < cart.length; i++) {
+      if (cart[i].product_id == product_id) {
+        // if found a product
+        // delete in DB, if product is exist in DB, delete them.
+        // Normally, product will be saved at session and will be saved at DB when logout => Reduce response's time
+        hasDeletedProduct = true;
+        const deleteProduct = await Cart_item.destroy({
+          where: { user_id, product_id },
+        }).catch((err) => console.log(err));
+
+        cart.splice(i, 1);
+        break;
+      }
+    }
+    if (!hasDeletedProduct) {
+      return res.status(400).json({
+        msg: 'Not found any products that match!',
+      });
+    } else {
+      req.session.cart = cart;
+      return res.status(200).json({
+        success: 'Removed success! ',
+      });
+    }
   }
 
-  // [PUT]
+  // [PUT] /edit-product-cart
   async updateProductInCart(req, res, next) {
-    var id = req.body.id;
-    var increase_btn = req.body.increase_btn;
-    var decrease_btn = req.body.decrease_btn;
+    const product_id = req.body.product_id;
+    const increase_btn = req.body.increase_btn;
+    const decrease_btn = req.body.decrease_btn;
 
-    var cart = req.session.cart;
+    let cart = req.session.cart;
 
     if (increase_btn) {
       for (let i = 0; i < cart.length; i++) {
-        if (cart[i].id == id) {
+        if (cart[i].product_id == product_id) {
           if (cart[i].quantity > 0) {
             cart[i].quantity = parseInt(cart[i].quantity) + 1;
           }
@@ -149,10 +202,12 @@ class cartController {
       }
     } else if (decrease_btn) {
       for (let i = 0; i < cart.length; i++) {
-        if (cart[i].id == id) {
+        if (cart[i].product_id == product_id) {
           if (cart[i].quantity > 1) {
             cart[i].quantity = parseInt(cart[i].quantity) - 1;
           }
+          // TODO
+          // chua xu ly tinh huong quantity = 0
         }
       }
     }
