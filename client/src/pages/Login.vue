@@ -54,7 +54,7 @@ export default {
         this.errors.push(err);
       }
       else {
-        this.setUser(data.data.userName);
+        this.setUser(data.data);
         this.setEmail(data.data.email);
         if (data.data.role) {
           this.setAdmin("admin");

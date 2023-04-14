@@ -21,6 +21,7 @@ class userController {
     });
 
     return res.status(200).json({
+      userId: id,
       userName: findUser.name,
       email: findUser.email,
       telephone: findUser.telephone,

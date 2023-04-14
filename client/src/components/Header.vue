@@ -25,7 +25,7 @@
 				<ul class="drop-down-select">
 					<li><RouterLink @click.prevent="scrollToTop()" to="/info">Tài khoản</RouterLink></li>
 					<li v-if="admin"><RouterLink @click.prevent="scrollToTop()" to="/admin">Quản lý</RouterLink></li>
-					<li><RouterLink to="/myorder">Giỏ hàng</RouterLink></li>
+					<li><RouterLink to="/myorder">Đơn hàng</RouterLink></li>
 					<li><RouterLink @click="handleLogout" to="/">Đăng xuất</RouterLink></li>
 				</ul>
 			</div>
@@ -54,7 +54,7 @@ export default {
 		async handleLogout() {
 			let data = await axios.get('/login', {withCredentials: true});
 			await axios.post('/logout', data, {withCredentials: true});
-			this.setUser("");
+			this.setUser([]);
 			this.setEmail("");
 			this.setAdmin("");
 		}

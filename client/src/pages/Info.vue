@@ -67,7 +67,7 @@ export default {
         };
     }, 
     methods: {
-      ...mapMutations(['scrollToTop', 'setUser']),
+      ...mapMutations(['scrollToTop']),
       
       setShowEditInfo() {
         this.showEditInfo = !this.showEditInfo;

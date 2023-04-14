@@ -128,23 +128,23 @@
 
         <div class="row box-container">
           <div v-for="(p, index) in currentPage" :key="index" class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-            <RouterLink :to="`menu/${p.id}`">
-              <div class="box">
-                <div class="image">
-                  <img :src="`${p.image}`" alt="">
-                  <!-- <img :src="`${imgUrl}${p.image}`" alt=""> -->
-                </div>
+            <!-- <RouterLink :to="`menu/${p.id}`">
+            </RouterLink> -->
+            <div class="box" @click="showDetail(index)">
+                  <div class="image">
+                    <img :src="`${p.image}`" alt="">
+                    <!-- <img :src="`${imgUrl}${p.image}`" alt=""> -->
+                  </div>
 
-                <div class="content">
-                  <h3>{{ p.name }}</h3>
+                  <div class="content">
+                    <h3>{{ p.name }}</h3>
 
-                  <div class="price">
-                    {{ parseFloat(p.price) }} VND
-                    <span></span>
+                    <div class="price">
+                      {{ parseFloat(p.price) }} VND
+                      <span></span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </RouterLink>
           </div>
         </div>
 
@@ -172,6 +172,11 @@
         </div>
       </div>
     </div>
+
+    <ProductDetail v-if="showProductDetail" :product="addId">
+      <button class="btnn" @click="closeDetail()">x</button>
+    </ProductDetail>
+
   </div>
 </template>
 
@@ -179,12 +184,18 @@
 import { mapMutations, mapState } from 'vuex';
 import serverUrl from '@/axios';
 import filterVN from '@/filterVN';
+import ProductDetail from '../components/ProductDetail.vue';
 
 export default {
   name: "Menu",
+  components: {
+    ProductDetail
+  },
   data() {
     return {
-      showDropDown: false,
+      showProductDetail: false,
+      addId: null,
+
       pageNum: 0,
       perPage: 12 ,
       prevCategoryClicked: "",
@@ -263,6 +274,16 @@ export default {
       console.log(this.productObj.category);
       this.prevCategoryClicked = event;
       event.target.style.background = "#057835fa";
+    },
+
+    showDetail(index) {
+      this.addId = parseFloat(this.currentPage[index].id);
+      this.showProductDetail = !this.showProductDetail;
+      
+    },
+
+    closeDetail() {
+      this.showProductDetail = !this.showProductDetail;
     }
   },
 
