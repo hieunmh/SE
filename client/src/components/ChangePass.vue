@@ -52,7 +52,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['scrollToTop', 'setUser']),
+    ...mapMutations(['scrollToTop']),
     
     async changePass() {
       let res = await axios.post('change-password', this.changePassForm, {withCredentials: true});

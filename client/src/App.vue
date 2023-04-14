@@ -32,7 +32,7 @@ export default {
       let res = await axios.get('login', {withCredentials: true});
       if (res.data.cookie) {
         let data = await axios.get('info', { withCredentials: true });  
-        this.setUser(data.data.userName);
+        this.setUser(data.data);
         this.setEmail(data.data.email);
         if (data.data.role) {
           this.setAdmin("admin");
