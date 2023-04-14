@@ -45,12 +45,23 @@ class orderController {
     }
   }
   // [POST]
+  // TO DO - ERROR
   async postCreateOrder(req, res, next) {
-    const { cartProduct, totalPrice, address, phone } = req.body;
     const user_id = req.session.userId;
+    const cartProduct = req.session.cart;
+    const totalPrice = req.session.totalPrice;
 
-    if (!cartProduct || !user_id || !totalPrice || !address || !phone) {
-      return res.status(400).json({ msg: 'All filled must be required' });
+    //check products in cart. if having nothing => fail
+    if (!cartProduct.length) {
+      return res.status(400).json({
+        msg: "Cant create order! Order's empty!",
+      });
+    }
+
+    //get userInfo
+
+    if (!cartProduct || !user_id || !totalPrice) {
+      return res.status(400).json({ msg: 'Cant create order!' });
     } else {
       try {
         // TO DO
