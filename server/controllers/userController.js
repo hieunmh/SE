@@ -165,7 +165,7 @@ class userController {
               return res.status(201).json({
                 msg: 'Register Account Success',
                 email: email,
-                name: name,
+                userName: name,
                 role: defaultUserRole,
               });
             })

@@ -13,14 +13,14 @@
             <div class="box">
               <div class="box-title item-total row">
                 <h3>
-                  <p style="font-size: 2rem;">{{ filterFoods.length.toString() }}
-                    <span v-if="filterFoods.length < 2">sản phẩm</span>
+                  <p style="font-size: 2rem;">{{ cartItem.length }}
+                    <span v-if="cartItem.length < 2">sản phẩm</span>
                     <span v-else>sản phẩm</span> trong giỏ hàng
                   </p>
                 </h3>
               </div>
 
-              <div v-if="!filterFoods.length">
+              <div v-if="cartItem.length == 0">
                 <div class="box-content row no-food">
                   <div class="content">
                     <h2 style="color: #057835fa;">Bạn không có sản phẩm nào trong giỏ hàng, đến menu để mua hàng!</h2>
@@ -33,38 +33,38 @@
               </div>
 
               <div v-else>
-                <div v-for="(f, index) in filterFoods" :key="index">
+                <div v-for="(p, index) in cartItem" :key="index">
                   <div class="box-content row">
                     <div class="image-box col-sm-3" style="padding-left: 0;">
-                      <img src="../assets/images/banhxeo.png" alt="" class="cart-product-img">
-                      <!-- link anh thi vut day -->
+                      <img :src="`${p.image}`" alt="">
                     </div>
                     
-                    <div class="desc col-sm-4">
-                      <h2 class="item-name">{{ f.food_name }}</h2>
+                    <div class="desc col-sm-3">
+                      <h2 class="item-name">{{ p.name }}</h2>
 
-                      <div class="item-desc">
+                      <!-- <div class="item-desc">
                         <b>Mô tả</b>
                         <p>{{ f.food_desc }}</p>
-                      </div>
+                      </div> -->
 
                       <button class="btnn remove-btn"><i class="fa fa-trash"></i>Xóa sản phẩm</button>
                     </div>  
                     
-                    <div class="item-price col-sm-1">
-                      <span class="sale-price">${{ parseFloat(f.food_price) - parseFloat(f.food_discount) }}</span>
-                      <p class="text-muted first-price" v-if="parseFloat(f.food_discount) != 0.00">{{ parseFloat(f.food_price) }}</p>
+                    <div class="item-price col-sm-2">
+                      <span class="sale-price">{{ p.price }} VND</span>
+                      <!-- <p class="text-muted first-price" v-if="parseFloat(f.food_discount) != 0.00">{{ parseFloat(f.food_price) }}</p> -->
                     </div>
 
                     <div class="item-qtt col-sm-2 d-inline">
-                      <label for="iQuantity" style="font-size: 12px; padding-right: 2px;">Số Lượng</label>
-                      <input type="number" id="iQuantity" class="form-control item-quantity"
-                      :value="itemQuantity[index]" min="1" max="100"
-                      @change="" >
+                      <label for="iQuantity" style="font-size: 1.5rem; padding-right: 0.5rem;">Số Lượng</label>
+                      <input type="number" id="iQuantity" class="form-control item-quantity" 
+                        :value="p.quantity" min="1" max="100"
+                        @change="changeQty($event, index)"
+                       >
                     </div>
 
                     <div class="cal-total col-sm-2">
-                      <h4 class="item-total"> {{  }} VND</h4>
+                      <h4 class="item-total"> {{ p.quantity * p.price }} VND</h4>
                     </div>
                   </div>
                 </div>
@@ -74,8 +74,7 @@
 
             <div class="box-content row">
               <RouterLink to="/menu" class="btnn shop-btn" style="margin-bottom: 10px; text-align: center;"><i class="fa fa-arrow-left"></i> Tiếp tục mua</RouterLink>
-              <button class="btnn checkout-btn" style=""
-               :disabled="filterFoods.length ? false : true"><i class="fa fa-shopping-cart"></i> Thanh toán</button>
+              <button class="btnn checkout-btn" :disabled="cartItem.length ? false : true"><i class="fa fa-shopping-cart"></i> Thanh toán</button>
             </div>
           </div>
 
@@ -87,25 +86,25 @@
 
               <div class="box-content pay">
                 <span>Giá trị sản phẩm</span>
-                <h3 class="font-bold total-first-price">{{  }}</h3>
+                <h3 class="font-bold total-first-price">{{ totalMoneyBeforeDiscount }}</h3>
 
                 <span>Giảm giá</span>
                 <h3 class="font-bold total-discount">{{ }}</h3>
 
                 <span>Phí vận chuyển</span>
-                <h3 class="font-bold total-delivery">{{  }}</h3>
+                <h3 class="font-bold total-delivery">{{ ship }}</h3>
 
                 <span>Tổng giá trị đơn hàng</span>
-                <h2 class="font-bold total-sale">{{ }}</h2>
+                <h2 class="font-bold total-sale">{{ totalMoneyBeforeDiscount + ship }}</h2>
 
                 <div class="btn-group">
-                  <button class="btnn  checkout-btn" 
-                    :disabled="filterFoods.length ? false : true">
+                  <button class="btnn checkout-btn" 
+                    :disabled="cartItem.length ? false : true">
                     <i class="fa fa-shopping-cart"></i>
                     Thanh toán
                   </button>
                   <button class="btnn cancel-btn" 
-                    :disabled="filterFoods.length ? false : true">
+                    :disabled="cartItem.length ? false : true">
                     Hủy
                   </button>
                 </div>
@@ -131,6 +130,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapState } from 'vuex';
 
 export default {
@@ -138,7 +138,9 @@ export default {
   data() {
     return {
       cartItem: [],
-      itemQuantity: []
+      totalMoneyBeforeDiscount: null,
+      total: null,
+      ship: 15000,
     }
   },
   methods: {
@@ -150,15 +152,26 @@ export default {
         }
       });
       return temp; 
+    },
+
+    async getCart() {
+      let res = await axios.get('cart', {withCredentials: true});
+      console.log(res.data.productsInCart);
+      this.cartItem = res.data.productsInCart;
+      this.totalMoneyBeforeDiscount = res.data.totalMoneyBeforeDiscount;
+    },
+
+    changeQty(event, index) {
+      this.cartItem[index].quantity = event.target.value;
     }
+
   },
   computed: {
     ...mapState(['user', 'allFoods']),
 
-    filterFoods() {
-      return this.allFoods.filter(f => this.matchID(f, this.cartItem));
-    }
-
+  },
+  created() {
+    this.getCart();
   }
 
 }
@@ -229,7 +242,24 @@ export default {
         margin-left: 10px;
       }
     }
-    
+    .image-box {
+      img {
+        width: 100%;
+        border-radius: 1rem;
+      }
+    }
+    .item-qtt {
+      input {
+        height: 4rem;
+        font-size: 2rem;
+        text-decoration: none;
+      }
+    }
+    .item-price {
+      .sale-price {
+        font-size: 1.5rem;
+      }
+    }
   }
 }
 
@@ -339,13 +369,12 @@ export default {
   .image-box {
     position: absolute;
     opacity: 0.8;
-    max-width: 100%;
     width: 100%;
     max-height: 100%;
     filter: brightness(60%);
     padding: none;
     img {
-      border-radius: 15px;
+      border-radius: 1rem;
     }
   }
 

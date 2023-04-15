@@ -75,6 +75,7 @@ import filterVN from '@/filterVN';
       async register() {
         let data = await axios.post('/register', this.registerForm, {withCredentials: true});
         let err = data.data.msg;
+        console.log(data.data);
         if (err === 'Email đã tồn tại') {
           this.errorObj.emailErr.push(err);
         }

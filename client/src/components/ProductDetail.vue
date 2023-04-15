@@ -13,7 +13,7 @@
 
           <div class="quantity">
             <label for="qty">Số Lượng: </label>
-            <input type="number" name="qty" id="qty" value="1" max="100">
+            <input type="number" name="qty" id="qty" value="1" min="1" max="100" @click="qtyChange($event)">
           </div>
 
           <button class="btnn" @click="addToCart()">Thêm vào giỏ hàng</button>
@@ -41,22 +41,27 @@ export default {
   props: ['product'],
   data() {
     return {
-      quantity: 1,
-      data: {
-        // user_id: this.user.userId,
-        id: this.product.id,
-        name: this.product.name,
-        price: this.product.price,
-        quantity: this.product.quantity,
-        image: this.product.image,
-      }
+      qty: 1,
     }
   },
 
   methods: {
     async addToCart() {
-      let res = await axios.get('/cart', {withCredentials: true});
-      console.log(res.data);
+      // let res = await axios.get('/cart', {withCredentials: true});
+      // console.log(res.data);
+      let data = {
+        // user_id: this.user.userId,
+        product_id: this.product.id,
+        name: this.product.name,
+        price: this.product.price,
+        quantity: this.qty,
+        image: this.product.image,
+      }  
+      await axios.post('add-to-cart', data, {withCredentials: true});
+    },
+
+    qtyChange(event) {
+      this.qty = event.target.value;
     }
   },
   computed: {

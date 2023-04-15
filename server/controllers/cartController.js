@@ -91,14 +91,14 @@ class cartController {
 
   // [POST] /add-to-cart
   async addToCart(req, res, next) {
-    const { product_id, name, price, salePrice, quantity, image } = req.body;
+    const { product_id, name, price, quantity, image } = req.body;
     const user_id = req.session.userId;
     if (
       !user_id ||
       !product_id ||
       !name ||
       !price ||
-      !salePrice ||
+      // !salePrice ||
       !quantity ||
       !image
     ) {
@@ -112,7 +112,7 @@ class cartController {
       product_id,
       name,
       price,
-      salePrice,
+      // salePrice,
       quantity,
       image,
     };
