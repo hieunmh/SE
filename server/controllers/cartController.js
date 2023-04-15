@@ -20,15 +20,13 @@ class cartController {
   }
 
   getCalculateTotal(cart) {
-    var total = 0;
+    var totalMoneyBeforeDiscount = 0;
+    var totalMoneyAfterDiscount = 0;
     for (let i = 0; i < cart.length; i++) {
-      if (cart[i].salePrice) {
-        total += cart[i].salePrice * cart[i].quantity;
-      } else {
-        total += cart[i].price * cart[i].quantity;
-      }
+      totalMoneyBeforeDiscount += cart[i].price * cart[i].quantity;
+      totalMoneyAfterDiscount += cart[i].salePrice * cart[i].quantity;
     }
-    return total;
+    return [totalMoneyBeforeDiscount, totalMoneyAfterDiscount];
   }
 
   // [GET] /cart
@@ -71,9 +69,6 @@ class cartController {
         // add to session cart
         cart = getCartInDB;
         req.session.cart = cart;
-
-        // first add req.session.amountProducts
-        req.session.amountProducts = cart.length;
         // add total amount products
         amountOfProducts = cart.length;
       }
@@ -83,12 +78,14 @@ class cartController {
       amountOfProducts = cart.length;
     }
     // total money
-    var total = this.getCalculateTotal(cart);
+    var [totalMoneyBeforeDiscount, totalMoneyAfterDiscount] = this.getCalculateTotal(cart);
+    req.session.totalPrice = totalMoneyAfterDiscount;
 
     return res.status(200).json({
-      AmountOfProducts: amountOfProducts,
-      ProductsInCart: cart,
-      TotalMoney: total,
+      amountOfProducts,
+      productsInCart: cart,
+      totalMoneyBeforeDiscount,
+      totalMoneyAfterDiscount
     });
   }
 
@@ -142,6 +139,7 @@ class cartController {
 
     return res.status(200).json({
       success: 'Uploaded success! ',
+      amountOfProducts: cart.length
     });
   }
 
@@ -212,8 +210,6 @@ class cartController {
       }
     }
 
-    // var total = getCalculateTotal(cart);
-    req.session.TotalPrice = total;
     req.session.cart = cart;
     return res.status(200).json({
       success: 'Updated success !',

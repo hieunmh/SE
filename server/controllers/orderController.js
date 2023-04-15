@@ -1,6 +1,7 @@
 const {
-  models: { Order_items, Order_details },
+  models: { Order_items, Order_details, Cart_item }, sequelize,
 } = require('../models');
+
 
 // status in Order_details need to be enum - to choose
 // provider ?
@@ -44,8 +45,7 @@ class orderController {
       next(err);
     }
   }
-  // [POST]
-  // TO DO - ERROR
+  // [POST] /create-order
   async postCreateOrder(req, res, next) {
     const user_id = req.session.userId;
     const cartProduct = req.session.cart;
@@ -65,7 +65,7 @@ class orderController {
     } else {
       try {
         // TO DO
-
+        
         const newOrder = await Order_details.create({
           user_id,
           total: totalPrice,
@@ -73,12 +73,32 @@ class orderController {
           status: 'Chờ xử lý',
         });
         if (newOrder) {
+          // order_id : Foreign key
           const order_id = newOrder.dataValues.id;
+          
+          // get product in cart_item
+          let productsInCartFilter = [];
+          for (let i = 0 ; i < cartProduct.length; i++) {
+            productsInCartFilter.push({
+              order_id, 
+              product_id: cartProduct[i].product_id, 
+              quantity: cartProduct[i].quantity});
+          }
+          console.log(productsInCartFilter);
+          // add to order_item
+          let insertProducts = await Order_items.bulkCreate(productsInCartFilter);
 
-          // TO DO
-          // after create order_details => next, add product to order_items with FK , get product_id, quantity in cartProduct array
-
-          return res.json({ success: 'Order created successfully' });
+          // if insert true, delete all products in cart
+          if (insertProducts) {
+            const deleteProduct = await Cart_item.destroy({
+              where: { user_id },
+            })
+            .then(() => {
+              req.session.cart = [];
+              return res.json({ success: 'Order created successfully' });
+            })
+            .catch((err) => console.log(err));
+          }
         }
       } catch (err) {
         console.log(err);
@@ -87,10 +107,10 @@ class orderController {
     }
   }
 
-  // [PUT]
+  // [PUT] /update-order
   async postUpdateOrder(req, res, next) {}
 
-  // [DELETE]
+  // [DELETE] /delete-order
   async postDeleteOrder(req, res, next) {}
 }
 
