@@ -9,7 +9,7 @@
     <div class="container">
       <div class="wrapper wrapper-content">
         <div class="row">
-          <div class="in-cart col-md-9">
+          <div class="in-cart col-md-12">
             <div class="box">
               <div class="box-title item-total row">
                 <h3>
@@ -34,37 +34,36 @@
 
               <div v-else>
                 <div v-for="(p, index) in cartItem" :key="index">
-                  <div class="box-content row">
-                    <div class="image-box col-sm-3" style="padding-left: 0;">
+                  <div class=" box-content row">
+                    <div class="centre image-box col-sm-2" style="padding-left: 0;">
                       <img :src="`${p.image}`" alt="">
                     </div>
                     
-                    <div class="desc col-sm-3">
-                      <h2 class="item-name">{{ p.name }}</h2>
-
-                      <!-- <div class="item-desc">
-                        <b>Mô tả</b>
-                        <p>{{ f.food_desc }}</p>
-                      </div> -->
-
-                      <button class="btnn remove-btn"><i class="fa fa-trash"></i>Xóa sản phẩm</button>
+                    <div class="centre desc col-sm-3">
+                      <h4 class="item-name">{{ p.name }}</h4>
                     </div>  
                     
-                    <div class="item-price col-sm-2">
-                      <span class="sale-price">{{ p.price }} VND</span>
-                      <!-- <p class="text-muted first-price" v-if="parseFloat(f.food_discount) != 0.00">{{ parseFloat(f.food_price) }}</p> -->
+                    <div class="centre item-price col-sm-2">
+                      <h4 class="sale-price">{{ parseInt(p.salePrice) }} VNĐ</h4>
+                      <h4 class="sale-price sale" v-if="p.price != p.salePrice">{{ p.price }} VNĐ</h4>
                     </div>
 
-                    <div class="item-qtt col-sm-2 d-inline">
-                      <label for="iQuantity" style="font-size: 1.5rem; padding-right: 0.5rem;">Số Lượng</label>
-                      <input type="number" id="iQuantity" class="form-control item-quantity" 
+                    <div class="centre item-qtt col-sm-2">
+                      <button class="btnn" @click="decrease(index)"><i class="fa-solid fa-minus"></i></button>
+                      <input type="text" id="iQuantity" class="form-control item-quantity" 
                         :value="p.quantity" min="1" max="100"
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                         @change="changeQty($event, index)"
                        >
+                      <button class="btnn" @click="increase(index)"><i class="fa-solid fa-plus"></i></button>
                     </div>
 
-                    <div class="cal-total col-sm-2">
-                      <h4 class="item-total"> {{ p.quantity * p.price }} VND</h4>
+                    <div class="centre cal-total col-sm-2">
+                      <h4 class="item-total"> {{ p.quantity * p.salePrice }} VNĐ</h4>
+                    </div>
+
+                    <div class="centre col-sm-1">
+                      <button class="btnn" @click="deleteProduct(index)">Xóa</button>
                     </div>
                   </div>
                 </div>
@@ -73,12 +72,12 @@
             </div>
 
             <div class="box-content row">
-              <RouterLink to="/menu" class="btnn shop-btn" style="margin-bottom: 10px; text-align: center;"><i class="fa fa-arrow-left"></i> Tiếp tục mua</RouterLink>
+              <RouterLink to="/menu" class="btnn shop-btn" style="margin-bottom: 1rem; text-align: center;"><i class="fa fa-arrow-left"></i> Tiếp tục mua</RouterLink>
               <button class="btnn checkout-btn" :disabled="cartItem.length ? false : true"><i class="fa fa-shopping-cart"></i> Thanh toán</button>
             </div>
           </div>
 
-          <div class="col-md-3">
+          <!-- <div class="col-md-3">
             <div class="box">
               <div class="box-title">
                 <h3>Hóa Đơn</h3>
@@ -121,7 +120,7 @@
                 <span class="small">Liên hệ với chúng tôi nếu bạn có câu hỏi. Chúng tôi luôn có mặt 24/24</span>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -132,12 +131,14 @@
 <script>
 import axios from 'axios';
 import { mapState } from 'vuex';
+// import formatMoney from '@/formatNumber.js';
 
 export default {
   name: 'Cart',
   data() {
     return {
       cartItem: [],
+      cart: null,
       totalMoneyBeforeDiscount: null,
       total: null,
       ship: 15000,
@@ -156,19 +157,50 @@ export default {
 
     async getCart() {
       let res = await axios.get('cart', {withCredentials: true});
-      console.log(res.data.productsInCart);
       this.cartItem = res.data.productsInCart;
       this.totalMoneyBeforeDiscount = res.data.totalMoneyBeforeDiscount;
+      this.cart = res.data.productsInCart;
     },
 
     changeQty(event, index) {
       this.cartItem[index].quantity = event.target.value;
+    },
+
+    async decrease(index) {
+      let data = {
+        product_id: this.cartItem[index].product_id,
+        increase_btn: false,
+        decrease_btn: true,
+      }
+      this.cartItem[index].quantity--;
+      await axios.put('edit-product-cart', data, { withCredentials: true });
+
+    },
+
+    async increase(index) {
+      let data = {
+        product_id: this.cartItem[index].product_id,
+        increase_btn: true,
+        decrease_btn: false,
+      }
+      this.cartItem[index].quantity++;
+      await axios.put('edit-product-cart', data, {withCredentials: true});
+    },
+
+    async deleteProduct(index) {
+      let data = {
+        product_id: this.cartItem[index].product_id,
+      }
+      let res = await axios.post('remove-product-cart', data, {withCredentials: true});
+      this.cartItem.splice(index, 1);
     }
 
   },
   computed: {
     ...mapState(['user', 'allFoods']),
-
+    formatMoney(value) {
+      return value * 10;
+    }
   },
   created() {
     this.getCart();
@@ -203,6 +235,7 @@ export default {
 
 .shopping-cart {
   background: #fff;
+  margin: 9rem 15%;
 }
 
 .box {
@@ -237,6 +270,14 @@ export default {
     border-image: none;
     border-style: solid solid none;
     border-width: 3px 0;
+
+    .centre {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
     .btn-group {
       .cancel-btn {
         margin-left: 10px;
@@ -244,20 +285,44 @@ export default {
     }
     .image-box {
       img {
-        width: 100%;
+        width: 8rem;
         border-radius: 1rem;
       }
     }
     .item-qtt {
-      input {
+      display: flex;
+      flex-direction: row;
+      button {
+        width: 4rem;
         height: 4rem;
-        font-size: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        i {
+          padding : 0;
+        }
+      }
+      input {
+        text-align: center;
+        height: 4rem;
+        width: 5rem;
+        font-size: 1.5rem;
         text-decoration: none;
+      }
+    }
+    .cal-total {
+      h4 {
+        color: #ee4d2d;
       }
     }
     .item-price {
       .sale-price {
+        width: 10rem;
         font-size: 1.5rem;
+      }
+      .sale {
+        text-decoration: line-through;
+        color: rgba($color: #000000, $alpha: 0.5);
       }
     }
   }

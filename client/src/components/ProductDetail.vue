@@ -1,4 +1,6 @@
 <template>
+  <VueBasicAlert :duration="300" :closeIn="2000" ref="alert" />
+
   <div v-if="user" class="product-detail">
     <div class="product-detail-inner" v-for="p in selectProduct" :key="p">
       <h2 class="d-flex justify-content-between">{{ p.name }} <slot></slot></h2>
@@ -9,14 +11,25 @@
         </div>
 
         <div class="content">
-          <p class="money">{{ p.price }} VND</p>
-
-          <div class="quantity">
-            <label for="qty">Số Lượng: </label>
-            <input type="number" name="qty" id="qty" value="1" min="1" max="100" @click="qtyChange($event)">
+          <div>
+            <p class="nosale">{{ p.price }} VNĐ</p>
+            <p >{{ parseInt(p.salePrice) }} VNĐ</p>
           </div>
 
-          <button class="btnn" @click="addToCart()">Thêm vào giỏ hàng</button>
+          <div class="row quantity">
+            <label class="col-5" for="qty">Số Lượng: </label>
+            <div class="col-7">
+              <button class="btnn" @click="decrease()"><i class="fa-solid fa-minus"></i></button>
+              <input type="text" name="qty" id="qty" :value="qty" min="1" max="100"
+               oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+               @input="qty = $event.target.value"
+               >
+               
+              <button class="btnn" @click="increase($event)"><i class="fa-solid fa-plus"></i></button>
+            </div>
+          </div>
+
+          <button class="btnn addToCart" @click="addToCart($event)">Thêm vào giỏ hàng</button>
         </div>
       </div>
     </div>
@@ -35,9 +48,14 @@
 <script>
 import axios from 'axios';
 import { mapState } from 'vuex';
+import VueBasicAlert from 'vue-basic-alert';
+
 
 export default {
   name: 'ProductDetail',
+  components: {
+    VueBasicAlert
+  },
   props: ['product'],
   data() {
     return {
@@ -47,22 +65,27 @@ export default {
 
   methods: {
     async addToCart() {
-      // let res = await axios.get('/cart', {withCredentials: true});
-      // console.log(res.data);
       let data = {
         // user_id: this.user.userId,
         product_id: this.product.id,
         name: this.product.name,
         price: this.product.price,
+        salePrice: (1 - this.product.discount.discount_percent) * this.product.price,
         quantity: this.qty,
         image: this.product.image,
       }  
       await axios.post('add-to-cart', data, {withCredentials: true});
+      this.$refs.alert.showAlert("Thêm vào giỏ hàng thành công !")
     },
 
-    qtyChange(event) {
-      this.qty = event.target.value;
+    decrease() {
+      this.qty--;
+    },
+
+    increase() {
+      this.qty++;
     }
+
   },
   computed: {
     ...mapState(['user', 'allFoods']),
@@ -92,7 +115,7 @@ export default {
   .product-detail-inner {
     background-color: #fff;
     width: 50vw;
-    height: 50vh;
+    height: 45vh;
     padding: 30px;
     border-radius: 2rem;
     h2 {
@@ -110,24 +133,51 @@ export default {
       }
 
       .content {
-        margin-top: 2rem;
         font-size: 2rem;
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
         align-items: center;
         text-align: center;
-        div {
-          margin-top: 3rem;
+        .nosale {
+          text-decoration: line-through;
+          color: rgba($color: #000000, $alpha: 0.5)
+        }
+        .quantity {
           label {
-            margin-right: 1rem;
+            height: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            font-size: 2rem;
           }
-          input {
-            border: 2px solid #27ae60;
-            border-radius: 1rem;
-            padding-left: 1.5rem;
-            width: 6.5rem;
+          div {
+            display: flex;
+            flex-direction: row;
+            input {
+              border: 2px solid #27ae60;
+              border-radius: 1rem;
+              text-align: center;
+              width: 5rem;
+              height: 4rem;
+              font-size: 1.8rem;
+            }
+            button {
+              width: 4rem;
+              height: 4rem;
+              margin: 0 0.5rem;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              i {
+                padding: 0;
+              }
+            }
           }
         }
-        button {
+        .addToCart {
           margin-top: 3rem;
         }
       }

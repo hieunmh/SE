@@ -20,6 +20,7 @@ export default {
       }
 
       let data = await axios.get("info", { withCredentials: true });
+      console.log(data.data);
 
       context.commit("setUser", data.data);
       context.commit("setLogged", true);
