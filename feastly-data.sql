@@ -20,10 +20,10 @@ INSERT INTO `discount` (`name`, `description`, `discount_percent`) VALUES
 ('Giảm 75%', 'Giảm 75% giá sản phẩm', 0.75);
 
 INSERT INTO `products` (`name`, `desc`, `category_id`, `discount_id`, `price`, `sold_number`, `quantity`, `image`) VALUES 
-('Mì trộn indo thập cẩm', '', 1, 1,27900, 1, 1, 'https://images.foody.vn/res/g101/1003994/s120x120/3d119e5e-9c39-41d6-83c3-90041bb9-b7a9121e-211230154400.jpeg'),
-('Mì trộn Nem chua', '', 1, 1, 31500, 1, 1, 'https://images.foody.vn/res/g101/1003994/s120x120/474b60dd-33d7-4fc5-b6f1-4bf51010-2564ecd3-211119213441.jpeg'),
-('Mì đặc biệt siêu topping', '', 1, 1, 60050, 1, 1, 'https://images.foody.vn/res/g101/1003994/s120x120/429d0ac2-d646-4418-ae17-33647887-e7c4b8f9-210710152430.jpeg'), 
-('Khoai tây lắc phô mai', '', 1, 1, 21600, 1, 1, 'https://images.foody.vn/res/g101/1003994/s120x120/16b38f0f-f82a-4fb1-896b-80c03361-b7d40dac-230224144857.jpeg'),
+('Mì trộn indo thập cẩm', '', 1, 2,27900, 1, 1, 'https://images.foody.vn/res/g101/1003994/s120x120/3d119e5e-9c39-41d6-83c3-90041bb9-b7a9121e-211230154400.jpeg'),
+('Mì trộn Nem chua', '', 1, 3, 31500, 1, 1, 'https://images.foody.vn/res/g101/1003994/s120x120/474b60dd-33d7-4fc5-b6f1-4bf51010-2564ecd3-211119213441.jpeg'),
+('Mì đặc biệt siêu topping', '', 1, 4, 60050, 1, 1, 'https://images.foody.vn/res/g101/1003994/s120x120/429d0ac2-d646-4418-ae17-33647887-e7c4b8f9-210710152430.jpeg'), 
+('Khoai tây lắc phô mai', '', 1, 2, 21600, 1, 1, 'https://images.foody.vn/res/g101/1003994/s120x120/16b38f0f-f82a-4fb1-896b-80c03361-b7d40dac-230224144857.jpeg'),
 ('Khoai tây chiên', '', 1, 1, 19800, 1, 1, 'https://images.foody.vn/res/g101/1003994/s120x120/474cfec3-d858-4185-b772-2259c9de-6298c164-230223123129.jpeg'),
 ('Mì Trộn Thập Cẩm Đặc Biệt', '', 1, 1,40050, 1, 1, 'https://images.foody.vn/res/g101/1003994/s120x120/b7ae92c1-3ddd-473c-bbf9-04bee7c8-86abaa17-211031152658.jpeg'),
 ('Mì Trộn Indomie Trứng ốp la', '', 1, 1, 22500, 1, 1, 'https://images.foody.vn/res/g101/1003994/s120x120/6b78d8e3-3da3-445e-9e00-989d8ab5-251d58e4-220907121524.jpeg'),
