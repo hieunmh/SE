@@ -1,6 +1,6 @@
 export default {
-  user: undefined,
-  email: undefined,
+  user: [],
   admin: "",
-  allFoods: []
+  allFoods: [],
+  isLogin: false
 };

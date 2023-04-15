@@ -7,20 +7,20 @@
         <div class="form-group">
           <p class="form-control"></p>
           <i class="fa-solid fa-user"></i>
-          <span class="sp">{{ userInfo.name }}</span>
+          <span class="sp">{{ user.userName }}</span>
         </div>
 
         <div class="form-group">
           <p class="form-control"></p>
           <i class="fa-regular fa-envelope"></i>
-          <span class="sp">{{ userInfo.email }}</span>
+          <span class="sp">{{ user.email }}</span>
         </div>
 
 
         <div class="form-group">
           <p class="form-control"></p>
           <i class="fa-solid fa-phone"></i>
-          <span>{{ userInfo.telephone }}</span>
+          <span>{{ user.telephone }}</span>
         </div>
 
         <div class="form-group">
@@ -47,21 +47,14 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import EditInfo from '../components/EditInfo.vue';
 import ChangePass from '../components/ChangePass.vue';
-import axios from 'axios';
 
 export default {
     name: "Register",
     data() {
         return {
-            userInfo: {
-                email: "",
-                name: "",
-                telephone: "",
-            },
-            matchUser: undefined,
             showEditInfo: false,
             showEditPass: false,
         };
@@ -77,11 +70,9 @@ export default {
       }
       
     },
-    async created() {
-      let data = await axios.get('/info', {withCredentials: true});
-      this.userInfo.name = data.data.userName;
-      this.userInfo.email = data.data.email;
-      this.userInfo.telephone = data.data.telephone;
+    
+    computed: {
+      ...mapState(['user'])
     },
     components: { 
       EditInfo,

@@ -79,7 +79,7 @@ import filterVN from '@/filterVN';
           this.errorObj.emailErr.push(err);
         }
         else {
-          this.setUser(data.data.name);
+          this.setUser(data.data);
           this.$router.push('/');
         }
       },

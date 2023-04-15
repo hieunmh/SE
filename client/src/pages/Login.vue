@@ -45,7 +45,7 @@ export default {
   },  
   
   methods: {
-    ...mapMutations(['scrollToTop', 'setUser', 'setEmail', 'setAdmin']),
+    ...mapMutations(['scrollToTop', 'setUser', 'setAdmin', 'setLogged']),
 
     async login() {
       let data = await axios.post('/login', this.loginForm, { withCredentials: true });
@@ -55,13 +55,20 @@ export default {
       }
       else {
         this.setUser(data.data);
-        this.setEmail(data.data.email);
+        this.setLogged(true);
+        this.$router.push('/');
+        
         if (data.data.role) {
           this.setAdmin("admin");
         }
-        this.$router.push('/');
+        this.getCart();
       }
     },  
+
+    async getCart() {
+      let res = await axios.get('cart', { withCredentials: true });
+      console.log(res.data);
+    },
 
     async handleSubmit(event) { 
       this.errors = [];
