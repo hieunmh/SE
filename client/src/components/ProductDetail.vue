@@ -42,24 +42,28 @@ export default {
   data() {
     return {
       quantity: 1,
+      data: {
+        // user_id: this.user.userId,
+        id: this.product.id,
+        name: this.product.name,
+        price: this.product.price,
+        quantity: this.product.quantity,
+        image: this.product.image,
+      }
     }
   },
 
   methods: {
     async addToCart() {
-      let data = {
-        user_id: parseInt(this.user.userId),
-        product_id: this.product,
-        item_qty: this.quantity
-      }
-      await axios.post('', {withCredentials: true});
+      let res = await axios.get('/cart', {withCredentials: true});
+      console.log(res.data);
     }
   },
   computed: {
     ...mapState(['user', 'allFoods']),
 
     selectProduct() {
-      return this.allFoods.filter((p) => parseInt(p.id) == parseInt(this.product));
+      return this.allFoods.filter((p) => p.id == this.product.id);
     }
   }
   

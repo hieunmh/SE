@@ -14,7 +14,7 @@
       <div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu"></div>	
 			<RouterLink @click="scrollToTop()"	to="/cart"><div class="fas fa-shopping-cart cart"></div></RouterLink>
 
-			<div v-if="!user" class="fas fa-user account">
+			<div v-if="!user.userName" class="fas fa-user account">
 				<ul class="drop-down-select">
 					<li><RouterLink @click="scrollToTop()" to="/login">Đăng nhập</RouterLink></li>
 					<li><RouterLink @click="scrollToTop()" to="/register">Đăng ký</RouterLink></li>
@@ -40,7 +40,7 @@ import { mapMutations, mapState } from 'vuex';
 export default {
 	name: 'Header',
 	methods: {
-		...mapMutations(['setUser', 'setEmail', 'setAdmin']),
+		...mapMutations(['setUser', 'setAdmin', 'setLogged']),
 
 		showMenu() {
 			let nav_bar = document.querySelector('.header .navbar');
@@ -52,16 +52,15 @@ export default {
 			window.scrollTo(0, 0);
 		},
 		async handleLogout() {
-			let data = await axios.get('/login', {withCredentials: true});
-			await axios.post('/logout', data, {withCredentials: true});
+			await axios.post('/logout',{},  {withCredentials: true});
 			this.setUser([]);
-			this.setEmail("");
-			this.setAdmin("");
+			this.setAdmin(null);
+			this.setLogged(false);
 		}
 
 	},
 	computed: {
-		...mapState(['user', 'email', 'admin'])
+		...mapState(['user', 'admin'])
 	}
 }
 </script>

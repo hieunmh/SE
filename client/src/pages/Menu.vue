@@ -194,7 +194,7 @@ export default {
   data() {
     return {
       showProductDetail: false,
-      addId: null,
+      addId: [],
 
       pageNum: 0,
       perPage: 12 ,
@@ -229,7 +229,7 @@ export default {
     },
 
     setPage(value) {
-      this.pageNum = value;   
+      this.pageNum = value;
       this.scrollToTop();
     },  
 
@@ -277,9 +277,8 @@ export default {
     },
 
     showDetail(index) {
-      this.addId = parseFloat(this.currentPage[index].id);
+      this.addId = this.currentPage[index];
       this.showProductDetail = !this.showProductDetail;
-      
     },
 
     closeDetail() {

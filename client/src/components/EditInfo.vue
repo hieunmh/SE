@@ -46,7 +46,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['scrollToTop', 'setEmail']),
+    ...mapMutations(['scrollToTop']),
 
     async edit() {
       let data = await axios.get('info', { withCredentials: true });
@@ -59,7 +59,6 @@ export default {
       alert('Chỉnh sửa thông tin thành công');
       await axios.post('edit-info', this.editInfoForm, { withCredentials: true });
       window.location.reload();
-      // console.log(res);
     },
 
     resetCheckErr() {
