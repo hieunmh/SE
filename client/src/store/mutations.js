@@ -13,5 +13,14 @@ export default {
   },
   setLogged(state, isLogin) {
     state.isLogin = isLogin;
+  },
+  setShowProduct(state, showpro) {
+    state.showProduct = showpro;
+  },
+  setCartLength(state, length) {
+    state.cartLength = length;
+  },
+  setCartItem(state, cartItem) {
+    state.cartItem = cartItem;
   }
 };

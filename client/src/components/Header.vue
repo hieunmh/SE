@@ -12,7 +12,10 @@
 
     <div class="icons">
       <div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu"></div>	
-			<RouterLink @click="scrollToTop()"	to="/cart"><div class="fas fa-shopping-cart cart"></div></RouterLink>
+			<RouterLink @click="scrollToTop()"	to="/cart">
+				<div class="fas fa-shopping-cart cart"> {{ cartItem.length }}
+				</div>
+			</RouterLink>
 
 			<div v-if="!user.userName" class="fas fa-user account">
 				<ul class="drop-down-select">
@@ -60,7 +63,7 @@ export default {
 
 	},
 	computed: {
-		...mapState(['user', 'admin'])
+		...mapState(['user', 'admin', 'cartItem'])
 	}
 }
 </script>

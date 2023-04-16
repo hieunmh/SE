@@ -25,12 +25,13 @@ export default {
     Footer,
   },
   methods: {
-    ...mapActions(['getProducts', 'checkLogin']),
+    ...mapActions(['getProducts', 'checkLogin', 'getCart']),
   },
   
   created() {
     this.checkLogin();
     this.getProducts();
+    this.getCart();
   },
 }
 </script>

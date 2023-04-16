@@ -20,7 +20,6 @@ export default {
       }
 
       let data = await axios.get("info", { withCredentials: true });
-      console.log(data.data);
 
       context.commit("setUser", data.data);
       context.commit("setLogged", true);
@@ -34,5 +33,13 @@ export default {
         }
       }
     }
+  },
+
+  async getCart(context) {
+    await axios.get("cart", { withCredentials: true })
+    .then((res) => {
+      context.commit("setCartItem", res.data.productsInCart);
+    })
+
   }
 }
