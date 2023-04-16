@@ -11,9 +11,9 @@
     </nav>
 
     <div class="icons">
-      <div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu"></div>	
+			<span class="qttCart" v-if="cartItem.length > 0">{{ cartItem.length }}</span>
 			<RouterLink @click="scrollToTop()"	to="/cart">
-				<div class="fas fa-shopping-cart cart"> {{ cartItem.length }}
+				<div class="fas fa-shopping-cart cart">
 				</div>
 			</RouterLink>
 
@@ -32,6 +32,8 @@
 					<li><RouterLink @click="handleLogout" to="/">Đăng xuất</RouterLink></li>
 				</ul>
 			</div>
+
+			<div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu"></div>	
       
     </div>
   </div>
@@ -116,6 +118,7 @@ export default {
 
   /**Header icons */
 	.icons {
+		position: relative;
 		div {
 			position: relative;
 			height: 4.5rem;
@@ -133,6 +136,23 @@ export default {
 				color: #fff;
 				background: #27ae60 !important;
 			}
+		}
+	
+		.qttCart {
+			position: absolute;
+			left: -1.5rem;
+			top: -1.5rem;
+			font-size: 1.5rem;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			color: #fff;
+			z-index: 50;
+			background-color: #d62e41;
+			width: 3rem;
+			height: 3rem;
+			border-radius: 2rem;
 		}
 		a.router-link-exact-active {
 			.cart {
