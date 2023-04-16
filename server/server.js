@@ -4,25 +4,18 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const routesInit = require('./routes/indexRoute');
 const path = require('path');
+const RedisStore = require("connect-redis").default;
+const {createClient} = require('redis');
 
 //temporary: save session into folder session
-const fileStore = require('session-file-store')(session);
-// const redis = require('redis');
-// const connectRedis = require('connect-redis');
-// const RedisStore = connectRedis(session);
+// const fileStore = require('session-file-store')(session);
+const redisClient = createClient();
+redisClient.connect().catch(console.error);
 
-// const redisClient = redis.createClient({
-//   host: 'localhost',
-//   port: 6379
-// })
-
-// const sessionStore = new RedisStore({ client: redisClient });
-// redisClient.on('error', function (err) {
-//   console.log('Could not establish a connection with redis. ' + err);
-// });
-// redisClient.on('connect', function (err) {
-//   console.log('Connected to redis successfully');
-// });
+let redisStore = new RedisStore({
+  client: redisClient,
+  prefix: "myapp:",
+})
 
 //database
 const db = require('./models');
@@ -44,7 +37,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     secret: process.env.SES_SECRET,
-    store: new fileStore(),
+    store: redisStore,
     cookie: {
       maxAge: Date.now() + 1000 * 60 * 60,
       sameSite: true,
