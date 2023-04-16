@@ -2,7 +2,7 @@
   <div class="shopping-cart">
 
     <div class="heading">
-      <span>Giỏ hàng</span>
+      <span>Giỏ hàng của bạn</span>
       <h3>Free ship trong vòng bán kính 5km</h3>
     </div>
 
@@ -20,26 +20,24 @@
                 </h3>
               </div>
 
-              <div v-if="cartItem.length == 0">
-                <div class="box-content row no-food">
-                  <div class="content">
-                    <h2 style="color: #057835fa;">Bạn không có sản phẩm nào trong giỏ hàng, đến menu để mua hàng!</h2>
-                  </div>
+              <div class="box-content row no-food" v-if="cartItem.length == 0">
+                <div class="content">
+                  <h2 style="color: #057835fa;">Bạn không có sản phẩm nào trong giỏ hàng, đến menu để mua hàng!</h2>
+                </div>
 
-                  <div class="image">
-                    <img src="../assets/images/notfound.png" alt="">
-                  </div>
+                <div class="image">
+                  <img src="../assets/images/notfound.png" alt="">
                 </div>
               </div>
 
-              <div v-else>
+              <div v-else class="box-content">
                 <div v-for="(p, index) in cartItem" :key="index">
-                  <div class=" box-content row">
-                    <div class="centre image-box col-sm-2" style="padding-left: 0;">
+                  <div class="row">
+                    <div class="centre image-box col-sm-2" style="">
                       <img :src="`${p.image}`" alt="">
                     </div>
                     
-                    <div class="centre desc col-sm-3">
+                    <div class="centre desc col-sm-2">
                       <h4 class="item-name">{{ p.name }}</h4>
                     </div>  
                     
@@ -62,65 +60,24 @@
                       <h4 class="item-total"> {{ p.quantity * p.salePrice }} VNĐ</h4>
                     </div>
 
-                    <div class="centre col-sm-1">
-                      <button class="btnn" @click="deleteProduct(index)">Xóa</button>
+                    <div class="centre col-sm-2 delete">
+                      <button class="btnn" @click="deleteProduct(index)">
+                        <p class="">Xóa</p>
+                        <p class="fa-solid fa-trash"></p>
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
-              
             </div>
 
-            <div class="box-content row">
-              <RouterLink to="/menu" class="btnn shop-btn" style="margin-bottom: 1rem; text-align: center;"><i class="fa fa-arrow-left"></i> Tiếp tục mua</RouterLink>
-              <button class="btnn checkout-btn" :disabled="cartItem.length ? false : true"><i class="fa fa-shopping-cart"></i> Thanh toán</button>
+            <div class="box">
+              <div class="d-flex justify-content-around">
+                <button class="col-4 btnn"><RouterLink to="/menu" style=" text-align: center; color: #fff;"><i class="fa fa-arrow-left"></i> Tiếp tục mua</RouterLink></button>
+                <button class="col-4 btnn checkout-btn" :disabled="cartItem.length ? false : true"><i class="fa fa-shopping-cart"></i> Thanh toán</button>
+              </div>
             </div>
           </div>
-
-          <!-- <div class="col-md-3">
-            <div class="box">
-              <div class="box-title">
-                <h3>Hóa Đơn</h3>
-              </div>
-
-              <div class="box-content pay">
-                <span>Giá trị sản phẩm</span>
-                <h3 class="font-bold total-first-price">{{ totalMoneyBeforeDiscount }}</h3>
-
-                <span>Giảm giá</span>
-                <h3 class="font-bold total-discount">{{ }}</h3>
-
-                <span>Phí vận chuyển</span>
-                <h3 class="font-bold total-delivery">{{ ship }}</h3>
-
-                <span>Tổng giá trị đơn hàng</span>
-                <h2 class="font-bold total-sale">{{ totalMoneyBeforeDiscount + ship }}</h2>
-
-                <div class="btn-group">
-                  <button class="btnn checkout-btn" 
-                    :disabled="cartItem.length ? false : true">
-                    <i class="fa fa-shopping-cart"></i>
-                    Thanh toán
-                  </button>
-                  <button class="btnn cancel-btn" 
-                    :disabled="cartItem.length ? false : true">
-                    Hủy
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="box">
-              <div class="box-title">
-                <h3>Đường dây nóng</h3>
-              </div>
-
-              <div class="box-content pay text-center">
-                <h3><i class="fa fa-phone"> 091 511 57 01</i></h3>
-                <span class="small">Liên hệ với chúng tôi nếu bạn có câu hỏi. Chúng tôi luôn có mặt 24/24</span>
-              </div>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
@@ -190,44 +147,10 @@ export default {
 
 <style lang="scss">
 
-.item-name {
-  color: #27ae60;
-}
-
-.box .box-content.pay {
-  span {
-    font-size: 1.5rem;
-  }
-  h3 {
-    font-size: 2em;
-  }
-}
-
-
-.cart-product-img {
-  text-align: center;
-  width: 100%;
-  height: 125px;
-  object-fit: cover;
-  background-color: #f7f7f7;
-}
-
-.shopping-cart {
-  background: #fff;
-  margin: 9rem 15%;
-}
-
 .box {
-  clear: both;
   margin: 0;
   margin-bottom: 20px;
   padding: 0;
-  &::after {
-    display: table;
-  }
-  &::before {
-    display: table;
-  }
   .box-title {
     background-color: inherit;
     border-color: #e7eaec;
@@ -242,14 +165,14 @@ export default {
     }
   }
   .box-content {
-    background-color: inherit;
-    color: inherit;
-    padding: 15px 20px 20px 20px;
-    border-color: #e7eaec;
+    padding: 1rem;
     border-image: none;
-    border-style: solid solid none;
-    border-width: 3px 0;
-
+    .row {
+      border: 2px solid #27ae60;
+      border-radius: 1rem;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
     .centre {
       display: flex;
       flex-direction: column;
@@ -257,12 +180,28 @@ export default {
       align-items: center;
     }
 
-    .btn-group {
-      .cancel-btn {
-        margin-left: 10px;
+    .delete {
+      display: flex;
+      align-items: flex-end;
+      button {
+        display: flex;
+        height: 4rem;
+        align-items: center;
+        p {
+          margin: 0;
+          &:nth-child(2) {
+            margin-left: 1rem;
+          }
+          &:nth-child(1) {
+            padding-top: 0.3rem;
+          }
+        }
       }
     }
+
     .image-box {
+      display: flex;
+      align-items: flex-start ;
       img {
         width: 8rem;
         border-radius: 1rem;
@@ -311,19 +250,7 @@ export default {
   padding-right: 5px;
 }
 
-.item-desc {
-  b {
-    font-size: 12px;
-  }
-  p {
-    font-size: 10px;
-  }
-}
 
-.sale-price, .first-price, .item-quantity {
-  width: 60px;
-  height: 15px;
-} 
 
 .item-quantity {
   text-decoration: line-through;
@@ -338,21 +265,9 @@ export default {
   }
 }
 
-.no-food {
-  text-align: center;
-  justify-content: center;
-  display: block;
-  img {
-    width: 200px;
-    height: 200px;
-  }
-}
 
 @media (max-width: 768px) {
   .box-content {
-    .item-name {
-      font-size: 14px;  
-    }
     .btn-group {
       display: block;
       button {
@@ -361,22 +276,8 @@ export default {
           margin-top: 3px;
         }
       }
-      .checkout-btn {
-        display: flex;
-        margin-top: 10px;
-        margin-bottom: 10px;
-      }
     }
   }
-
-  .desc button {
-    position: absolute;
-    bottom: 0;
-  }
-
-    .box .box-content .btn-group .cancel-btn {
-      margin-left: 0;
-    }
 }
 
 @media (max-width: 576px) {
@@ -384,13 +285,6 @@ export default {
     min-height: 48px;
   }
 
-  .box .box-content .btn-group .cancel-btn {
-    margin-left: 0;
-  }
-
-  .box-title.item-total {
-    border: none;
-  }
 
   .in-cart .box-content {
     color: white;
@@ -401,12 +295,6 @@ export default {
     .btn-group {
       margin-top: 5px;
       display: inline-flex;
-      .checkout-btn {
-        display: flex;
-        margin-top: 0px;
-        margin-right: 5px;
-        margin-bottom: 0px;
-      }
     }
   }
 
@@ -422,23 +310,6 @@ export default {
     }
   }
 
-  .desc {
-    .item-name {
-      font-size: 16px;
-      filter: brightness(160%);
-    }
-    b {
-      font-size: 10px;
-    }
-    p {
-      font-size: 12px;
-    }
-    .remove-btn {
-      font-size: 10px;
-      position: relative;
-    }
-  }
-
   .item-price {
     position: absolute;
     margin-top: 55px;
@@ -447,20 +318,6 @@ export default {
       padding-left: 5px;
       color: red !important;
     }
-  }
-
-  .item-quantity {
-    position: absolute;
-    margin-top: 55px;
-    padding-left: 160px;
-  }
-
-  .cal-total {
-    display: none;
-  }
-
-  .in-cart .box-content .checkout-btn {
-    display: none;
   }
 
 }

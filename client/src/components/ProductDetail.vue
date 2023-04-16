@@ -2,36 +2,43 @@
   <VueBasicAlert :duration="200" :closeIn="2000" ref="alert" />
 
   <div v-if="user.userName" class="product-detail">
+    
     <div class="product-detail-inner" v-for="p in selectProduct" :key="p">
-      <h2 class="d-flex justify-content-between">{{ p.name }}
-        <button class="btnn" @click="setShowProduct(false)">x</button>
-      </h2>
+      <button class="out" @click="setShowProduct(false)">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
 
-      <div class="product-description d-flex">
+      <div class="row product-description">
+
         <div class="image">
           <img :src="`${ p.image }`" alt="">
         </div>
 
         <div class="content">
+          <h2 class="w-100 text-center">{{ p.name }}</h2>
           <div>
             <p class="nosale" v-if="p.price != parseInt(p.salePrice)">{{ p.price }} VNĐ</p>
             <p >{{ parseInt(p.salePrice) }} VNĐ</p>
           </div>
 
           <div class="row quantity">
-            <label class="col-5" for="qty">Số Lượng: </label>
-            <div class="col-7">
+            <label class="col-xl-5 col-lg-12 col-md-12" for="qty">Số Lượng:</label>
+
+            <div class="col-xl-7 col-lg-12 col-md-12 justify-content-center">
               <button class="btnn" @click="decrease()" :disabled="qty < 2"><i class="fa-solid fa-minus"></i></button>
               <input type="text" name="qty" id="qty" :value="qty" min="1" max="100"
                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                @input="qty = $event.target.value"
                >
-               
               <button class="btnn" @click="increase($event)"><i class="fa-solid fa-plus"></i></button>
             </div>
           </div>
 
-          <button class="btnn addToCart" @click="addToCart($event)">Thêm vào giỏ hàng</button>
+          <button class="btnn addToCart" @click="addToCart($event)">
+            <p class="fa-solid fa-cart-plus"></p>
+            <p class="">Thêm vào giỏ hàng</p>
+            <!-- <i class="fa-sharp fa-solid fa-cart-plus"></i> -->
+          </button>
         </div>
       </div>
     </div>
@@ -84,7 +91,7 @@ export default {
       await new Promise(() => setTimeout(() => {
         this.setShowProduct(false);
       }, 1000)).then(this.$refs.alert.showAlert("Thêm vào giỏ hàng thành công !"), 
-                      this.getCart());
+      this.getCart());
       
     },
 
@@ -116,47 +123,87 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 99;
+  z-index: 49;
   background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
   justify-content: center;
 
   .product-detail-inner {
+    position: relative;
     background-color: #fff;
-    width: 50vw;
-    height: 45vh;
-    padding: 30px;
+    width: 35rem;
     border-radius: 2rem;
-    h2 {
-      margin: 0;
-      font-size: 2.5rem;
-      color: #27ae60;
+    box-shadow: 1rem 1rem 1rem  rgba($color: #d62e41, $alpha: 0.5),
+                -1rem -1rem 1rem  rgba($color: #d62e41, $alpha: 0.5),
+                1rem -1rem 1rem  rgba($color: #d62e41, $alpha: 0.5),
+                -1rem 1rem 1rem  rgba($color: #d62e41, $alpha: 0.5);
+    .out {
+      position: absolute;
+      right: -2rem;
+      top: -2rem;
+      width: 4rem;
+      height: 4rem;
+      border-radius: 3rem;
+      font-size: 2rem;
+      background-color: #d62e41;
+      color: white;
+      z-index: 100;
+      &:hover {
+        background-color: #f62f41;
+      }
     }
     .product-description {
+      position: relative;
       .image {
         img {
-          height: 30rem;
-          border-radius: 1rem;
-          margin: 1rem;
+          filter: brightness(60%);
+          width: 100%;
+          border-radius: 2rem;
         }
       }
 
       .content {
+        position: absolute;
+        top: 15%;
+        border-radius: 1rem;
         font-size: 2rem;
-        width: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
         text-align: center;
+        color: #fff;
+
+        .addToCart {
+          font-size: 1.8rem;
+          margin-top: 1.5rem;
+          display: flex; 
+          p {
+            height: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0;
+            &:nth-child(2) {
+              margin-left: 1rem;
+            }
+          }
+        }
+        h2 {
+          font-size: 2.5rem;
+        }
+        div > p {
+          margin: 0;
+          font-size: 3rem;
+        }
         .nosale {
           text-decoration: line-through;
-          color: rgba($color: #000000, $alpha: 0.5)
+          color: rgba($color: #fff, $alpha: 0.5)
         }
         .quantity {
           label {
-            height: 4rem;
+            // height: 4rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -167,7 +214,6 @@ export default {
             display: flex;
             flex-direction: row;
             input {
-              border: 2px solid #27ae60;
               border-radius: 1rem;
               text-align: center;
               width: 5rem;
@@ -187,8 +233,23 @@ export default {
             }
           }
         }
-        .addToCart {
-          margin-top: 3rem;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 340px) {
+  .product-detail .product-detail-inner  {
+    width: 28rem;
+    .product-description {
+      .content {
+        top: 10%;
+        h2 {
+          font-size: 2rem;
+        }
+        div > p {
+          font-size: 2rem;
         }
       }
     }
