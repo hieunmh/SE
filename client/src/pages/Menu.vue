@@ -173,9 +173,7 @@
       </div>
     </div>
 
-    <ProductDetail v-if="showProductDetail" :product="addId">
-      <button class="btnn" @click="closeDetail()">x</button>
-    </ProductDetail>
+    <ProductDetail v-if="showProduct" :product="addId" />
 
   </div>
 </template>
@@ -193,7 +191,6 @@ export default {
   },
   data() {
     return {
-      showProductDetail: false,
       addId: [],
 
       pageNum: 0,
@@ -205,7 +202,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['scrollToTop']),
+    ...mapMutations(['scrollToTop', 'setShowProduct']),
 
       displayFilter() {
       let div1 = document.querySelectorAll('.filter-heading');
@@ -278,7 +275,7 @@ export default {
 
     showDetail(index) {
       this.addId = this.currentPage[index];
-      this.showProductDetail = !this.showProductDetail;
+      this.setShowProduct(true);
     },
 
     closeDetail() {
@@ -287,7 +284,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['allFoods']),
+    ...mapState(['allFoods', 'showProduct']),
     
     filterFoods() {
       this.pageNum = 0;

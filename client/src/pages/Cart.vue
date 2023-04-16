@@ -49,7 +49,7 @@
                     </div>
 
                     <div class="centre item-qtt col-sm-2">
-                      <button class="btnn" @click="decrease(index)"><i class="fa-solid fa-minus"></i></button>
+                      <button class="btnn" @click="decrease(index)" :disabled="p.quantity < 2"><i class="fa-solid fa-minus"></i></button>
                       <input type="text" id="iQuantity" class="form-control item-quantity" 
                         :value="p.quantity" min="1" max="100"
                         oninput="this.value = this.value.replace(/[^0-9]/g, '')"
@@ -130,37 +130,19 @@
 
 <script>
 import axios from 'axios';
-import { mapState } from 'vuex';
-// import formatMoney from '@/formatNumber.js';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'Cart',
   data() {
     return {
-      cartItem: [],
       cart: null,
-      totalMoneyBeforeDiscount: null,
       total: null,
       ship: 15000,
     }
   },
   methods: {
-    matchID(food, cartArray) {
-      let temp = '';
-      cartArray.forEach(element => {
-        if (parseInt(food.food_id) == element) {
-          temp = food;
-        }
-      });
-      return temp; 
-    },
-
-    async getCart() {
-      let res = await axios.get('cart', {withCredentials: true});
-      this.cartItem = res.data.productsInCart;
-      this.totalMoneyBeforeDiscount = res.data.totalMoneyBeforeDiscount;
-      this.cart = res.data.productsInCart;
-    },
+    ...mapActions(['getCart']),
 
     changeQty(event, index) {
       this.cartItem[index].quantity = event.target.value;
@@ -197,10 +179,7 @@ export default {
 
   },
   computed: {
-    ...mapState(['user', 'allFoods']),
-    formatMoney(value) {
-      return value * 10;
-    }
+    ...mapState(['user', 'allFoods', 'cartItem']),
   },
   created() {
     this.getCart();

@@ -2,5 +2,7 @@ export default {
   user: [],
   admin: "",
   allFoods: [],
-  isLogin: false
+  isLogin: false,
+  showProduct: false,
+  cartItem: [],
 };

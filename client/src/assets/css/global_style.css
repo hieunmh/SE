@@ -68,7 +68,7 @@ html::-webkit-scrollbar-thumb {
 }
 
 .btnn:disabled {
-    background-color: #130f40 !important;
+    background-color: rgba(0, 0, 0, 0.3) !important;
     color: #fff;
 }
 
