@@ -11,11 +11,12 @@
     </nav>
 
     <div class="icons col-4	d-flex justify-content-center">
-			<span class="qttCart" v-if="cartItem.length > 0">{{ cartItem.length }}</span>
-			<RouterLink @click="scrollToTop()"	to="/cart">
-				<div class="fas fa-shopping-cart cart">
-				</div>
-			</RouterLink>
+			<div>
+				<span class="qttCart" v-if="cartItem.length > 0">{{ cartItem.length }}</span>
+				<RouterLink @click="scrollToTop()"	to="/cart">
+					<div class="cart"><i class="fas fa-shopping-cart"></i></div>
+				</RouterLink>
+			</div>
 
 			<div v-if="!user.userName" class="fas fa-user account">
 				<ul class="drop-down-select">
@@ -118,8 +119,7 @@ export default {
 
   /**Header icons */
 	.icons {
-		position: relative;
-		div {
+		> div {
 			position: relative;
 			height: 4.5rem;
 			width: 4.5rem;
@@ -135,14 +135,22 @@ export default {
 			&:hover {
 				color: #fff;
 				background: #27ae60 !important;
+				div {
+					color: #fff;
+				}
+			} 
+			div {
+				width: 100%;
+				height: 100%;
+				color: #27ae60;
 			}
 		}
 	
 		.qttCart {
 			position: absolute;
-			left: -1.5rem;
-			top: -1.5rem;
-			font-size: 1.5rem;
+			left: -1.3rem;
+			top: -1.4rem;
+			font-size: 1.2rem;
 			text-align: center;
 			display: flex;
 			flex-direction: column;
@@ -150,19 +158,9 @@ export default {
 			color: #fff;
 			z-index: 50;
 			background-color: #d62e41;
-			width: 3rem;
-			height: 3rem;
+			width: 2.5rem;
+			height: 2.5rem;
 			border-radius: 2rem;
-		}
-		a.router-link-exact-active {
-			.cart {
-				background-color: #f38609;
-				border-color: #f38609;
-				color: white;
-			}
-			:hover {
-				border: 2px solid #27ae60;
-			}
 		}
 
 		.account.logined {

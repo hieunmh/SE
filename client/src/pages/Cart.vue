@@ -68,13 +68,35 @@
                     </div>
                   </div>
                 </div>
+
+                <div class="row">
+                  <div class="col-4"></div>
+                  <div class="col-2 centre">
+                    <!-- <h4>{{ calTotal()[1] }} VNĐ</h4> -->
+                  </div>
+                  <div class="col-2 centre">
+                    <h4>Tổng</h4>
+                  </div>
+                  <div class="col-2 centre">
+                    <h4>{{ calTotal()[0] }} VNĐ</h4>
+                  </div>
+                </div> 
               </div>
             </div>
 
             <div class="box">
               <div class="d-flex justify-content-around">
-                <button class="col-4 btnn"><RouterLink to="/menu" style=" text-align: center; color: #fff;"><i class="fa fa-arrow-left"></i> Tiếp tục mua</RouterLink></button>
-                <button class="col-4 btnn checkout-btn" :disabled="cartItem.length ? false : true"><i class="fa fa-shopping-cart"></i> Thanh toán</button>
+                <button class="col-4 btnn">
+                  <RouterLink to="/menu" style=" text-align: center; color: #fff;">
+                    <i class="fa fa-arrow-left" style="margin-right: 1rem;"></i>Tiếp tục mua
+                  </RouterLink>
+                </button>
+
+                <button class="col-4 btnn checkout-btn" :disabled="cartItem.length ? false : true">
+                  <RouterLink to="/payment" style=" text-align: center; color: #fff;">
+                    <i class="fa fa-shopping-cart" style="margin-right: 1rem;"></i> Thanh toán
+                  </RouterLink>
+                </button>
               </div>
             </div>
           </div>
@@ -96,6 +118,7 @@ export default {
       cart: null,
       total: null,
       ship: 15000,
+      totalPrice: 0,
     }
   },
   methods: {
@@ -132,6 +155,18 @@ export default {
       }
       let res = await axios.post('remove-product-cart', data, {withCredentials: true});
       this.cartItem.splice(index, 1);
+    },
+
+    calTotal() {
+      let i = 0;
+      let totalsalePrice = 0;
+      let totalPrice = 0;
+      while(i < this.cartItem.length) {
+        totalsalePrice += parseInt(this.cartItem[i].salePrice) * this.cartItem[i].quantity;
+        totalPrice += parseInt(this.cartItem[i].price) * this.cartItem[i].quantity;
+        i++;
+      }
+      return [totalsalePrice, totalPrice];
     }
 
   },

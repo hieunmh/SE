@@ -13,8 +13,8 @@ import Cart from '../pages/Cart.vue';
 import Info from '../pages/Info.vue';
 import Admin from '../pages/Admin.vue';
 import ProductDetail from '../components/ProductDetail.vue';
+import Payment from '../pages/Payment.vue'
 
-import store from '@/store/index';
 
 const routes = [
   { path: "/", name: "Home", component: Home, },
@@ -29,6 +29,7 @@ const routes = [
   { path: "/myorder", name: "Myorder", component: Myorder },
   { path: "/info", name: "Info", component: Info },
   { path: "/admin", name: "Admin", component: Admin },
+  { path: "/payment", name: "Payment", component: Payment}
 ];
 
 const router = createRouter({

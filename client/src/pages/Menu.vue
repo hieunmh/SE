@@ -530,7 +530,7 @@ input[type="button"] {
       background-color: #fff;
         width: 4rem;
         height: 4rem;
-        margin: 0rem 2rem;
+        margin: 0rem 1rem;
       &:hover {
         cursor: pointer;
       }
