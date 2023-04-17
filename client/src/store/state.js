@@ -5,4 +5,5 @@ export default {
   isLogin: false,
   showProduct: false,
   cartItem: [],
+  totalPeice: 0,
 };

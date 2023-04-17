@@ -134,10 +134,10 @@ export default {
     background-color: #fff;
     width: 35rem;
     border-radius: 2rem;
-    box-shadow: 1rem 1rem 1rem  rgba($color: #d62e41, $alpha: 0.5),
-                -1rem -1rem 1rem  rgba($color: #d62e41, $alpha: 0.5),
-                1rem -1rem 1rem  rgba($color: #d62e41, $alpha: 0.5),
-                -1rem 1rem 1rem  rgba($color: #d62e41, $alpha: 0.5);
+    box-shadow: 1rem 1rem 1rem  rgba($color: #f1f1f1, $alpha: 1),
+                -1rem -1rem 1rem  rgba($color: #f1f1f1, $alpha: 1),
+                1rem -1rem 1rem  rgba($color: #f1f1f1, $alpha: 1),
+                -1rem 1rem 1rem  rgba($color: #f1f1f1, $alpha: 1);
     .out {
       position: absolute;
       right: -2rem;
