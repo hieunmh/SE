@@ -1,16 +1,16 @@
 <template>
-  <div class="header">
-    <RouterLink to="/" class="logo"><img src="../assets/images/taco-logo.png" />Hieuhub</RouterLink>
+  <div class="header row">
+    <RouterLink to="/" @click="scrollToTop()" class="logo col-4 d-flex justify-content-center"><img src="../assets/images/taco-logo.png" />Hieuhub</RouterLink>
 
-    <nav class="navbar">
+    <nav class="navbar col-4 d-flex justify-content-between">
       <RouterLink @click="scrollToTop()" to="/">Home</RouterLink>
-      <RouterLink @click="scrollToTop()" to="/about">About</RouterLink>
+      <!-- <RouterLink @click="scrollToTop()" to="/about">About</RouterLink> -->
       <RouterLink @click="scrollToTop()" to="/menu">Menu</RouterLink>
-      <RouterLink @click="scrollToTop()" to="/promotion">Promotions</RouterLink>
+      <!-- <RouterLink @click="scrollToTop()" to="/promotion">Promotions</RouterLink> -->
       <RouterLink @click="scrollToTop()" to="/table">Table</RouterLink>
     </nav>
 
-    <div class="icons">
+    <div class="icons col-4	d-flex justify-content-center">
 			<span class="qttCart" v-if="cartItem.length > 0">{{ cartItem.length }}</span>
 			<RouterLink @click="scrollToTop()"	to="/cart">
 				<div class="fas fa-shopping-cart cart">
@@ -45,7 +45,7 @@ import { mapMutations, mapState } from 'vuex';
 export default {
 	name: 'Header',
 	methods: {
-		...mapMutations(['setUser', 'setAdmin', 'setLogged']),
+		...mapMutations(['setUser', 'setAdmin', 'setLogged', 'scrollToTop']),
 
 		showMenu() {
 			let nav_bar = document.querySelector('.header .navbar');
