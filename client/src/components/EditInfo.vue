@@ -1,4 +1,6 @@
 <template>
+  <VueBasicAlert :duration="200" :closeIn="700" ref="alert" />
+
   <div class="editInfo">
     <div class="editInfo-form">
       <form novalidate autocapitalize="off">
@@ -23,7 +25,7 @@
           <slot></slot>
         </div>
 
-      </form>k
+      </form>
     </div>
   </div>
 </template>
@@ -32,9 +34,13 @@
 import axios from 'axios';
 import { mapMutations } from 'vuex';
 import filterVN from '@/filterVN';
+import VueBasicAlert from 'vue-basic-alert';
 
 export default {
   name: "editInfo",
+  components: {
+    VueBasicAlert
+  },
   data() {
     return {
       editInfoForm: {
@@ -46,7 +52,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['scrollToTop']),
+    ...mapMutations(['scrollToTop', 'setShowAlertEditInfo']),
 
     async edit() {
       let data = await axios.get('info', { withCredentials: true });
@@ -56,9 +62,13 @@ export default {
       if (!this.editInfoForm.telephone) {
         this.editInfoForm.telephone = data.data.telephone;
       }
-      alert('Chỉnh sửa thông tin thành công');
+
       await axios.post('edit-info', this.editInfoForm, { withCredentials: true });
-      window.location.reload();
+
+      await new Promise(() => setTimeout(() => {
+        this.setShowAlertEditInfo(false);
+        window.location.reload();
+      }, 700)).then(this.$refs.alert.showAlert("Chỉnh sửa thông tin thành công !"));
     },
 
     resetCheckErr() {
@@ -136,6 +146,7 @@ export default {
   .editInfo-form {
     background-color: transparent;
     height: 45vh;
+    width: 40rem;
 
     form {
       position: relative;

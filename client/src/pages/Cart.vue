@@ -206,11 +206,8 @@ export default {
     },
 
     async deleteProduct(index) {
-      let data = {
-        product_id: this.cartItem[index].product_id,
-      }
-      let res = await axios.post('remove-product-cart', data, {withCredentials: true});
-      this.cartItem.splice(index, 1);
+      this.setShowAlert(true);
+      this.index = index;
     },
 
     calTotal() {

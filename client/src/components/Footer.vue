@@ -31,7 +31,7 @@
       <div class="box">
         <h3>link</h3>
         <div v-if="user.userName">
-          <RouterLink to="/cart"><i class="fas fa-arrow-right"></i> Giỏ hàng</RouterLink>
+          <RouterLink @click="scrollToTop()" to="/cart"><i class="fas fa-arrow-right"></i> Giỏ hàng</RouterLink>
         </div>
 
         <div v-else>

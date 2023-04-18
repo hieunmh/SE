@@ -23,16 +23,16 @@
             <div class="filter-section">
               <ul class="filter-option">
                 <li>
-                  <input type="text" value="" id="50k" placeholder="Từ VND">
+                  <input type="text"  placeholder="Từ VNĐ" v-model="priceRangeFrom">
                   <!-- <label for="50k" class="">{{ "<" }} 50k<button class="unselect-btn">X</button></label> -->
                 </li>
 
                 <li>
-                  <input type="text" value="" id="50_200k" placeholder="Đến VND">
+                  <input type="text"  placeholder="Đến VNĐ" v-model="priceRangeTo">
                   <!-- <label for="50_200k" class="">50k - 200k<button class="unselect-btn">X</button></label> -->
                 </li>
                 <li>
-                  <button class="btnn">Áp dụng</button>
+                  <button class="btnn" @click="filterPriceRange()">Áp dụng</button>
                 </li>
               </ul>
             </div>
@@ -140,7 +140,7 @@
                     <h3>{{ p.name }}</h3>
 
                     <div class="price">
-                      {{ parseFloat(p.price) }} VND
+                      {{ parseFloat(p.price) }} VNĐ
                       <span></span>
                     </div>
                   </div>
@@ -187,7 +187,7 @@ import ProductDetail from '../components/ProductDetail.vue';
 export default {
   name: "Menu",
   components: {
-    ProductDetail
+    ProductDetail,
   },
   data() {
     return {
@@ -197,7 +197,13 @@ export default {
       perPage: 12 ,
       prevCategoryClicked: "",
       productObj: {name: "", category: "", price: "", type: ""},
-      imgUrl: serverUrl + "/upload/productImage/"
+      imgUrl: serverUrl + "/upload/productImage/",
+      priceRange: {
+        from: "",
+        to: "",
+      },
+      priceRangeFrom: "",
+      priceRangeTo: ""
     };
   },
 
@@ -264,6 +270,8 @@ export default {
 
     filterProduct(event) {
       this.pageNum = 0;
+      this.priceRange.from = "";
+      this.priceRange.to = "";
       if (this.productObj.category != event.target.value && this.prevCategoryClicked != "") {
         this.prevCategoryClicked.target.style.background = "#27ae60";
       }
@@ -271,6 +279,12 @@ export default {
       console.log(this.productObj.category);
       this.prevCategoryClicked = event;
       event.target.style.background = "#057835fa";
+    },
+
+    filterPriceRange() {
+      this.priceRange.from = this.priceRangeFrom;
+      this.priceRange.to = this.priceRangeTo;
+      this.hideFilter();
     },
 
     showDetail(index) {
@@ -288,8 +302,24 @@ export default {
     
     filterFoods() {
       this.pageNum = 0;
-      return this.allFoods.filter((p) => filterVN(p.name).toLowerCase().match(filterVN(this.productObj.name).toLowerCase()) 
-      && (this.productObj.category.toLowerCase() == "tất cả" || this.productObj.category == ""));
+      if (!this.priceRange.from && !this.priceRange.to) {
+        return this.allFoods.filter((p) => filterVN(p.name).toLowerCase().match(filterVN(this.productObj.name).toLowerCase())
+          && (this.productObj.category.toLowerCase() == "tất cả" || this.productObj.category == ""));
+      }
+      else if (this.priceRange.from && !this.priceRange.to) {
+        return this.allFoods.filter((p) => filterVN(p.name).toLowerCase().match(filterVN(this.productObj.name).toLowerCase())
+          && (this.productObj.category.toLowerCase() == "tất cả" || this.productObj.category == "") && parseInt(p.price) >= parseInt(this.priceRange.from));
+      }
+      else if (!this.priceRange.from && this.priceRange.to) {
+        return this.allFoods.filter((p) => filterVN(p.name).toLowerCase().match(filterVN(this.productObj.name).toLowerCase())
+          && (this.productObj.category.toLowerCase() == "tất cả" || this.productObj.category == "") && parseInt(p.price) <= parseInt(this.priceRange.to));
+      }
+      else {
+        return this.allFoods.filter((p) => filterVN(p.name).toLowerCase().match(filterVN(this.productObj.name).toLowerCase())
+          && (this.productObj.category.toLowerCase() == "tất cả" || this.productObj.category == "") 
+          && (parseInt(p.price) >= parseInt(this.priceRange.from) && parseInt(p.price) <= parseInt(this.priceRange.to)));
+      }
+      
     },
 
     currentPage() {

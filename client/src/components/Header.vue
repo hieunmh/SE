@@ -27,7 +27,7 @@
 
 			<div v-else class="fas fa-user account logined" style="background: #f38609; color: white;">
 				<ul class="drop-down-select">
-					<li><RouterLink @click.prevent="scrollToTop()" to="/info">Tài khoản</RouterLink></li>
+					<li><RouterLink @click.prevent="toInfo()" to="/info">Tài khoản</RouterLink></li>
 					<li v-if="admin"><RouterLink @click.prevent="scrollToTop()" to="/admin">Quản lý</RouterLink></li>
 					<li><RouterLink to="/myorder">Đơn hàng</RouterLink></li>
 					<li><RouterLink @click="handleLogout" to="/">Đăng xuất</RouterLink></li>
@@ -46,7 +46,7 @@ import { mapMutations, mapState } from 'vuex';
 export default {
 	name: 'Header',
 	methods: {
-		...mapMutations(['setUser', 'setAdmin', 'setLogged', 'scrollToTop']),
+		...mapMutations(['setUser', 'setAdmin', 'setLogged', 'scrollToTop', 'setShowAlertEditInfo']),
 
 		showMenu() {
 			let nav_bar = document.querySelector('.header .navbar');
@@ -62,6 +62,11 @@ export default {
 			this.setUser([]);
 			this.setAdmin(null);
 			this.setLogged(false);
+		},
+
+		toInfo() {
+			this.setShowAlertEditInfo(false);
+			this.scrollToTop();
 		}
 
 	},
