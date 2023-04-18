@@ -11,7 +11,8 @@
       <div class="row product-description">
 
         <div class="image">
-          <img :src="`${ p.image }`" alt="">
+          <!-- <img :src="`${ p.image }`" alt=""> -->
+          <img :src="`${imgUrl}${p.image}`" alt="">
         </div>
 
         <div class="content">
@@ -58,6 +59,7 @@
 import axios from 'axios';
 import { mapActions, mapMutations, mapState } from 'vuex';
 import VueBasicAlert from 'vue-basic-alert';
+import serverUrl from '@/axios';
 
 
 export default {
@@ -69,6 +71,7 @@ export default {
   data() {
     return {
       qty: 1,
+      imgUrl: serverUrl + "/upload/productImage/",
     }
   },
 

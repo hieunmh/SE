@@ -132,8 +132,7 @@
             </RouterLink> -->
             <div class="box" @click="showDetail(index)">
                   <div class="image">
-                    <img :src="`${p.image}`" alt="">
-                    <!-- <img :src="`${imgUrl}${p.image}`" alt=""> -->
+                    <img :src="`${imgUrl}${p.image}`" alt="">
                   </div>
 
                   <div class="content">
@@ -504,7 +503,7 @@ input[type="button"] {
     .box {
       border-radius: 1rem;
       position: relative;
-      background-color: #f2f2f2;
+      background-color: #d9d9d9;
       text-align: center;
       &:hover {
         box-shadow: 0px 5px 5px rgba($color: #000000, $alpha: 0.3);

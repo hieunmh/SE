@@ -63,7 +63,7 @@
                 <div v-for="(p, index) in cartItem" :key="index">
                   <div class="row">
                     <div class="centre col-md-2 image-box" style="">
-                      <img :src="`${p.image}`" alt="">
+                      <img :src="`${imgUrl}${p.image}`" alt="">
                     </div>
                     
                     <div class="centre col-md-2 mt-sm-3 mt-md-0 desc">
@@ -152,6 +152,7 @@
 <script>
 import axios from 'axios';
 import { mapActions, mapMutations, mapState } from 'vuex';
+import serverUrl from '@/axios';
 
 import Alert from '../components/Alert.vue';
 
@@ -167,6 +168,7 @@ export default {
       ship: 15000,
       totalPrice: 0,
       index: null,
+      imgUrl: serverUrl + "/upload/productImage/",
     }
   },
   methods: {
