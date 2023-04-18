@@ -7,4 +7,6 @@ export default {
   cartItem: [],
   totalPeice: 0,
   showAlert: false,
+  showAlertEditInfo: false,
+  showAlertEditPass: false
 };

@@ -25,5 +25,11 @@ export default {
   },
   setCartItem(state, cartItem) {
     state.cartItem = cartItem;
+  },
+  setShowAlertEditInfo(state, showAlertEditInfo) {
+    state.showAlertEditInfo = showAlertEditInfo;
+  },
+  setShowAlertEditPass(state, showAlertEditPass) {
+    state.showAlertEditPass = showAlertEditPass;
   }
 };
