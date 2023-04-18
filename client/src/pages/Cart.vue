@@ -11,43 +11,72 @@
         <div class="row">
           <div class="in-cart col-md-12">
             <div class="box">
-              <div class="box-title item-total row">
-                <h3>
+              <div class="box-title item-total row text-center">
+                <h3 v-if="cartItem.length > 0">
                   <p style="font-size: 2rem;">{{ cartItem.length }}
-                    <span v-if="cartItem.length < 2">sản phẩm</span>
-                    <span v-else>sản phẩm</span> trong giỏ hàng
+                    sản phẩm trong giỏ hàng
                   </p>
                 </h3>
               </div>
 
-              <div class="box-content row no-food" v-if="cartItem.length == 0">
-                <div class="content">
+              <div class="box-content row" v-if="cartItem.length == 0">
+                <div class="content text-center">
                   <h2 style="color: #057835fa;">Bạn không có sản phẩm nào trong giỏ hàng, đến menu để mua hàng!</h2>
                 </div>
 
-                <div class="image">
+                <div class="image d-flex justify-content-center">
                   <img src="../assets/images/notfound.png" alt="">
                 </div>
+
+                <div class="d-flex justify-content-center" style="margin-top: 2rem;">
+                  <button class="btnn" @click="setShowProduct(false)">
+                    <RouterLink to="/menu" style=" text-align: center; color: #fff;">
+                      <i class="fa fa-arrow-left"></i>Đến Menu
+                    </RouterLink>
+                  </button>
+                </div> 
               </div>
 
               <div v-else class="box-content">
+                <div class="row d-md-flex d-none bar">
+                  <div class="col-md-4 text-center">
+                    <h4>Sản phẩm</h4>
+                  </div>
+                  
+
+                  <div class="col-md-2 text-center">
+                    <h4>Đơn giá</h4>
+                  </div>
+
+                  <div class="col-md-2 text-center">
+                    <h4>Số lượng</h4>
+                  </div>
+
+                  <div class="col-md-2 text-center">
+                    <h4>Số tiền</h4>
+                  </div>
+
+                  <div class="col-md-2 text-center">
+                    <h4>Thao tác</h4>
+                  </div>
+                </div>
                 <div v-for="(p, index) in cartItem" :key="index">
                   <div class="row">
-                    <div class="centre image-box col-sm-2" style="">
+                    <div class="centre col-md-2 image-box" style="">
                       <img :src="`${p.image}`" alt="">
                     </div>
                     
-                    <div class="centre desc col-sm-2">
+                    <div class="centre col-md-2 mt-sm-3 mt-md-0 desc">
                       <h4 class="item-name">{{ p.name }}</h4>
                     </div>  
                     
-                    <div class="centre item-price col-sm-2">
+                    <div class="centre col-md-2 col-sm-4 col-12 mt-sm-3 mt-md-0 item-price">
                       <h4 class="sale-price">{{ parseInt(p.salePrice) }} VNĐ</h4>
                       <h4 class="sale-price sale" v-if="p.price != p.salePrice">{{ p.price }} VNĐ</h4>
                     </div>
 
-                    <div class="centre item-qtt col-sm-2">
-                      <button class="btnn" @click="decrease(index)" :disabled="p.quantity < 2"><i class="fa-solid fa-minus"></i></button>
+                    <div class="centre col-md-2 col-sm-4 col-6 mt-sm-3 mt-md-0 item-qtt">
+                      <button class="btnn" @click="decrease(index)" :disabled="p.quantity < 1"><i class="fa-solid fa-minus"></i></button>
                       <input type="text" id="iQuantity" class="form-control item-quantity" 
                         :value="p.quantity" min="1" max="100"
                         oninput="this.value = this.value.replace(/[^0-9]/g, '')"
@@ -56,11 +85,11 @@
                       <button class="btnn" @click="increase(index)"><i class="fa-solid fa-plus"></i></button>
                     </div>
 
-                    <div class="centre cal-total col-sm-2">
+                    <div class="centre col-md-2 d-md-flex d-none cal-total">
                       <h4 class="item-total"> {{ p.quantity * p.salePrice }} VNĐ</h4>
                     </div>
 
-                    <div class="centre col-sm-2 delete">
+                    <div class="centre col-md-2 col-sm-4 col-6 mt-sm-3 mt-md-0  delete">
                       <button class="btnn" @click="deleteProduct(index)">
                         <p class="">Xóa</p>
                         <p class="fa-solid fa-trash"></p>
@@ -69,34 +98,45 @@
                   </div>
                 </div>
 
-                <div class="row">
-                  <div class="col-4"></div>
-                  <div class="col-2 centre">
+                <div class="row d-md-none d-sm-flex">
+                  <div class="col-6 text-center">
+                    <h4>Tổng thanh toán :</h4>
+                  </div>
+
+                  <div class="col-6 text-center">
+                      <h4>{{ calTotal()[0] }} VNĐ</h4>
+                    </div>
+                </div>
+
+                <div class="row col-12">
+                  <div class="col-md-2 col-6 d-flex justify-content-center">
+                    <button class="btnn" @click="setShowProduct(false)">
+                      <RouterLink to="/menu" style=" text-align: center; color: #fff;">
+                        <i class="fa fa-arrow-left"></i>Tiếp tục mua
+                      </RouterLink>
+                    </button>
+                  </div>
+
+                  <div class="col-md-4 d-md-flex d-none centre">
                     <!-- <h4>{{ calTotal()[1] }} VNĐ</h4> -->
                   </div>
-                  <div class="col-2 centre">
-                    <h4>Tổng</h4>
+
+                  <div class="col-md-2 d-md-flex d-none centre">
+                    <h4>Tổng thanh toán:</h4>
                   </div>
-                  <div class="col-2 centre">
+
+                  <div class="col-md-2 d-md-flex d-none centre">
                     <h4>{{ calTotal()[0] }} VNĐ</h4>
                   </div>
+
+                  <div class="col-md-2 col-6 d-flex justify-content-center">
+                    <button class="btnn checkout-btn" :disabled="cartItem.length ? false : true">
+                      <RouterLink to="/payment" style=" text-align: center; color: #fff;">
+                        <i class="fa fa-shopping-cart"></i> Mua hàng
+                      </RouterLink>
+                    </button>
+                  </div>
                 </div> 
-              </div>
-            </div>
-
-            <div class="box">
-              <div class="d-flex justify-content-around">
-                <button class="col-4 btnn">
-                  <RouterLink to="/menu" style=" text-align: center; color: #fff;">
-                    <i class="fa fa-arrow-left" style="margin-right: 1rem;"></i>Tiếp tục mua
-                  </RouterLink>
-                </button>
-
-                <button class="col-4 btnn checkout-btn" :disabled="cartItem.length ? false : true">
-                  <RouterLink to="/payment" style=" text-align: center; color: #fff;">
-                    <i class="fa fa-shopping-cart" style="margin-right: 1rem;"></i> Thanh toán
-                  </RouterLink>
-                </button>
               </div>
             </div>
           </div>
@@ -104,25 +144,34 @@
       </div>
     </div>
 
+    <Alert v-if="showAlert" :index="index"></Alert>
+
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
+
+import Alert from '../components/Alert.vue';
 
 export default {
   name: 'Cart',
+  components: {
+    Alert
+  },
   data() {
     return {
       cart: null,
       total: null,
       ship: 15000,
       totalPrice: 0,
+      index: null,
     }
   },
   methods: {
     ...mapActions(['getCart']),
+    ...mapMutations(['setShowProduct', 'setShowAlert']),
 
     changeQty(event, index) {
       this.cartItem[index].quantity = event.target.value;
@@ -135,7 +184,14 @@ export default {
         decrease_btn: true,
       }
       this.cartItem[index].quantity--;
-      await axios.put('edit-product-cart', data, { withCredentials: true });
+      if (this.cartItem[index].quantity < 1) {
+        this.cartItem[index].quantity = 1;
+        this.setShowAlert(true);
+        this.index = index;
+      }
+      else {
+        await axios.put('edit-product-cart', data, { withCredentials: true });
+      }
 
     },
 
@@ -171,7 +227,7 @@ export default {
 
   },
   computed: {
-    ...mapState(['user', 'allFoods', 'cartItem']),
+    ...mapState(['user', 'allFoods', 'cartItem', 'showAlert']),
   },
   created() {
     this.getCart();
@@ -202,6 +258,12 @@ export default {
   .box-content {
     padding: 1rem;
     border-image: none;
+    .image {
+      width: 100%;
+      img {
+        width: 20rem;
+      }
+    }
     .row {
       border: 2px solid #27ae60;
       border-radius: 1rem;
@@ -217,10 +279,10 @@ export default {
 
     .delete {
       display: flex;
-      align-items: flex-end;
+      // align-items: flex-end;
       button {
         display: flex;
-        height: 4rem;
+        height: 3rem;
         align-items: center;
         p {
           margin: 0;
@@ -235,8 +297,9 @@ export default {
     }
 
     .image-box {
+      padding: 0;
       display: flex;
-      align-items: flex-start ;
+      // align-items: flex-start ;
       img {
         width: 8rem;
         border-radius: 1rem;
@@ -246,8 +309,8 @@ export default {
       display: flex;
       flex-direction: row;
       button {
-        width: 4rem;
-        height: 4rem;
+        width: 3rem;
+        height: 3rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -257,8 +320,8 @@ export default {
       }
       input {
         text-align: center;
-        height: 4rem;
-        width: 5rem;
+        height: 3rem;
+        width: 4rem;
         font-size: 1.5rem;
         text-decoration: none;
       }
@@ -298,63 +361,21 @@ export default {
   i {
     padding-right: 5px;
   }
-}
+} 
 
-
-@media (max-width: 768px) {
-  .box-content {
-    .btn-group {
-      display: block;
-      button {
-        border-radius: 0.5rem !important;
-        i {
-          margin-top: 3px;
+@media (max-width: 767px) {
+  .box {
+    .box-content {
+      .image-box {
+        img {
+          width: 100%;
+          height: 20rem;
+          object-fit: cover;
+          // filter: brightness(60%);
         }
       }
     }
   }
-}
-
-@media (max-width: 576px) {
-  .box-title {
-    min-height: 48px;
-  }
-
-
-  .in-cart .box-content {
-    color: white;
-    border: none;
-    display: flex;
-    margin-left: 2rem;
-    margin-right: 2rem;
-    .btn-group {
-      margin-top: 5px;
-      display: inline-flex;
-    }
-  }
-
-  .image-box {
-    position: absolute;
-    opacity: 0.8;
-    width: 100%;
-    max-height: 100%;
-    filter: brightness(60%);
-    padding: none;
-    img {
-      border-radius: 1rem;
-    }
-  }
-
-  .item-price {
-    position: absolute;
-    margin-top: 55px;
-    .first-price {
-      display: inline;
-      padding-left: 5px;
-      color: red !important;
-    }
-  }
-
 }
 
 
