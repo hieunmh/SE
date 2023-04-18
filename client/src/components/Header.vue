@@ -2,7 +2,7 @@
   <div class="header row">
     <RouterLink to="/" @click="scrollToTop()" class="logo col-4 d-flex justify-content-center"><img src="../assets/images/taco-logo.png" />Hieuhub</RouterLink>
 
-    <nav class="navbar col-4 d-flex justify-content-between">
+    <nav class="navbar col-md-4 col-12 d-flex justify-content-md-between justify-content-around">
       <RouterLink @click="scrollToTop()" to="/">Home</RouterLink>
       <!-- <RouterLink @click="scrollToTop()" to="/about">About</RouterLink> -->
       <RouterLink @click="scrollToTop()" to="/menu">Menu</RouterLink>

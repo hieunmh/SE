@@ -17,6 +17,9 @@ export default {
   setShowProduct(state, showpro) {
     state.showProduct = showpro;
   },
+  setShowAlert(state, showAlert) {
+    state.showAlert = showAlert;
+  },
   setCartLength(state, length) {
     state.cartLength = length;
   },

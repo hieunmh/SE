@@ -1,5 +1,5 @@
 <template>
-  <VueBasicAlert :duration="200" :closeIn="2000" ref="alert" />
+  <VueBasicAlert :duration="200" :closeIn="700" ref="alert" />
 
   <div v-if="user.userName" class="product-detail">
     
@@ -90,7 +90,7 @@ export default {
       await axios.post('add-to-cart', data, {withCredentials: true});
       await new Promise(() => setTimeout(() => {
         this.setShowProduct(false);
-      }, 1000)).then(this.$refs.alert.showAlert("Thêm vào giỏ hàng thành công !"), 
+      }, 700)).then(this.$refs.alert.showAlert("Thêm vào giỏ hàng thành công !"), 
       this.getCart());
       
     },
