@@ -6,4 +6,9 @@ export default {
   showProduct: false,
   cartItem: [],
   totalPeice: 0,
+  showAlert: false,
+  showAlertEditInfo: false,
+  showAlertEditPass: false,
+  loading: true,
+  showLoading: true,
 };

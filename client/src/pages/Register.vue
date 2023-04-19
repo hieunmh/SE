@@ -80,8 +80,10 @@ import filterVN from '@/filterVN';
           this.errorObj.emailErr.push(err);
         }
         else {
-          this.setUser(data.data);
           this.$router.push('/');
+          setTimeout(() => {
+            this.setUser(data.data);
+          }, 2000);
         }
       },
 

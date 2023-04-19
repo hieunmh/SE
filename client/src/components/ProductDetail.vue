@@ -1,8 +1,7 @@
 <template>
-  <VueBasicAlert :duration="200" :closeIn="2000" ref="alert" />
+  <VueBasicAlert :duration="200" :closeIn="700" ref="alert" />
 
   <div v-if="user.userName" class="product-detail">
-    
     <div class="product-detail-inner" v-for="p in selectProduct" :key="p">
       <button class="out" @click="setShowProduct(false)">
         <i class="fa-solid fa-xmark"></i>
@@ -11,7 +10,8 @@
       <div class="row product-description">
 
         <div class="image">
-          <img :src="`${ p.image }`" alt="">
+          <!-- <img :src="`${ p.image }`" alt=""> -->
+          <img :src="`${imgUrl}${p.image}`" alt="">
         </div>
 
         <div class="content">
@@ -46,9 +46,15 @@
 
   <div v-else class="product-detail">
     <div class="product-detail-inner">
-      <h2 class="d-flex justify-content-between">Đăng nhập di ĐM <slot></slot></h2>
-      <div>
-        <RouterLink class="btnn" to="login">Đăng Nhập</RouterLink>
+      <button class="out" @click="setShowProduct(false)">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="row" style="margin-top: 3rem;">
+        <h2 class="col-12 text-center">Vui lòng đăng nhập để sử dụng tính năng này</h2>
+        <div class="col-4"></div>
+        <RouterLink @click="setShowProduct(false)" class="btnn col-4 text-center" to="login">Đăng Nhập</RouterLink>
+        <div class="col-4"></div>
       </div>
     </div>
   </div>
@@ -58,6 +64,7 @@
 import axios from 'axios';
 import { mapActions, mapMutations, mapState } from 'vuex';
 import VueBasicAlert from 'vue-basic-alert';
+import serverUrl from '@/axios';
 
 
 export default {
@@ -69,6 +76,7 @@ export default {
   data() {
     return {
       qty: 1,
+      imgUrl: serverUrl + "/upload/productImage/",
     }
   },
 
@@ -90,7 +98,7 @@ export default {
       await axios.post('add-to-cart', data, {withCredentials: true});
       await new Promise(() => setTimeout(() => {
         this.setShowProduct(false);
-      }, 1000)).then(this.$refs.alert.showAlert("Thêm vào giỏ hàng thành công !"), 
+      }, 700)).then(this.$refs.alert.showAlert("Thêm vào giỏ hàng thành công !"), 
       this.getCart());
       
     },

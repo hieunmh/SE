@@ -1,37 +1,52 @@
 <template>
   <div id="app">
-    <Header />
-
-    <div class="auth-wrapper">
-      <div class="auth-inner">
-        <router-view></router-view>
-      </div>
+    <div v-if="loading">
+      <Loading></Loading>
     </div>
 
-    <Footer />
+    <div v-else class="">
+      <Header />
+      <router-view></router-view>
+      <Footer />
+    </div>
+
   </div>
 </template>
 
 <script>
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
+import Loading from './components/Loading.vue';
 
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 
 export default {
   name: 'App',
   components: {
     Header,
     Footer,
+    Loading,
   },
+  data() {
+    return {
+      
+    }
+  },
+
   methods: {
     ...mapActions(['getProducts', 'checkLogin', 'getCart']),
+    ...mapMutations(['setLoading'])
+  },
+
+  computed: {
+    ...mapState(['loading', 'user']),
   },
   
   created() {
     this.checkLogin();
     this.getProducts();
     this.getCart();
+    this.setLoading();
   },
 }
 </script>

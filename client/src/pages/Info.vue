@@ -24,25 +24,21 @@
         </div>
 
         <div class="form-group">
-          <button @click.prevent="setShowEditInfo" class="btnn">Chỉnh sửa thông tin</button>
-          <button @click.prevent="setShowEditPass" class="btnn">Đổi mật khẩu</button>
-          <button class="btnn"><RouterLink to="/" @click.prevent="scrollToTop">Đến trang chủ</RouterLink></button>
-        </div>
-
-        <div class="form-group">
-          <EditInfo v-if="showEditInfo">
-            <button @click.prevent="setShowEditInfo" class="btnn">Hủy</button>
-          </EditInfo>
-        </div>
-
-        <div class="form-group">
-          <ChangePass v-if="showEditPass">
-            <button @click.prevent="setShowEditPass" class="btnn">Hủy</button>
-          </ChangePass>
+          <button @click.prevent="setShowAlertEditInfo(true)" class="btnn">Chỉnh sửa thông tin</button>
+          <button @click.prevent="setShowAlertEditPass(true)" class="btnn">Đổi mật khẩu</button>
+          <RouterLink to="/" @click="scrollToTop()"><button class="btnn">Đến trang chủ</button></RouterLink>
         </div>
 
       </form>
     </div>
+
+    <EditInfo v-if="showAlertEditInfo">
+      <button @click.prevent="setShowAlertEditInfo(false)" class="btnn">Hủy</button>
+    </EditInfo>
+
+    <ChangePass v-if="showAlertEditPass">
+      <button @click.prevent="setShowAlertEditPass(false)" class="btnn">Hủy</button>
+    </ChangePass>
   </div>
 </template>
 
@@ -55,16 +51,12 @@ export default {
     name: "Register",
     data() {
         return {
-            showEditInfo: false,
             showEditPass: false,
         };
     }, 
     methods: {
-      ...mapMutations(['scrollToTop']),
+      ...mapMutations(['scrollToTop', 'setShowAlertEditInfo', 'setShowAlertEditPass']),
       
-      setShowEditInfo() {
-        this.showEditInfo = !this.showEditInfo;
-      },
       setShowEditPass() {
         this.showEditPass = !this.showEditPass;
       }
@@ -72,7 +64,7 @@ export default {
     },
     
     computed: {
-      ...mapState(['user'])
+      ...mapState(['user', 'showAlertEditInfo', 'showAlertEditPass'])
     },
     components: { 
       EditInfo,

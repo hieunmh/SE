@@ -41,6 +41,9 @@ export default {
       context.commit("setCartItem", res.data.productsInCart);
       console.log(res.data);
     })
+  },
 
-  }
+  setLoading(context) {
+    context.commit("setLoading", false);
+  } 
 }
