@@ -69,17 +69,17 @@ export default {
         this.getCart();
 
         await new Promise(() => setTimeout(() => {
+          this.setUser(data.data),
           this.setShowLoading(false);
+          if (data.data.role) {
+            this.setAdmin("admin");
+          }
         }, 1000)).then(
           this.$router.push('/'),
           this.setShowLoading(true),
-          this.setUser(data.data),
           this.setLogged(true),
         )
         
-        if (data.data.role) {
-          this.setAdmin("admin");
-        }
       }
     },  
 

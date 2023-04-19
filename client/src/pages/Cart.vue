@@ -154,7 +154,7 @@ import axios from 'axios';
 import { mapActions, mapMutations, mapState } from 'vuex';
 import serverUrl from '@/axios';
 
-import Alert from '../components/Alert.vue';
+import Alert from '../components/AlertCart.vue';
 
 export default {
   name: 'Cart',

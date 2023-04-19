@@ -26,7 +26,7 @@
         <div class="form-group">
           <button @click.prevent="setShowAlertEditInfo(true)" class="btnn">Chỉnh sửa thông tin</button>
           <button @click.prevent="setShowAlertEditPass(true)" class="btnn">Đổi mật khẩu</button>
-          <button class="btnn"><RouterLink to="/" @click.prevent="scrollToTop">Đến trang chủ</RouterLink></button>
+          <RouterLink to="/" @click="scrollToTop()"><button class="btnn">Đến trang chủ</button></RouterLink>
         </div>
 
       </form>

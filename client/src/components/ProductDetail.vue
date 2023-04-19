@@ -2,7 +2,6 @@
   <VueBasicAlert :duration="200" :closeIn="700" ref="alert" />
 
   <div v-if="user.userName" class="product-detail">
-    
     <div class="product-detail-inner" v-for="p in selectProduct" :key="p">
       <button class="out" @click="setShowProduct(false)">
         <i class="fa-solid fa-xmark"></i>
@@ -47,9 +46,15 @@
 
   <div v-else class="product-detail">
     <div class="product-detail-inner">
-      <h2 class="d-flex justify-content-between">Đăng nhập di ĐM <slot></slot></h2>
-      <div>
-        <RouterLink class="btnn" to="login">Đăng Nhập</RouterLink>
+      <button class="out" @click="setShowProduct(false)">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="row" style="margin-top: 3rem;">
+        <h2 class="col-12 text-center">Vui lòng đăng nhập để sử dụng tính năng này</h2>
+        <div class="col-4"></div>
+        <RouterLink @click="setShowProduct(false)" class="btnn col-4 text-center" to="login">Đăng Nhập</RouterLink>
+        <div class="col-4"></div>
       </div>
     </div>
   </div>
