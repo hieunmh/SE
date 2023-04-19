@@ -1,4 +1,7 @@
 <template>
+  <div v-if="loading">
+    <Loading></Loading>
+  </div>
   <div class = "login">
     <div class = "login-form">
       <form @submit.prevent="handleSubmit" novalidate autocomplete="off">
@@ -31,11 +34,16 @@
   </div>
 </template>
 <script>
-import { mapMutations } from 'vuex';
-import axios from 'axios'
+import { mapActions, mapMutations, mapState } from 'vuex';
+import axios from 'axios';
+import Loading from '@/components/Loading.vue';
 
 export default {
   name: 'Login',
+  components: {
+    Loading
+  },
+
   data() {
     return {
       loginForm: {email: "", password: ""},
@@ -43,9 +51,13 @@ export default {
       errors: []
     }
   },  
+  computed: {
+    ...mapState(['loading']),
+  },
   
   methods: {
-    ...mapMutations(['scrollToTop', 'setUser', 'setAdmin', 'setLogged']),
+    ...mapMutations(['scrollToTop', 'setUser', 'setAdmin', 'setLogged', 'setShowLoading']),
+    ...mapActions(['getCart']),
 
     async login() {
       let data = await axios.post('/login', this.loginForm, { withCredentials: true });
@@ -54,21 +66,22 @@ export default {
         this.errors.push(err);
       }
       else {
-        this.setUser(data.data);
-        this.setLogged(true);
-        this.$router.push('/');
+        this.getCart();
+
+        await new Promise(() => setTimeout(() => {
+          this.setShowLoading(false);
+        }, 1000)).then(
+          this.$router.push('/'),
+          this.setShowLoading(true),
+          this.setUser(data.data),
+          this.setLogged(true),
+        )
         
         if (data.data.role) {
           this.setAdmin("admin");
         }
-        this.getCart();
       }
     },  
-
-    async getCart() {
-      let res = await axios.get('cart', { withCredentials: true });
-      console.log(res.data);
-    },
 
     async handleSubmit(event) { 
       this.errors = [];

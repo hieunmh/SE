@@ -12,7 +12,7 @@
 
     <div class="icons col-4	d-flex justify-content-center">
 			<div>
-				<span class="qttCart" v-if="cartItem.length > 0">{{ cartItem.length }}</span>
+				<span class="qttCart" v-if="cartItem.length > 0 && user.userName">{{ cartItem.length }}</span>
 				<RouterLink @click="scrollToTop()"	to="/cart">
 					<div class="cart"><i class="fas fa-shopping-cart"></i></div>
 				</RouterLink>
@@ -46,7 +46,7 @@ import { mapMutations, mapState } from 'vuex';
 export default {
 	name: 'Header',
 	methods: {
-		...mapMutations(['setUser', 'setAdmin', 'setLogged', 'scrollToTop', 'setShowAlertEditInfo']),
+		...mapMutations(['setUser', 'setAdmin', 'setLogged', 'scrollToTop', 'setShowAlertEditInfo', 'setShowLoading']),
 
 		showMenu() {
 			let nav_bar = document.querySelector('.header .navbar');
@@ -59,9 +59,14 @@ export default {
 		},
 		async handleLogout() {
 			await axios.post('/logout',{},  {withCredentials: true});
-			this.setUser([]);
-			this.setAdmin(null);
-			this.setLogged(false);
+			this.setShowLoading(true);
+
+			setTimeout(() => {
+				this.setShowLoading(false);
+				this.setUser([]);
+				this.setAdmin(null);
+				this.setLogged(false);
+			}, 1000);
 		},
 
 		toInfo() {
@@ -87,7 +92,7 @@ export default {
 	top: 0;
 	left: 0;
 	right: 0;
-	z-index: 1000;
+	z-index: 100;
 	background: #fff;
 	box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.05);
 	display: flex;

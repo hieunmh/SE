@@ -31,5 +31,13 @@ export default {
   },
   setShowAlertEditPass(state, showAlertEditPass) {
     state.showAlertEditPass = showAlertEditPass;
+  },
+  setLoading(state, loading) {
+    setTimeout(() => {
+      state.loading = false;
+    }, 1000);
+  },
+  setShowLoading(state, showLoading) {
+    state.showLoading = showLoading;
   }
 };

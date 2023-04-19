@@ -1,4 +1,8 @@
 <template>
+	<div v-if="showLoading && user.userName">
+		<Loading></Loading>
+	</div>
+
   <div class="">
     <div class="home-main">
       <div class="content">
@@ -77,24 +81,31 @@
         </div>
       </div>
     </div>
-    
   </div>
 </template>
 <script>
 import { mapMutations, mapState } from 'vuex';
+import Loading from '../components/Loading.vue';
 
 export default {
   name: 'Home',
+	components: {
+		Loading,
+	},
 	data() {
 		return {
-
 		}
 	},
 	methods: {
-		...mapMutations(['scrollToTop'])
+		...mapMutations(['scrollToTop', 'setShowLoading']),
 	},
 	computed: {
-		...mapState(['user'])
+		...mapState(['user', 'showLoading']),		
+	},
+	mounted() {
+		setTimeout(() => {
+			this.setShowLoading(false);
+		}, 1000);
 	}
 	
 }

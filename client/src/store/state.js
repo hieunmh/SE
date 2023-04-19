@@ -8,5 +8,7 @@ export default {
   totalPeice: 0,
   showAlert: false,
   showAlertEditInfo: false,
-  showAlertEditPass: false
+  showAlertEditPass: false,
+  loading: true,
+  showLoading: true,
 };
