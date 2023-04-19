@@ -1,5 +1,5 @@
 <template>
-	<div v-if="showLoading && user.userName">
+	<div v-if="showLoading && !user.userName">
 		<Loading></Loading>
 	</div>
 

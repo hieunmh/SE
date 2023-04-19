@@ -21,11 +21,11 @@
 
       <div class="box">
         <h3>Hieu dep trai</h3>
-        <RouterLink to="/"><i class="fas fa-arrow-right"></i> Home</RouterLink>
+        <RouterLink @click="scrollToTop()" to="/"><i class="fas fa-arrow-right"></i> Home</RouterLink>
         <!-- <RouterLink to="/about"><i class="fas fa-arrow-right"></i> About</RouterLink> -->
         <!-- <RouterLink to="/promotion"><i class="fas fa-arrow-right"></i> Promotions</RouterLink>  -->
-        <RouterLink to="/menu"><i class="fas fa-arrow-right"></i> Menu</RouterLink>
-        <RouterLink to="/table"><i class="fas fa-arrow-right"></i> Book table</RouterLink>
+        <RouterLink @click="scrollToTop()" to="/menu"><i class="fas fa-arrow-right"></i> Menu</RouterLink>
+        <RouterLink @click="scrollToTop()" to="/table"><i class="fas fa-arrow-right"></i> Book table</RouterLink>
       </div>
 
       <div class="box">

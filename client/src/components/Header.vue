@@ -1,19 +1,21 @@
 <template>
   <div class="header row">
-    <RouterLink to="/" @click="scrollToTop()" class="logo col-4 d-flex justify-content-center"><img src="../assets/images/taco-logo.png" />Hieuhub</RouterLink>
+    <RouterLink to="/" @click="outMenu()" class="logo col-md-4 col-4 d-flex justify-content-md-center justify-content-start">
+			<img src="../assets/images/taco-logo.png" />Hieuhub
+		</RouterLink>
 
-    <nav class="navbar col-md-4 col-12 d-flex justify-content-md-between justify-content-around">
-      <RouterLink @click="scrollToTop()" to="/">Home</RouterLink>
+    <nav class="navbar col-md-4 d-md-flex justify-content-md-between justify-content-around">
+      <RouterLink @click="outMenu()" to="/">Home</RouterLink>
       <!-- <RouterLink @click="scrollToTop()" to="/about">About</RouterLink> -->
       <RouterLink @click="scrollToTop()" to="/menu">Menu</RouterLink>
       <!-- <RouterLink @click="scrollToTop()" to="/promotion">Promotions</RouterLink> -->
-      <RouterLink @click="scrollToTop()" to="/table">Table</RouterLink>
+      <RouterLink @click="outMenu()" to="/table">Table</RouterLink>
     </nav>
 
-    <div class="icons col-4	d-flex justify-content-center">
+    <div class="icons col-md-4 col-8	d-flex justify-content-md-center justify-content-end">
 			<div>
 				<span class="qttCart" v-if="cartItem.length > 0 && user.userName">{{ cartItem.length }}</span>
-				<RouterLink @click="scrollToTop()"	to="/cart">
+				<RouterLink @click="outMenu()"	to="/cart">
 					<div class="cart"><i class="fas fa-shopping-cart"></i></div>
 				</RouterLink>
 			</div>
@@ -27,9 +29,9 @@
 
 			<div v-else class="fas fa-user account logined" style="background: #f38609; color: white;">
 				<ul class="drop-down-select">
-					<li><RouterLink @click.prevent="toInfo()" to="/info">Tài khoản</RouterLink></li>
-					<li v-if="admin"><RouterLink @click.prevent="scrollToTop()" to="/admin">Quản lý</RouterLink></li>
-					<li><RouterLink to="/myorder">Đơn hàng</RouterLink></li>
+					<li><RouterLink @click="outMenu()" to="/info">Tài khoản</RouterLink></li>
+					<li v-if="admin"><RouterLink @click.prevent="outMenu()" to="/admin">Quản lý</RouterLink></li>
+					<li><RouterLink @click="outMenu()" to="/myorder">Đơn hàng</RouterLink></li>
 					<li><RouterLink @click="handleLogout" to="/">Đăng xuất</RouterLink></li>
 				</ul>
 			</div>
@@ -46,7 +48,7 @@ import { mapMutations, mapState } from 'vuex';
 export default {
 	name: 'Header',
 	methods: {
-		...mapMutations(['setUser', 'setAdmin', 'setLogged', 'scrollToTop', 'setShowAlertEditInfo', 'setShowLoading']),
+		...mapMutations(['setUser', 'setAdmin', 'setLogged', 'scrollToTop', 'setShowAlertEditInfo', 'setShowLoading', 'setShowProduct']),
 
 		showMenu() {
 			let nav_bar = document.querySelector('.header .navbar');
@@ -59,11 +61,12 @@ export default {
 		},
 		async handleLogout() {
 			await axios.post('/logout',{},  {withCredentials: true});
+			this.setUser([]);
+			this.setShowProduct(false);
 			this.setShowLoading(true);
 
 			setTimeout(() => {
 				this.setShowLoading(false);
-				this.setUser([]);
 				this.setAdmin(null);
 				this.setLogged(false);
 			}, 1000);
@@ -71,9 +74,14 @@ export default {
 
 		toInfo() {
 			this.setShowAlertEditInfo(false);
+			this.setShowProduct(false);
 			this.scrollToTop();
-		}
-
+		},
+		
+		outMenu() {
+			this.setShowProduct(false);
+			this.scrollToTop();
+		},
 	},
 	computed: {
 		...mapState(['user', 'admin', 'cartItem'])
@@ -256,5 +264,17 @@ export default {
 		margin-left: -50px;
 	}
 }
+
+// @media(max-width: 456px) {
+// 	.header {
+// 		.icons {
+// 			> div {
+// 				height: 4rem;
+// 				width: 4rem;
+// 				line-height: 4rem;
+// 			}
+// 		}
+// 	}
+// }
 
 </style>

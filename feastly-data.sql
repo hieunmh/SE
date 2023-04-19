@@ -34,7 +34,7 @@ INSERT INTO `products` (`name`, `desc`, `category_id`, `discount_id`, `price`, `
 ('Cơm rang xá xíu', '', 2, 3, 40000, 1, 1, '1681815136443.jpeg'),
 ('Cơm rang thập cẩm', '', 2, 1, 32000, 1, 1, '1681815226446.jpeg'),
 ('Cơm bò sốt tiêu đen', '', 2, 2, 38400, 1, 1, '1681815556598.jpeg'),
-('Cơm thịt chiên sốt thái', '', 2, 1, 9900, 1, 1, '1681815645434.jpeg'),
+('Cơm thịt chiên sốt thái', '', 2, 1, 39900, 1, 1, '1681815645434.jpeg'),
 ('Bánh mì thịt nướng', '', 3, 3, 26600, 1, 1, '1681815954922.jpg'),
 ('Bánh mì gà chiên', '', 3, 1, 23000, 0, 10, '1681816076225.jpg'),
 ('Bánh Mì thịt viên', '', 3, 1, 15000, 0, 10, '1681816129859.jpeg'),
