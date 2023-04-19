@@ -7,8 +7,6 @@ const {
 // ADD discount
 // EDIT discount
 
-class discountController {
-
-}
+class discountController {}
 
 module.exports = new discountController();

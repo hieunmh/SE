@@ -1,7 +1,7 @@
 const {
-  models: { Order_items, Order_details, Cart_item }, sequelize,
+  models: { Order_items, Order_details, Cart_item },
+  sequelize,
 } = require('../models');
-
 
 // status in Order_details need to be enum - to choose
 // provider ?
@@ -65,7 +65,7 @@ class orderController {
     } else {
       try {
         // TO DO
-        
+
         const newOrder = await Order_details.create({
           user_id,
           total: totalPrice,
@@ -75,29 +75,32 @@ class orderController {
         if (newOrder) {
           // order_id : Foreign key
           const order_id = newOrder.dataValues.id;
-          
+
           // get product in cart_item
           let productsInCartFilter = [];
-          for (let i = 0 ; i < cartProduct.length; i++) {
+          for (let i = 0; i < cartProduct.length; i++) {
             productsInCartFilter.push({
-              order_id, 
-              product_id: cartProduct[i].product_id, 
-              quantity: cartProduct[i].quantity});
+              order_id,
+              product_id: cartProduct[i].product_id,
+              quantity: cartProduct[i].quantity,
+            });
           }
           console.log(productsInCartFilter);
           // add to order_item
-          let insertProducts = await Order_items.bulkCreate(productsInCartFilter);
+          let insertProducts = await Order_items.bulkCreate(
+            productsInCartFilter,
+          );
 
           // if insert true, delete all products in cart
           if (insertProducts) {
             const deleteProduct = await Cart_item.destroy({
               where: { user_id },
             })
-            .then(() => {
-              req.session.cart = [];
-              return res.json({ success: 'Order created successfully' });
-            })
-            .catch((err) => console.log(err));
+              .then(() => {
+                req.session.cart = [];
+                return res.json({ success: 'Order created successfully' });
+              })
+              .catch((err) => console.log(err));
           }
         }
       } catch (err) {

@@ -78,14 +78,15 @@ class cartController {
       amountOfProducts = cart.length;
     }
     // total money
-    var [totalMoneyBeforeDiscount, totalMoneyAfterDiscount] = this.getCalculateTotal(cart);
+    var [totalMoneyBeforeDiscount, totalMoneyAfterDiscount] =
+      this.getCalculateTotal(cart);
     req.session.totalPrice = totalMoneyAfterDiscount;
 
     return res.status(200).json({
       amountOfProducts,
       productsInCart: cart,
       totalMoneyBeforeDiscount,
-      totalMoneyAfterDiscount
+      totalMoneyAfterDiscount,
     });
   }
 
@@ -139,7 +140,7 @@ class cartController {
 
     return res.status(200).json({
       success: 'Uploaded success! ',
-      amountOfProducts: cart.length
+      amountOfProducts: cart.length,
     });
   }
 
