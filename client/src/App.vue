@@ -34,7 +34,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getProducts', 'checkLogin', 'getCart']),
+    ...mapActions(['getProducts', 'checkLogin', 'getCart', 'getCategory']),
     ...mapMutations(['setLoading'])
   },
 
@@ -46,6 +46,7 @@ export default {
     this.checkLogin();
     this.getProducts();
     this.getCart();
+    this.getCategory();
     this.setLoading();
   },
 }

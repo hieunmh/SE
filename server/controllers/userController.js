@@ -167,6 +167,7 @@ class userController {
                 email: email,
                 userName: name,
                 role: defaultUserRole,
+                telephone
               });
             })
             .catch((err) => {

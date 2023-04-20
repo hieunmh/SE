@@ -1,5 +1,13 @@
 <template>
   <div class="info">
+    <EditInfo v-if="showAlertEditInfo">
+      <button @click.prevent="setShowAlertEditInfo(false)" class="btnn">Hủy</button>
+    </EditInfo>
+
+    <ChangePass v-else-if="showAlertEditPass">
+      <button @click.prevent="setShowAlertEditPass(false)" class="btnn">Hủy</button>
+    </ChangePass>
+
     <div class="info-form">
       <form @submit="handleSubmit" novalidate autocapitalize="off">
         <h3>Thông tin tài khoản</h3>
@@ -31,14 +39,6 @@
 
       </form>
     </div>
-
-    <EditInfo v-if="showAlertEditInfo">
-      <button @click.prevent="setShowAlertEditInfo(false)" class="btnn">Hủy</button>
-    </EditInfo>
-
-    <ChangePass v-if="showAlertEditPass">
-      <button @click.prevent="setShowAlertEditPass(false)" class="btnn">Hủy</button>
-    </ChangePass>
   </div>
 </template>
 
