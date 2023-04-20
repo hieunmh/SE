@@ -55,7 +55,7 @@ INSERT INTO `products` (`name`, `desc`, `category_id`, `discount_id`, `price`, `
 ('Caramel Macchiato', '', 5, 1, 50000, 0, 10, '1681817952029.jpeg'),
 ('Americano chanh leo', '', 5, 1, 35000, 0, 10, '1681818145995.jpeg'),
 ('Esperesso nâu đá', '', 5, 1, 50000, 0, 10, '1681818215981.jpeg'),
-('Cappuccino', '', 3, 3, 52000, 0, 10, '1681817873766.jpg');
+('Cappuccino', '', 5, 3, 52000, 0, 10, '1681817873766.jpg');
 
 INSERT INTO `users` (`email`, `password`, `name`, `telephone`, `role`) VALUES 
 ('admin@gmail.com', '$2b$10$iDOGulq.CY.YtBD96mA7lO0pPZHZ14i054D0E7AluwYXP1kkvJ0Ya', 'admin', '0987654321', 1), -- password = 123456

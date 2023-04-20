@@ -1,7 +1,8 @@
 <template>
-  <div v-if="loading">
+  <div v-if="showLoading">
     <Loading></Loading>
   </div>
+  
   <div class = "login">
     <div class = "login-form">
       <form @submit.prevent="handleSubmit" novalidate autocomplete="off">
@@ -52,7 +53,7 @@ export default {
     }
   },  
   computed: {
-    ...mapState(['loading']),
+    ...mapState(['loading', 'showLoading']),
   },
   
   methods: {

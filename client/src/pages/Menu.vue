@@ -118,18 +118,16 @@
       
       <div class="col-12">
         <div class="row menu-tabs">
-          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" name="allFood" value="Tất cả">
-          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" name="allFood" value="Mì phở">
-          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" name="allFood" value="Cơm hộp">
-          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" name="allFood" value="Bánh Mì">
-          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" name="allFood" value="Bia, Rượu">
-          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" name="allFood" value="Trà sữa">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="0" value="Tất cả">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="1" value="Mì phở">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="2" value="Cơm hộp">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="3" value="Bánh">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="4" value="Trà sữa">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="5" value="Cà phê">
         </div>
 
         <div class="row box-container">
-          <div v-for="(p, index) in currentPage" :key="index" class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-            <!-- <RouterLink :to="`menu/${p.id}`">
-            </RouterLink> -->
+          <div v-for="(p, index) in currentPage" :key="index" class="col-lg-3 col-md-4 col-6">
             <div class="box" @click="showDetail(index)">
                   <div class="image">
                     <img :src="`${imgUrl}${p.image}`" alt="">
@@ -269,12 +267,11 @@ export default {
 
     filterProduct(event) {
       this.pageNum = 0;
-      this.priceRange.from = "";
-      this.priceRange.to = "";
-      if (this.productObj.category != event.target.value && this.prevCategoryClicked != "") {
+      if (this.productObj.category != event.target.id && this.prevCategoryClicked != "") {
         this.prevCategoryClicked.target.style.background = "#27ae60";
       }
-      this.productObj.category = event.target.value;
+      this.productObj.category = event.target.id;
+      
       console.log(this.productObj.category);
       this.prevCategoryClicked = event;
       event.target.style.background = "#057835fa";
@@ -297,25 +294,25 @@ export default {
   },
 
   computed: {
-    ...mapState(['allFoods', 'showProduct']),
+    ...mapState(['allFoods', 'showProduct', 'category']),
     
     filterFoods() {
       this.pageNum = 0;
       if (!this.priceRange.from && !this.priceRange.to) {
         return this.allFoods.filter((p) => filterVN(p.name).toLowerCase().match(filterVN(this.productObj.name).toLowerCase())
-          && (this.productObj.category.toLowerCase() == "tất cả" || this.productObj.category == ""));
+          && ((this.productObj.category == 0 || this.productObj.category == "" || parseInt(this.productObj.category.toLowerCase()) == p.category_id)));
       }
       else if (this.priceRange.from && !this.priceRange.to) {
         return this.allFoods.filter((p) => filterVN(p.name).toLowerCase().match(filterVN(this.productObj.name).toLowerCase())
-          && (this.productObj.category.toLowerCase() == "tất cả" || this.productObj.category == "") && parseInt(p.price) >= parseInt(this.priceRange.from));
+          && ((this.productObj.category == 0 || this.productObj.category == "" || parseInt(this.productObj.category.toLowerCase()) == p.category_id) ) && parseInt(p.price) >= parseInt(this.priceRange.from));
       }
       else if (!this.priceRange.from && this.priceRange.to) {
         return this.allFoods.filter((p) => filterVN(p.name).toLowerCase().match(filterVN(this.productObj.name).toLowerCase())
-          && (this.productObj.category.toLowerCase() == "tất cả" || this.productObj.category == "") && parseInt(p.price) <= parseInt(this.priceRange.to));
+          && ((this.productObj.category == 0 || this.productObj.category == "" || parseInt(this.productObj.category.toLowerCase()) == p.category_id)) && parseInt(p.price) <= parseInt(this.priceRange.to));
       }
-      else {
+      else {  
         return this.allFoods.filter((p) => filterVN(p.name).toLowerCase().match(filterVN(this.productObj.name).toLowerCase())
-          && (this.productObj.category.toLowerCase() == "tất cả" || this.productObj.category == "") 
+          && ((this.productObj.category.toLowerCase() == 0 || this.productObj.c || parseInt(this.productObj.category.toLowerCase()) == p.category_id)) 
           && (parseInt(p.price) >= parseInt(this.priceRange.from) && parseInt(p.price) <= parseInt(this.priceRange.to)));
       }
       
@@ -406,17 +403,17 @@ input[type="button"] {
 }
 
 .search-box {
-  width: 100%;
+  width: 100%;  
   position: relative;
   margin: 0;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
   i {
     position: absolute;
     width: 3.2rem;
     border-top: 5px solid #27ae60;
     border-bottom: 5px solid #27ae60;
     border-radius: 8px;
-    top: 15%;
+    top: 0.6rem;
     left: 0.7rem;
     font-size: 1.8rem;
     background-color: #27ae60;
@@ -425,7 +422,7 @@ input[type="button"] {
   .search-input {
     padding-left: 4.5rem;
     width: 100%;
-    height: 40px;
+    height: 4rem;
     font-size: 15px;
     color: #27ae60;
     text-transform: none;
@@ -459,7 +456,6 @@ input[type="button"] {
   padding: 2rem 20%;
   // background-color: #fff;
   .filter-box {
-    // position: relative;
     .filter {
       width: 100%;
       border-radius: 1rem;
@@ -577,11 +573,22 @@ input[type="button"] {
 }
 
 @media (max-width: 575px) {
+
+  .search-box {
+    i {
+      top: 0.5rem;
+      left: 0.5rem;
+    }
+  }
   .search-box, .filter-heading, .filter-section {
     width: auto;
   }
   .filter-option {
     width: 100%;
+  }
+  
+  .menu {
+    padding: 2rem 5%;
   }
   .menu .action-row {
     font-size: 1.5rem;

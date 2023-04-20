@@ -2,6 +2,7 @@ export default {
   user: [],
   admin: "",
   allFoods: [],
+  category: [],
   isLogin: false,
   showProduct: false,
   cartItem: [],

@@ -1,8 +1,12 @@
 <template>
-  <VueBasicAlert :duration="200" :closeIn="700" ref="alert" />
+  <div v-if="loading">
+    <Loading></Loading>
+  </div>
 
   <div class="editInfo">
     <div class="editInfo-form">
+      <VueBasicAlert :duration="200" :closeIn="700" ref="alert" />
+
       <form novalidate autocapitalize="off">
         <h3>Chỉnh sửa thông tin</h3>
 
@@ -32,14 +36,16 @@
 
 <script>
 import axios from 'axios';
-import { mapMutations } from 'vuex';
+import { mapMutations  } from 'vuex';
 import filterVN from '@/filterVN';
 import VueBasicAlert from 'vue-basic-alert';
+import Loading from './Loading.vue';
 
 export default {
   name: "editInfo",
   components: {
-    VueBasicAlert
+    VueBasicAlert,
+    Loading
   },
   data() {
     return {
@@ -48,11 +54,12 @@ export default {
         telephone: "",
       },
       errorObj: { nameErr: [], phoneErr: [] },
+      loading: false
     }
   },
 
   methods: {
-    ...mapMutations(['scrollToTop', 'setShowAlertEditInfo']),
+    ...mapMutations(['scrollToTop', 'setShowAlertEditInfo', 'setShowLoading']),
 
     async edit() {
       let data = await axios.get('info', { withCredentials: true });
@@ -67,9 +74,12 @@ export default {
 
       await new Promise(() => setTimeout(() => {
         this.setShowAlertEditInfo(false);
-        window.location.reload();
-      }, 700)).then(this.$refs.alert.showAlert("Chỉnh sửa thông tin thành công !"));
-    },
+        this.loading = false;
+        this.$refs.alert.showAlert("Chỉnh sửa thông tin thành công !");
+      }, 1000)).then(
+          window.location.reload(),
+          this.loading = true
+        )},
 
     resetCheckErr() {
       this.errorObj.nameErr = [],
