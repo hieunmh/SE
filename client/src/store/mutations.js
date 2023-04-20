@@ -8,6 +8,9 @@ export default {
   setFoods(state, products) {
     state.allFoods = products;
   },
+  setCategory(state, category) {
+    state.category = category;
+  },
   setAdmin(state, admin) {
     state.admin = admin;
   },

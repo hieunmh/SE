@@ -6,10 +6,19 @@ export default {
     await axios.get('products', {withCredentials: true})
     .then((res) => {
       context.commit("setFoods", res.data);
+      console.log(res.data);
     })
     .catch((err) => {
       console.log(err);
     })
+  },
+
+  async getCategory(context) {
+    await axios.get('all-category', { withCredentials: true })
+    .then((res) => {
+      context.commit("setCategory", res.data.slice(0, 5));
+    })
+
   },
 
   async checkLogin(context) {

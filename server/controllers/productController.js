@@ -12,6 +12,7 @@ class productController {
         attributes: [
           'id',
           'name',
+          'category_id',
           'sold_number',
           'quantity',
           'image',
