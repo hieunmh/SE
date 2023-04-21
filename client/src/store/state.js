@@ -6,6 +6,7 @@ export default {
   isLogin: false,
   showProduct: false,
   cartItem: [],
+  cartLength: 0,
   totalPeice: 0,
   showAlert: false,
   showAlertEditInfo: false,

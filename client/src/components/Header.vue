@@ -14,7 +14,7 @@
 
     <div class="icons col-md-3 col-8	d-flex justify-content-md-end justify-content-end">
 			<div>
-				<span class="qttCart" v-if="cartItem.length > 0 && user.userName">{{ cartItem.length }}</span>
+				<span class="qttCart" v-if="cartLength > 0 && user.userName">{{ cartLength }}</span>
 				<RouterLink @click="outMenu()"	to="/cart">
 					<div class="cart"><i class="fas fa-shopping-cart"></i></div>
 				</RouterLink>
@@ -67,7 +67,8 @@ export default {
 	data() {
 		return {
 			searchName: "",
-			loadingSearch: false
+			loadingSearch: false,
+			lengthIcon: 0
 		}
 	},
 
@@ -121,7 +122,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapState(['user', 'admin', 'cartItem', 'productObj'])
+		...mapState(['user', 'admin', 'cartItem', 'productObj', 'cartLength'])
 	}
 }
 </script>

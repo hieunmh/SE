@@ -3,11 +3,7 @@
     <LoadingSearch v-if="!showSearchLoading"></LoadingSearch>
   </div>
 
-  <div v-if="showLoading && !user.userName">
-    <Loading></Loading>
-  </div>
-
-  <div class="menu" @click.self="hideFilter()">
+  <div class="menu" @click.self="">
     <div class="row">      
       <div class="col-12">
         <div class="row menu-tabs">
@@ -97,7 +93,6 @@ export default {
 
       pageNum: 0,
       perPage: 12 ,
-      productObj: { name: "", category: "", price: "", type: "" },
       prevCategoryClicked: "",
       imgUrl: serverUrl + "/upload/productImage/",
       priceRange: {
@@ -111,27 +106,6 @@ export default {
 
   methods: {
     ...mapMutations(['scrollToTop', 'setShowProduct', 'setShowSearchLoading']),
-
-      displayFilter() {
-      let div1 = document.querySelectorAll('.filter-heading');
-      let div2 = document.querySelectorAll('.filter-section');
-      
-      for (let i = 0; i < div1.length; i++) {
-        div1[i].classList.toggle('active');
-        div2[i].classList.toggle('active');
-      }
-    },
-
-    hideFilter() {
-      let div1 = document.querySelectorAll('.filter-heading');
-      let div2 = document.querySelectorAll('.filter-section');
-      if (div1[0].classList.contains('active')) {
-        for (let i = 0; i < div1.length; i++) {
-          div1[i].classList.remove('active');
-          div2[i].classList.remove('active');
-        }
-      }
-    },
 
     setPage(value) {
       this.pageNum = value;
@@ -185,7 +159,6 @@ export default {
         this.setShowSearchLoading(true);
         this.priceRange.from = this.priceRangeFrom;
         this.priceRange.to = this.priceRangeTo;
-        this.hideFilter();
       }, 1000)).then(
         this.setShowSearchLoading(false),
       )
