@@ -110,11 +110,11 @@
 
                 <div class="row col-12">
                   <div class="col-md-2 col-6 d-flex justify-content-center">
-                    <button class="btnn" @click="setShowProduct(false)">
                       <RouterLink to="/menu" style=" text-align: center; color: #fff;">
-                        <i class="fa fa-arrow-left"></i>Tiếp tục mua
+                        <button class="btnn" @click="setShowProduct(false)">
+                          <i class="fa fa-arrow-left"></i>Tiếp tục mua
+                        </button>
                       </RouterLink>
-                    </button>
                   </div>
 
                   <div class="col-md-4 d-md-flex d-none centre">
@@ -130,11 +130,11 @@
                   </div>
 
                   <div class="col-md-2 col-6 d-flex justify-content-center">
-                    <button class="btnn checkout-btn" :disabled="cartItem.length ? false : true">
                       <RouterLink to="/payment" style=" text-align: center; color: #fff;">
-                        <i class="fa fa-shopping-cart"></i> Mua hàng
+                        <button class="btnn checkout-btn" :disabled="cartItem.length ? false : true">
+                          <i class="fa fa-shopping-cart"></i> Mua hàng
+                        </button>
                       </RouterLink>
-                    </button>
                   </div>
                 </div> 
               </div>

@@ -3,117 +3,8 @@
     <LoadingSearch v-if="!showSearchLoading"></LoadingSearch>
   </div>
 
-  <div v-if="!showLoading && !user.userName">
-    <Loading></Loading>
-  </div>
-
-  <div class="menu" @click.self="hideFilter()">
-    <div class="row">
-      <div class="col-12 filter-box">
-        
-         
-        <div class="row filter">
-          <div class="col-md-3 col-6">
-            <div class="filter-heading">
-              <h3>Khoảng giá</h3>
-            </div>
-
-            <div class="filter-section">
-              <ul class="filter-option">
-                <li>
-                  <input type="text"  placeholder="Từ VNĐ" v-model="priceRangeFrom">
-                  <!-- <label for="50k" class="">{{ "<" }} 50k<button class="unselect-btn">X</button></label> -->
-                </li>
-
-                <li>
-                  <input type="text"  placeholder="Đến VNĐ" v-model="priceRangeTo">
-                  <!-- <label for="50_200k" class="">50k - 200k<button class="unselect-btn">X</button></label> -->
-                </li>
-                <li>
-                  <button class="btnn" @click="filterPriceRange()">Áp dụng</button>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="col-md-3 col-6">
-            <div class="filter-heading"> 
-              <h3>Đồ Ăn</h3>
-            </div>
-
-            <div class="filter-section">
-              <ul class="filter-option">
-                <li>
-                  <input type="button" value="food" id="foodType" hidden>
-                  <label for="footType" class="">Bánh Mì<button class="unselect-btn">X</button></label>
-                </li>
-
-                <li>
-                  <input type="button" value="drink" id="drinkType" hidden>
-                  <label for="drinkType" class="">Cơm Hộp<button class="unselect-btn">X</button></label>
-                </li>
-
-                <li>
-                  <input type="button" value="food" id="foodType" hidden>
-                  <label for="footType" class="">Món lẩu<button class="unselect-btn">X</button></label>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="col-md-3 col-6">
-            <div class="filter-heading"> 
-              <h3>Đồ Uống</h3>
-            </div>
-
-            <div class="filter-section">
-              <ul class="filter-option">
-                <li>
-                  <input type="button" value="food" id="foodType" hidden>
-                  <label for="footType" class="">Bia, Rượu<button class="unselect-btn">X</button></label>
-                </li>
-
-                <li>
-                  <input type="button" value="drink" id="drinkType" hidden>
-                  <label for="drinkType" class="">Trà sữa<button class="unselect-btn">X</button></label>
-                </li>
-
-                <li>
-                  <input type="button" value="food" id="foodType" hidden>
-                  <label for="footType" class="">Cà Phê<button class="unselect-btn">X</button></label>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="col-md-3 col-6">
-            <div class="filter-heading"> 
-              <h3>Đồ Chiên</h3>
-            </div>
-
-            <div class="filter-section">
-              <ul class="filter-option">
-                <li>
-                  <input type="button" value="food" id="foodType" hidden>
-                  <label for="footType" class="">Ăn vặt<button class="unselect-btn">X</button></label>
-                </li>
-
-                <li>
-                  <input type="button" value="drink" id="drinkType" hidden>
-                  <label for="drinkType" class="">Xiên Bẩn<button class="unselect-btn">X</button></label>
-                </li>
-
-                <li>
-                  <input type="button" value="food" id="foodType" hidden>
-                  <label for="footType" class="">Cơm rang<button class="unselect-btn">X</button></label>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-      </div>
-      
+  <div class="menu" @click.self="">
+    <div class="row">      
       <div class="col-12">
         <div class="row menu-tabs">
           <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="0" value="Tất cả">
@@ -122,6 +13,13 @@
           <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="3" value="Bánh">
           <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="4" value="Trà sữa">
           <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="5" value="Cà phê">
+        </div>
+
+        <div class="row priceFilter">
+          <input type="text" class="filter-item col-4" v-model="priceRangeFrom" placeholder="Từ VNĐ" @keypress.enter="filterPriceRange()" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          <input type="text" class="filter-item col-4" v-model="priceRangeTo" placeholder="Đến VNĐ" @keypress.enter="filterPriceRange()" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          <input type="button" class="filter-item col-2" @click="filterPriceRange()" value="Áp dụng" >
+          <input type="button" class="filter-item col-2" @click="deletePriceRange()" value="Xóa lọc">
         </div>
 
         <div class="row box-container">
@@ -207,28 +105,7 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['scrollToTop', 'setShowProduct']),
-
-      displayFilter() {
-      let div1 = document.querySelectorAll('.filter-heading');
-      let div2 = document.querySelectorAll('.filter-section');
-      
-      for (let i = 0; i < div1.length; i++) {
-        div1[i].classList.toggle('active');
-        div2[i].classList.toggle('active');
-      }
-    },
-
-    hideFilter() {
-      let div1 = document.querySelectorAll('.filter-heading');
-      let div2 = document.querySelectorAll('.filter-section');
-      if (div1[0].classList.contains('active')) {
-        for (let i = 0; i < div1.length; i++) {
-          div1[i].classList.remove('active');
-          div2[i].classList.remove('active');
-        }
-      }
-    },
+    ...mapMutations(['scrollToTop', 'setShowProduct', 'setShowSearchLoading']),
 
     setPage(value) {
       this.pageNum = value;
@@ -269,21 +146,35 @@ export default {
 
     filterProduct(event) {
       this.pageNum = 0;
-      // this.productObj.name = ""
       if (this.productObj.category != event.target.id && this.prevCategoryClicked != "") {
         this.prevCategoryClicked.target.style.background = "#27ae60";
       }
-      this.productObj.category = event.target.id;
-      
-      console.log(this.productObj.category);
+      this.productObj.category = event.target.id; 
       this.prevCategoryClicked = event;
       event.target.style.background = "#057835fa";
     },
 
-    filterPriceRange() {
-      this.priceRange.from = this.priceRangeFrom;
-      this.priceRange.to = this.priceRangeTo;
-      this.hideFilter();
+    async filterPriceRange() {
+      await new Promise(() => setTimeout(() => {
+        this.setShowSearchLoading(true);
+        this.priceRange.from = this.priceRangeFrom;
+        this.priceRange.to = this.priceRangeTo;
+      }, 1000)).then(
+        this.setShowSearchLoading(false),
+      )
+    },
+
+    async deletePriceRange() {
+      await new Promise(() => setTimeout(() => {
+        this.setShowSearchLoading(true);
+      }, 1000)).then(
+        this.setShowSearchLoading(false),
+        this.priceRangeFrom = "",
+        this.priceRangeTo = "",
+        this.priceRange.from = "",
+        this.priceRange.to = "",
+      )
+      
     },
 
     showDetail(index) {
@@ -469,10 +360,41 @@ input[type="button"] {
       z-index: 2; 
     }
   }
+
+  .priceFilter {
+    background-color: #27ae60;
+    margin: 0;
+    margin-bottom: 2rem;
+    // flex: 0 0 100%;
+    max-width: 100%;
+    text-align: center;
+    .filter-item {
+      padding: 0.8rem 1rem;
+      border: 5px solid #27ae60;
+      font-size: 1.7rem;
+      color: #27ae60;
+      &:nth-child(1) {
+        border-right: none;
+      }
+      &::placeholder {
+        color: rgba($color: #27ae60, $alpha: 1.0);
+        // text-align: center;
+      }
+    }
+    input[type = "button"] {
+      background-color: #27ae60;
+      color: #fff;
+      font-weight: 500;
+      &:hover {
+        background-color: #f38609;
+        border-color: #f38609;
+      }
+    }
+  }
   
   .menu-tabs {
     margin: 0;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     flex: 0 0 100%;
     max-width: 100%;
     text-align: center;
@@ -566,13 +488,16 @@ input[type="button"] {
   }
 }
 
-.filter-heading, .filter-section {
-  display: none;
+@media (max-width: 992px)  {
+  .menu {
+    padding: 2rem 15%;
+  }
 }
 
-.filter-heading.active, .filter-section.active  {
-  display: block;
-  
+@media (max-width: 767px) {
+  .menu {
+    padding: 2rem 10%;
+  }
 }
 
 @media (max-width: 575px) {

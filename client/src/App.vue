@@ -17,6 +17,8 @@
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
 import Loading from './components/Loading.vue';
+import axios from 'axios';
+import router from "@/routes/router";
 
 import { mapActions, mapMutations, mapState } from 'vuex';
 
@@ -34,8 +36,37 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getProducts', 'checkLogin', 'getCart', 'getCategory']),
-    ...mapMutations(['setLoading'])
+    ...mapActions(['getProducts', 'getCart', 'getCategory']),
+    ...mapMutations(['setLoading', 'setUser', 'setLogged', 'setAdmin', 'setCartItem', 'setCartLength']),
+
+
+    async checkLogin() {
+      let res = await axios.get("login", {withCredentials: true});
+      if (res.data.cookie) {
+        if (router.currentRoute.value.path == "/login" || router.currentRoute.value.path == "/register") {
+          router.push("/");
+        }
+
+        let data = await axios.get("info", { withCredentials: true });
+        this.setUser(data.data);
+        this.setLogged(true);
+
+        if (data.data.role) {
+          this.setAdmin("admin");
+        }
+
+        let cart = await axios.get("cart", {withCredentials: true})
+        .then((res) => {  
+          this.setCartItem(res.data.productsInCart);
+          this.setCartLength(res.data.productsInCart.length)
+        })
+      }
+      else {
+        if (router.currentRoute.value.path == "/admin") {
+          router.push('/');
+        }
+      }
+    }
   },
 
   computed: {
@@ -45,7 +76,6 @@ export default {
   created() {
     this.checkLogin();
     this.getProducts();
-    this.getCart();
     this.getCategory();
     this.setLoading();
   },

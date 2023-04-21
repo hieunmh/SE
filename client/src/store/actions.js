@@ -48,6 +48,7 @@ export default {
     await axios.get("cart", { withCredentials: true })
     .then((res) => {
       context.commit("setCartItem", res.data.productsInCart);
+      context.commit("setCartLength", res.data.productsInCart.length)
       console.log(res.data);
     })
   },

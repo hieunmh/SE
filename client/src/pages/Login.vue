@@ -71,13 +71,13 @@ export default {
 
         await new Promise(() => setTimeout(() => {
           this.setUser(data.data),
-          this.setShowLoading(true);
+          this.setShowLoading(false);
           if (data.data.role) {
             this.setAdmin("admin");
           }
         }, 1000)).then(
           this.$router.push('/'),
-          this.setShowLoading(false),
+          this.setShowLoading(true),
           this.setLogged(true),
         )
         
