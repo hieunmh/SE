@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.get('/products/:id', productController.getProduct);
 router.get('/products', productController.getAllProducts);
-router.post('/product-by-category', productController.getProductByCategory);
-router.post('/product-by-price', productController.getProductByPrice);
+// router.post('/product-by-category', productController.getProductByCategory);
+// router.post('/product-by-price', productController.getProductByPrice);
 
 // review
 

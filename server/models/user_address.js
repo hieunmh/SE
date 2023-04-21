@@ -42,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'user_address',
       timestamps: true,
       updatedAt: false,
-      createdAt: 'created_at',
+      createdAt: false,
     },
   );
   return User_address;
