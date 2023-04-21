@@ -13,10 +13,10 @@
         <RouterLink to="/menu" class="btnn">Menu</RouterLink>
       </div>
 
-      <div class="image">
+      <!-- <div class="image">
         <img src="../assets/images/b.png" class="home-img-1">
         <img src="../assets/images/a.png" class="home-img-2">
-      </div>
+      </div> -->
     </div>
     
     <div class="home-category row">
@@ -114,7 +114,7 @@ export default {
 
 /** home main */
 .home-main {
-	padding: 2rem 9%;
+	padding: 2rem 20%;
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap-reverse;
@@ -165,7 +165,7 @@ export default {
 	// gap: 1.5rem;
 	// margin: 1.5rem;
 	padding-bottom: 5rem;
-  padding: 2rem 9%;
+  padding: 2rem 20%;
 	.box {
 		padding: 2rem;
 		text-align: center;
@@ -187,7 +187,7 @@ export default {
 
 /**home-banner */
 .home-banner {
-  padding: 2rem 9%;
+  padding: 2rem 20%;
 	.row-banner {
 		// background: url(../assets/images/row-banner.png) no-repeat;
 		height: 45rem;
@@ -291,6 +291,7 @@ export default {
 }
 @media (max-width: 576px) {
 	.home-main {
+		padding: 2rem 10%;
 		.content {
 			h3 {
 				font-size: 3rem;
@@ -299,6 +300,10 @@ export default {
 				font-size: 1.5rem;
 			}
 		}
+	}
+
+	.home-banner, .home-category {
+		padding: 2rem 10%;
 	}
 }
 </style>

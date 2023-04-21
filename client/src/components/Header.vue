@@ -5,9 +5,9 @@
 		</RouterLink>
 
     <nav class="navbar col-md-6 d-md-flex justify-content-md-around justify-content-around">
-      <!-- <RouterLink @click="outMenu()" to="/">Home</RouterLink> -->
+      <RouterLink @click="outMenu()" to="/">Home</RouterLink>
       <!-- <RouterLink @click="scrollToTop()" to="/about">About</RouterLink> -->
-      <RouterLink @click="scrollToTop()" to="/">Menu</RouterLink>
+      <RouterLink @click="scrollToTop()" to="/menu">Menu</RouterLink>
       <!-- <RouterLink @click="scrollToTop()" to="/promotion">Promotions</RouterLink> -->
       <RouterLink @click="outMenu()" to="/table">Table</RouterLink>
     </nav>
@@ -20,36 +20,39 @@
 				</RouterLink>
 			</div>
 
+			<div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu">
+			</div>	
+
 			<div v-if="!user.userName" class="fas fa-user account">
 				<ul class="drop-down-select">
 					<li><RouterLink @click="scrollToTop()" to="/login">Đăng nhập</RouterLink></li>
 					<li><RouterLink @click="scrollToTop()" to="/register">Đăng ký</RouterLink></li>
 				</ul>
 			</div>
+			
 
 			<div v-else class="fas fa-user account logined" style="background: #f38609; color: white;">
 				<ul class="drop-down-select">
-					<li><RouterLink @click="outMenu()" to="/info">Tài khoản</RouterLink></li>
+					<li><RouterLink @click="outMenu()" to="/info">{{ user.userName.split(' ')[user.userName.split(' ').length - 1] }}</RouterLink></li>
+					<!-- <li><RouterLink @click="outMenu()" to="/info">Tài khoản của tôi</RouterLink></li> -->
 					<li v-if="admin"><RouterLink @click.prevent="outMenu()" to="/admin">Quản lý</RouterLink></li>
-					<li><RouterLink @click="outMenu()" to="/myorder">Đơn hàng</RouterLink></li>
+					<li><RouterLink @click="outMenu()" to="/myorder">Đơn mua</RouterLink></li>
 					<li><RouterLink @click="handleLogout" to="/">Đăng xuất</RouterLink></li>
 				</ul>
 			</div>
 
-			<div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu"></div>	
-      
     </div>
 
 		<div class="search-box">
-			<RouterLink to="/" @click="scrollToTop()">
+			<RouterLink to="/menu" @click="scrollToTop()">
 				<i class="fa-solid fa-magnifying-glass" @click="search()"></i>
 			</RouterLink>
-			<RouterLink to="/">
-				<input type="text" class="search-input" v-model="searchName" @keyup.enter="search(), this.nm = '/menu'" placeholder="Tìm kiếm . . .">
+			<RouterLink to="/menu">
+				<input type="text" class="search-input" v-model="searchName" @keyup.enter="search(), scrollToTop()" placeholder="Tìm kiếm . . .">
 			</RouterLink>
-			<div class="row filter-dropdown" @click="">
+			<!-- <div class="row filter-dropdown" @click="">
 				<div class="fa fa-sliders dropDown"></div>
-			</div>
+			</div> -->
 		</div>
   </div>
 </template>
@@ -88,10 +91,10 @@ export default {
 			await axios.post('/logout',{},  {withCredentials: true});
 			this.setUser([]);
 			this.setShowProduct(false);
-			this.setShowLoading(false);
+			this.setShowLoading(true);
 
 			setTimeout(() => {
-				this.setShowLoading(true);
+				this.setShowLoading(false);
 				this.setAdmin(null);
 				this.setLogged(false);
 			}, 1000);
@@ -274,19 +277,19 @@ export default {
 
 			.drop-down-select {
 				display: none;
+				background-color: #27ae60;
 				padding: 0;
 				position: absolute;
-				margin-left: -30px;
+				margin-left: -5rem;
 				list-style-type: none;
 				// border: 2px solid #27ae60;
-				border-radius: 1rem;
 				a {
 					text-decoration: none;
-					color: #27ae60;
+					color: #fff;
 					font-size: 15px;
-					font-weight: 300;
+					font-weight: 500;
 					float: left;
-					width: 100px;
+					width: 14rem;
 					// border-radius: 1rem;
 				}
 			}
@@ -295,7 +298,7 @@ export default {
 				.drop-down-select {
 					display: block;
 					a {
-						background-color: #f7f7f7;
+						background-color: #27ae60;
 						&:hover {
 							background-color: #f38609;
 							color: white;
@@ -306,14 +309,24 @@ export default {
 		}
 	}
 }
+
+@media (max-width: 992px)  {
+  .header {
+    padding: 2rem 15%;
+  }
+}
+
 @media (min-width: 769px) {
 	.header .icons .account:hover .drop-down-select {
     display: block;
   }
 }
 
-@media (max-width: 768px) {
+
+
+@media (max-width: 767px) {
 	.header {
+		padding: 2rem 10%;
 		.navbar {
 			position: absolute;
 			top: 99%;
