@@ -1,18 +1,18 @@
 <template>
   <div class="header row">
-    <RouterLink to="/" @click="outMenu()" class="logo col-md-4 col-4 d-flex justify-content-md-center justify-content-start">
+    <RouterLink to="/" @click="outMenu()" class="logo col-md-3 col-2 d-flex justify-content-start">
 			<img src="../assets/images/taco-logo.png" />Hieuhub
 		</RouterLink>
 
-    <nav class="navbar col-md-4 d-md-flex justify-content-md-between justify-content-around">
-      <RouterLink @click="outMenu()" to="/">Home</RouterLink>
+    <nav class="navbar col-md-6 d-md-flex justify-content-md-around justify-content-around">
+      <!-- <RouterLink @click="outMenu()" to="/">Home</RouterLink> -->
       <!-- <RouterLink @click="scrollToTop()" to="/about">About</RouterLink> -->
-      <RouterLink @click="scrollToTop()" to="/menu">Menu</RouterLink>
+      <RouterLink @click="scrollToTop()" to="/">Menu</RouterLink>
       <!-- <RouterLink @click="scrollToTop()" to="/promotion">Promotions</RouterLink> -->
       <RouterLink @click="outMenu()" to="/table">Table</RouterLink>
     </nav>
 
-    <div class="icons col-md-4 col-8	d-flex justify-content-md-center justify-content-end">
+    <div class="icons col-md-3 col-8	d-flex justify-content-md-end justify-content-end">
 			<div>
 				<span class="qttCart" v-if="cartItem.length > 0 && user.userName">{{ cartItem.length }}</span>
 				<RouterLink @click="outMenu()"	to="/cart">
@@ -39,16 +39,41 @@
 			<div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu"></div>	
       
     </div>
+
+		<div class="search-box">
+			<RouterLink to="/" @click="scrollToTop()">
+				<i class="fa-solid fa-magnifying-glass" @click="search()"></i>
+			</RouterLink>
+			<RouterLink to="/">
+				<input type="text" class="search-input" v-model="searchName" @keyup.enter="search(), this.nm = '/menu'" placeholder="Tìm kiếm . . .">
+			</RouterLink>
+			<div class="row filter-dropdown" @click="">
+				<div class="fa fa-sliders dropDown"></div>
+			</div>
+		</div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import { mapMutations, mapState } from 'vuex';
+import LoadingSearch from '../components/LoadingSearch.vue';
+
 export default {
 	name: 'Header',
+	data() {
+		return {
+			searchName: "",
+			loadingSearch: false
+		}
+	},
+
+	components: {
+		LoadingSearch
+	},
+
 	methods: {
-		...mapMutations(['setUser', 'setAdmin', 'setLogged', 'scrollToTop', 'setShowAlertEditInfo', 'setShowLoading', 'setShowProduct']),
+		...mapMutations(['setUser', 'setAdmin', 'setLogged', 'scrollToTop', 'setShowAlertEditInfo', 'setShowLoading', 'setShowProduct', 'setShowSearchLoading']),
 
 		showMenu() {
 			let nav_bar = document.querySelector('.header .navbar');
@@ -63,10 +88,10 @@ export default {
 			await axios.post('/logout',{},  {withCredentials: true});
 			this.setUser([]);
 			this.setShowProduct(false);
-			this.setShowLoading(true);
+			this.setShowLoading(false);
 
 			setTimeout(() => {
-				this.setShowLoading(false);
+				this.setShowLoading(true);
 				this.setAdmin(null);
 				this.setLogged(false);
 			}, 1000);
@@ -82,9 +107,18 @@ export default {
 			this.setShowProduct(false);
 			this.scrollToTop();
 		},
+
+		async	search() {
+			await new Promise(() => setTimeout(() => {
+				this.productObj.name = this.searchName;
+				this.setShowSearchLoading(true);
+			}, 1000)).then(
+				this.setShowSearchLoading(false),
+			)
+		}
 	},
 	computed: {
-		...mapState(['user', 'admin', 'cartItem'])
+		...mapState(['user', 'admin', 'cartItem', 'productObj'])
 	}
 }
 </script>
@@ -106,7 +140,57 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 2rem 9%;
+	padding: 2rem 20%;
+
+	.search-box {
+  width: 100%;  
+  position: relative;
+  margin: 0;	
+	margin-top: 1rem;
+  i {
+    position: absolute;
+		padding: 0 0.5rem;
+    border-top: 0.5rem solid #27ae60;
+    border-bottom: 0.5rem solid #27ae60;
+    // border-radius: 8px;
+    top: 0.6rem;
+    left: 1.4rem;
+    font-size: 1.8rem;
+    background-color: #27ae60;
+    color: white;
+  }
+  .search-input {
+    padding-left: 3.8rem;
+    width: 100%;
+    height: 4rem;
+    font-size: 15px;
+    color: #27ae60;
+    text-transform: none;
+    background-color: #fff;
+    border: 2px solid #27ae60;
+    // border-radius: 1rem;
+    &::placeholder {
+      color: #27ae60;
+    }
+  }
+  .filter-dropdown {
+    display: block;
+    border-radius: 1rem;
+    background-color: #27ae60;
+    color: #27ae60;
+    font-weight: 400;
+    margin-bottom: 0rem;
+    position: relative;
+    div {
+      position: absolute;
+      top: -2.9rem;
+      right: 2.2rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size:2rem;
+    }
+  }
+}
 
   /** Header logo */
 	.logo {
@@ -150,6 +234,7 @@ export default {
 			margin-left: 0.3rem;
 			cursor: pointer;
 			text-align: center;
+			z-index: 50;
 			&:hover {
 				color: #fff;
 				background: #27ae60 !important;
@@ -193,8 +278,8 @@ export default {
 				position: absolute;
 				margin-left: -30px;
 				list-style-type: none;
-				border: 2px solid #27ae60;
-				border-radius: 10px;
+				// border: 2px solid #27ae60;
+				border-radius: 1rem;
 				a {
 					text-decoration: none;
 					color: #27ae60;
@@ -202,7 +287,7 @@ export default {
 					font-weight: 300;
 					float: left;
 					width: 100px;
-					border-radius: 8px;
+					// border-radius: 1rem;
 				}
 			}
 			&:hover {
@@ -255,6 +340,9 @@ export default {
 	}
 }
 @media (max-width: 576px) {
+	.header {
+		padding: 2rem 5%;
+	}
 	.header .navbar a {
 		font-size: 1.5rem;
 		margin: 0;

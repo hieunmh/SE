@@ -1,18 +1,16 @@
 <template>
-  <div class="menu" @click.self="hideFilter()">
-    <div class="heading">
-      <span>menu</span>
-    </div>
+  <div>
+    <LoadingSearch v-if="!showSearchLoading"></LoadingSearch>
+  </div>
 
+  <div v-if="!showLoading && !user.userName">
+    <Loading></Loading>
+  </div>
+
+  <div class="menu" @click.self="hideFilter()">
     <div class="row">
       <div class="col-12 filter-box">
-        <div class="row search-box">
-          <i class="fa-solid fa-magnifying-glass" @click=""></i>
-          <input type="text" class="search-input" v-model="productObj.name" placeholder="Tìm kiếm . . .">
-          <div class="row filter-dropdown" @click="displayFilter()">
-            <div class="fa fa-sliders dropDown"></div>
-          </div>
-        </div>
+        
          
         <div class="row filter">
           <div class="col-md-3 col-6">
@@ -180,12 +178,17 @@ import { mapMutations, mapState } from 'vuex';
 import serverUrl from '@/axios';
 import filterVN from '@/filterVN';
 import ProductDetail from '../components/ProductDetail.vue';
+import LoadingSearch from '@/components/LoadingSearch.vue';
+import Loading from '@/components/Loading.vue';
+
 
 export default {
   name: "Menu",
   components: {
     ProductDetail,
-  },
+    LoadingSearch ,
+    Loading
+},
   data() {
     return {
       addId: [],
@@ -193,14 +196,13 @@ export default {
       pageNum: 0,
       perPage: 12 ,
       prevCategoryClicked: "",
-      productObj: {name: "", category: "", price: "", type: ""},
       imgUrl: serverUrl + "/upload/productImage/",
       priceRange: {
         from: "",
         to: "",
       },
       priceRangeFrom: "",
-      priceRangeTo: ""
+      priceRangeTo: "",
     };
   },
 
@@ -267,6 +269,7 @@ export default {
 
     filterProduct(event) {
       this.pageNum = 0;
+      // this.productObj.name = ""
       if (this.productObj.category != event.target.id && this.prevCategoryClicked != "") {
         this.prevCategoryClicked.target.style.background = "#27ae60";
       }
@@ -294,7 +297,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['allFoods', 'showProduct', 'category']),
+    ...mapState(['allFoods', 'showProduct', 'category', 'productObj', 'showLoading', 'user', 'showSearchLoading']),
     
     filterFoods() {
       this.pageNum = 0;
@@ -326,7 +329,7 @@ export default {
       if (this.filterFoods.length % this.perPage != 0) {
         return Math.floor((this.filterFoods.length) / this.perPage) + 1;
       }
-      else {
+      else { 
         return this.filterFoods.length / this.perPage;
       }
     },
@@ -474,11 +477,11 @@ input[type="button"] {
     max-width: 100%;
     text-align: center;
     background-color: #27ae60;
-    border-radius: 1rem;
+    // border-radius: 1rem;
     .menu-tab-item {
       cursor: pointer;
       padding: 0.8rem 0;
-      border-radius: 1rem;
+      // border-radius: 1rem;
       font-size: 1.7rem;
       color: whitesmoke;
       font-weight: 500;
@@ -497,7 +500,7 @@ input[type="button"] {
   .box-container {
     padding: 0;
     .box {
-      border-radius: 1rem;
+      // border-radius: 1rem;
       position: relative;
       background-color: #d9d9d9;
       text-align: center;
@@ -507,7 +510,7 @@ input[type="button"] {
       .image {
         img {
           width: 100%;
-          border-radius: 1rem;
+          // border-radius: 1rem;
         }
       }
 
