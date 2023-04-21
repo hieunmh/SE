@@ -24,7 +24,7 @@ export default {
   async checkLogin(context) {
     let res = await axios.get("login", { withCredentials: true });
     if (res.data.cookie) {
-      if (router.currentRoute.value.path == "/login") {
+      if (router.currentRoute.value.path == "/login" || router.currentRoute.value.path == "/register") {
         router.push("/");
       }
 

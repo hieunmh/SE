@@ -1,7 +1,7 @@
 <template>
-  <div v-if="showLoading">
-    <Loading></Loading>
-  </div>
+    <!-- <div v-if="showLoading">
+      <Loading></Loading>
+    </div> -->
   
   <div class = "login">
     <div class = "login-form">
@@ -71,13 +71,13 @@ export default {
 
         await new Promise(() => setTimeout(() => {
           this.setUser(data.data),
-          this.setShowLoading(false);
+          this.setShowLoading(true);
           if (data.data.role) {
             this.setAdmin("admin");
           }
         }, 1000)).then(
           this.$router.push('/'),
-          this.setShowLoading(true),
+          this.setShowLoading(false),
           this.setLogged(true),
         )
         
