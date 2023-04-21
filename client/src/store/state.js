@@ -12,4 +12,11 @@ export default {
   showAlertEditPass: false,
   loading: true,
   showLoading: true,
+  showSearchLoading: true,
+  productObj: {
+    name: "",
+    category: "",
+    price: "",
+    type: "",
+  },
 };

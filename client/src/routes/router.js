@@ -17,9 +17,9 @@ import Payment from '../pages/Payment.vue'
 
 
 const routes = [
-  { path: "/", name: "Home", component: Home, },
+  // { path: "/", name: "Home", component: Home, },
   { path: "/login", name: "Login", component: Login, },
-  { path: "/menu", name: "Menu", component: Menu, },
+  { path: "/", name: "Menu", component: Menu, },
   { path: "/menu/:id", name: "ProductDetail", component: ProductDetail, props: true },
   { path: "/about", name: "About", component: About },
   { path: "/promotion", name: "Promotion", component: Promotion },

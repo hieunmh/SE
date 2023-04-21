@@ -141,7 +141,7 @@ export default {
     position: relative;
     background-color: #fff;
     width: 35rem;
-    border-radius: 2rem;
+    // border-radius: 2rem;
     box-shadow: 1rem 1rem 1rem  rgba($color: #f1f1f1, $alpha: 1),
                 -1rem -1rem 1rem  rgba($color: #f1f1f1, $alpha: 1),
                 1rem -1rem 1rem  rgba($color: #f1f1f1, $alpha: 1),
@@ -167,7 +167,7 @@ export default {
         img {
           filter: brightness(60%);
           width: 100%;
-          border-radius: 2rem;
+          // border-radius: 2rem;
         }
       }
 
