@@ -52,7 +52,7 @@ db.models.User_payment = require('./user_payment')(
   Sequelize.DataTypes,
 );
 
-Object.keys(db.models).forEach(modelName => {
+Object.keys(db.models).forEach((modelName) => {
   if (db.models[modelName].associate) {
     db.models[modelName].associate(db.models);
   }

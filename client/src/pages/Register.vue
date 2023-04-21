@@ -1,4 +1,8 @@
 <template>
+  <div v-if="loading">
+    <loading></loading>
+  </div>
+
   <div class = "register">
     <div class = "register-form">
       <form @submit="handleSubmit" novalidate autocapitalize="off">
@@ -50,11 +54,15 @@
 
 <script>
 import axios from 'axios';
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import filterVN from '@/filterVN';
+import Loading from '@/components/Loading.vue';
 
   export default {
     name: "Register",
+    components: {
+      Loading
+    },
     data() {
       return {
         registerForm: {
@@ -69,18 +77,28 @@ import filterVN from '@/filterVN';
       }
     },
 
+    computed: {
+      ...mapState(['loading'])
+    },
+
     methods: {
-      ...mapMutations(['scrollToTop', 'setUser']),
+      ...mapMutations(['scrollToTop', 'setUser', 'setShowLoading']),
 
       async register() {
         let data = await axios.post('/register', this.registerForm, {withCredentials: true});
         let err = data.data.msg;
+        console.log(data.data);
         if (err === 'Email đã tồn tại') {
           this.errorObj.emailErr.push(err);
         }
         else {
-          this.setUser(data.data.name);
-          this.$router.push('/');
+          await new Promise(() => setTimeout(() => {
+            this.setUser(data.data);
+            this.setShowLoading(false);
+          }, 1000)).then(
+            this.$router.push('/'),
+            this.setShowLoading(true),  
+          )
         }
       },
 

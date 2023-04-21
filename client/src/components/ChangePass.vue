@@ -1,4 +1,6 @@
 <template>
+  <VueBasicAlert :duration="200" :closeIn="700" ref="alert" />
+
   <div class="changePass">
     <div class="changePass-form">
       <form @submit="handleSubmit" novalidate autocapitalize="off">
@@ -38,8 +40,13 @@
 <script>
 import axios from 'axios';
 import { mapMutations } from 'vuex';
+import VueBasicAlert from 'vue-basic-alert';
+
 export default {
   name: "editInfo",
+  components: {
+    VueBasicAlert
+  },
   data() {
     return {
       changePassForm: {
@@ -52,11 +59,11 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['scrollToTop', 'setUser']),
+    ...mapMutations(['scrollToTop', 'setShowAlertEditPass']),
     
     async changePass() {
-      let res = await axios.post('change-password', this.changePassForm, {withCredentials: true});
-      
+        let res = await axios.post('change-password', this.changePassForm, { withCredentials: true });
+
       let err = res.data.msg;
       if (err === 'Mật khẩu cũ không đúng') {
         this.errorObj.oldPassErr.push('Mật khẩu cũ không đúng');
@@ -65,8 +72,10 @@ export default {
         this.errorObj.newPassErr.push('Mật khẩu mới không được giống mật khẩu cũ');
       }
       else {
-        alert(res.data.msg);
-        window.location.reload();
+        await new Promise(() => setTimeout(() => {
+          this.setShowAlertEditPass(false);
+          window.location.reload();
+        }, 700)).then(this.$refs.alert.showAlert("Đổi mật khẩu thành công !"));
       }
     },
 
@@ -134,6 +143,7 @@ export default {
   .changePass-form {
     background-color: transparent;
     height: 45vh;
+    width: 40rem;
 
     form {
       position: relative;

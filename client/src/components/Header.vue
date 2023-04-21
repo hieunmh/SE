@@ -1,20 +1,26 @@
 <template>
-  <div class="header">
-    <RouterLink to="/" class="logo"><img src="../assets/images/taco-logo.png" />Hieuhub</RouterLink>
+  <div class="header row">
+    <RouterLink to="/" @click="outMenu()" class="logo col-md-4 col-4 d-flex justify-content-md-center justify-content-start">
+			<img src="../assets/images/taco-logo.png" />Hieuhub
+		</RouterLink>
 
-    <nav class="navbar">
-      <RouterLink @click="scrollToTop()" to="/">Home</RouterLink>
-      <RouterLink @click="scrollToTop()" to="/about">About</RouterLink>
+    <nav class="navbar col-md-4 d-md-flex justify-content-md-between justify-content-around">
+      <RouterLink @click="outMenu()" to="/">Home</RouterLink>
+      <!-- <RouterLink @click="scrollToTop()" to="/about">About</RouterLink> -->
       <RouterLink @click="scrollToTop()" to="/menu">Menu</RouterLink>
-      <RouterLink @click="scrollToTop()" to="/promotion">Promotions</RouterLink>
-      <RouterLink @click="scrollToTop()" to="/table">Table</RouterLink>
+      <!-- <RouterLink @click="scrollToTop()" to="/promotion">Promotions</RouterLink> -->
+      <RouterLink @click="outMenu()" to="/table">Table</RouterLink>
     </nav>
 
-    <div class="icons">
-      <div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu"></div>	
-			<RouterLink @click="scrollToTop()"	to="/cart"><div class="fas fa-shopping-cart cart"></div></RouterLink>
+    <div class="icons col-md-4 col-8	d-flex justify-content-md-center justify-content-end">
+			<div>
+				<span class="qttCart" v-if="cartItem.length > 0 && user.userName">{{ cartItem.length }}</span>
+				<RouterLink @click="outMenu()"	to="/cart">
+					<div class="cart"><i class="fas fa-shopping-cart"></i></div>
+				</RouterLink>
+			</div>
 
-			<div v-if="!user" class="fas fa-user account">
+			<div v-if="!user.userName" class="fas fa-user account">
 				<ul class="drop-down-select">
 					<li><RouterLink @click="scrollToTop()" to="/login">Đăng nhập</RouterLink></li>
 					<li><RouterLink @click="scrollToTop()" to="/register">Đăng ký</RouterLink></li>
@@ -23,12 +29,14 @@
 
 			<div v-else class="fas fa-user account logined" style="background: #f38609; color: white;">
 				<ul class="drop-down-select">
-					<li><RouterLink @click.prevent="scrollToTop()" to="/info">Tài khoản</RouterLink></li>
-					<li v-if="admin"><RouterLink @click.prevent="scrollToTop()" to="/admin">Quản lý</RouterLink></li>
-					<li><RouterLink to="/myorder">Giỏ hàng</RouterLink></li>
+					<li><RouterLink @click="outMenu()" to="/info">Tài khoản</RouterLink></li>
+					<li v-if="admin"><RouterLink @click.prevent="outMenu()" to="/admin">Quản lý</RouterLink></li>
+					<li><RouterLink @click="outMenu()" to="/myorder">Đơn hàng</RouterLink></li>
 					<li><RouterLink @click="handleLogout" to="/">Đăng xuất</RouterLink></li>
 				</ul>
 			</div>
+
+			<div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu"></div>	
       
     </div>
   </div>
@@ -40,7 +48,7 @@ import { mapMutations, mapState } from 'vuex';
 export default {
 	name: 'Header',
 	methods: {
-		...mapMutations(['setUser', 'setEmail', 'setAdmin']),
+		...mapMutations(['setUser', 'setAdmin', 'setLogged', 'scrollToTop', 'setShowAlertEditInfo', 'setShowLoading', 'setShowProduct']),
 
 		showMenu() {
 			let nav_bar = document.querySelector('.header .navbar');
@@ -52,16 +60,31 @@ export default {
 			window.scrollTo(0, 0);
 		},
 		async handleLogout() {
-			let data = await axios.get('/login', {withCredentials: true});
-			await axios.post('/logout', data, {withCredentials: true});
-			this.setUser("");
-			this.setEmail("");
-			this.setAdmin("");
-		}
+			await axios.post('/logout',{},  {withCredentials: true});
+			this.setUser([]);
+			this.setShowProduct(false);
+			this.setShowLoading(true);
 
+			setTimeout(() => {
+				this.setShowLoading(false);
+				this.setAdmin(null);
+				this.setLogged(false);
+			}, 1000);
+		},
+
+		toInfo() {
+			this.setShowAlertEditInfo(false);
+			this.setShowProduct(false);
+			this.scrollToTop();
+		},
+		
+		outMenu() {
+			this.setShowProduct(false);
+			this.scrollToTop();
+		},
 	},
 	computed: {
-		...mapState(['user', 'email', 'admin'])
+		...mapState(['user', 'admin', 'cartItem'])
 	}
 }
 </script>
@@ -77,7 +100,7 @@ export default {
 	top: 0;
 	left: 0;
 	right: 0;
-	z-index: 1000;
+	z-index: 100;
 	background: #fff;
 	box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.05);
 	display: flex;
@@ -114,7 +137,7 @@ export default {
 
   /**Header icons */
 	.icons {
-		div {
+		> div {
 			position: relative;
 			height: 4.5rem;
 			width: 4.5rem;
@@ -130,17 +153,32 @@ export default {
 			&:hover {
 				color: #fff;
 				background: #27ae60 !important;
+				div {
+					color: #fff;
+				}
+			} 
+			div {
+				width: 100%;
+				height: 100%;
+				color: #27ae60;
 			}
 		}
-		a.router-link-exact-active {
-			.cart {
-				background-color: #f38609;
-				border-color: #f38609;
-				color: white;
-			}
-			:hover {
-				border: 2px solid #27ae60;
-			}
+	
+		.qttCart {
+			position: absolute;
+			left: -1.3rem;
+			top: -1.4rem;
+			font-size: 1.2rem;
+			text-align: center;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			color: #fff;
+			z-index: 50;
+			background-color: #d62e41;
+			width: 2.5rem;
+			height: 2.5rem;
+			border-radius: 2rem;
 		}
 
 		.account.logined {
@@ -226,5 +264,17 @@ export default {
 		margin-left: -50px;
 	}
 }
+
+// @media(max-width: 456px) {
+// 	.header {
+// 		.icons {
+// 			> div {
+// 				height: 4rem;
+// 				width: 4rem;
+// 				line-height: 4rem;
+// 			}
+// 		}
+// 	}
+// }
 
 </style>

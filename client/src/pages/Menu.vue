@@ -1,152 +1,236 @@
 <template>
-  <div class="menu">
+  <div class="menu" @click.self="hideFilter()">
     <div class="heading">
       <span>menu</span>
     </div>
 
     <div class="row">
-      <div class="col-sm-4 col-12 filter-box">
+      <div class="col-12 filter-box">
         <div class="row search-box">
           <i class="fa-solid fa-magnifying-glass" @click=""></i>
           <input type="text" class="search-input" v-model="productObj.name" placeholder="Tìm kiếm . . .">
           <div class="row filter-dropdown" @click="displayFilter()">
-            <div class="fa-solid fa-caret-down dropDown"></div>
+            <div class="fa fa-sliders dropDown"></div>
           </div>
         </div>
          
-        <div class="row filter-heading">
-          <h1>Khoảng giá</h1>
-        </div>
+        <div class="row filter">
+          <div class="col-md-3 col-6">
+            <div class="filter-heading">
+              <h3>Khoảng giá</h3>
+            </div>
 
-        <div class="row filter-section">
-          <ul class="filter-option">
-            <li>
-              <input type="button" value="50k" id="50k" hidden>
-              <label for="50k" class="d-flex justify-content-between">{{ "<" }} 50k<button class="unselect-btn">X</button></label>
-            </li>
+            <div class="filter-section">
+              <ul class="filter-option">
+                <li>
+                  <input type="text"  placeholder="Từ VNĐ" v-model="priceRangeFrom">
+                  <!-- <label for="50k" class="">{{ "<" }} 50k<button class="unselect-btn">X</button></label> -->
+                </li>
 
-            <li>
-              <input type="button" value="50k_200K" id="50_200k" hidden>
-              <label for="50_200k" class="d-flex justify-content-between">50k - 200k<button class="unselect-btn">X</button></label>
-            </li>
-          </ul>
-        </div>
-
-        <hr/>
-
-        <div class="row filter-heading"> 
-          <h1>Phân loại</h1>
-        </div>
-
-        <div class="row filter-section">
-          <ul class="filter-option">
-            <li>
-              <input type="button" value="food" id="foodType" hidden>
-              <label for="footType" class="d-flex justify-content-between">Đồ ăn<button class="unselect-btn">X</button></label>
-            </li>
-
-            <li>
-              <input type="button" value="drink" id="drinkType" hidden>
-              <label for="drinkType" class="d-flex justify-content-between">Đồ uống<button class="unselect-btn">X</button></label>
-            </li>
-          </ul>
-        </div>
-      </div>
-      
-      <div class="col-sm-8">
-        <div class="row">
-          <div class="menu-tabs ">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Tất cả">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Bánh">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Đồ ăn">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Nước">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Bia">
-            <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-sm-6" @click="filterProduct($event)" name="allFood" value="Rượu">
+                <li>
+                  <input type="text"  placeholder="Đến VNĐ" v-model="priceRangeTo">
+                  <!-- <label for="50_200k" class="">50k - 200k<button class="unselect-btn">X</button></label> -->
+                </li>
+                <li>
+                  <button class="btnn" @click="filterPriceRange()">Áp dụng</button>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
 
-        <div class="row box-container">
-          <div v-for="(p, index) in currentPage" :key="index" class="col-lg-4 col-md-6 col-sm-12">
-            <div class="box">
-              <div class="image">
-                <img :src="`${p.image}`" alt="">
-                <!-- <img :src="`${imgUrl}${p.image}`" alt=""> -->
-              </div>
+          <div class="col-md-3 col-6">
+            <div class="filter-heading"> 
+              <h3>Đồ Ăn</h3>
+            </div>
 
-              <div class="content">
-                <h3>{{ p.name }}</h3>
+            <div class="filter-section">
+              <ul class="filter-option">
+                <li>
+                  <input type="button" value="food" id="foodType" hidden>
+                  <label for="footType" class="">Bánh Mì<button class="unselect-btn">X</button></label>
+                </li>
 
-                <div class="price">
-                  {{ parseFloat(p.price) }} VND
-                  <span></span>
-                  <button class="btnn" @click="">Thêm vào giỏ hàng</button>
-                </div>
-              </div>
+                <li>
+                  <input type="button" value="drink" id="drinkType" hidden>
+                  <label for="drinkType" class="">Cơm Hộp<button class="unselect-btn">X</button></label>
+                </li>
+
+                <li>
+                  <input type="button" value="food" id="foodType" hidden>
+                  <label for="footType" class="">Món lẩu<button class="unselect-btn">X</button></label>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-6">
+            <div class="filter-heading"> 
+              <h3>Đồ Uống</h3>
+            </div>
+
+            <div class="filter-section">
+              <ul class="filter-option">
+                <li>
+                  <input type="button" value="food" id="foodType" hidden>
+                  <label for="footType" class="">Bia, Rượu<button class="unselect-btn">X</button></label>
+                </li>
+
+                <li>
+                  <input type="button" value="drink" id="drinkType" hidden>
+                  <label for="drinkType" class="">Trà sữa<button class="unselect-btn">X</button></label>
+                </li>
+
+                <li>
+                  <input type="button" value="food" id="foodType" hidden>
+                  <label for="footType" class="">Cà Phê<button class="unselect-btn">X</button></label>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-6">
+            <div class="filter-heading"> 
+              <h3>Đồ Chiên</h3>
+            </div>
+
+            <div class="filter-section">
+              <ul class="filter-option">
+                <li>
+                  <input type="button" value="food" id="foodType" hidden>
+                  <label for="footType" class="">Ăn vặt<button class="unselect-btn">X</button></label>
+                </li>
+
+                <li>
+                  <input type="button" value="drink" id="drinkType" hidden>
+                  <label for="drinkType" class="">Xiên Bẩn<button class="unselect-btn">X</button></label>
+                </li>
+
+                <li>
+                  <input type="button" value="food" id="foodType" hidden>
+                  <label for="footType" class="">Cơm rang<button class="unselect-btn">X</button></label>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
 
+      </div>
+      
+      <div class="col-12">
+        <div class="row menu-tabs">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="0" value="Tất cả">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="1" value="Mì phở">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="2" value="Cơm hộp">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="3" value="Bánh">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="4" value="Trà sữa">
+          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="5" value="Cà phê">
+        </div>
+
+        <div class="row box-container">
+          <div v-for="(p, index) in currentPage" :key="index" class="col-lg-3 col-md-4 col-6">
+            <div class="box" @click="showDetail(index)">
+                  <div class="image">
+                    <img :src="`${imgUrl}${p.image}`" alt="">
+                  </div>
+
+                  <div class="content">
+                    <h3>{{ p.name }}</h3>
+
+                    <div class="price">
+                      {{ parseFloat(p.price) }} VNĐ
+                      <span></span>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+
         <div class="action-row">
-          <button @click="previousToFirst()" class="action-btn decrease-btn">
+          <button @click="previousToFirst(), hideFilter()" class="action-btn decrease-btn">
             <i class="fa-solid fa-angles-left"></i>
           </button>
 
-          <button  @click="previous()" class="action-btn decrease-btn">
+          <button  @click="previous(), hideFilter()" class="action-btn decrease-btn">
             <i class="fa-solid fa-angle-left"></i>
           </button>
 
           <div v-for="(page, index) in calculatePages" :key="index" class="d-inline">
-            <button v-if="index == pageNum" class="highlight" @click="setPage(index)">{{ index + 1 }}</button>
-            <button v-else @click="setPage(index)">{{ index + 1 }}</button>
+            <button v-if="index == pageNum" class="highlight" @click="setPage(index), hideFilter()">{{ index + 1 }}</button>
+            <button v-else @click="setPage(index), hideFilter()">{{ index + 1 }}</button>
           </div>
 
-          <button @click="next()" class="action-btn increase-btn">
+          <button @click="next(), hideFilter()" class="action-btn increase-btn">
             <i class="fa-solid fa-angle-right"></i>   
           </button>
 
-          <button @click="nextToLast()" class="action-btn increase-btn">
+          <button @click="nextToLast(), hideFilter()" class="action-btn increase-btn">
             <i class="fa-solid fa-angles-right"></i>   
           </button>
         </div>
       </div>
     </div>
+
+    <ProductDetail v-if="showProduct" :product="addId" />
+
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import serverUrl from '@/axios';
 import filterVN from '@/filterVN';
+import ProductDetail from '../components/ProductDetail.vue';
 
 export default {
   name: "Menu",
+  components: {
+    ProductDetail,
+  },
   data() {
     return {
-      showDropDown: false,
+      addId: [],
+
       pageNum: 0,
-      perPage: 9,
+      perPage: 12 ,
       prevCategoryClicked: "",
       productObj: {name: "", category: "", price: "", type: ""},
-      imgUrl: serverUrl + "/upload/productImage/"
+      imgUrl: serverUrl + "/upload/productImage/",
+      priceRange: {
+        from: "",
+        to: "",
+      },
+      priceRangeFrom: "",
+      priceRangeTo: ""
     };
   },
 
   methods: {
+    ...mapMutations(['scrollToTop', 'setShowProduct']),
 
-    displayFilter() {
+      displayFilter() {
       let div1 = document.querySelectorAll('.filter-heading');
       let div2 = document.querySelectorAll('.filter-section');
-      let dropdown = document.querySelector('.dropDown');
       
       for (let i = 0; i < div1.length; i++) {
         div1[i].classList.toggle('active');
         div2[i].classList.toggle('active');
       }
-      dropdown.classList.toggle('active')
+    },
+
+    hideFilter() {
+      let div1 = document.querySelectorAll('.filter-heading');
+      let div2 = document.querySelectorAll('.filter-section');
+      if (div1[0].classList.contains('active')) {
+        for (let i = 0; i < div1.length; i++) {
+          div1[i].classList.remove('active');
+          div2[i].classList.remove('active');
+        }
+      }
     },
 
     setPage(value) {
-      this.pageNum = value;   
+      this.pageNum = value;
+      this.scrollToTop();
     },  
 
     previous() {
@@ -157,10 +241,12 @@ export default {
         document.querySelectorAll('.decrease-btn').disabled = false;
         this.pageNum--;
       }
+      this.scrollToTop();
     },
 
     previousToFirst() {
       this.pageNum = 0;
+      this.scrollToTop();
     },
 
     next() {
@@ -171,31 +257,65 @@ export default {
         document.querySelectorAll('.increase-btn').disabled = false;
         this.pageNum++;
       }
+      this.scrollToTop();
     },
 
     nextToLast() {
       this.pageNum = this.calculatePages - 1;
+      this.scrollToTop();
     },
 
     filterProduct(event) {
       this.pageNum = 0;
-      if (this.productObj.category != event.target.value && this.prevCategoryClicked != "") {
+      if (this.productObj.category != event.target.id && this.prevCategoryClicked != "") {
         this.prevCategoryClicked.target.style.background = "#27ae60";
       }
-      this.productObj.category = event.target.value;
+      this.productObj.category = event.target.id;
+      
       console.log(this.productObj.category);
       this.prevCategoryClicked = event;
       event.target.style.background = "#057835fa";
+    },
+
+    filterPriceRange() {
+      this.priceRange.from = this.priceRangeFrom;
+      this.priceRange.to = this.priceRangeTo;
+      this.hideFilter();
+    },
+
+    showDetail(index) {
+      this.addId = this.currentPage[index];
+      this.setShowProduct(true);
+    },
+
+    closeDetail() {
+      this.showProductDetail = !this.showProductDetail;
     }
   },
 
   computed: {
-    ...mapState(['allFoods']),
+    ...mapState(['allFoods', 'showProduct', 'category']),
     
     filterFoods() {
       this.pageNum = 0;
-      return this.allFoods.filter((p) => filterVN(p.name).toLowerCase().match(filterVN(this.productObj.name).toLowerCase()) 
-      && (this.productObj.category.toLowerCase() == "tất cả" || this.productObj.category == ""));
+      if (!this.priceRange.from && !this.priceRange.to) {
+        return this.allFoods.filter((p) => filterVN(p.name).toLowerCase().match(filterVN(this.productObj.name).toLowerCase())
+          && ((this.productObj.category == 0 || this.productObj.category == "" || parseInt(this.productObj.category.toLowerCase()) == p.category_id)));
+      }
+      else if (this.priceRange.from && !this.priceRange.to) {
+        return this.allFoods.filter((p) => filterVN(p.name).toLowerCase().match(filterVN(this.productObj.name).toLowerCase())
+          && ((this.productObj.category == 0 || this.productObj.category == "" || parseInt(this.productObj.category.toLowerCase()) == p.category_id) ) && parseInt(p.price) >= parseInt(this.priceRange.from));
+      }
+      else if (!this.priceRange.from && this.priceRange.to) {
+        return this.allFoods.filter((p) => filterVN(p.name).toLowerCase().match(filterVN(this.productObj.name).toLowerCase())
+          && ((this.productObj.category == 0 || this.productObj.category == "" || parseInt(this.productObj.category.toLowerCase()) == p.category_id)) && parseInt(p.price) <= parseInt(this.priceRange.to));
+      }
+      else {  
+        return this.allFoods.filter((p) => filterVN(p.name).toLowerCase().match(filterVN(this.productObj.name).toLowerCase())
+          && ((this.productObj.category.toLowerCase() == 0 || this.productObj.c || parseInt(this.productObj.category.toLowerCase()) == p.category_id)) 
+          && (parseInt(p.price) >= parseInt(this.priceRange.from) && parseInt(p.price) <= parseInt(this.priceRange.to)));
+      }
+      
     },
 
     currentPage() {
@@ -215,10 +335,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-hr {
-  border-top: 3px solid #057835fa;
-  width: 100%;
-}
 input[type="button"] {
   background: none;
   color: inherit;
@@ -243,6 +359,7 @@ input[type="button"] {
 
 .filter-heading {
   padding-top: 25px;
+  text-align: center;
   h1 {
     color: #27ae60;
   }
@@ -250,13 +367,32 @@ input[type="button"] {
 
 .filter-option {
   list-style-type: none;
-  width: inherit;
+  width: 100%;
+  padding: 0;
+  input {
+    background-color: #fff;
+    height: 3.5rem;
+    width: 100%;
+    // margin-left: 3rem;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  button {
+    width: 100%;
+    background-color: #f38609;
+    &:hover {
+      background-color: #ee4d2d;
+    }
+  }
   label {
     width: 100%;
-    font-size: 15px;
-    padding: 5px 0;
-    padding-left: 1rem;
+    height: 4rem;
+    font-size: 1.5rem;
+    padding: 1rem 0;
     border-radius: 1rem;
+    text-align: center;
     &:hover {
       color: #fff;
       background-color: #f38609 !important;
@@ -267,16 +403,17 @@ input[type="button"] {
 }
 
 .search-box {
-  width: 100%;
+  width: 100%;  
   position: relative;
-  margin-bottom: 15px;
+  margin: 0;
+  margin-bottom: 1rem;
   i {
     position: absolute;
     width: 3.2rem;
     border-top: 5px solid #27ae60;
     border-bottom: 5px solid #27ae60;
     border-radius: 8px;
-    top: 15%;
+    top: 0.6rem;
     left: 0.7rem;
     font-size: 1.8rem;
     background-color: #27ae60;
@@ -285,7 +422,7 @@ input[type="button"] {
   .search-input {
     padding-left: 4.5rem;
     width: 100%;
-    height: 40px;
+    height: 4rem;
     font-size: 15px;
     color: #27ae60;
     text-transform: none;
@@ -296,13 +433,43 @@ input[type="button"] {
       color: #27ae60;
     }
   }
+  .filter-dropdown {
+    display: block;
+    border-radius: 1rem;
+    background-color: #27ae60;
+    color: #27ae60;
+    font-weight: 400;
+    margin-bottom: 0rem;
+    position: relative;
+    div {
+      position: absolute;
+      top: -3rem;
+      right: 1rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      font-size:2rem;
+    }
+  }
 }
 
 .menu {
-  padding: 2rem 9%;
-  background-color: #f2f2f2;
+  padding: 2rem 20%;
+  // background-color: #fff;
+  .filter-box {
+    .filter {
+      width: 100%;
+      border-radius: 1rem;
+      color: white;
+      background-color: rgba($color: #27ae60, $alpha: 1);
+      position: absolute;
+      top: 4.5rem;
+      z-index: 2; 
+    }
+  }
+  
   .menu-tabs {
-    margin-bottom: 30px;
+    margin: 0;
+    margin-bottom: 2rem;
     flex: 0 0 100%;
     max-width: 100%;
     text-align: center;
@@ -310,9 +477,9 @@ input[type="button"] {
     border-radius: 1rem;
     .menu-tab-item {
       cursor: pointer;
-      padding: 5px 30px;
+      padding: 0.8rem 0;
       border-radius: 1rem;
-      font-size: 20px;
+      font-size: 1.7rem;
       color: whitesmoke;
       font-weight: 500;
       text-transform: capitalize;
@@ -328,41 +495,48 @@ input[type="button"] {
   }
 
   .box-container {
+    padding: 0;
     .box {
       border-radius: 1rem;
       position: relative;
-      background-color: #fff;
-      padding: 10px;
+      background-color: #d9d9d9;
       text-align: center;
       &:hover {
-        box-shadow: 10px 10px 10px rgba($color: #000000, $alpha: 0.2), -10px -10px 10px rgba($color: #000000, $alpha: 0.2) ;
+        box-shadow: 0px 5px 5px rgba($color: #000000, $alpha: 0.3);
       }
       .image {
-        // margin: 1rem 0;
-        width: 100%;
         img {
           width: 100%;
+          border-radius: 1rem;
         }
       }
 
       .content {
         h3 {
-          font-size: 2rem;
-          height: 5rem;
-          color: #130f40;
+          font-size: 1.8rem;
+          height: 4rem;
+          color: #000;
+          margin: 0 1rem;
+          margin-top: 1rem;
         }
         .price  {
-          font-size: 2rem;
-          color: #130f40;
+          font-size: 1.8rem;
+          color: #ee4d2d;
+          // padding: 0 2rem;
+          padding-bottom: 1rem;
+        }
+        button {
+          margin: 0 1rem;
+          margin-bottom: 1rem;
         }
       }
     }
   }
   .action-row {
     padding-top: 30px;
-    width: 100%;
+    max-width: 100%;
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 2rem;
     .action-btn {
       width: 4rem;
       height: 4rem;
@@ -379,8 +553,53 @@ input[type="button"] {
     }
     button {
       background-color: #fff;
-      width: 4rem;
-      height: 4rem;
+        width: 4rem;
+        height: 4rem;
+        margin: 0rem 1rem;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.filter-heading, .filter-section {
+  display: none;
+}
+
+.filter-heading.active, .filter-section.active  {
+  display: block;
+  
+}
+
+@media (max-width: 575px) {
+
+  .search-box {
+    i {
+      top: 0.5rem;
+      left: 0.5rem;
+    }
+  }
+  .search-box, .filter-heading, .filter-section {
+    width: auto;
+  }
+  .filter-option {
+    width: 100%;
+  }
+  
+  .menu {
+    padding: 2rem 5%;
+  }
+  .menu .action-row {
+    font-size: 1.5rem;
+    .action-btn {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 3rem;
+    }
+    button {
+      width: 3rem;
+      height: 3rem;
       margin: 0rem 2rem;
       &:hover {
         cursor: pointer;
@@ -389,55 +608,11 @@ input[type="button"] {
   }
 }
 
-.filter-dropdown {
-  display: none;
-}
-
-@media (min-width: 576px) {
-  .filter-heading, .filter-section {
-    display: block !important;
-  }
-}
-
-@media (max-width: 575px) {
-  .search-box, .filter-heading, .filter-section {
-    width: auto;
-  }
-  .filter-heading, .filter-section {
-    display: none;
-  }
-  .filter-heading.active, .filter-section.active  {
-    display: block;
-    
-  }
-  .filter-option {
-    width: 100%;
-  }
-  .filter-dropdown {
-    display: block;
-    border-radius: 1rem;
-    background-color: #27ae60;
-    color: #27ae60;
-    font-weight: 400;
-    margin-bottom: 15px;
-    position: relative;
-    div {
-      position: absolute;
-      top: -3.7rem;
-      right: 1rem;
-      width: 2.5rem;
-      height: 2.5rem;
-      font-size:2.5rem;
-    }
-    div.active {
-      transform: rotateX(180deg);
-    }
-  }
-}
-
 @media (max-width: 324px) {
   .menu .menu-tabs .menu-tab-item {
-    font-size: 1.8rem;
+    text-align: center;
+    padding: auto auto;
+    font-size: 1.4rem;
   }
 }
 

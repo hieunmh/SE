@@ -1,50 +1,54 @@
 <template>
   <div id="app">
-    <Header />
-
-    <div class="auth-wrapper">
-      <div class="auth-inner">
-        <router-view></router-view>
-      </div>
+    <div v-if="loading">
+      <Loading></Loading>
     </div>
 
-    <Footer />
+    <div v-else class="">
+      <Header />
+      <router-view></router-view>
+      <Footer />
+    </div>
+
   </div>
 </template>
 
 <script>
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
-import axios from 'axios';
-import { mapActions, mapMutations } from 'vuex';
+import Loading from './components/Loading.vue';
+
+import { mapActions, mapMutations, mapState } from 'vuex';
 
 export default {
   name: 'App',
   components: {
     Header,
     Footer,
+    Loading,
   },
-  methods: {
-    ...mapMutations(['setEmail', 'setUser', 'setAdmin']),
-    ...mapActions(['getProducts']),
-
-    async checkLogin() {
-      let res = await axios.get('login', {withCredentials: true});
-      if (res.data.cookie) {
-        let data = await axios.get('info', { withCredentials: true });  
-        this.setUser(data.data.userName);
-        this.setEmail(data.data.email);
-        if (data.data.role) {
-          this.setAdmin("admin");
-        }
-      }
+  data() {
+    return {
+      
     }
+  },
+
+  methods: {
+    ...mapActions(['getProducts', 'checkLogin', 'getCart', 'getCategory']),
+    ...mapMutations(['setLoading'])
+  },
+
+  computed: {
+    ...mapState(['loading', 'user']),
   },
   
   created() {
     this.checkLogin();
     this.getProducts();
-  }
+    this.getCart();
+    this.getCategory();
+    this.setLoading();
+  },
 }
 </script>
 

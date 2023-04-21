@@ -4,9 +4,18 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const routesInit = require('./routes/indexRoute');
 const path = require('path');
+const RedisStore = require('connect-redis').default;
+const { createClient } = require('redis');
 
 //temporary: save session into folder session
-const fileStore = require('session-file-store')(session);
+// const fileStore = require('session-file-store')(session);
+const redisClient = createClient();
+redisClient.connect().catch(console.error);
+
+let redisStore = new RedisStore({
+  client: redisClient,
+  prefix: 'myapp:',
+});
 
 //database
 const db = require('./models');
@@ -25,15 +34,15 @@ app.use('/', express.static(staticFolder));
 app.use(
   session({
     name: process.env.SES_NAME,
-    cookie: {
-      maxAge: 1000 * 60 * 60,
-      sameSite: true,
-      // secure: process.env.NODE_ENV,
-    },
     resave: false,
     saveUninitialized: false,
     secret: process.env.SES_SECRET,
-    store: new fileStore(),
+    store: redisStore,
+    cookie: {
+      maxAge: Date.now() + 1000 * 60 * 60,
+      sameSite: true,
+      // httpOnly: false,
+    },
   }),
 );
 
@@ -60,6 +69,11 @@ routesInit(app);
 app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).send('Something broke!');
+});
+
+// test
+app.get('/payment', (req, res) => {
+  res.sendFile(__dirname + '/payment.html');
 });
 
 app.get('/', (req, res) => {

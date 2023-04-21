@@ -1,6 +1,15 @@
 export default {
-  user: undefined,
-  email: undefined,
+  user: [],
   admin: "",
-  allFoods: []
+  allFoods: [],
+  category: [],
+  isLogin: false,
+  showProduct: false,
+  cartItem: [],
+  totalPeice: 0,
+  showAlert: false,
+  showAlertEditInfo: false,
+  showAlertEditPass: false,
+  loading: true,
+  showLoading: true,
 };

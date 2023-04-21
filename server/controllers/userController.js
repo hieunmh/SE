@@ -2,7 +2,7 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const {
-  models: { User },
+  models: { User, Cart_item },
 } = require('../models/');
 
 // bcrypt
@@ -21,6 +21,7 @@ class userController {
     });
 
     return res.status(200).json({
+      userId: id,
       userName: findUser.name,
       email: findUser.email,
       telephone: findUser.telephone,
@@ -79,13 +80,44 @@ class userController {
       }
     } else {
       return res.status(400).json({
-        msg: 'Please fill all ',
+        msg: 'All filled must be required ',
       });
     }
   }
 
   // [POST] /logout
   async logout(req, res, next) {
+    // store session cart in DB
+    var cart = req.session.cart;
+    if (cart) {
+      var user_id, product_id, quantity;
+      for (let i = 0; i < cart.length; i++) {
+        user_id = cart[i].user_id;
+        product_id = cart[i].product_id;
+        quantity = cart[i].quantity;
+
+        const checkCartExist = await Cart_item.findOne({
+          where: { user_id, product_id },
+        });
+
+        if (checkCartExist) {
+          if (checkCartExist.quantity != quantity) {
+            Cart_item.update({ quantity }, { where: { user_id, product_id } });
+            console.log('update');
+          } else {
+            console.log('nothing changes!');
+          }
+        } else {
+          Cart_item.create({
+            user_id,
+            product_id,
+            quantity,
+          });
+          console.log('create');
+        }
+      }
+    }
+    // destroy session
     req.session.destroy((err) => {
       if (err) {
         return res.json({
@@ -97,7 +129,7 @@ class userController {
 
     res.clearCookie('sid');
     return res.status(200).json({
-      msg: 'Logout successful',
+      msg: 'Logout was successful',
       redirect: '/login',
     });
   }
@@ -133,8 +165,9 @@ class userController {
               return res.status(201).json({
                 msg: 'Register Account Success',
                 email: email,
-                name: name,
+                userName: name,
                 role: defaultUserRole,
+                telephone
               });
             })
             .catch((err) => {

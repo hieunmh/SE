@@ -1,5 +1,13 @@
 <template>
   <div class="info">
+    <EditInfo v-if="showAlertEditInfo">
+      <button @click.prevent="setShowAlertEditInfo(false)" class="btnn">Hủy</button>
+    </EditInfo>
+
+    <ChangePass v-else-if="showAlertEditPass">
+      <button @click.prevent="setShowAlertEditPass(false)" class="btnn">Hủy</button>
+    </ChangePass>
+
     <div class="info-form">
       <form @submit="handleSubmit" novalidate autocapitalize="off">
         <h3>Thông tin tài khoản</h3>
@@ -7,38 +15,26 @@
         <div class="form-group">
           <p class="form-control"></p>
           <i class="fa-solid fa-user"></i>
-          <span class="sp">{{ userInfo.name }}</span>
+          <span class="sp">{{ user.userName }}</span>
         </div>
 
         <div class="form-group">
           <p class="form-control"></p>
           <i class="fa-regular fa-envelope"></i>
-          <span class="sp">{{ userInfo.email }}</span>
+          <span class="sp">{{ user.email }}</span>
         </div>
 
 
         <div class="form-group">
           <p class="form-control"></p>
           <i class="fa-solid fa-phone"></i>
-          <span>{{ userInfo.telephone }}</span>
+          <span>{{ user.telephone }}</span>
         </div>
 
         <div class="form-group">
-          <button @click.prevent="setShowEditInfo" class="btnn">Chỉnh sửa thông tin</button>
-          <button @click.prevent="setShowEditPass" class="btnn">Đổi mật khẩu</button>
-          <button class="btnn"><RouterLink to="/" @click.prevent="scrollToTop">Đến trang chủ</RouterLink></button>
-        </div>
-
-        <div class="form-group">
-          <EditInfo v-if="showEditInfo">
-            <button @click.prevent="setShowEditInfo" class="btnn">Hủy</button>
-          </EditInfo>
-        </div>
-
-        <div class="form-group">
-          <ChangePass v-if="showEditPass">
-            <button @click.prevent="setShowEditPass" class="btnn">Hủy</button>
-          </ChangePass>
+          <button @click.prevent="setShowAlertEditInfo(true)" class="btnn">Chỉnh sửa thông tin</button>
+          <button @click.prevent="setShowAlertEditPass(true)" class="btnn">Đổi mật khẩu</button>
+          <RouterLink to="/" @click="scrollToTop()"><button class="btnn">Đến trang chủ</button></RouterLink>
         </div>
 
       </form>
@@ -47,41 +43,28 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 import EditInfo from '../components/EditInfo.vue';
 import ChangePass from '../components/ChangePass.vue';
-import axios from 'axios';
 
 export default {
     name: "Register",
     data() {
         return {
-            userInfo: {
-                email: "",
-                name: "",
-                telephone: "",
-            },
-            matchUser: undefined,
-            showEditInfo: false,
             showEditPass: false,
         };
     }, 
     methods: {
-      ...mapMutations(['scrollToTop', 'setUser']),
+      ...mapMutations(['scrollToTop', 'setShowAlertEditInfo', 'setShowAlertEditPass']),
       
-      setShowEditInfo() {
-        this.showEditInfo = !this.showEditInfo;
-      },
       setShowEditPass() {
         this.showEditPass = !this.showEditPass;
       }
       
     },
-    async created() {
-      let data = await axios.get('/info', {withCredentials: true});
-      this.userInfo.name = data.data.userName;
-      this.userInfo.email = data.data.email;
-      this.userInfo.telephone = data.data.telephone;
+    
+    computed: {
+      ...mapState(['user', 'showAlertEditInfo', 'showAlertEditPass'])
     },
     components: { 
       EditInfo,

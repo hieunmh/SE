@@ -1,9 +1,13 @@
 <template>
+	<div v-if="showLoading && !user.userName">
+		<Loading></Loading>
+	</div>
+
   <div class="">
     <div class="home-main">
       <div class="content">
         <span>Home page</span>
-        <h3 v-if="user">Xin chào {{ user }}</h3>
+        <h3 v-if="user.userName">Xin chào {{ user.userName }}</h3>
 				<h3 v-else>SIUUUUUU</h3>
         <p>Welcome to the League of Draven</p>
         <RouterLink to="/menu" class="btnn">Menu</RouterLink>
@@ -77,24 +81,31 @@
         </div>
       </div>
     </div>
-    
   </div>
 </template>
 <script>
 import { mapMutations, mapState } from 'vuex';
+import Loading from '../components/Loading.vue';
 
 export default {
   name: 'Home',
+	components: {
+		Loading,
+	},
 	data() {
 		return {
-
 		}
 	},
 	methods: {
-		...mapMutations(['scrollToTop'])
+		...mapMutations(['scrollToTop', 'setShowLoading']),
 	},
 	computed: {
-		...mapState(['user', 'email'])
+		...mapState(['user', 'showLoading']),		
+	},
+	mounted() {
+		setTimeout(() => {
+			this.setShowLoading(false);
+		}, 1000);
 	}
 	
 }

@@ -1,6 +1,12 @@
 <template>
+  <div v-if="loading">
+    <Loading></Loading>
+  </div>
+
   <div class="editInfo">
     <div class="editInfo-form">
+      <VueBasicAlert :duration="200" :closeIn="700" ref="alert" />
+
       <form novalidate autocapitalize="off">
         <h3>Chỉnh sửa thông tin</h3>
 
@@ -23,18 +29,24 @@
           <slot></slot>
         </div>
 
-      </form>k
+      </form>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
-import { mapMutations } from 'vuex';
+import { mapMutations  } from 'vuex';
 import filterVN from '@/filterVN';
+import VueBasicAlert from 'vue-basic-alert';
+import Loading from './Loading.vue';
 
 export default {
   name: "editInfo",
+  components: {
+    VueBasicAlert,
+    Loading
+  },
   data() {
     return {
       editInfoForm: {
@@ -42,11 +54,12 @@ export default {
         telephone: "",
       },
       errorObj: { nameErr: [], phoneErr: [] },
+      loading: false
     }
   },
 
   methods: {
-    ...mapMutations(['scrollToTop', 'setEmail']),
+    ...mapMutations(['scrollToTop', 'setShowAlertEditInfo', 'setShowLoading']),
 
     async edit() {
       let data = await axios.get('info', { withCredentials: true });
@@ -56,11 +69,17 @@ export default {
       if (!this.editInfoForm.telephone) {
         this.editInfoForm.telephone = data.data.telephone;
       }
-      alert('Chỉnh sửa thông tin thành công');
+
       await axios.post('edit-info', this.editInfoForm, { withCredentials: true });
-      window.location.reload();
-      // console.log(res);
-    },
+
+      await new Promise(() => setTimeout(() => {
+        this.setShowAlertEditInfo(false);
+        this.loading = false;
+        this.$refs.alert.showAlert("Chỉnh sửa thông tin thành công !");
+      }, 1000)).then(
+          window.location.reload(),
+          this.loading = true
+        )},
 
     resetCheckErr() {
       this.errorObj.nameErr = [],
@@ -137,6 +156,7 @@ export default {
   .editInfo-form {
     background-color: transparent;
     height: 45vh;
+    width: 40rem;
 
     form {
       position: relative;
