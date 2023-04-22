@@ -14,7 +14,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .flower-spinner-search,
 .flower-spinner-search * {
   box-sizing: border-box;

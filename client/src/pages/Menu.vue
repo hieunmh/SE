@@ -16,10 +16,10 @@
         </div>
 
         <div class="row priceFilter">
-          <input type="text" class="filter-item col-4" v-model="priceRangeFrom" placeholder="Từ VNĐ" @keypress.enter="filterPriceRange()" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-          <input type="text" class="filter-item col-4" v-model="priceRangeTo" placeholder="Đến VNĐ" @keypress.enter="filterPriceRange()" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-          <input type="button" class="filter-item col-2" @click="filterPriceRange()" value="Áp dụng" >
-          <input type="button" class="filter-item col-2" @click="deletePriceRange()" value="Xóa lọc">
+          <input type="text" class="filter-item col-sm-4 col-6" v-model="priceRangeFrom" placeholder="Từ VNĐ" @keypress.enter="filterPriceRange()" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          <input type="text" class="filter-item col-sm-4 col-6" v-model="priceRangeTo" placeholder="Đến VNĐ" @keypress.enter="filterPriceRange()" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          <input type="button" class="filter-item col-sm-2 col-6" @click="filterPriceRange()" value="Áp dụng" >
+          <input type="button" class="filter-item col-sm-2 col-6" @click="deletePriceRange()" value="Xóa lọc">
         </div>
 
         <div class="row box-container">
@@ -42,24 +42,24 @@
         </div>
 
         <div class="action-row">
-          <button @click="previousToFirst(), hideFilter()" class="action-btn decrease-btn">
+          <button @click="previousToFirst()" class="action-btn decrease-btn">
             <i class="fa-solid fa-angles-left"></i>
           </button>
 
-          <button  @click="previous(), hideFilter()" class="action-btn decrease-btn">
+          <button  @click="previous()" class="action-btn decrease-btn">
             <i class="fa-solid fa-angle-left"></i>
           </button>
 
           <div v-for="(page, index) in calculatePages" :key="index" class="d-inline">
-            <button v-if="index == pageNum" class="highlight" @click="setPage(index), hideFilter()">{{ index + 1 }}</button>
-            <button v-else @click="setPage(index), hideFilter()">{{ index + 1 }}</button>
+            <button v-if="index == pageNum" class="highlight" @click="setPage(index)">{{ index + 1 }}</button>
+            <button v-else @click="setPage(index)">{{ index + 1 }}</button>
           </div>
 
-          <button @click="next(), hideFilter()" class="action-btn increase-btn">
+          <button @click="next()" class="action-btn increase-btn">
             <i class="fa-solid fa-angle-right"></i>   
           </button>
 
-          <button @click="nextToLast(), hideFilter()" class="action-btn increase-btn">
+          <button @click="nextToLast()" class="action-btn increase-btn">
             <i class="fa-solid fa-angles-right"></i>   
           </button>
         </div>
