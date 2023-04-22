@@ -1,8 +1,8 @@
 const {
-  models: { Order_items, Order_details, Cart_item },
-  sequelize,
+  models: { Order_items, Order_details, Cart_item, Product, User }
 } = require('../models');
 
+const sequelize = require('sequelize');
 // status in Order_details need to be enum - to choose
 // provider ?
 
@@ -10,7 +10,23 @@ class orderController {
   // [GET] /get-all-orders - author: admin
   async getAllOrders(req, res, next) {
     try {
-      const Orders = await Order_details.findAll({});
+      const Orders = await Order_details.findAll({
+        attributes: ['total', 'provider', 'status'],
+        include: [
+          {
+            model: User,
+            attributes: ['name', 'telephone']
+          },
+          {
+            model: Order_items, 
+            attributes: ['quantity'],
+            include: {
+              attributes: ['name', 'image'],
+              model: Product,
+            }
+          },
+        ],
+      });
       if (Orders.length) {
         return res.status(200).json({
           Orders: Orders,
@@ -22,6 +38,7 @@ class orderController {
       }
     } catch (err) {
       console.log(err);
+      next(err);
     }
   }
   // [GET] /order-by-user
@@ -29,6 +46,15 @@ class orderController {
     try {
       const user_id = req.session.userId;
       const Orders = await Order_details.findAll({
+        attributes: ['total', 'provider', 'status'],
+        include: {
+          model: Order_items,
+          attributes: ['quantity'],
+          include: {
+            model: Product,
+            attributes: ['name', 'image'],
+          }
+        },
         where: { user_id },
       });
       if (Orders.length) {
@@ -51,8 +77,6 @@ class orderController {
     const cartProduct = req.session.cart;
 
     const totalPrice = req.body.totalPrice;
-    const userName = req.body.userName;
-    const telephone = req.body.telephone;
 
     //check products in cart. if having nothing => fail
     if (!cartProduct.length) {
@@ -62,7 +86,7 @@ class orderController {
     }
 
     //get userInfo
-
+    console.log(cartProduct, user_id, totalPrice);
     if (!cartProduct || !user_id || !totalPrice) {
       return res.status(400).json({ msg: 'Cant create order!' });
     } else {
@@ -71,8 +95,6 @@ class orderController {
 
         const newOrder = await Order_details.create({
           user_id,
-          name: userName,
-          telephone: telephone,
           total: totalPrice,
           provider: 1,
           status: 'Chờ xử lý',

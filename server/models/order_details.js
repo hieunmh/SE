@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
       Order_details.belongsTo(models.User, {
         foreignKey: 'user_id',
       });
+      Order_details.hasMany(models.Order_items, {
+        foreignKey: 'order_id',
+      });
     }
   }
 
@@ -24,15 +27,6 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      name: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-      },
-      telephone: {
-        type: DataTypes.STRING(10),
-        allowNull: false,
-      },
-
       total: {
         type: DataTypes.DECIMAL(15, 2),
         allowNull: false,
