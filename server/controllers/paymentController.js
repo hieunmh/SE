@@ -9,7 +9,6 @@ class paymentController {
     const user_id = req.session.userId;
     const totalPrice = req.session.totalPrice;
     const productInCart = req.session.cart;
-    const amountOfProducts = productInCart.length;
 
     if(!user_id || !totalPrice || !productInCart) {
       return res.status(400).json({
@@ -19,6 +18,7 @@ class paymentController {
       // Lay thong tin nguoi dung
       // username, telephone, user_address
       try {
+        const amountOfProducts = productInCart.length;
         const getUserInfo = await User.findOne({
           attributes: ['name', 'telephone'],
           where: {
