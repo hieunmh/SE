@@ -6,7 +6,6 @@ export default {
     await axios.get('products', {withCredentials: true})
     .then((res) => {
       context.commit("setFoods", res.data);
-      console.log(res.data);
     })
     .catch((err) => {
       console.log(err);
@@ -49,7 +48,6 @@ export default {
     .then((res) => {
       context.commit("setCartItem", res.data.productsInCart);
       context.commit("setCartLength", res.data.productsInCart.length)
-      console.log(res.data);
     })
   },
 

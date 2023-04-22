@@ -49,7 +49,10 @@ class orderController {
   async postCreateOrder(req, res, next) {
     const user_id = req.session.userId;
     const cartProduct = req.session.cart;
-    const totalPrice = req.session.totalPrice;
+
+    const totalPrice = req.body.totalPrice;
+    const userName = req.body.userName;
+    const telephone = req.body.telephone;
 
     //check products in cart. if having nothing => fail
     if (!cartProduct.length) {
@@ -68,6 +71,8 @@ class orderController {
 
         const newOrder = await Order_details.create({
           user_id,
+          name: userName,
+          telephone: telephone,
           total: totalPrice,
           provider: 1,
           status: 'Chờ xử lý',

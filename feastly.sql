@@ -89,6 +89,8 @@ CREATE TABLE user_payment (
 CREATE TABLE order_details (
     `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `user_id` INT UNSIGNED, -- NOT NULL,
+    `name` VARCHAR(30) NOT NULL,
+    `telephone` VARCHAR(10) NOT NULL,
     `total` DECIMAL(15, 2) NOT NULL, 
     `provider` VARCHAR(10) NOT NULL,
     `status` VARCHAR(10) NOT NULL,

@@ -1,34 +1,263 @@
 <template>
-  <div>
-    <button class="btnn" @click="getPayment">Click</button>
+  <div class="shopping-cart">
+    <div class="">
+      <div class="box">
+        <div class="box-content">
+          <div class="row d-sm-flex d-none bar">
+            <div class="col-sm-6 text-center">
+              <h4>Sản phẩm</h4>
+            </div>
+
+            <div class="col-sm-2 text-center">
+              <h4>Đơn giá</h4>
+            </div>
+
+            <div class="col-sm-2 text-center">
+              <h4>Số lượng</h4>
+            </div>
+
+            <div class="col-sm-2 text-center">
+              <h4>Thành tiền</h4>
+            </div>
+          </div>
+          
+          <div v-for="(p, index) in cartItem" :key="index">
+            <div class="row">
+              <div class="centre col-sm-2 col-4 image-box" style="">
+                <img :src="`${imgUrl}${p.image}`" alt="">
+              </div>
+
+              <div class="centre col-sm-4 col-4 desc">
+                <h4 class="item-name">{{ p.name }}</h4>
+              </div>
+
+
+              <div class="centre col-sm-2 d-sm-flex d-none cal-total">
+                <h4 class="item-total"> {{ p.quantity * p.salePrice }}</h4>
+              </div>
+
+              <div class="centre col-sm-2 col-2  item-qtt">
+                <h4><span class="d-sm-none d-inline">x</span>{{ p.quantity }}</h4>
+              </div>
+
+              <div class="centre col-2 delete">
+                <h4>{{ p.quantity * p.salePrice }}</h4>
+              </div>
+            </div>
+          </div>
+
+          <div class="row col-12">
+
+            <div class="col-9 d-flex justify-content-end">
+              <h4>Tổng số tiền ({{ cartItem.length }} sản phẩm): </h4>
+            </div>
+
+            <div class="col-1">
+
+            </div>
+
+            <div class="col-2 centre">
+              <h4>{{ calTotal()[0] }}</h4>
+            </div>
+          </div>
+
+          <div>
+            <div class="col-12 d-flex justify-content-end">
+              <RouterLink to="/menu" @click="order()" style=" text-align: center; color: #fff;">
+                <button class="btnn checkout-btn" :disabled="cartItem.length ? false : true">
+                  <i class="fa fa-shopping-cart"></i> Đặt hàng
+                </button>
+              </RouterLink>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import { mapActions, mapMutations, mapState } from 'vuex';
+import serverUrl from '@/axios';
 
 export default {
-  name: "Payment",
+  name: 'Payment',
+  components: {
+    
+  },
   data() {
     return {
-
+      imgUrl: serverUrl + "/upload/productImage/",
     }
   },
-
   methods: {
-    async getPayment() {
-      let res = await axios.post('payment', {},{withCredentials: true});
-      console.log(res);
+    async order() {
+      let data = {
+        totalPrice: this.calTotal()[0],
+        userName: this.user.userName,
+        telephone: this.user.telephone,
+      } 
+      let res = await axios.post('create-order', data, {withCredentials: true});
+    },
+
+    calTotal() {
+      let i = 0;
+      let totalsalePrice = 0;
+      let totalPrice = 0;
+      while (i < this.cartItem.length) {
+        totalsalePrice += parseInt(this.cartItem[i].salePrice) * this.cartItem[i].quantity;
+        totalPrice += parseInt(this.cartItem[i].price) * this.cartItem[i].quantity;
+        i++;
+      }
+      return [totalsalePrice, totalPrice];
     }
+
   },
-
   computed: {
-
-  }
+    ...mapState(['user', 'allFoods', 'cartItem']),
+  },  
 
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 
+.shopping-cart {
+  padding: 2rem 20%;
+}
+
+.box {
+  margin: 0;
+  margin-bottom: 20px;
+  padding: 0;
+
+  .box-title {
+    background-color: inherit;
+    border-color: #e7eaec;
+    border-width: 3px 0 0;
+    color: inherit;
+    margin-bottom: 0;
+    margin-bottom: 0;
+    padding: 14px 15px 7px;
+    min-height: 78px;
+
+    h3 {
+      font-size: 2rem;
+    }
+  }
+
+  .box-content {
+    padding: 0;
+    border-image: none;
+
+    .image {
+      width: 100%;
+
+      img {
+        width: 20rem;
+      }
+    }
+
+    .row {
+      border: 2px solid #27ae60;
+      border-radius: 1rem;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+
+    .centre {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-box {
+      padding: 0;
+      display: flex;
+      img {
+        width: 8rem;
+        height: 8rem;
+        border-radius: 1rem;
+      }
+    }
+
+    .item-qtt {
+      display: flex;
+      flex-direction: row;
+
+      button {
+        width: 3rem;
+        height: 3rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        i {
+          padding: 0;
+        }
+      }
+
+      input {
+        text-align: center;
+        height: 3rem;
+        width: 4rem;
+        font-size: 1.5rem;
+        text-decoration: none;
+      }
+    }
+
+    .cal-total {
+      h4 {
+        color: #ee4d2d;
+      }
+    }
+
+    .item-price {
+      .sale-price {
+        width: 10rem;
+        font-size: 1.5rem;
+      }
+
+      .sale {
+        text-decoration: line-through;
+        color: rgba($color: #000000, $alpha: 0.5);
+      }
+    }
+  }
+}
+
+.box-content button i,
+.box-content a i {
+  padding-right: 5px;
+}
+
+
+
+.item-quantity {
+  text-decoration: line-through;
+}
+
+.remove-btn {
+  font-size: 10px;
+  padding: 5px;
+  margin-top: 27px;
+
+  i {
+    padding-right: 5px;
+  }
+}
+
+@media (max-width: 992px) {
+  .shopping-cart {
+    padding: 2rem 15%;
+  }
+}
+
+@media (max-width: 767px) {
+  .shopping-cart {
+    padding: 2rem 10%;
+  }
+}
 </style>
