@@ -97,7 +97,7 @@ class orderController {
     const user_id = req.session.userId;
     const cartProduct = req.session.cart;
 
-    const totalPrice = req.body.totalPrice;
+    const totalPrice = req.session.totalPrice;
 
     //check products in cart. if having nothing => fail
     if (!cartProduct.length) {

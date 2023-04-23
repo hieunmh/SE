@@ -48,28 +48,28 @@ import EditInfo from '../components/EditInfo.vue';
 import ChangePass from '../components/ChangePass.vue';
 
 export default {
-    name: "Register",
-    data() {
-        return {
-            showEditPass: false,
-        };
-    }, 
-    methods: {
-      ...mapMutations(['scrollToTop', 'setShowAlertEditInfo', 'setShowAlertEditPass']),
-      
-      setShowEditPass() {
-        this.showEditPass = !this.showEditPass;
-      }
-      
-    },
+  name: "Register",
+  data() {
+      return {
+          showEditPass: false,
+      };
+  }, 
+  methods: {
+    ...mapMutations(['scrollToTop', 'setShowAlertEditInfo', 'setShowAlertEditPass']),
     
-    computed: {
-      ...mapState(['user', 'showAlertEditInfo', 'showAlertEditPass'])
-    },
-    components: { 
-      EditInfo,
-      ChangePass,
+    setShowEditPass() {
+      this.showEditPass = !this.showEditPass;
     }
+    
+  },
+  
+  computed: {
+    ...mapState(['user', 'showAlertEditInfo', 'showAlertEditPass'])
+  },
+  components: { 
+    EditInfo,
+    ChangePass,
+  }
 }
 </script>
 

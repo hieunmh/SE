@@ -422,7 +422,7 @@ input[type="button"] {
   .box-container {
     padding: 0;
     .box {
-      // border-radius: 1rem;
+      margin: 0.7rem 0;
       position: relative;
       background-color: #d9d9d9;
       text-align: center;
