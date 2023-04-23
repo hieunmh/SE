@@ -2,6 +2,8 @@ const {
   models: {User_payment, User_address, User}, sequelize,
 } = require('../models');
 
+const { getCalculateTotal } = require('./cartController');
+
 // Chua hieu User_payment lam gi
 class paymentController {
   // [POST] /payment
@@ -10,7 +12,7 @@ class paymentController {
     const totalPrice = req.session.totalPrice;
     const productInCart = req.session.cart;
 
-    if(!user_id || !totalPrice || !productInCart) {
+    if(!user_id || !totalPrice || !productInCart.length) {
       return res.status(400).json({
         msg: "Fail to create order! "
       })
