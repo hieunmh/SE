@@ -21,7 +21,7 @@ class orderController {
             model: Order_items, 
             attributes: ['quantity'],
             include: {
-              attributes: ['name', 'image'],
+              attributes: ['name', 'image', 'price'],
               model: Product,
             }
           },
@@ -76,7 +76,7 @@ class orderController {
     const user_id = req.session.userId;
     const cartProduct = req.session.cart;
 
-    const totalPrice = req.body.totalPrice;
+    const totalPrice = req.session.totalPrice;
 
     //check products in cart. if having nothing => fail
     if (!cartProduct.length) {

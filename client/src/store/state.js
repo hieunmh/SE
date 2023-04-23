@@ -5,6 +5,7 @@ export default {
   category: [],
   isLogin: false,
   showProduct: false,
+  showOrderDetail: false,
   cartItem: [],
   cartLength: 0,
   totalPeice: 0,

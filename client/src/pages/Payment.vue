@@ -1,74 +1,72 @@
 <template>
-  <div class="shopping-cart">
-    <div class="">
-      <div class="box">
-        <div class="box-content">
-          <div class="row d-sm-flex d-none bar">
-            <div class="col-sm-6 text-center">
-              <h4>Sản phẩm</h4>
-            </div>
-
-            <div class="col-sm-2 text-center">
-              <h4>Đơn giá</h4>
-            </div>
-
-            <div class="col-sm-2 text-center">
-              <h4>Số lượng</h4>
-            </div>
-
-            <div class="col-sm-2 text-center">
-              <h4>Thành tiền</h4>
-            </div>
-          </div>
-          
-          <div v-for="(p, index) in cartItem" :key="index">
-            <div class="row">
-              <div class="centre col-sm-2 col-4 image-box" style="">
-                <img :src="`${imgUrl}${p.image}`" alt="">
-              </div>
-
-              <div class="centre col-sm-4 col-4 desc">
-                <h4 class="item-name">{{ p.name }}</h4>
-              </div>
-
-
-              <div class="centre col-sm-2 d-sm-flex d-none cal-total">
-                <h4 class="item-total"> {{ p.quantity * p.salePrice }}</h4>
-              </div>
-
-              <div class="centre col-sm-2 col-2  item-qtt">
-                <h4><span class="d-sm-none d-inline">x</span>{{ p.quantity }}</h4>
-              </div>
-
-              <div class="centre col-2 delete">
-                <h4>{{ p.quantity * p.salePrice }}</h4>
-              </div>
-            </div>
+  <div class="payment">
+    <div class="box">
+      <div class="box-content">
+        <div class="row d-sm-flex d-none bar">
+          <div class="col-sm-6 text-center">
+            <h4>Sản phẩm</h4>
           </div>
 
-          <div class="row col-12">
-
-            <div class="col-9 d-flex justify-content-end">
-              <h4>Tổng số tiền ({{ cartItem.length }} sản phẩm): </h4>
-            </div>
-
-            <div class="col-1">
-
-            </div>
-
-            <div class="col-2 centre">
-              <h4>{{ calTotal()[0] }}</h4>
-            </div>
+          <div class="col-sm-2 text-center">
+            <h4>Đơn giá</h4>
           </div>
 
-          <div>
-            <div class="col-12 d-flex justify-content-end">
-              <RouterLink to="/menu" @click="order()" style=" text-align: center; color: #fff;">
-                <button class="btnn checkout-btn" :disabled="cartItem.length ? false : true">
-                  <i class="fa fa-shopping-cart"></i> Đặt hàng
-                </button>
-              </RouterLink>
+          <div class="col-sm-2 text-center">
+            <h4>Số lượng</h4>
+          </div>
+
+          <div class="col-sm-2 text-center">
+            <h4>Thành tiền</h4>
+          </div>
+        </div>
+        
+        <div v-for="(p, index) in cartItem" :key="index">
+          <div class="row">
+            <div class="centre col-sm-2 col-4 image-box" style="">
+              <img :src="`${imgUrl}${p.image}`" alt="">
             </div>
+
+            <div class="centre col-sm-4 col-4 desc">
+              <h4 class="item-name">{{ p.name }}</h4>
+            </div>
+
+
+            <div class="centre col-sm-2 d-sm-flex d-none cal-total">
+              <h4 class="item-total"> {{ p.quantity * p.salePrice }}</h4>
+            </div>
+
+            <div class="centre col-sm-2 col-2  item-qtt">
+              <h4><span class="d-sm-none d-inline">x</span>{{ p.quantity }}</h4>
+            </div>
+
+            <div class="centre col-2 delete">
+              <h4>{{ p.quantity * p.salePrice }}</h4>
+            </div>
+          </div>
+        </div>
+
+        <div class="row col-12">
+
+          <div class="col-9 d-flex justify-content-end">
+            <h4>Tổng số tiền ({{ cartItem.length }} sản phẩm): </h4>
+          </div>
+
+          <div class="col-1">
+
+          </div>
+
+          <div class="col-2 centre">
+            <h4>{{ calTotal()[0] }}</h4>
+          </div>
+        </div>
+
+        <div>
+          <div class="col-12 d-flex justify-content-end">
+            <RouterLink to="/menu" @click="order()" style=" text-align: center; color: #fff;">
+              <button class="btnn checkout-btn" :disabled="cartItem.length ? false : true">
+                <i class="fa fa-shopping-cart"></i> Đặt hàng
+              </button>
+            </RouterLink>
           </div>
         </div>
       </div>
@@ -123,8 +121,9 @@ export default {
 
 <style lang="scss" scoped>
 
-.shopping-cart {
+.payment {
   padding: 2rem 20%;
+  background-color: #fff;
 }
 
 .box {
@@ -160,9 +159,8 @@ export default {
     }
 
     .row {
-      border: 2px solid #27ae60;
-      border-radius: 1rem;
-      padding: 1rem;
+      background-color: #f1f1f1;
+      padding: 2rem 0;
       margin: 1rem 0;
     }
 
@@ -228,35 +226,15 @@ export default {
   }
 }
 
-.box-content button i,
-.box-content a i {
-  padding-right: 5px;
-}
-
-
-
-.item-quantity {
-  text-decoration: line-through;
-}
-
-.remove-btn {
-  font-size: 10px;
-  padding: 5px;
-  margin-top: 27px;
-
-  i {
-    padding-right: 5px;
-  }
-}
 
 @media (max-width: 992px) {
-  .shopping-cart {
+  .payment {
     padding: 2rem 15%;
   }
 }
 
 @media (max-width: 767px) {
-  .shopping-cart {
+  .payment {
     padding: 2rem 10%;
   }
 }
