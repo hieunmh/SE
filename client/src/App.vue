@@ -54,15 +54,21 @@ export default {
         if (data.data.role) {
           this.setAdmin("admin");
         }
+        
+        else {
+          if (router.currentRoute.value.path == "/admin") {
+            router.push("/");
+          }
+        }
 
-        let cart = await axios.get("cart", {withCredentials: true})
+        await axios.get("cart", {withCredentials: true})
         .then((res) => {  
           this.setCartItem(res.data.productsInCart);
           this.setCartLength(res.data.productsInCart.length)
         })
       }
       else {
-        if (router.currentRoute.value.path == "/admin") {
+        if (router.currentRoute.value.path == "/admin" || router.currentRoute.value.path == "/payment") {
           router.push('/');
         }
       }

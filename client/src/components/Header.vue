@@ -5,11 +5,11 @@
 		</RouterLink>
 
     <nav class="navbar col-md-6 d-md-flex justify-content-md-around justify-content-around">
-      <RouterLink @click="outMenu()" to="/">Home</RouterLink>
+      <RouterLink @click="outMenu()" to="/"><h3>Home</h3></RouterLink>
       <!-- <RouterLink @click="scrollToTop()" to="/about">About</RouterLink> -->
-      <RouterLink @click="scrollToTop()" to="/menu">Menu</RouterLink>
+      <RouterLink @click="scrollToTop()" to="/menu"><h3>Menu</h3></RouterLink>
       <!-- <RouterLink @click="scrollToTop()" to="/promotion">Promotions</RouterLink> -->
-      <RouterLink @click="outMenu()" to="/table">Table</RouterLink>
+      <RouterLink @click="outMenu()" to="/table"><h3>Table</h3></RouterLink>
     </nav>
 
     <div class="icons col-md-3 col-8	d-flex justify-content-md-end justify-content-end">

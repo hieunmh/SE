@@ -20,28 +20,6 @@ export default {
 
   },
 
-  async checkLogin(context) {
-    let res = await axios.get("login", { withCredentials: true });
-    if (res.data.cookie) {
-      if (router.currentRoute.value.path == "/login" || router.currentRoute.value.path == "/register") {
-        router.push("/");
-      }
-
-      let data = await axios.get("info", { withCredentials: true });
-
-      context.commit("setUser", data.data);
-      context.commit("setLogged", true);
-
-      if (data.data.role) {
-        context.commit("setAdmin", "admin");
-      }
-      else {
-        if (router.currentRoute.value.path == "/admin") {
-          router.push('/');
-        }
-      }
-    }
-  },
 
   async getCart(context) {
     await axios.get("cart", { withCredentials: true })
