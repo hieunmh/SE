@@ -118,11 +118,11 @@ class cartController {
       image,
     };
 
-    // Update total price 
+    // Update total price
     var priceChange = product.salePrice * product.quantity;
     req.session.totalPrice += priceChange;
 
-    // update cart 
+    // update cart
     var cart = [];
     if (req.session.cart) {
       cart = req.session.cart;
@@ -217,8 +217,8 @@ class cartController {
         if (cart[i].product_id == product_id) {
           if (cart[i].quantity > 1) {
             cart[i].quantity = parseInt(cart[i].quantity) - 1;
-             // update totalPrice
-             req.session.totalPrice -= cart[i].salePrice;
+            // update totalPrice
+            req.session.totalPrice -= cart[i].salePrice;
           }
           break;
         }

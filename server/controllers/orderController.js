@@ -1,5 +1,5 @@
 const {
-  models: { Order_items, Order_details, Cart_item, Product, User, Discount }
+  models: { Order_items, Order_details, Cart_item, Product, User, Discount },
 } = require('../models');
 
 const sequelize = require('sequelize');
@@ -9,7 +9,7 @@ const sequelize = require('sequelize');
 class orderController {
   // [GET] /get-all-orders - author: admin
   // get information of all orders
-  // 
+  //
   async getAllOrders(req, res, next) {
     try {
       const Orders = await Order_details.findAll({
@@ -17,16 +17,17 @@ class orderController {
         include: [
           {
             model: User,
-            attributes: ['name', 'telephone']
+            attributes: ['name', 'telephone'],
           },
           {
-            model: Order_items, 
+            model: Order_items,
             attributes: ['quantity'],
             include: {
+              attributes: ['name', 'image'],
               model: Product,
               attributes: [
                 ['id', 'product_id'],
-                'name', 
+                'name',
                 'image',
                 'price',
                 [sequelize.literal('price*(1-discount_percent)'), 'salePrice'],
@@ -65,7 +66,7 @@ class orderController {
           include: {
             model: Product,
             attributes: [
-              'name', 
+              'name',
               'image',
               'price',
               [sequelize.literal('price*(1-discount_percent)'), 'salePrice'],
@@ -96,7 +97,6 @@ class orderController {
   async postCreateOrder(req, res, next) {
     const user_id = req.session.userId;
     const cartProduct = req.session.cart;
-
     const totalPrice = req.session.totalPrice;
 
     //check products in cart. if having nothing => fail
