@@ -1,5 +1,5 @@
 const {
-  models: { Order_items, Order_details, Cart_item, Product, User }
+  models: { Order_items, Order_details, Cart_item, Product, User, Discount },
 } = require('../models');
 
 const sequelize = require('sequelize');
@@ -8,22 +8,35 @@ const sequelize = require('sequelize');
 
 class orderController {
   // [GET] /get-all-orders - author: admin
+  // get information of all orders
+  //
   async getAllOrders(req, res, next) {
     try {
       const Orders = await Order_details.findAll({
-        attributes: ['total', 'provider', 'status'],
+        attributes: ['total', 'provider', 'status', 'created_at'],
         include: [
           {
             model: User,
-            attributes: ['name', 'telephone']
+            attributes: ['name', 'telephone'],
           },
           {
-            model: Order_items, 
+            model: Order_items,
             attributes: ['quantity'],
             include: {
-              attributes: ['name', 'image', 'price'],
+              attributes: ['name', 'image'],
               model: Product,
-            }
+              attributes: [
+                ['id', 'product_id'],
+                'name',
+                'image',
+                'price',
+                [sequelize.literal('price*(1-discount_percent)'), 'salePrice'],
+              ],
+              include: {
+                model: Discount,
+                attributes: [],
+              },
+            },
           },
         ],
       });
@@ -46,14 +59,23 @@ class orderController {
     try {
       const user_id = req.session.userId;
       const Orders = await Order_details.findAll({
-        attributes: ['total', 'provider', 'status'],
+        attributes: ['total', 'provider', 'status', 'created_at'],
         include: {
           model: Order_items,
           attributes: ['quantity'],
           include: {
             model: Product,
-            attributes: ['name', 'image'],
-          }
+            attributes: [
+              'name',
+              'image',
+              'price',
+              [sequelize.literal('price*(1-discount_percent)'), 'salePrice'],
+            ],
+            include: {
+              model: Discount,
+              attributes: [],
+            },
+          },
         },
         where: { user_id },
       });
@@ -75,7 +97,6 @@ class orderController {
   async postCreateOrder(req, res, next) {
     const user_id = req.session.userId;
     const cartProduct = req.session.cart;
-
     const totalPrice = req.session.totalPrice;
 
     //check products in cart. if having nothing => fail

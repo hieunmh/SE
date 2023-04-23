@@ -23,8 +23,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER.UNSIGNED,
         // allowNull: false,
         references: {
-          model: "User",
-          key: "id",
+          model: 'User',
+          key: 'id',
         },
       },
       total: {
@@ -42,11 +42,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "order_details",
+      modelName: 'order_details',
       timestamps: true,
       updatedAt: false,
-      createdAt: "created_at",
-    }
+      createdAt: 'created_at',
+    },
   );
   return Order_details;
 };

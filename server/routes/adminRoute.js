@@ -7,6 +7,7 @@ const {
   isAuth,
   isAlreadyLogin,
 } = require('../middleware/authenticate');
+const { json } = require('body-parser');
 
 const router = express.Router();
 
@@ -21,6 +22,8 @@ const upload_image_field = 'myImage';
 router.post(
   '/product/add',
   upload(saved_image_folder).single(upload_image_field),
+  isAuth,
+  isAdmin,
   adminController.addProduct,
 );
 

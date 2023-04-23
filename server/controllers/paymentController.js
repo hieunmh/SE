@@ -1,6 +1,9 @@
 const {
-  models: {User_payment, User_address, User}, sequelize,
+  models: { User_payment, User_address, User },
+  sequelize,
 } = require('../models');
+
+const { getCalculateTotal } = require('./cartController');
 
 // Chua hieu User_payment lam gi
 class paymentController {
@@ -10,10 +13,10 @@ class paymentController {
     const totalPrice = req.session.totalPrice;
     const productInCart = req.session.cart;
 
-    if(!user_id || !totalPrice || !productInCart) {
+    if (!user_id || !totalPrice || !productInCart.length) {
       return res.status(400).json({
-        msg: "Fail to create order! "
-      })
+        msg: 'Fail to create order! ',
+      });
     } else {
       // Lay thong tin nguoi dung
       // username, telephone, user_address
@@ -23,28 +26,28 @@ class paymentController {
           attributes: ['name', 'telephone'],
           where: {
             id: user_id,
-          }
+          },
         });
-  
+
         // get address user
-        // lay san trong DB 
+        // lay san trong DB
         // Tao them nut bam de tao dia chi, roi luu vao DB
         const getUserAddress = await User_address.findAll({
           where: {
             user_id,
-          }
+          },
         });
-  
+
         // get UserInfo, userAddress have or not
         if (getUserInfo) {
           return res.status(200).json({
-            success: "Create order success!",
+            success: 'Create order success!',
             userInfo: getUserInfo,
             userAddress: getUserAddress,
             productInCart: productInCart,
             amountOfProducts: amountOfProducts,
-            totalPrice: totalPrice
-          })
+            totalPrice: totalPrice,
+          });
         }
       } catch (error) {
         console.log(error);
