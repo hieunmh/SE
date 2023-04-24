@@ -1,7 +1,7 @@
 <template>
-  <div v-if="showLoading">
-    <Loading></Loading>
-  </div>
+    <!-- <div v-if="showLoading">
+      <Loading></Loading>
+    </div> -->
   
   <div class = "login">
     <div class = "login-form">

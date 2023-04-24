@@ -6,7 +6,6 @@ export default {
     await axios.get('products', {withCredentials: true})
     .then((res) => {
       context.commit("setFoods", res.data);
-      console.log(res.data);
     })
     .catch((err) => {
       console.log(err);
@@ -21,34 +20,19 @@ export default {
 
   },
 
-  async checkLogin(context) {
-    let res = await axios.get("login", { withCredentials: true });
-    if (res.data.cookie) {
-      if (router.currentRoute.value.path == "/login") {
-        router.push("/");
-      }
-
-      let data = await axios.get("info", { withCredentials: true });
-
-      context.commit("setUser", data.data);
-      context.commit("setLogged", true);
-
-      if (data.data.role) {
-        context.commit("setAdmin", "admin");
-      }
-      else {
-        if (router.currentRoute.value.path == "/admin") {
-          router.push('/');
-        }
-      }
-    }
-  },
 
   async getCart(context) {
     await axios.get("cart", { withCredentials: true })
     .then((res) => {
       context.commit("setCartItem", res.data.productsInCart);
-      console.log(res.data);
+      context.commit("setCartLength", res.data.productsInCart.length);
+    })
+  },
+
+  async getAllOrder(context) {
+    await axios.get('get-all-orders', {withCredentials: true})
+    .then((res) => {
+      context.commit("setAllOrder", res.data.Orders);
     })
   },
 

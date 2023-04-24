@@ -42,5 +42,11 @@ export default {
   },
   setShowLoading(state, showLoading) {
     state.showLoading = showLoading;
+  },
+  setShowSearchLoading(state, showSearchLoading) {
+    state.showSearchLoading = showSearchLoading;
+  },
+  setAllOrder(state, allOrder) {
+    state.allOrder = allOrder;
   }
 };

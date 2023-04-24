@@ -6,140 +6,124 @@
       <h3>Free ship trong vòng bán kính 5km</h3>
     </div>
 
-    <div class="container">
-      <div class="wrapper wrapper-content">
-        <div class="row">
-          <div class="in-cart col-md-12">
-            <div class="box">
-              <div class="box-title item-total row text-center">
-                <h3 v-if="cartItem.length > 0">
-                  <p style="font-size: 2rem;">{{ cartItem.length }}
-                    sản phẩm trong giỏ hàng
-                  </p>
-                </h3>
+    <div class="in-cart">
+      <div class="box">
+        <div class="box-title item-total row text-center">
+          <h3 v-if="cartItem.length > 0">
+            <p style="font-size: 2rem;">{{ cartItem.length }}
+              sản phẩm trong giỏ hàng
+            </p>
+          </h3>
+        </div>
+
+        <div class="box-content row" v-if="cartItem.length == 0">
+          <div class="content text-center">
+            <h2 style="color: #057835fa;">Bạn không có sản phẩm nào trong giỏ hàng, đến menu để mua hàng!</h2>
+          </div>
+
+          <div class="image d-flex justify-content-center">
+            <img src="../assets/images/notfound.png" alt="">
+          </div>
+
+          <div class="d-flex justify-content-center" style="margin-top: 2rem;">
+            <button class="btnn" @click="setShowProduct(false)">
+              <RouterLink to="/menu" style=" text-align: center; color: #fff;">
+                <i class="fa fa-arrow-left"></i>Đến Menu
+              </RouterLink>
+            </button>
+          </div> 
+        </div>
+
+        <div v-else class="box-content">
+          <div class="row d-md-flex d-none bar">
+            <div class="col-md-4 text-center">
+              <h4>Sản phẩm</h4>
+            </div>
+            
+
+            <div class="col-md-2 text-center">
+              <h4>Đơn giá</h4>
+            </div>
+
+            <div class="col-md-2 text-center">
+              <h4>Số lượng</h4>
+            </div>
+
+            <div class="col-md-2 text-center">
+              <h4>Số tiền</h4>
+            </div>
+
+            <div class="col-md-2 text-center">
+              <h4>Thao tác</h4>
+            </div>
+          </div>
+          <div v-for="(p, index) in cartItem" :key="index">
+            <div class="row">
+              <div class="centre col-md-2 image-box" style="">
+                <img :src="`${imgUrl}${p.image}`" alt="">
+              </div>
+              
+              <div class="centre col-md-2 mt-sm-3 mt-md-0 desc">
+                <h4 class="item-name">{{ p.name }}</h4>
+              </div>  
+              
+              <div class="centre text-center col-md-2 col-sm-4 col-12 mt-sm-3 mt-md-0 item-price">
+                <h4 class="sale-price">{{ parseInt(p.salePrice) }}</h4>
+                <h4 class="sale-price sale" v-if="p.price != p.salePrice">{{ p.price }}</h4>
               </div>
 
-              <div class="box-content row" v-if="cartItem.length == 0">
-                <div class="content text-center">
-                  <h2 style="color: #057835fa;">Bạn không có sản phẩm nào trong giỏ hàng, đến menu để mua hàng!</h2>
-                </div>
-
-                <div class="image d-flex justify-content-center">
-                  <img src="../assets/images/notfound.png" alt="">
-                </div>
-
-                <div class="d-flex justify-content-center" style="margin-top: 2rem;">
-                  <button class="btnn" @click="setShowProduct(false)">
-                    <RouterLink to="/menu" style=" text-align: center; color: #fff;">
-                      <i class="fa fa-arrow-left"></i>Đến Menu
-                    </RouterLink>
-                  </button>
-                </div> 
+              <div class="centre col-md-2 col-sm-4 col-6 mt-sm-3 mt-md-0 item-qtt">
+                <button class="btnn" @click="decrease(index)" :disabled="p.quantity < 1"><i class="fa-solid fa-minus"></i></button>
+                <input type="text" id="iQuantity" class="form-control item-quantity" 
+                  :value="p.quantity" min="1" max="100"
+                  oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                  @change="changeQty($event, index)"
+                  >
+                <button class="btnn" @click="increase(index)"><i class="fa-solid fa-plus"></i></button>
               </div>
 
-              <div v-else class="box-content">
-                <div class="row d-md-flex d-none bar">
-                  <div class="col-md-4 text-center">
-                    <h4>Sản phẩm</h4>
-                  </div>
-                  
+              <div class="centre col-md-2 d-md-flex d-none cal-total">
+                <h4 class="item-total"> {{ p.quantity * p.salePrice }}</h4>
+              </div>
 
-                  <div class="col-md-2 text-center">
-                    <h4>Đơn giá</h4>
-                  </div>
-
-                  <div class="col-md-2 text-center">
-                    <h4>Số lượng</h4>
-                  </div>
-
-                  <div class="col-md-2 text-center">
-                    <h4>Số tiền</h4>
-                  </div>
-
-                  <div class="col-md-2 text-center">
-                    <h4>Thao tác</h4>
-                  </div>
-                </div>
-                <div v-for="(p, index) in cartItem" :key="index">
-                  <div class="row">
-                    <div class="centre col-md-2 image-box" style="">
-                      <img :src="`${imgUrl}${p.image}`" alt="">
-                    </div>
-                    
-                    <div class="centre col-md-2 mt-sm-3 mt-md-0 desc">
-                      <h4 class="item-name">{{ p.name }}</h4>
-                    </div>  
-                    
-                    <div class="centre col-md-2 col-sm-4 col-12 mt-sm-3 mt-md-0 item-price">
-                      <h4 class="sale-price">{{ parseInt(p.salePrice) }} VNĐ</h4>
-                      <h4 class="sale-price sale" v-if="p.price != p.salePrice">{{ p.price }} VNĐ</h4>
-                    </div>
-
-                    <div class="centre col-md-2 col-sm-4 col-6 mt-sm-3 mt-md-0 item-qtt">
-                      <button class="btnn" @click="decrease(index)" :disabled="p.quantity < 1"><i class="fa-solid fa-minus"></i></button>
-                      <input type="text" id="iQuantity" class="form-control item-quantity" 
-                        :value="p.quantity" min="1" max="100"
-                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                        @change="changeQty($event, index)"
-                       >
-                      <button class="btnn" @click="increase(index)"><i class="fa-solid fa-plus"></i></button>
-                    </div>
-
-                    <div class="centre col-md-2 d-md-flex d-none cal-total">
-                      <h4 class="item-total"> {{ p.quantity * p.salePrice }} VNĐ</h4>
-                    </div>
-
-                    <div class="centre col-md-2 col-sm-4 col-6 mt-sm-3 mt-md-0  delete">
-                      <button class="btnn" @click="deleteProduct(index)">
-                        <p class="">Xóa</p>
-                        <p class="fa-solid fa-trash"></p>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row d-md-none d-sm-flex">
-                  <div class="col-6 text-center">
-                    <h4>Tổng thanh toán :</h4>
-                  </div>
-
-                  <div class="col-6 text-center">
-                      <h4>{{ calTotal()[0] }} VNĐ</h4>
-                    </div>
-                </div>
-
-                <div class="row col-12">
-                  <div class="col-md-2 col-6 d-flex justify-content-center">
-                    <button class="btnn" @click="setShowProduct(false)">
-                      <RouterLink to="/menu" style=" text-align: center; color: #fff;">
-                        <i class="fa fa-arrow-left"></i>Tiếp tục mua
-                      </RouterLink>
-                    </button>
-                  </div>
-
-                  <div class="col-md-4 d-md-flex d-none centre">
-                    <!-- <h4>{{ calTotal()[1] }} VNĐ</h4> -->
-                  </div>
-
-                  <div class="col-md-2 d-md-flex d-none centre">
-                    <h4>Tổng thanh toán:</h4>
-                  </div>
-
-                  <div class="col-md-2 d-md-flex d-none centre">
-                    <h4>{{ calTotal()[0] }} VNĐ</h4>
-                  </div>
-
-                  <div class="col-md-2 col-6 d-flex justify-content-center">
-                    <button class="btnn checkout-btn" :disabled="cartItem.length ? false : true">
-                      <RouterLink to="/payment" style=" text-align: center; color: #fff;">
-                        <i class="fa fa-shopping-cart"></i> Mua hàng
-                      </RouterLink>
-                    </button>
-                  </div>
-                </div> 
+              <div class="centre col-md-2 col-sm-4 col-6 mt-sm-3 mt-md-0  delete">
+                <button class="btnn" @click="deleteProduct(index)">
+                  <p class="">Xóa</p>
+                  <p class="fa-solid fa-trash"></p>
+                </button>
               </div>
             </div>
           </div>
+
+          <div class="row col-12">
+            <div class="col-md-2 col-6 d-flex justify-content-center">
+                <RouterLink to="/menu" style=" text-align: center; color: #fff;">
+                  <button class="btnn" @click="setShowProduct(false)">
+                    <i class="fa fa-arrow-left"></i>Tiếp tục mua
+                  </button>
+                </RouterLink>
+            </div>
+
+            <div class="col-md-4 d-md-flex d-none centre">
+              <!-- <h4>{{ calTotal()[1] }} VNĐ</h4> -->
+            </div>
+
+            <div class="col-md-2 d-md-flex d-none centre">
+              <h4>Tổng thanh toán:</h4>
+            </div>
+
+            <div class="col-md-2 d-md-flex d-none centre">
+              <h4>{{ calTotal()[0] }}</h4>
+            </div>
+
+            <div class="col-md-2 col-6 d-flex justify-content-center">
+                <RouterLink to="/payment" @click="postPayment()" style=" text-align: center; color: #fff;">
+                  <button class="btnn checkout-btn" :disabled="cartItem.length ? false : true">
+                    <i class="fa fa-shopping-cart"></i> Mua hàng
+                  </button>
+                </RouterLink>
+            </div>
+          </div> 
         </div>
       </div>
     </div>
@@ -212,6 +196,11 @@ export default {
       this.index = index;
     },
 
+    async postPayment() {
+      await axios.post('payment', {}, {withCredentials: true})
+      .then(res => console.log(res))
+    },
+
     calTotal() {
       let i = 0;
       let totalsalePrice = 0;
@@ -228,14 +217,19 @@ export default {
   computed: {
     ...mapState(['user', 'allFoods', 'cartItem', 'showAlert']),
   },
-  created() {
+  mounted() {
     this.getCart();
   }
 
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+
+.shopping-cart {
+  padding: 2rem 20%;
+  background-color: #fff;
+}
 
 .box {
   margin: 0;
@@ -255,7 +249,7 @@ export default {
     }
   }
   .box-content {
-    padding: 1rem;
+    padding: 0;
     border-image: none;
     .image {
       width: 100%;
@@ -264,10 +258,9 @@ export default {
       }
     }
     .row {
-      border: 2px solid #27ae60;
-      border-radius: 1rem;
-      padding: 1rem;
+      padding: 1rem 0;
       margin: 1rem 0;
+      background-color: #f1f1f1;
     }
     .centre {
       display: flex;
@@ -360,9 +353,18 @@ export default {
   i {
     padding-right: 5px;
   }
-} 
+}
+
+@media (max-width: 992px) {
+  .shopping-cart {
+  padding: 2rem 15%;
+  }
+}
 
 @media (max-width: 767px) {
+  .shopping-cart {
+    padding: 2rem 10%;
+  }
   .box {
     .box-content {
       .image-box {
@@ -374,6 +376,12 @@ export default {
         }
       }
     }
+  }
+}
+
+@media (max-width: 576px) {
+  .shopping-cart {
+  padding: 2rem 5%;
   }
 }
 

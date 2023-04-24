@@ -1,16 +1,45 @@
 const {
-  models: { Order_items, Order_details, Cart_item },
-  sequelize,
+  models: { Order_items, Order_details, Cart_item, Product, User, Discount },
 } = require('../models');
 
+const sequelize = require('sequelize');
 // status in Order_details need to be enum - to choose
 // provider ?
 
 class orderController {
   // [GET] /get-all-orders - author: admin
+  // get information of all orders
+  //
   async getAllOrders(req, res, next) {
     try {
-      const Orders = await Order_details.findAll({});
+      const Orders = await Order_details.findAll({
+        attributes: ['total', 'provider', 'status', 'created_at'],
+        include: [
+          {
+            model: User,
+            attributes: ['name', 'telephone'],
+          },
+          {
+            model: Order_items,
+            attributes: ['quantity'],
+            include: {
+              attributes: ['name', 'image'],
+              model: Product,
+              attributes: [
+                ['id', 'product_id'],
+                'name',
+                'image',
+                'price',
+                [sequelize.literal('price*(1-discount_percent)'), 'salePrice'],
+              ],
+              include: {
+                model: Discount,
+                attributes: [],
+              },
+            },
+          },
+        ],
+      });
       if (Orders.length) {
         return res.status(200).json({
           Orders: Orders,
@@ -22,6 +51,7 @@ class orderController {
       }
     } catch (err) {
       console.log(err);
+      next(err);
     }
   }
   // [GET] /order-by-user
@@ -29,6 +59,24 @@ class orderController {
     try {
       const user_id = req.session.userId;
       const Orders = await Order_details.findAll({
+        attributes: ['total', 'provider', 'status', 'created_at'],
+        include: {
+          model: Order_items,
+          attributes: ['quantity'],
+          include: {
+            model: Product,
+            attributes: [
+              'name',
+              'image',
+              'price',
+              [sequelize.literal('price*(1-discount_percent)'), 'salePrice'],
+            ],
+            include: {
+              model: Discount,
+              attributes: [],
+            },
+          },
+        },
         where: { user_id },
       });
       if (Orders.length) {
@@ -59,7 +107,7 @@ class orderController {
     }
 
     //get userInfo
-
+    console.log(cartProduct, user_id, totalPrice);
     if (!cartProduct || !user_id || !totalPrice) {
       return res.status(400).json({ msg: 'Cant create order!' });
     } else {

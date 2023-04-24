@@ -41,7 +41,7 @@ class userController {
       try {
         const hashedPwd = await bcrypt.hash(password, saltRounds);
         const findUser = await User.findOne({
-          attributes: ['id', 'password', 'name', 'role'],
+          attributes: ['id', 'password', 'name', 'role', 'telephone'],
           where: { email },
         });
 
@@ -64,6 +64,7 @@ class userController {
               email: email,
               role: findUser.role,
               cookie: req.headers.cookie,
+              telephone: findUser.telephone,
             });
           } else {
             return res.status(200).json({
@@ -167,7 +168,7 @@ class userController {
                 email: email,
                 userName: name,
                 role: defaultUserRole,
-                telephone
+                telephone,
               });
             })
             .catch((err) => {

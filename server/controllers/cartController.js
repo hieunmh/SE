@@ -117,6 +117,12 @@ class cartController {
       quantity,
       image,
     };
+
+    // Update total price
+    var priceChange = product.salePrice * product.quantity;
+    req.session.totalPrice += priceChange;
+
+    // update cart
     var cart = [];
     if (req.session.cart) {
       cart = req.session.cart;
@@ -131,12 +137,12 @@ class cartController {
         console.log('co trong gio hang');
         cart[index].quantity += quantity;
       }
-      req.session.cart = cart;
     } else {
       console.log('Gio hang con trong');
-      req.session.cart = [product];
-      cart = req.session.cart;
+      cart = [product];
     }
+
+    req.session.cart = cart;
 
     return res.status(200).json({
       success: 'Uploaded success! ',
@@ -167,6 +173,8 @@ class cartController {
           where: { user_id, product_id },
         }).catch((err) => console.log(err));
 
+        // update total Price
+        req.session.totalPrice -= cart[i].salePrice * cart[i].quantity;
         cart.splice(i, 1);
         break;
       }
@@ -198,7 +206,10 @@ class cartController {
         if (cart[i].product_id == product_id) {
           if (cart[i].quantity > 0) {
             cart[i].quantity = parseInt(cart[i].quantity) + 1;
+            // update totalPrice
+            req.session.totalPrice += cart[i].salePrice;
           }
+          break;
         }
       }
     } else if (decrease_btn) {
@@ -206,9 +217,10 @@ class cartController {
         if (cart[i].product_id == product_id) {
           if (cart[i].quantity > 1) {
             cart[i].quantity = parseInt(cart[i].quantity) - 1;
+            // update totalPrice
+            req.session.totalPrice -= cart[i].salePrice;
           }
-          // TODO
-          // chua xu ly tinh huong quantity = 0
+          break;
         }
       }
     }

@@ -1,0 +1,272 @@
+<template>
+  <div class="order-detail">
+    <div class="box">
+      <div class="box-content">
+        <div>
+          <RouterLink to="/admin/allorder"><button class="btnn">quay lai</button></RouterLink>
+        </div>
+
+        <div class="row client-info">
+          <div class="col-6  text-center"><h3>tên khánh hàng:</h3></div>
+
+          <div class="col-6  text-center"><h3>{{ orderDetail.user.name }}</h3></div>
+
+          <div class="col-6  text-center"><h3>số điện thoại:</h3></div>
+
+          <div class="col-6  text-center"><h3>{{ orderDetail.user.telephone }}</h3></div>
+
+          <div class="col-12 row text-center">
+            <h3 class="col-6 d-flex flex-column justify-content-center">Thời gian đặt đơn:</h3>
+            <div class="col-6 text-center">
+              <h3>{{ getTime(orderDetail.created_at)[2] + " - " + getTime(orderDetail.created_at)[1] + " - " + getTime(orderDetail.created_at)[0] }}</h3>
+              <h3>{{ getTime(orderDetail.created_at)[3] + " : " + getTime(orderDetail.created_at)[4] + " : " + getTime(orderDetail.created_at)[5] }}</h3>
+            </div>
+          </div>
+
+
+          <div class="col-6  text-center"><h3>Địa chỉ:</h3></div>
+
+          <div class="col-6  text-center"><h3> 144 xuân thủy, cầu giấy, hà nội</h3></div>  
+
+          <div class="col-6  text-center"><h3>trạng thái:</h3></div>
+
+          <div class="col-6  text-center"><h3>{{ orderDetail.status }}</h3></div>
+
+        </div>
+
+        <div class="row bar">
+          <div class="col-sm-6 col-8 text-center">
+            <h4>Sản phẩm</h4>
+          </div>
+
+          <div class="col-sm-2 d-sm-inline d-none">
+            <h4 class="text-center">Đơn giá</h4>
+          </div>
+
+          <div class="col-sm-2 col-2">
+            <h4 class="text-center">Số lượng</h4>
+          </div>
+
+          <div class="col-sm-2 col-2 text-center">
+            <h4>Thành tiền</h4>
+          </div>
+        </div>
+      
+        <div class="row" v-for="(o, index) in orderDetail.order_items" :key="index">
+          <div class="centre col-sm-2 col-4 image-box" style="">
+            <img :src="`${imgUrl}${o.product.image}`" alt="">
+          </div>
+
+          <div class="centre col-sm-4 col-4">
+            <h4 class="item-total d-sm-none d-inline text-dark text-decoration-line-through" v-if="parseInt(o.product.price) != parseInt(o.product.salePrice)"> {{ o.product.price }}</h4>
+            <h4 class="item-total d-sm-none d-inline">{{ parseInt(o.product.salePrice) }}</h4>
+            <h4 class="item-name">{{ o.product.name }}</h4>
+          </div>
+
+
+          <div class="centre col-sm-2 d-sm-flex d-none cal-total">
+            <h4 class="item-total text-dark text-decoration-line-through" v-if="parseInt(o.product.price) != parseInt(o.product.salePrice)"> {{ o.product.price }}</h4>
+            <h4>{{ parseInt(o.product.salePrice) }}</h4>
+          </div>
+
+          <div class="centre col-sm-2 col-2  item-qtt">
+            <h4>{{ o.quantity }}</h4>
+          </div>
+
+          <div class="centre col-2 delete">
+            <h4>{{ o.quantity * o.product.salePrice }}</h4>
+          </div>
+        </div>
+
+        <div class="row col-12">
+          <div class="col-9 d-flex justify-content-end">
+            <h4>Tổng số tiền ( {{ this.orderDetail.order_items.length }} sản phẩm ): </h4>
+          </div>
+
+          <div class="col-1">
+
+          </div>
+
+          <div class="col-2 centre">
+            <h4>{{ parseInt(orderDetail.total) }}</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { mapMutations, mapState } from 'vuex';
+import serverUrl from '@/axios';
+
+  export default {
+    name: "OrderDetail",
+    data() {
+      return {
+        imgUrl: serverUrl + "/upload/productImage/",
+        index: null,
+        orderDetail: undefined,
+      }
+    },
+
+    methods: {
+      ...mapMutations(['']),
+
+      getTime(time) {
+        let year = new Date(time).getFullYear();
+        let month = new Date(time).getMonth();
+        let date = new Date(time).getDate();
+
+        let hour = new Date(time).getHours();
+        let minute = new Date(time).getMinutes();
+        let second = new Date(time).getSeconds();
+
+        return [year, month, date, hour, minute, second];
+      },
+
+
+
+    },
+
+    computed: {
+      ...mapState(['allOrder'])
+    },
+
+    created() {
+      this.index = this.$route.params.id;
+      this.orderDetail = this.allOrder[this.index - 1]
+    }
+
+  }
+</script>
+
+<style lang="scss" scoped>
+.order-detail {
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 2rem 20%;
+  height: auto;
+  // overflow-y: scroll !important;
+
+  .box {
+
+    scroll-behavior: auto;
+    margin: 0;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 0;
+    // overflow-y: scroll;
+
+
+  .box-content {
+    padding: 0;
+    border-image: none;
+    .row {
+      background-color: #f1f1f1;
+      padding: 2rem 0;
+      margin: 1rem 0;
+    }
+
+    .client-info {
+      > div {
+        // border: 2px solid rgba(0, 0, 0, 0.2);
+        padding: 1rem 0;
+      }
+    }
+
+
+    .centre {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .item-total {
+        color: #ee4d2d;
+      }
+    }
+
+    .image-box {
+      padding: 0;
+      display: flex;
+      img {
+        width: 8rem;
+        height: 8rem;
+        border-radius: 1rem;
+      }
+    }
+
+    .item-qtt {
+      display: flex;
+      flex-direction: row;
+
+      button {
+        width: 3rem;
+        height: 3rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        i {
+          padding: 0;
+        }
+      }
+
+      input {
+        text-align: center;
+        height: 3rem;
+        width: 4rem;
+        font-size: 1.5rem;
+        text-decoration: none;
+      }
+    }
+
+    .cal-total {
+      h4 {
+        color: #ee4d2d;
+      }
+    }
+
+    .item-price {
+      .sale-price {
+        width: 10rem;
+        font-size: 1.5rem;
+      }
+
+      .sale {
+        text-decoration: line-through;
+        color: rgba($color: #000000, $alpha: 0.5);
+      }
+    }
+  }
+}
+}
+
+
+
+
+@media (max-width: 992px) {
+  .order-detail {
+    padding: 2rem 15%;
+  }
+}
+
+@media (max-width: 767px) {
+  .order-detail {
+    padding: 2rem 10%;
+  }
+}
+
+@media (max-width: 576px) {
+  .order-detail {
+    padding: 2rem 5%;
+  }
+}
+
+</style>
