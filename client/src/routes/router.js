@@ -16,7 +16,7 @@ import ProductDetail from '../components/ProductDetail.vue';
 import Payment from '../pages/Payment.vue';
 import AllOrder from '../pages/AllOrder.vue';
 import OrderDetail from '../components/OrderDetail.vue';
-
+// import MyOrderDetail from '../pages/MyOrderDetail.vue';
 
 const routes = [
   { path: "/", name: "Home", component: Home },
@@ -34,10 +34,15 @@ const routes = [
   { path: "/register", name: "Register", component: Register },
   { path: "/cart", name: "Cart", component: Cart },
   { path: "/myorder", name: "Myorder", component: Myorder },
+  // { path: "/myorder/id=:id", name: "MyorderDetail", component: MyOrderDetail },
   { path: "/info", name: "Info", component: Info },
   { path: "/admin", name: "Admin", component: Admin },
   { path: "/admin/allorder", name: "AllOrder", component: AllOrder },
-  { path: "/admin/allorder/order=:id", name: "OrderDetail", component: OrderDetail },
+  {
+    path: "/admin/allorder/order=:id",
+    name: "OrderDetail",
+    component: OrderDetail,
+  },
   { path: "/payment", name: "Payment", component: Payment },
 ];
 

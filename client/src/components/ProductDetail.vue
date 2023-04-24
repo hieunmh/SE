@@ -10,7 +10,6 @@
       <div class="row product-description">
 
         <div class="image">
-          <!-- <img :src="`${ p.image }`" alt=""> -->
           <img :src="`${imgUrl}${p.image}`" alt="">
         </div>
 
@@ -167,7 +166,7 @@ export default {
         img {
           filter: brightness(60%);
           width: 100%;
-          // border-radius: 2rem;
+          border-radius: 1rem;
         }
       }
 

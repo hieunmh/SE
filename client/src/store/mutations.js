@@ -48,5 +48,11 @@ export default {
   },
   setAllOrder(state, allOrder) {
     state.allOrder = allOrder;
+  },
+  setUserOrder(state, userOrder) {
+    state.userOrder = userOrder;
+  },
+  setShowMyOrder(state, showMyOrder) {
+    state.showMyOrder = showMyOrder;
   }
 };

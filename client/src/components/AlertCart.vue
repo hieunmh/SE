@@ -62,7 +62,7 @@ import { mapMutations, mapState } from 'vuex';
     background-color: #fff;
     width: auto;
     height: auto;
-    border-radius: 2rem;
+    border-radius: 0.5rem;
     .row {
       width: 50rem;
       margin: 0;
@@ -73,10 +73,10 @@ import { mapMutations, mapState } from 'vuex';
       }
       .btnn {
         &:nth-child(1) {
-          border-radius: 0 0 0 2rem;
+          border-radius: 0 0 0 0.5rem;
         }
         &:nth-child(2) {
-          border-radius: 0 0 2rem 0;
+          border-radius: 0 0 0.5rem 0;
         }
       }
     }

@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 import serverUrl from '@/axios';
 import filterVN from '@/filterVN';
 import ProductDetail from '../components/ProductDetail.vue';
@@ -106,6 +106,7 @@ export default {
 
   methods: {
     ...mapMutations(['scrollToTop', 'setShowProduct', 'setShowSearchLoading']),
+    ...mapActions(['getCategory', 'getProducts']),
 
     setPage(value) {
       this.pageNum = value;
@@ -224,6 +225,11 @@ export default {
         return this.filterFoods.length / this.perPage;
       }
     },
+  },
+
+  created() {
+    this.getCategory();
+    // this.getProducts();
   }
 }
 </script>
@@ -259,118 +265,21 @@ input[type="button"] {
   }
 }
 
-.filter-option {
-  list-style-type: none;
-  width: 100%;
-  padding: 0;
-  input {
-    background-color: #fff;
-    height: 3.5rem;
-    width: 100%;
-    // margin-left: 3rem;
-    border-radius: 1rem;
-    padding: 1.5rem;
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-  button {
-    width: 100%;
-    background-color: #f38609;
-    &:hover {
-      background-color: #ee4d2d;
-    }
-  }
-  label {
-    width: 100%;
-    height: 4rem;
-    font-size: 1.5rem;
-    padding: 1rem 0;
-    border-radius: 1rem;
-    text-align: center;
-    &:hover {
-      color: #fff;
-      background-color: #f38609 !important;
-      border-radius: 1rem;
-      transition: all 0.5s ease;
-    }
-  }
-}
-
-.search-box {
-  width: 100%;  
-  position: relative;
-  margin: 0;
-  margin-bottom: 1rem;
-  i {
-    position: absolute;
-    width: 3.2rem;
-    border-top: 5px solid #27ae60;
-    border-bottom: 5px solid #27ae60;
-    border-radius: 8px;
-    top: 0.6rem;
-    left: 0.7rem;
-    font-size: 1.8rem;
-    background-color: #27ae60;
-    color: white;
-  }
-  .search-input {
-    padding-left: 4.5rem;
-    width: 100%;
-    height: 4rem;
-    font-size: 15px;
-    color: #27ae60;
-    text-transform: none;
-    background-color: #fff;
-    border: 2px solid #27ae60;
-    border-radius: 1rem;
-    &::placeholder {
-      color: #27ae60;
-    }
-  }
-  .filter-dropdown {
-    display: block;
-    border-radius: 1rem;
-    background-color: #27ae60;
-    color: #27ae60;
-    font-weight: 400;
-    margin-bottom: 0rem;
-    position: relative;
-    div {
-      position: absolute;
-      top: -3rem;
-      right: 1rem;
-      width: 2.5rem;
-      height: 2.5rem;
-      font-size:2rem;
-    }
-  }
-}
-
 .menu {
   padding: 2rem 20%;
   // background-color: #fff;
-  .filter-box {
-    .filter {
-      width: 100%;
-      border-radius: 1rem;
-      color: white;
-      background-color: rgba($color: #27ae60, $alpha: 1);
-      position: absolute;
-      top: 4.5rem;
-      z-index: 2; 
-    }
-  }
 
   .priceFilter {
     background-color: #27ae60;
     margin: 0;
     margin-bottom: 2rem;
-    // flex: 0 0 100%;
     max-width: 100%;
+    border-radius: 0.7rem;
     text-align: center;
     .filter-item {
       padding: 0.8rem 1rem;
       border: 5px solid #27ae60;
+      border-radius: 0.7rem;
       font-size: 1.7rem;
       color: #27ae60;
       &:nth-child(1) {
@@ -399,11 +308,11 @@ input[type="button"] {
     max-width: 100%;
     text-align: center;
     background-color: #27ae60;
-    // border-radius: 1rem;
+    border-radius: 0.7rem;
     .menu-tab-item {
       cursor: pointer;
       padding: 0.8rem 0;
-      // border-radius: 1rem;
+      border-radius: 0.7rem;
       font-size: 1.7rem;
       color: whitesmoke;
       font-weight: 500;
@@ -422,6 +331,7 @@ input[type="button"] {
   .box-container {
     padding: 0;
     .box {
+      border-radius: 0.7rem;
       margin: 0.7rem 0;
       position: relative;
       background-color: #d9d9d9;
@@ -432,7 +342,7 @@ input[type="button"] {
       .image {
         img {
           width: 100%;
-          // border-radius: 1rem;
+          border-radius: 0.7rem;
         }
       }
 

@@ -2,6 +2,9 @@
   <div class="payment">
     <div class="box">
       <div class="box-content">
+
+        <button class="btnn" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i></button>
+
         <div class="row bar">
           <div class="col-sm-6 col-7 text-center">
             <h4>Sản phẩm</h4>
@@ -61,7 +64,7 @@
 
         <div>
           <div class="col-12 d-flex justify-content-end">
-            <RouterLink to="/menu" @click="order()" style=" text-align: center; color: #fff;">
+            <RouterLink to="/payment" @click="order()" style=" text-align: center; color: #fff;">
               <button class="btnn checkout-btn" :disabled="cartItem.length ? false : true">
                 <i class="fa fa-shopping-cart"></i> Đặt hàng
               </button>
@@ -92,9 +95,11 @@ export default {
   methods: {
     async order() {
       let data = {
-        adress: this.address
+        address: this.address,
       } 
+      // window.location.reload();
       await axios.post('create-order', data, {withCredentials: true});
+      
     },
 
     calTotal() {
@@ -160,9 +165,11 @@ export default {
       background-color: #f1f1f1;
       padding: 2rem 0;
       margin: 1rem 0;
+      border-radius: 0.7rem;
       input {
         height: 5rem;
         font-size: 2rem;
+        border-radius: 0.7rem;
         // color: #27ae60;
         padding-left: 1rem;
       }

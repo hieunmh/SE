@@ -158,7 +158,7 @@ export default {
 		padding: 0 0.5rem;
     border-top: 0.5rem solid #27ae60;
     border-bottom: 0.5rem solid #27ae60;
-    // border-radius: 8px;
+    border-radius: 0.5rem;
     top: 0.6rem;
     left: 1.4rem;
     font-size: 1.8rem;
@@ -174,7 +174,7 @@ export default {
     text-transform: none;
     background-color: #fff;
     border: 2px solid #27ae60;
-    // border-radius: 1rem;
+    border-radius: 0.7rem;
     &::placeholder {
       color: #27ae60;
     }
@@ -285,6 +285,7 @@ export default {
 				position: absolute;
 				margin-left: -5rem;
 				list-style-type: none;
+				border-radius: 0.7rem;
 				// border: 2px solid #27ae60;
 				a {
 					text-decoration: none;
@@ -293,15 +294,17 @@ export default {
 					font-weight: 500;
 					float: left;
 					width: 14rem;
-					// border-radius: 1rem;
+					// border-radius: 0.7rem;
 				}
 			}
 			&:hover {
 				border:2px solid #27ae60;
+				border-radius: 0.7rem;
 				.drop-down-select {
 					display: block;
 					a {
 						background-color: #27ae60;
+						border-radius: 0.7rem;
 						&:hover {
 							background-color: #f38609;
 							color: white;

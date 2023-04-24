@@ -21,4 +21,6 @@ export default {
     type: "",
   },
   allOrder: [],
+  userOrder: [],
+  showMyOrder: true,
 };

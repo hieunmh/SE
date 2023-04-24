@@ -1,12 +1,10 @@
 <template>
-
-
   <div class="allOrder">
     <div class="box">
       <div class="box-content">
 
         <div>
-          <RouterLink to="/admin"><button class="btnn">Quay lai</button></RouterLink>
+          <RouterLink to="/admin"><button class="btnn"><i class="fa fa-arrow-left"></i></button></RouterLink>
         </div>
 
         <div class="row bar">
@@ -40,7 +38,6 @@
           </div>
 
           <div class="centre col-3">
-            <!-- <button @click="showOrderById(index), scrollToTop()" class="btnn">xem</button> -->
             <RouterLink :to="`/admin/allorder/order=${index + 1}`" @click="scrollToTop()"><button class="btnn">xem</button></RouterLink>
           </div>
         </div>
@@ -77,6 +74,25 @@ export default {
       let hour = new Date(time).getHours();
       let minute = new Date(time).getMinutes();
       let second = new Date(time).getSeconds();
+
+      if (month <= 10) {
+        month = "0" + month;
+      }
+
+      if (date <= 10) {
+        date = "0" + date;
+      }
+
+      if (parseInt(hour <= 12)) {
+        hour = "0" + hour;
+      }
+      if (minute <= 10) {
+        minute = "0" + minute;
+      }
+
+      if (second <= 10) {
+        second = "0" + second;
+      }
       
       return [year, month, date, hour, minute, second];
     }
@@ -109,6 +125,7 @@ export default {
         background-color: #f1f1f1;
         padding: 2rem 0;
         margin: 1rem 0;
+        border-radius: 0.7rem;
       }
 
       .centre {

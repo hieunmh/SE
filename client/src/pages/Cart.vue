@@ -1,5 +1,10 @@
 <template>
   <div class="shopping-cart">
+    <RouterLink to="/menu" style=" text-align: center; color: #fff;">
+      <button class="btnn" @click="setShowProduct(false)">
+        <i class="fa fa-arrow-left"></i> Menu
+      </button>
+    </RouterLink>
 
     <div class="heading">
       <span>Giỏ hàng của bạn</span>
@@ -8,14 +13,6 @@
 
     <div class="in-cart">
       <div class="box">
-        <div class="box-title item-total row text-center">
-          <h3 v-if="cartItem.length > 0">
-            <p style="font-size: 2rem;">{{ cartItem.length }}
-              sản phẩm trong giỏ hàng
-            </p>
-          </h3>
-        </div>
-
         <div class="box-content row" v-if="cartItem.length == 0">
           <div class="content text-center">
             <h2 style="color: #057835fa;">Bạn không có sản phẩm nào trong giỏ hàng, đến menu để mua hàng!</h2>
@@ -24,55 +21,47 @@
           <div class="image d-flex justify-content-center">
             <img src="../assets/images/notfound.png" alt="">
           </div>
-
-          <div class="d-flex justify-content-center" style="margin-top: 2rem;">
-            <button class="btnn" @click="setShowProduct(false)">
-              <RouterLink to="/menu" style=" text-align: center; color: #fff;">
-                <i class="fa fa-arrow-left"></i>Đến Menu
-              </RouterLink>
-            </button>
-          </div> 
         </div>
 
         <div v-else class="box-content">
-          <div class="row d-md-flex d-none bar">
-            <div class="col-md-4 text-center">
+          <div class="row bar">
+            <div class="col-md-4 col-9 text-center">
               <h4>Sản phẩm</h4>
             </div>
             
 
-            <div class="col-md-2 text-center">
+            <div class="col-md-2 col-3 text-center">
               <h4>Đơn giá</h4>
             </div>
 
-            <div class="col-md-2 text-center">
+            <div class="col-md-2 d-md-inline d-none text-center">
               <h4>Số lượng</h4>
             </div>
 
-            <div class="col-md-2 text-center">
+            <div class="col-md-2 d-md-inline d-none text-center">
               <h4>Số tiền</h4>
             </div>
 
-            <div class="col-md-2 text-center">
+            <div class="col-md-2 d-md-inline d-none text-center">
               <h4>Thao tác</h4>
             </div>
           </div>
           <div v-for="(p, index) in cartItem" :key="index">
             <div class="row">
-              <div class="centre col-md-2 image-box" style="">
+              <div class="centre col-md-2 col-sm-4 col-4 image-box" style="">
                 <img :src="`${imgUrl}${p.image}`" alt="">
               </div>
               
-              <div class="centre col-md-2 mt-sm-3 mt-md-0 desc">
+              <div class="centre col-md-2 col-sm-5 col-5 desc">
                 <h4 class="item-name">{{ p.name }}</h4>
               </div>  
               
-              <div class="centre text-center col-md-2 col-sm-4 col-12 mt-sm-3 mt-md-0 item-price">
+              <div class="centre text-center col-md-2 col-sm-3 col-3 item-price">
                 <h4 class="sale-price">{{ parseInt(p.salePrice) }}</h4>
                 <h4 class="sale-price sale" v-if="p.price != p.salePrice">{{ p.price }}</h4>
               </div>
 
-              <div class="centre col-md-2 col-sm-4 col-6 mt-sm-3 mt-md-0 item-qtt">
+              <div class="centre col-md-2 col-sm-7 col-7 mt-md-0 mt-4 item-qtt">
                 <button class="btnn" @click="decrease(index)" :disabled="p.quantity < 1"><i class="fa-solid fa-minus"></i></button>
                 <input type="text" id="iQuantity" class="form-control item-quantity" 
                   :value="p.quantity" min="1" max="100"
@@ -86,44 +75,35 @@
                 <h4 class="item-total"> {{ p.quantity * p.salePrice }}</h4>
               </div>
 
-              <div class="centre col-md-2 col-sm-4 col-6 mt-sm-3 mt-md-0  delete">
+              <div class="centre col-md-2 col-sm-5 col-5 mt-md-0 mt-4 delete">
                 <button class="btnn" @click="deleteProduct(index)">
-                  <p class="">Xóa</p>
-                  <p class="fa-solid fa-trash"></p>
+                  <p class="">Xóa</p> 
                 </button>
               </div>
             </div>
           </div>
+          
 
           <div class="row col-12">
-            <div class="col-md-2 col-6 d-flex justify-content-center">
-                <RouterLink to="/menu" style=" text-align: center; color: #fff;">
-                  <button class="btnn" @click="setShowProduct(false)">
-                    <i class="fa fa-arrow-left"></i>Tiếp tục mua
-                  </button>
-                </RouterLink>
+            <div class="col-md-8 col-sm-9 col-9 d-flex justify-content-end">
+              <h4>Tổng thanh toán ( {{ cartItem.length }} sản phẩm ) :</h4>
             </div>
 
-            <div class="col-md-4 d-md-flex d-none centre">
-              <!-- <h4>{{ calTotal()[1] }} VNĐ</h4> -->
-            </div>
-
-            <div class="col-md-2 d-md-flex d-none centre">
-              <h4>Tổng thanh toán:</h4>
-            </div>
-
-            <div class="col-md-2 d-md-flex d-none centre">
+            <div class="col-md-2 col-sm-3 col-3 centre">
               <h4>{{ calTotal()[0] }}</h4>
             </div>
+          </div> 
 
-            <div class="col-md-2 col-6 d-flex justify-content-center">
+          <div class="row">
+            <div class="col-12 d-flex justify-content-end">
                 <RouterLink to="/payment" @click="postPayment()" style=" text-align: center; color: #fff;">
                   <button class="btnn checkout-btn" :disabled="cartItem.length ? false : true">
                     <i class="fa fa-shopping-cart"></i> Mua hàng
                   </button>
                 </RouterLink>
             </div>
-          </div> 
+          </div>
+          
         </div>
       </div>
     </div>
@@ -261,6 +241,7 @@ export default {
       padding: 1rem 0;
       margin: 1rem 0;
       background-color: #f1f1f1;
+      border-radius: 0.7rem;
     }
     .centre {
       display: flex;
@@ -281,20 +262,17 @@ export default {
           &:nth-child(2) {
             margin-left: 1rem;
           }
-          &:nth-child(1) {
-            padding-top: 0.3rem;
-          }
         }
       }
     }
 
     .image-box {
-      padding: 0;
+      // padding: 0;
       display: flex;
       // align-items: flex-start ;
       img {
         width: 8rem;
-        border-radius: 1rem;
+        border-radius: 0.5rem;
       }
     }
     .item-qtt {
@@ -369,8 +347,8 @@ export default {
     .box-content {
       .image-box {
         img {
-          width: 100%;
-          height: 20rem;
+          width: 8rem;
+          height: 8rem;
           object-fit: cover;
           // filter: brightness(60%);
         }
