@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 import serverUrl from '@/axios';
 
 export default {
@@ -90,6 +90,7 @@ export default {
 
   methods: {
     ...mapMutations(['scrollToTop']),
+    ...mapActions(['getAllOrder', 'getProducts']),
 
 
     setPage(value) {
@@ -150,6 +151,10 @@ export default {
 
   },
 
+  created() {
+    this.getAllOrder();
+    // this.getProducts();
+  }
   
 }
 </script>
@@ -172,6 +177,7 @@ export default {
         background-color: #f1f1f1;
         padding: 2rem 0;
         margin: 1rem 0;
+        border-radius: 0.7rem;
       }
 
       .centre {

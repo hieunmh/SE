@@ -3,7 +3,7 @@
     <div class="box">
       <div class="box-content">
         <div>
-          <RouterLink to="/admin/allorder"><button class="btnn">quay lai</button></RouterLink>
+          <RouterLink to="/admin/allorder"><button class="btnn"><i class="fa fa-arrow-left"></i></button></RouterLink>
         </div>
 
         <div class="row client-info">
@@ -13,7 +13,13 @@
 
           <div class="col-6  text-center"><h3>số điện thoại:</h3></div>
 
-          <div class="col-6  text-center"><h3>{{ orderDetail.user.telephone }}</h3></div>
+          <div class="col-6  text-center">
+            <h3>
+              {{ orderDetail.user.telephone.substring(0, 4) + " - " 
+               + orderDetail.user.telephone.substring(4, 7) + " - " 
+               + orderDetail.user.telephone.substring(7, 10) }}
+            </h3>
+          </div>
 
           <div class="col-12 row text-center">
             <h3 class="col-6 d-flex flex-column justify-content-center">Thời gian đặt đơn:</h3>
@@ -79,12 +85,8 @@
         </div>
 
         <div class="row col-12">
-          <div class="col-9 d-flex justify-content-end">
+          <div class="col-10 d-flex justify-content-end">
             <h4>Tổng số tiền ( {{ this.orderDetail.order_items.length }} sản phẩm ): </h4>
-          </div>
-
-          <div class="col-1">
-
           </div>
 
           <div class="col-2 centre">
@@ -121,6 +123,25 @@ import serverUrl from '@/axios';
         let hour = new Date(time).getHours();
         let minute = new Date(time).getMinutes();
         let second = new Date(time).getSeconds();
+
+        if (month <= 10) {
+          month = "0" + month;
+        }
+
+        if (date <= 10) {
+          date = "0" + date;
+        }
+
+        if (parseInt(hour <= 12)) {
+          hour = "0" + hour;
+        }
+        if (minute <= 10) {
+          minute = "0" + minute;
+        }
+
+        if (second <= 10) {
+          second = "0" + second;
+        }
 
         return [year, month, date, hour, minute, second];
       },
@@ -172,6 +193,7 @@ import serverUrl from '@/axios';
       background-color: #f1f1f1;
       padding: 2rem 0;
       margin: 1rem 0;
+      border-radius: 0.7rem;
     }
 
     .client-info {
@@ -198,7 +220,7 @@ import serverUrl from '@/axios';
       img {
         width: 8rem;
         height: 8rem;
-        border-radius: 1rem;
+        border-radius: 0.7rem;
       }
     }
 

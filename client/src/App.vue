@@ -36,13 +36,14 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getProducts', 'getCart', 'getCategory', 'getAllOrder']),
+    ...mapActions(['getProducts', 'getCart', 'getCategory', 'getAllOrder', 'getUserOrder']),
     ...mapMutations(['setLoading', 'setUser', 'setLogged', 'setAdmin', 'setCartItem', 'setCartLength']),
 
 
     async checkLogin() {
       let res = await axios.get("login", {withCredentials: true});
       if (res.data.cookie) {
+        // this.getUserOrder();
         if (router.currentRoute.value.path.includes("login") || router.currentRoute.value.path.includes("register")) {
           router.push("/");
         }
@@ -52,7 +53,6 @@ export default {
 
         if (data.data.role) {
           this.setAdmin("admin");
-          this.getAllOrder();
         }
         
         else {
@@ -82,7 +82,6 @@ export default {
   created() {
     this.checkLogin();
     this.getProducts();
-    this.getCategory();
     this.setLoading();
   },
 }
