@@ -35,8 +35,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(10),
         allowNull: false,
       },
+      address: {
+        type: DataTypes.STRING(200),
+        allowNull: false,
+      },
       status: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.ENUM('Đang xử lý', 'Đang giao hàng', 'Đã giao hàng'),
         allowNull: false,
       },
     },

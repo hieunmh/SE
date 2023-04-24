@@ -93,7 +93,8 @@ CREATE TABLE order_details (
     `telephone` VARCHAR(10) NOT NULL,
     `total` DECIMAL(15, 2) NOT NULL, 
     `provider` VARCHAR(10) NOT NULL,
-    `status` VARCHAR(10) NOT NULL,
+    `address` VARCHAR(200) NOT NULL,
+    `status` ENUM('Đang xử lý', 'Đang giao hàng', 'Đã giao hàng') NOT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (`id`),
     CONSTRAINT `fk_user_details`
