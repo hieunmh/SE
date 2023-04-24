@@ -150,7 +150,7 @@ class cartController {
     });
   }
 
-  // [DELETE] /remove-product-cart
+  // [POST] /remove-product-cart
   async removeProduct(req, res, next) {
     const product_id = req.body.product_id;
     const user_id = req.session.userId;

@@ -55,6 +55,41 @@ class paymentController {
       }
     }
   }
+  // [POST] /payment/create-address
+  async postCreateAddress(req, res, next) {
+    const { city, home_location } = req.body;
+    const user_id = req.session.userId;
+
+    if (!city || !home_location || !user_id) {
+      return res.status(400).json({
+        msg: 'Bad request!',
+      });
+    } else {
+      const query = await User_address.findOrCreate({
+        where: {
+          user_id,
+          city,
+          home_location,
+        },
+      })
+        .then((data) => {
+          console.log(data[0]);
+          if (data[0]._options.isNewRecord) {
+            return res.status(200).json({
+              success: 'Created address Success !!',
+            });
+          } else {
+            return res.status(200).json({
+              msg: 'Already Had !!',
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          next(err);
+        });
+    }
+  }
 }
 
 module.exports = new paymentController();

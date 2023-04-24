@@ -11,7 +11,7 @@ router.get('/products', productController.getAllProducts);
 // review
 
 router.post('/add-review', productController.addReviewProduct);
-router.delete('/delete-review', productController.deleteReviewProduct);
+router.post('/delete-review', productController.deleteReviewProduct);
 
 // export default router;
 module.exports = router;

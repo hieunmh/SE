@@ -2,6 +2,8 @@ const {
   models: { Order_items, Order_details, Cart_item, Product, User, Discount },
 } = require('../models');
 
+const { statusType } = require('../types/db_types');
+
 const sequelize = require('sequelize');
 // status in Order_details need to be enum - to choose
 // provider ?
@@ -13,7 +15,14 @@ class orderController {
   async getAllOrders(req, res, next) {
     try {
       const Orders = await Order_details.findAll({
-        attributes: ['total', 'provider', 'status', 'created_at'],
+        attributes: [
+          'id',
+          'total',
+          'provider',
+          'status',
+          'address',
+          'created_at',
+        ],
         include: [
           {
             model: User,
@@ -59,7 +68,14 @@ class orderController {
     try {
       const user_id = req.session.userId;
       const Orders = await Order_details.findAll({
-        attributes: ['total', 'provider', 'status', 'created_at'],
+        attributes: [
+          'id',
+          'total',
+          'provider',
+          'status',
+          'address',
+          'created_at',
+        ],
         include: {
           model: Order_items,
           attributes: ['quantity'],
@@ -99,6 +115,9 @@ class orderController {
     const cartProduct = req.session.cart;
     const totalPrice = req.session.totalPrice;
 
+    // Home_location + ', ' City
+    const full_address = req.body.full_address;
+
     //check products in cart. if having nothing => fail
     if (!cartProduct.length) {
       return res.status(400).json({
@@ -107,8 +126,7 @@ class orderController {
     }
 
     //get userInfo
-    console.log(cartProduct, user_id, totalPrice);
-    if (!cartProduct || !user_id || !totalPrice) {
+    if (!cartProduct || !user_id || !totalPrice || !full_address) {
       return res.status(400).json({ msg: 'Cant create order!' });
     } else {
       try {
@@ -118,7 +136,8 @@ class orderController {
           user_id,
           total: totalPrice,
           provider: 1,
-          status: 'Chờ xử lý',
+          status: statusType.HANDLE,
+          address: full_address,
         });
         if (newOrder) {
           // order_id : Foreign key
@@ -161,8 +180,84 @@ class orderController {
   // [PUT] /update-order
   async postUpdateOrder(req, res, next) {}
 
-  // [DELETE] /delete-order
-  async postDeleteOrder(req, res, next) {}
+  // CASE: USER want cancel order
+  // Just only status order is : "Dang xu ly" == statusType.HANDLE
+  // [POST] /delete-order
+  async postDeleteOrder(req, res, next) {
+    const { order_id } = req.body;
+    const user_id = req.session.userId;
+
+    if (!order_id || !user_id) {
+      return res.status(400).json({
+        msg: 'Bad request!',
+      });
+    } else {
+      const query = await Order_details.destroy({
+        where: {
+          id: order_id,
+          user_id,
+          status: statusType.HANDLE,
+        },
+      })
+        .then((data) => {
+          console.log(data);
+          if (data == 1) {
+            return res.status(200).json({
+              success: 'Deleted Success!',
+            });
+          } else {
+            return res.status(400).json({
+              success: "You can't delete this order!",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          next(err);
+        });
+    }
+  }
+
+  // [POST] /admin/update-status
+  async postUpdateStatus(req, res, next) {
+    const { order_id, statusOrder } = req.body;
+
+    if (!statusOrder || !order_id) {
+      return res.status(400).json({
+        msg: 'Bad request!',
+      });
+    } else if (Object.values(statusType).includes(statusOrder)) {
+      const query = await Order_details.update(
+        {
+          status: statusOrder,
+        },
+        {
+          where: {
+            id: order_id,
+          },
+        },
+      )
+        .then((data) => {
+          if (data[0]) {
+            return res.status(200).json({
+              success: 'Updated Success!',
+            });
+          } else {
+            return res.status(400).json({
+              message: 'Bad request!',
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          next(err);
+        });
+    } else {
+      return res.status(400).json({
+        msg: 'Bad request! ',
+      });
+    }
+  }
 }
 
 module.exports = new orderController();

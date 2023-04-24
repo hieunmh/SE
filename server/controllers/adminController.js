@@ -8,8 +8,8 @@ class adminController {
   // [POST] /admin/product/add
   async addProduct(req, res, next) {
     // need category_id, discount_id, quantity, sold
-    //to do
-    //handle category and discount
+    // to do
+    // handle category and discount
     // admin pick one of all categories and pick discount
     // search for category id in table product_category and discount_id in discount
     // get foreign key
@@ -101,7 +101,7 @@ class adminController {
     }
   }
 
-  // [DELETE] /admin/product/:id/delete
+  // [POST] /admin/product/:id/delete
   async deleteProduct(req, res, next) {
     const IDProduct = req.params.id;
     try {

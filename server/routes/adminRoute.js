@@ -33,7 +33,7 @@ router.put(
   isAdmin,
   adminController.modifyProduct,
 );
-router.delete(
+router.post(
   '/product/:id/delete',
   isAuth,
   isAdmin,
