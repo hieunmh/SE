@@ -28,14 +28,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
-      country: {
+      home_location: {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
-      telephone: {
-        type: DataTypes.STRING(10),
-        allowNull: false,
-      },
+      // telephone: {
+      //   type: DataTypes.STRING(10),
+      //   allowNull: false,
+      // },
     },
     {
       sequelize,

@@ -162,7 +162,7 @@ class productController {
   // [POST] /add-review
   async addReviewProduct(req, res, next) {}
 
-  // [DELETE] /delete-review
+  // [POST] /delete-review
   async deleteReviewProduct(req, res, next) {}
 }
 
