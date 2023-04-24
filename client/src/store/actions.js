@@ -25,7 +25,14 @@ export default {
     await axios.get("cart", { withCredentials: true })
     .then((res) => {
       context.commit("setCartItem", res.data.productsInCart);
-      context.commit("setCartLength", res.data.productsInCart.length)
+      context.commit("setCartLength", res.data.productsInCart.length);
+    })
+  },
+
+  async getAllOrder(context) {
+    await axios.get('get-all-orders', {withCredentials: true})
+    .then((res) => {
+      context.commit("setAllOrder", res.data.Orders);
     })
   },
 

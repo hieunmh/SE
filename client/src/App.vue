@@ -36,27 +36,27 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getProducts', 'getCart', 'getCategory']),
+    ...mapActions(['getProducts', 'getCart', 'getCategory', 'getAllOrder']),
     ...mapMutations(['setLoading', 'setUser', 'setLogged', 'setAdmin', 'setCartItem', 'setCartLength']),
 
 
     async checkLogin() {
       let res = await axios.get("login", {withCredentials: true});
       if (res.data.cookie) {
-        if (router.currentRoute.value.path == "/login" || router.currentRoute.value.path == "/register") {
+        if (router.currentRoute.value.path.includes("login") || router.currentRoute.value.path.includes("register")) {
           router.push("/");
         }
-
         let data = await axios.get("info", { withCredentials: true });
         this.setUser(data.data);
         this.setLogged(true);
 
         if (data.data.role) {
           this.setAdmin("admin");
+          this.getAllOrder();
         }
         
         else {
-          if (router.currentRoute.value.path == "/admin") {
+          if (router.currentRoute.value.path.includes("admin")) {
             router.push("/");
           }
         }
@@ -68,7 +68,7 @@ export default {
         })
       }
       else {
-        if (router.currentRoute.value.path == "/admin" || router.currentRoute.value.path == "/payment") {
+        if (router.currentRoute.value.path.includes("admin") || router.currentRoute.value.path.includes("payment")) {
           router.push('/');
         }
       }

@@ -20,9 +20,6 @@ export default {
   setShowProduct(state, showpro) {
     state.showProduct = showpro;
   },
-  setShowOrderDetail(state, orderDetail) {
-    state.showOrderDetail = orderDetail;
-  },
   setShowAlert(state, showAlert) {
     state.showAlert = showAlert;
   },
@@ -48,5 +45,8 @@ export default {
   },
   setShowSearchLoading(state, showSearchLoading) {
     state.showSearchLoading = showSearchLoading;
+  },
+  setAllOrder(state, allOrder) {
+    state.allOrder = allOrder;
   }
 };

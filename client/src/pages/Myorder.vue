@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>My Order Page</h1>
+
     <button @click="getOrderDetail()" class="btnn">getOrderDetail</button>
   </div>
 </template>
