@@ -33,9 +33,11 @@
 
 			<div v-else class="fas fa-user account logined" style="background: #f38609; color: white;">
 				<ul class="drop-down-select">
-					<li><RouterLink @click="outMenu()" to="/info">{{ user.userName.split(' ')[user.userName.split(' ').length - 1] }}</RouterLink></li>
+					<li><RouterLink @click="outMenu()" to="/info">
+						<!-- {{ user.userName.split(' ')[user.userName.split(' ').length - 1] }} -->Hồ sơ
+					</RouterLink></li>
 					<!-- <li><RouterLink @click="outMenu()" to="/info">Tài khoản của tôi</RouterLink></li> -->
-					<li v-if="admin"><RouterLink @click.prevent="outMenu()" to="/admin">Quản lý đơn bán</RouterLink></li>
+					<li v-if="admin"><RouterLink @click.prevent="outMenu()" to="/admin">Quản lý</RouterLink></li>
 					<li><RouterLink @click="outMenu()" to="/myorder">Đơn mua</RouterLink></li>
 					<li><RouterLink @click="handleLogout" to="/">Đăng xuất</RouterLink></li>
 				</ul>

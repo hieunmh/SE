@@ -2,62 +2,61 @@
   <div class="payment">
     <div class="box">
       <div class="box-content">
-        <div class="row d-sm-flex d-none bar">
-          <div class="col-sm-6 text-center">
+        <div class="row bar">
+          <div class="col-sm-6 col-7 text-center">
             <h4>Sản phẩm</h4>
           </div>
 
-          <div class="col-sm-2 text-center">
+          <div class="col-2 d-sm-inline d-none text-center">
             <h4>Đơn giá</h4>
           </div>
 
-          <div class="col-sm-2 text-center">
+          <div class="col-2 text-center">
             <h4>Số lượng</h4>
           </div>
 
-          <div class="col-sm-2 text-center">
+          <div class="col-sm-2 col-3 text-center">
             <h4>Thành tiền</h4>
           </div>
         </div>
         
-        <div v-for="(p, index) in cartItem" :key="index">
-          <div class="row">
-            <div class="centre col-sm-2 col-4 image-box" style="">
-              <img :src="`${imgUrl}${p.image}`" alt="">
-            </div>
+        <div class="row" v-for="(p, index) in cartItem" :key="index">
+          <div class="centre col-sm-2 col-4 image-box" style="">
+            <img :src="`${imgUrl}${p.image}`" alt="">
+          </div>
 
-            <div class="centre col-sm-4 col-4 desc">
-              <h4 class="item-name">{{ p.name }}</h4>
-            </div>
+          <div class="centre col-sm-4 col-3 desc">
+            <h4 class="item-name">{{ p.name }}</h4>
+          </div>
 
 
-            <div class="centre col-sm-2 d-sm-flex d-none cal-total">
-              <h4 class="item-total"> {{ p.quantity * p.salePrice }}</h4>
-            </div>
+          <div class="centre col-sm-2 d-sm-flex d-none cal-total">
+            <h4 class="item-total"> {{ p.quantity * p.salePrice }}</h4>
+          </div>
 
-            <div class="centre col-sm-2 col-2  item-qtt">
-              <h4><span class="d-sm-none d-inline">x</span>{{ p.quantity }}</h4>
-            </div>
+          <div class="centre col-sm-2 col-2  item-qtt">
+            <h4><span class="d-sm-none d-inline">x</span>{{ p.quantity }}</h4>
+          </div>
 
-            <div class="centre col-2 delete">
-              <h4>{{ p.quantity * p.salePrice }}</h4>
-            </div>
+          <div class="centre col-sm-2 col-3">
+            <h4>{{ p.quantity * p.salePrice }}</h4>
           </div>
         </div>
 
         <div class="row col-12">
 
-          <div class="col-9 d-flex justify-content-end">
+          <div class="col-sm-10 col-9 d-flex justify-content-end">
             <h4>Tổng số tiền ({{ cartItem.length }} sản phẩm): </h4>
           </div>
 
-          <div class="col-1">
-
-          </div>
-
-          <div class="col-2 centre">
+          <div class="col-sm-2 col-3 centre">
             <h4>{{ calTotal()[0] }}</h4>
           </div>
+        </div>
+
+        <div class="row">
+          <div class="col-1"></div>
+          <input class="inp col-10" v-model="address" type="text" placeholder="Nhập địa chỉ nhận hàng">
         </div>
 
         <div>
@@ -87,16 +86,15 @@ export default {
   data() {
     return {
       imgUrl: serverUrl + "/upload/productImage/",
+      address: null,
     }
   },
   methods: {
     async order() {
       let data = {
-        totalPrice: this.calTotal()[0],
-        userName: this.user.userName,
-        telephone: this.user.telephone,
+        adress: this.address
       } 
-      let res = await axios.post('create-order', data, {withCredentials: true});
+      await axios.post('create-order', data, {withCredentials: true});
     },
 
     calTotal() {
@@ -162,6 +160,12 @@ export default {
       background-color: #f1f1f1;
       padding: 2rem 0;
       margin: 1rem 0;
+      input {
+        height: 5rem;
+        font-size: 2rem;
+        // color: #27ae60;
+        padding-left: 1rem;
+      }
     }
 
     .centre {

@@ -25,19 +25,19 @@
         <div class="row box-container">
           <div v-for="(p, index) in currentPage" :key="index" class="col-lg-3 col-md-4 col-6">
             <div class="box" @click="showDetail(index)">
-                  <div class="image">
-                    <img :src="`${imgUrl}${p.image}`" alt="">
-                  </div>
+              <div class="image">
+                <img :src="`${imgUrl}${p.image}`" alt="">
+              </div>
 
-                  <div class="content">
-                    <h3>{{ p.name }}</h3>
+              <div class="content">
+                <h3>{{ p.name }}</h3>
 
-                    <div class="price">
-                      {{ parseFloat(p.price) }} VNĐ
-                      <span></span>
-                    </div>
-                  </div>
+                <div class="price">
+                  {{ parseFloat(p.price) }} VNĐ
+                  <span></span>
                 </div>
+              </div>
+            </div>
           </div>
         </div>
 

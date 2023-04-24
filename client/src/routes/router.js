@@ -13,14 +13,21 @@ import Cart from '../pages/Cart.vue';
 import Info from '../pages/Info.vue';
 import Admin from '../pages/Admin.vue';
 import ProductDetail from '../components/ProductDetail.vue';
-import Payment from '../pages/Payment.vue'
+import Payment from '../pages/Payment.vue';
+import AllOrder from '../pages/AllOrder.vue';
+import OrderDetail from '../components/OrderDetail.vue';
 
 
 const routes = [
-  { path: "/", name: "Home", component: Home, },
-  { path: "/login", name: "Login", component: Login, },
-  { path: "/menu", name: "Menu", component: Menu, },
-  { path: "/menu/:id", name: "ProductDetail", component: ProductDetail, props: true },
+  { path: "/", name: "Home", component: Home },
+  { path: "/login", name: "Login", component: Login },
+  { path: "/menu", name: "Menu", component: Menu },
+  {
+    path: "/menu/:id",
+    name: "ProductDetail",
+    component: ProductDetail,
+    props: true,
+  },
   { path: "/about", name: "About", component: About },
   { path: "/promotion", name: "Promotion", component: Promotion },
   { path: "/table", name: "Table", component: Table },
@@ -29,7 +36,9 @@ const routes = [
   { path: "/myorder", name: "Myorder", component: Myorder },
   { path: "/info", name: "Info", component: Info },
   { path: "/admin", name: "Admin", component: Admin },
-  { path: "/payment", name: "Payment", component: Payment}
+  { path: "/admin/allorder", name: "AllOrder", component: AllOrder },
+  { path: "/admin/allorder/order=:id", name: "OrderDetail", component: OrderDetail },
+  { path: "/payment", name: "Payment", component: Payment },
 ];
 
 const router = createRouter({
