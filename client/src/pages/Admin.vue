@@ -3,7 +3,7 @@
     <div class="box">
       <div class="box-content">
         <div>
-          <RouterLink to="admin/allorder"><button class="btnn">Đơn bán</button></RouterLink>
+          <RouterLink @click="" to="admin/allorder"><button class="btnn">Đơn bán</button></RouterLink>
         </div>
         
         <div class="row bar">
@@ -152,7 +152,7 @@ export default {
   },
 
   created() {
-    this.getAllOrder();
+    // this.getAllOrder();
     // this.getProducts();
   }
   

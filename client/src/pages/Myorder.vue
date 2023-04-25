@@ -10,7 +10,7 @@
       <div class="box-content">
 
         <div>
-          <RouterLink to="/"><button class="btnn"><i class="fa fa-arrow-left"></i></button></RouterLink>
+          <RouterLink to="/"><button class="btnn"><i class="fa fa-arrow-left" style="margin-right: 0.5rem;"></i>Home</button></RouterLink>
         </div>
 
         <div class="row bar">
@@ -80,7 +80,7 @@ export default {
 
     getTime(time) {
       let year = new Date(time).getFullYear();
-      let month = new Date(time).getMonth();
+      let month = new Date(time).getMonth() + 1;
       let date = new Date(time).getDate();
 
       let hour = new Date(time).getHours();
@@ -95,7 +95,7 @@ export default {
         date = "0" + date;
       }
 
-      if (parseInt(hour <= 12)) {
+      if (parseInt(hour) <= 10) {
         hour = "0" + hour;
       }
       if (minute <= 10) {

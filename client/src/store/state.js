@@ -23,4 +23,5 @@ export default {
   allOrder: [],
   userOrder: [],
   showMyOrder: true,
+  showOrderDetail: true,
 };

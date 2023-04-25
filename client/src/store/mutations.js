@@ -54,5 +54,8 @@ export default {
   },
   setShowMyOrder(state, showMyOrder) {
     state.showMyOrder = showMyOrder;
+  },
+  setShowOrderDetail(state, showOrderDetail) {
+    state.showOrderDetail = showOrderDetail;
   }
 };

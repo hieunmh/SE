@@ -3,7 +3,7 @@
     <div class="box">
       <div class="box-content">
         <div>
-          <RouterLink to="/admin/allorder"><button class="btnn"><i class="fa fa-arrow-left"></i></button></RouterLink>
+          <button @click="setShowOrderDetail(true)" class="btnn"><i class="fa fa-arrow-left"></i></button>
         </div>
 
         <div class="row client-info">
@@ -32,7 +32,7 @@
 
           <div class="col-6  text-center"><h3>Địa chỉ:</h3></div>
 
-          <div class="col-6  text-center"><h3> 144 xuân thủy, cầu giấy, hà nội</h3></div>  
+          <div class="col-6  text-center"><h3>{{ orderDetail.address }}</h3></div>  
 
           <div class="col-6  text-center"><h3>trạng thái:</h3></div>
 
@@ -104,20 +104,20 @@ import serverUrl from '@/axios';
 
   export default {
     name: "OrderDetail",
+    props: ['orderDetail'],
     data() {
       return {
         imgUrl: serverUrl + "/upload/productImage/",
         index: null,
-        orderDetail: undefined,
       }
     },
 
     methods: {
-      ...mapMutations(['']),
+      ...mapMutations(['setShowOrderDetail']),
 
       getTime(time) {
         let year = new Date(time).getFullYear();
-        let month = new Date(time).getMonth();
+        let month = new Date(time).getMonth() + 1;
         let date = new Date(time).getDate();
 
         let hour = new Date(time).getHours();
@@ -132,7 +132,7 @@ import serverUrl from '@/axios';
           date = "0" + date;
         }
 
-        if (parseInt(hour <= 12)) {
+        if (parseInt(hour) <= 10) {
           hour = "0" + hour;
         }
         if (minute <= 10) {
@@ -149,15 +149,6 @@ import serverUrl from '@/axios';
 
 
     },
-
-    computed: {
-      ...mapState(['allOrder'])
-    },
-
-    created() {
-      this.index = this.$route.params.id;
-      this.orderDetail = this.allOrder[this.index - 1]
-    }
 
   }
 </script>

@@ -94,7 +94,7 @@
             </div>
           </div> 
 
-          <div class="row">
+          <div class="">
             <div class="col-12 d-flex justify-content-end">
                 <RouterLink to="/payment" @click="postPayment()" style=" text-align: center; color: #fff;">
                   <button class="btnn checkout-btn" :disabled="cartItem.length ? false : true">
