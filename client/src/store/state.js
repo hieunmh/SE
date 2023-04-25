@@ -24,4 +24,5 @@ export default {
   userOrder: [],
   showMyOrder: true,
   showOrderDetail: true,
+  showThank: true,
 };

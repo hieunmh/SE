@@ -57,5 +57,11 @@ export default {
   },
   setShowOrderDetail(state, showOrderDetail) {
     state.showOrderDetail = showOrderDetail;
+  },
+  setShowThank(state, showThank) {
+    state.showThank = showThank;
+    // setTimeout(() => {
+    //   state.showThank = false;
+    // }, 1000);
   }
 };

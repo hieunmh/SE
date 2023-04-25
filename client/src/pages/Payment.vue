@@ -1,4 +1,9 @@
 <template>
+
+  <div v-if="!showThank">
+    <Thank></Thank>
+  </div>
+
   <div class="payment">
     <div class="box">
       <div class="box-content">
@@ -64,11 +69,11 @@
 
         <div>
           <div class="col-12 d-flex justify-content-end">
-            <RouterLink to="/payment" @click="order()" style=" text-align: center; color: #fff;">
-              <button class="btnn checkout-btn" :disabled="cartItem.length ? false : true">
+            <!-- <RouterLink to="/" @click="order()" style=" text-align: center; color: #fff;"> -->
+              <button @click="order()" class="btnn checkout-btn" :disabled="cartItem.length ? false : true">
                 <i class="fa fa-shopping-cart"></i> Đặt hàng
               </button>
-            </RouterLink>
+            <!-- </RouterLink> -->
           </div>
         </div>
       </div>
@@ -80,11 +85,12 @@
 import axios from 'axios';
 import { mapActions, mapMutations, mapState } from 'vuex';
 import serverUrl from '@/axios';
+import Thank from '@/components/Thank.vue';
 
 export default {
   name: 'Payment',
   components: {
-    
+    Thank
   },
   data() {
     return {
@@ -93,13 +99,22 @@ export default {
     }
   },
   methods: {
-    async order() {
+    ...mapMutations(['setShowThank']),
+    ...mapActions(['getCart']),
+
+    async order() { 
       let data = {
         full_address: this.address,
       } 
-      // window.location.reload();
-      await axios.post('create-order', data, {withCredentials: true});
-      
+      await axios.post('create-order', data, { withCredentials: true });
+
+      await new Promise(() => setTimeout(() => {
+        this.setShowThank(true);
+        this.$router.push("/");
+      }, 1000)).then(
+        this.setShowThank(false),
+        this.getCart()
+      )
     },
 
     calTotal() {
@@ -116,7 +131,7 @@ export default {
 
   },
   computed: {
-    ...mapState(['user', 'allFoods', 'cartItem']),
+    ...mapState(['user', 'allFoods', 'cartItem', 'showThank']),
   },  
 
 }

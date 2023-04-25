@@ -39,7 +39,6 @@ export default {
   async getUserOrder(context) {
     await axios.get('order-by-user', { withCredentials: true })
     .then((res) => {
-      console.log(res.data.Orders);
       context.commit("setUserOrder", res.data.Orders);
     });
   },
