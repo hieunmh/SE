@@ -35,7 +35,7 @@
           </div>
 
           <div class="col-6  text-center">
-            <h3> 144 xuân thủy, cầu giấy, hà nội</h3>
+            <h3>{{ detailId.address }}</h3>
           </div>
 
           <div class="col-6  text-center">
