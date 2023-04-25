@@ -25,7 +25,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       desc: {
         type: DataTypes.TEXT,
-        allowNull: false,
       },
       category_id: {
         type: DataTypes.INTEGER.UNSIGNED,
@@ -33,6 +32,8 @@ module.exports = (sequelize, DataTypes) => {
           model: 'Product_category',
           key: 'id',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'RESTRICT',
       },
       discount_id: {
         type: DataTypes.INTEGER.UNSIGNED,
@@ -40,6 +41,8 @@ module.exports = (sequelize, DataTypes) => {
           model: 'Discount',
           key: 'id',
         },
+        onDelete: 'SET NULL',
+        onUpdate: 'CASCADE',
       },
       price: {
         type: DataTypes.INTEGER.UNSIGNED,

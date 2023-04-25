@@ -22,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       description: {
         type: DataTypes.TEXT,
-        allowNull: false,
       },
       discount_percent: {
         type: DataTypes.DECIMAL(4, 2),

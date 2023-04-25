@@ -21,11 +21,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       user_id: {
         type: DataTypes.INTEGER.UNSIGNED,
-        // allowNull: false,
+        allowNull: false,
         references: {
           model: 'User',
           key: 'id',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       total: {
         type: DataTypes.DECIMAL(15, 2),

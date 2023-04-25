@@ -59,4 +59,5 @@ INSERT INTO `products` (`name`, `desc`, `category_id`, `discount_id`, `price`, `
 
 INSERT INTO `users` (`email`, `password`, `name`, `telephone`, `role`) VALUES 
 ('admin@gmail.com', '$2b$10$iDOGulq.CY.YtBD96mA7lO0pPZHZ14i054D0E7AluwYXP1kkvJ0Ya', 'admin', '0987654321', 1), -- password = 123456
-('vinh@gmail.com', '$2b$10$iDOGulq.CY.YtBD96mA7lO0pPZHZ14i054D0E7AluwYXP1kkvJ0Ya', 'Vinh', '0123456789', 0);
+('vinh@gmail.com', '$2b$10$iDOGulq.CY.YtBD96mA7lO0pPZHZ14i054D0E7AluwYXP1kkvJ0Ya', 'Vinh', '0123456789', 0),
+('hieu@gmail.com',	'$2b$10$bKufoH9l2AQg.Hv0AdLKce/PO2f4uFXbkJY2LKpjMjdVME.mgpCkS',	'Minh Hieu', '0987654321', 0) -- password = 123
