@@ -54,6 +54,7 @@ export default {
         if (data.data.role) {
           this.setAdmin("admin");
         }
+
         
         else {
           if (router.currentRoute.value.path.includes("admin")) {

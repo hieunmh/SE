@@ -95,7 +95,7 @@ export default {
   methods: {
     async order() {
       let data = {
-        address: this.address,
+        full_address: this.address,
       } 
       // window.location.reload();
       await axios.post('create-order', data, {withCredentials: true});

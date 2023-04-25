@@ -128,7 +128,7 @@ export default {
 
     getTime(time) {
       let year = new Date(time).getFullYear();
-      let month = new Date(time).getMonth();
+      let month = new Date(time).getMonth() + 1;
       let date = new Date(time).getDate();
 
       let hour = new Date(time).getHours();
@@ -143,7 +143,7 @@ export default {
         date = "0" + date;
       }
 
-      if (parseInt(hour <= 12)) {
+      if (parseInt(hour) <= 10) {
         hour = "0" + hour;
       }
       if (minute <= 10) {

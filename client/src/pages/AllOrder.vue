@@ -1,8 +1,11 @@
 <template>
-  <div class="allOrder">
+  <div v-if="!showOrderDetail">
+    <OrderDetail :orderDetail="orderDetailId"></OrderDetail>
+  </div>
+
+  <div v-else class="allOrder">
     <div class="box">
       <div class="box-content">
-
         <div>
           <RouterLink to="/admin"><button class="btnn"><i class="fa fa-arrow-left"></i></button></RouterLink>
         </div>
@@ -38,7 +41,8 @@
           </div>
 
           <div class="centre col-3">
-            <RouterLink :to="`/admin/allorder/order=${index + 1}`" @click="scrollToTop()"><button class="btnn">xem</button></RouterLink>
+            <!-- <RouterLink :to="`/admin/allorder/order=${index + 1}`" @click="scrollToTop()"><button class="btnn">xem</button></RouterLink> -->
+            <button class="btnn" @click="showOrder(index)">xem</button>
           </div>
         </div>
       </div>
@@ -47,9 +51,8 @@
 </template>
 
 <script>
-import axios from 'axios';
 import OrderDetail from '@/components/OrderDetail.vue';
-import { mapMutations, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 
 export default {
   name: "AllOrder",
@@ -58,17 +61,23 @@ export default {
   },
   data() {
     return {  
-    
+      orderDetailId: null,
     }
   },
 
   methods: {
     ...mapMutations(['setShowOrderDetail', 'scrollToTop']),
+    ...mapActions(['getAllOrder']),
+    
+    showOrder(index) {
+      this.orderDetailId = this.allOrder[index];
+      this.setShowOrderDetail(false);
+    },
 
 
     getTime(time) {
       let year = new Date(time).getFullYear();
-      let month = new Date(time).getMonth();
+      let month = new Date(time).getMonth() + 1;
       let date = new Date(time).getDate();
 
       let hour = new Date(time).getHours();
@@ -83,7 +92,7 @@ export default {
         date = "0" + date;
       }
 
-      if (parseInt(hour <= 12)) {
+      if (parseInt(hour) <= 10) {
         hour = "0" + hour;
       }
       if (minute <= 10) {
@@ -104,6 +113,9 @@ export default {
 
   },
 
+  created() {
+    this.getAllOrder();
+  },
 }
 </script>
 
