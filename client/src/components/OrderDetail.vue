@@ -30,14 +30,20 @@
           </div>
 
 
-          <div class="col-6  text-center"><h3>Địa chỉ:</h3></div>
+          <div class="col-6 text-center"><h3>Địa chỉ:</h3></div>
 
-          <div class="col-6  text-center"><h3>{{ orderDetail.address }}</h3></div>  
+          <div class="col-6 text-center"><h3>{{ orderDetail.address }}</h3></div>  
 
-          <div class="col-6  text-center"><h3>trạng thái:</h3></div>
+          <div class="col-6 text-center d-flex flex-column justify-content-center"><h3 class="">trạng thái:</h3></div>
 
-          <div class="col-6  text-center"><h3>{{ orderDetail.status }}</h3></div>
-
+          <div class="col-6 d-flex justify-content-center text-center">
+            <select name="format" @input="updateStatus($event)">
+              <option value="" selected>{{ orderDetail.status }}</option> 
+              <option value="Đang xử lý" v-if="orderDetail.status != 'Đang xử lý'">Đang xử lý</option>
+              <option value="Đang giao hàng" v-if="orderDetail.status != 'Đang giao hàng'">Đang giao hàng</option>
+              <option value="Đã giao hàng" v-if="orderDetail.status != 'Đã giao hàng'">Đã giao hàng</option>
+            </select> 
+          </div>
         </div>
 
         <div class="row bar">
@@ -101,6 +107,7 @@
 <script>
 import { mapMutations, mapState } from 'vuex';
 import serverUrl from '@/axios';
+import axios from 'axios';
 
   export default {
     name: "OrderDetail",
@@ -114,6 +121,17 @@ import serverUrl from '@/axios';
 
     methods: {
       ...mapMutations(['setShowOrderDetail']),
+
+      async updateStatus(event) {
+        let data = {
+          statusOrder: event.target.value,
+          order_id: this.orderDetail.id,
+        }
+
+
+        await axios.post('/admin/update-status', data, {withCredentials: true})
+        // window.location.reload();
+      },
 
       getTime(time) {
         let year = new Date(time).getFullYear();
@@ -145,9 +163,6 @@ import serverUrl from '@/axios';
 
         return [year, month, date, hour, minute, second];
       },
-
-
-
     },
 
   }
@@ -166,6 +181,20 @@ import serverUrl from '@/axios';
   padding: 2rem 20%;
   height: auto;
   // overflow-y: scroll !important;
+
+  select {
+    outline: none;
+    appearance: none;
+    height: 3.5rem;
+    width: 15rem;
+    font-size: 1.7rem;
+    font-weight: 500;
+    border-radius: 0.7rem;
+    text-align: center;
+    option {
+      height: 3.5rem;
+    }
+  }
 
   .box {
 
