@@ -23,6 +23,8 @@ module.exports = (sequelize, DataTypes) => {
           model: 'User',
           key: 'id',
         },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
       },
       payment_type: {
         type: DataTypes.STRING(100),

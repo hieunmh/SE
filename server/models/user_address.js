@@ -18,24 +18,22 @@ module.exports = (sequelize, DataTypes) => {
       },
       user_id: {
         type: DataTypes.INTEGER.UNSIGNED,
-        // allowNull: false,
+        allowNull: false,
         references: {
           model: 'User',
           key: 'id',
         },
-      },
-      city: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       home_location: {
         type: DataTypes.STRING(100),
         allowNull: false,
       },
-      // telephone: {
-      //   type: DataTypes.STRING(10),
-      //   allowNull: false,
-      // },
+      city: {
+        type: DataTypes.STRING(100),
+        allowNull: false,
+      },
     },
     {
       sequelize,

@@ -21,19 +21,23 @@ module.exports = (sequelize, DataTypes) => {
       },
       order_id: {
         type: DataTypes.INTEGER.UNSIGNED,
-        // allowNull: false,
+        allowNull: false,
         references: {
           model: 'Order_details',
           key: 'id',
         },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       product_id: {
         type: DataTypes.INTEGER.UNSIGNED,
-        // allowNull: false,
+        allowNull: false,
         references: {
           model: 'Product',
           key: 'id',
         },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       quantity: {
         type: DataTypes.INTEGER.UNSIGNED,

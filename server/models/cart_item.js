@@ -21,19 +21,23 @@ module.exports = (sequelize, DataTypes) => {
       },
       user_id: {
         type: DataTypes.INTEGER.UNSIGNED,
-        // allowNull: false,
+        allowNull: false,
         references: {
           model: 'User',
           key: 'id',
         },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       product_id: {
         type: DataTypes.INTEGER.UNSIGNED,
-        // allowNull: false,
+        allowNull: false,
         references: {
           model: 'Product',
           key: 'id',
         },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
       },
       quantity: {
         type: DataTypes.INTEGER.UNSIGNED,
