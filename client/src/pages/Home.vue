@@ -263,6 +263,10 @@ export default {
 }
 
 @media (max-width: 992px) {
+	
+	.home-main, .home-category, .home-banner {
+		padding: 2rem 15%;
+	}
 	.home-banner .grid-banner .grid .content p {
 		font-size: 1.5rem;
 	}
@@ -273,7 +277,10 @@ export default {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
+	.home-main, .home-category, .home-banner {
+		padding: 2rem 10%;
+	}
 	.home-main {
 		.home-img-2 {
 			top: 0;
@@ -291,7 +298,6 @@ export default {
 }
 @media (max-width: 576px) {
 	.home-main {
-		padding: 2rem 10%;
 		.content {
 			h3 {
 				font-size: 3rem;
@@ -301,9 +307,8 @@ export default {
 			}
 		}
 	}
-
-	.home-banner, .home-category {
-		padding: 2rem 10%;
+	.home-main, .home-category, .home-banner {
+		padding: 2rem 5%;
 	}
 }
 </style>

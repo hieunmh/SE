@@ -55,13 +55,15 @@ export default {
           this.setAdmin("admin");
         }
 
-        
         else {
           if (router.currentRoute.value.path.includes("admin")) {
             router.push("/");
           }
         }
 
+        if (router.currentRoute.value.path.includes("admin/allorder/order")) {
+          this.getAllOrder();
+        }
         await axios.get("cart", {withCredentials: true})
         .then((res) => {  
           this.setCartItem(res.data.productsInCart);

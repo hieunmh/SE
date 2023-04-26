@@ -1,13 +1,10 @@
 <template>
-  <div v-if="!showOrderDetail">
-    <OrderDetail :orderDetail="orderDetailId"></OrderDetail>
-  </div>
-
-  <div v-else class="allOrder">
+  <div class="allOrder">
     <div class="box">
       <div class="box-content">
-        <div>
-          <RouterLink to="/admin"><button class="btnn"><i class="fa fa-arrow-left"></i></button></RouterLink>
+        <div class="">
+          <RouterLink to="/admin"><button class="btnn col-6">Quản Lý Menu</button></RouterLink>
+          <RouterLink to="/admin/allorder"><button class="btnn col-6" :disabled="true">Đơn bán</button></RouterLink>
         </div>
 
         <div class="row bar">
@@ -41,8 +38,8 @@
           </div>
 
           <div class="centre col-3">
-            <!-- <RouterLink :to="`/admin/allorder/order=${index + 1}`" @click="scrollToTop()"><button class="btnn">xem</button></RouterLink> -->
-            <button class="btnn" @click="showOrder(index)">xem</button>
+            <RouterLink :to="`/admin/allorder/order=${index + 1}`" @click="scrollToTop()"><button class="btnn">xem</button></RouterLink>
+            <!-- <button class="btnn" @click="showOrder(index)">xem</button> -->
           </div>
         </div>
       </div>
@@ -51,13 +48,12 @@
 </template>
 
 <script>
-import OrderDetail from '@/components/OrderDetail.vue';
 import { mapActions, mapMutations, mapState } from 'vuex';
 
 export default {
   name: "AllOrder",
   components: {
-    OrderDetail
+    
   },
   data() {
     return {  

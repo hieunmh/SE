@@ -11,12 +11,11 @@ import Register from '../pages/Register.vue';
 import Myorder from '../pages/Myorder.vue';
 import Cart from '../pages/Cart.vue';
 import Info from '../pages/Info.vue';
-import Admin from '../pages/Admin.vue';
-import ProductDetail from '../components/ProductDetail.vue';
+import Admin from '../pages/Admin/Admin.vue';
 import Payment from '../pages/Payment.vue';
-import AllOrder from '../pages/AllOrder.vue';
-import OrderDetail from '../components/OrderDetail.vue';
-// import MyOrderDetail from '../pages/MyOrderDetail.vue';
+import AllOrder from '../pages/Admin/AllOrder.vue';
+import OrderDetail from '../pages/Admin/OrderDetail.vue';
+
 
 const routes = [
   { path: "/", name: "Home", component: Home },

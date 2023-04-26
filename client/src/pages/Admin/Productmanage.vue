@@ -1,11 +1,12 @@
 <template>
-  <div class="admin">
+  <div class="product-manage">
     <div class="box">
+      <div class="">
+        <button class="btnn col-6" :disabled="true">Quản Lý Menu</button>
+        <RouterLink to="/admin/allorder"><button class="btnn col-6">Đơn Bán</button></RouterLink>
+      </div>
+
       <div class="box-content">
-        <div>
-          <RouterLink @click="" to="admin/allorder"><button class="btnn">Đơn bán</button></RouterLink>
-        </div>
-        
         <div class="row bar">
           <div class="col-7">
             <h4 class="text-center">Thông tin sản phẩm</h4>
@@ -21,7 +22,7 @@
           </div>
         </div>
 
-      
+
         <div v-for="(p, index) in currentPage" :key="index" class="row">
           <div class="centre col-3 image-box" style="">
             <img :src="`${imgUrl}${p.image}`" alt="">
@@ -33,7 +34,8 @@
 
 
           <div class="centre col-2 cal-total">
-            <h4 class="item-total text-dark text-decoration-line-through" v-if="parseInt(p.price) != parseInt(p.salePrice)"> {{ p.price }}</h4>
+            <h4 class="item-total text-dark text-decoration-line-through"
+              v-if="parseInt(p.price) != parseInt(p.salePrice)"> {{ p.price }}</h4>
             <h4 class="item-total">{{ parseInt(p.salePrice) }}</h4>
           </div>
 
@@ -47,7 +49,7 @@
             <i class="fa-solid fa-angles-left"></i>
           </button>
 
-          <button  @click="previous()" class="action-btn decrease-btn">
+          <button @click="previous()" class="action-btn decrease-btn">
             <i class="fa-solid fa-angle-left"></i>
           </button>
 
@@ -57,18 +59,16 @@
           </div>
 
           <button @click="next()" class="action-btn increase-btn">
-            <i class="fa-solid fa-angle-right"></i>   
+            <i class="fa-solid fa-angle-right"></i>
           </button>
 
           <button @click="nextToLast()" class="action-btn increase-btn">
-            <i class="fa-solid fa-angles-right"></i>   
+            <i class="fa-solid fa-angles-right"></i>
           </button>
         </div>
       </div>
     </div>
   </div>
-
-
 </template>
 
 <script>
@@ -155,12 +155,12 @@ export default {
     // this.getAllOrder();
     // this.getProducts();
   }
-  
+
 }
 </script>
 
 <style lang="scss" scoped>
-.admin {
+.product-manage {
   padding: 2rem 20%;
 
   .box {
@@ -245,58 +245,63 @@ export default {
 }
 
 .action-row {
-    padding-top: 30px;
-    max-width: 100%;
-    text-align: center;
-    font-size: 2rem;
-    .action-btn {
-      width: 4rem;
-      height: 4rem;
-      border-radius: 4rem;
-      color: white;
-      i {
-        color: #27ae60;
-      }
-    }
-    button.highlight {
-      color: #fff;
-      background-color: #27ae60;
-      border-radius: 2rem;
-    }
-    button {
-      background-color: #fff;
-        width: 4rem;
-        height: 4rem;
-        margin: 0rem 1rem;
-      &:hover {
-        cursor: pointer;
-      }
+  padding-top: 30px;
+  max-width: 100%;
+  text-align: center;
+  font-size: 2rem;
+
+  .action-btn {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 4rem;
+    color: white;
+
+    i {
+      color: #27ae60;
     }
   }
+
+  button.highlight {
+    color: #fff;
+    background-color: #27ae60;
+    border-radius: 2rem;
+  }
+
+  button {
+    background-color: #fff;
+    width: 4rem;
+    height: 4rem;
+    margin: 0rem 1rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
 
 
 
 
 @media (max-width: 992px) {
-  .admin {
+  .product-manage {
     padding: 2rem 15%;
   }
 }
 
 @media (max-width: 767px) {
-  .admin {
+  .product-manage {
     padding: 2rem 10%;
   }
 }
 
 @media (max-width: 576px) {
-  .admin {
+  .product-manage {
     padding: 2rem 5%;
   }
 }
 
 @media (max-width: 400px) {
-  .admin {
+  .product-manage {
     .box {
       .box-content {
         .image-box {
@@ -310,5 +315,4 @@ export default {
     }
   }
 }
-
 </style>

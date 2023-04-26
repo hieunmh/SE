@@ -3,17 +3,21 @@
     <div class="box">
       <div class="box-content">
         <div>
-          <button @click="setShowOrderDetail(true)" class="btnn"><i class="fa fa-arrow-left"></i></button>
+          <button @click="$router.go(-1)" class="btnn"><i class="fa fa-arrow-left"></i></button>
         </div>
 
         <div class="row client-info">
-          <div class="col-6  text-center"><h3>tên khánh hàng:</h3></div>
+          <div class="col-6 text-center"><h3>ID: </h3></div>
 
-          <div class="col-6  text-center"><h3>{{ orderDetail.user.name }}</h3></div>
+          <div class="col-6 text-center"><h3>{{ this.$route.params.id  }}</h3></div>
 
-          <div class="col-6  text-center"><h3>số điện thoại:</h3></div>
+          <div class="col-6 text-center"><h3>tên khánh hàng:</h3></div>
 
-          <div class="col-6  text-center">
+          <div class="col-6 text-center"><h3>{{ orderDetail.user.name }}</h3></div>
+
+          <div class="col-6 text-center"><h3>số điện thoại:</h3></div>
+
+          <div class="col-6 text-center">
             <h3>
               {{ orderDetail.user.telephone.substring(0, 4) + " - " 
                + orderDetail.user.telephone.substring(4, 7) + " - " 
@@ -109,63 +113,71 @@ import { mapMutations, mapState } from 'vuex';
 import serverUrl from '@/axios';
 import axios from 'axios';
 
-  export default {
-    name: "OrderDetail",
-    props: ['orderDetail'],
-    data() {
-      return {
-        imgUrl: serverUrl + "/upload/productImage/",
-        index: null,
+export default {
+  name: "OrderDetail",
+  data() {
+    return {
+      imgUrl: serverUrl + "/upload/productImage/",
+      index: null,
+      orderDetail: null,
+    }
+  },
+
+  methods: {
+    ...mapMutations(['setShowOrderDetail']),
+
+    async updateStatus(event) {
+      let data = {
+        statusOrder: event.target.value,
+        order_id: this.orderDetail.id,
       }
+
+      await axios.post('/admin/update-status', data, {withCredentials: true})
+
     },
 
-    methods: {
-      ...mapMutations(['setShowOrderDetail']),
+    getTime(time) {
+      let year = new Date(time).getFullYear();
+      let month = new Date(time).getMonth() + 1;
+      let date = new Date(time).getDate();
 
-      async updateStatus(event) {
-        let data = {
-          statusOrder: event.target.value,
-          order_id: this.orderDetail.id,
-        }
+      let hour = new Date(time).getHours();
+      let minute = new Date(time).getMinutes();
+      let second = new Date(time).getSeconds();
 
+      if (month <= 10) {
+        month = "0" + month;
+      }
 
-        await axios.post('/admin/update-status', data, {withCredentials: true})
-        // window.location.reload();
-      },
+      if (date <= 10) {
+        date = "0" + date;
+      }
 
-      getTime(time) {
-        let year = new Date(time).getFullYear();
-        let month = new Date(time).getMonth() + 1;
-        let date = new Date(time).getDate();
+      if (parseInt(hour) <= 10) {
+        hour = "0" + hour;
+      }
+      if (minute <= 10) {
+        minute = "0" + minute;
+      }
 
-        let hour = new Date(time).getHours();
-        let minute = new Date(time).getMinutes();
-        let second = new Date(time).getSeconds();
+      if (second <= 10) {
+        second = "0" + second;
+      }
 
-        if (month <= 10) {
-          month = "0" + month;
-        }
-
-        if (date <= 10) {
-          date = "0" + date;
-        }
-
-        if (parseInt(hour) <= 10) {
-          hour = "0" + hour;
-        }
-        if (minute <= 10) {
-          minute = "0" + minute;
-        }
-
-        if (second <= 10) {
-          second = "0" + second;
-        }
-
-        return [year, month, date, hour, minute, second];
-      },
+      return [year, month, date, hour, minute, second];
     },
+  },
 
+  computed: {
+    ...mapState(['allOrder']),
+  },
+
+  created() {
+    this.orderDetail = this.allOrder[this.$route.params.id - 1];
+    console.log(this.orderDetail);
   }
+
+}
 </script>
 
 <style lang="scss" scoped>
