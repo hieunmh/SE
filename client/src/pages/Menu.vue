@@ -280,13 +280,15 @@ input[type="button"] {
       padding: 0.8rem 1rem;
       border: 5px solid #27ae60;
       border-radius: 0.7rem;
-      font-size: 1.7rem;
+      font-size: 2rem;
       color: #27ae60;
+      font-weight: 500;
       &:nth-child(1) {
         border-right: none;
       }
       &::placeholder {
         color: rgba($color: #27ae60, $alpha: 1.0);
+        font-weight: 500;
         // text-align: center;
       }
     }
@@ -295,8 +297,8 @@ input[type="button"] {
       color: #fff;
       font-weight: 500;
       &:hover {
-        background-color: #f38609;
-        border-color: #f38609;
+        background-color: #ee4d2d;
+        border-color: #ee4d2d;
       }
     }
   }
@@ -319,7 +321,7 @@ input[type="button"] {
       text-transform: capitalize;
       transition: all 0.3s ease;
       &:hover {
-        background-color: #f38609 !important;
+        background-color: #ee4d2d !important;
       }
       p {
         padding: none;

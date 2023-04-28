@@ -31,7 +31,7 @@
 			</div>
 			
 
-			<div v-else class="fas fa-user account logined" style="background: #f38609; color: white;">
+			<div v-else class="fas fa-user account logined" style="color: white;">
 				<ul class="drop-down-select">
 					<li><RouterLink @click="outMenu()" to="/info">
 						<!-- {{ user.userName.split(' ')[user.userName.split(' ').length - 1] }} -->Hồ sơ
@@ -221,7 +221,7 @@ export default {
 			}
 		}
 		a.router-link-exact-active {
-			color: #f38609;
+			color: #ee4d2d;
 		}
 	}
 
@@ -273,7 +273,8 @@ export default {
 		}
 
 		.account.logined {
-			border-color: #f38609;
+			border-color: #ee4d2d;
+			background-color: #ee4d2d;
 		}
 
 		.account {
@@ -306,7 +307,7 @@ export default {
 						background-color: #27ae60;
 						border-radius: 0.7rem;
 						&:hover {
-							background-color: #f38609;
+							background-color: #ee4d2d;
 							color: white;
 						}
 					}

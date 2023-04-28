@@ -63,5 +63,11 @@ export default {
     // setTimeout(() => {
     //   state.showThank = false;
     // }, 1000);
+  },
+  setInputAddress(state, inputAddress) {
+    state.inputAddress = inputAddress;
+  },
+  setAddress(state, address) {
+    state.addressPayment = address;
   }
 };

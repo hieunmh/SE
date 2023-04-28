@@ -4,11 +4,37 @@
     <Thank></Thank>
   </div>
 
+  <div v-if="inputAddress">
+    <Address></Address>
+  </div>
+
   <div class="payment">
     <div class="box">
       <div class="box-content">
 
         <button class="btnn" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i></button>
+
+        <div class="row">
+          <div class="col-12" style="height: 4rem; color: #ee4d2d;"><h3><i class="fa-solid fa-location-dot"></i> Địa chỉ nhận hàng</h3></div>
+
+          <div class="col-10 d-flex justify-content-start">
+            <h3 class="col-6 d-flex flex-column justify-content-center">
+              {{ user.userName }} (+84) {{ user.telephone.substring(1, 4) }} {{ user.telephone.substring(4, 7) }} {{ user.telephone.substring(7, 10) }}
+            </h3>
+
+            <h4 class="col-6 d-flex flex-column justify-content-center">
+              <div>
+                {{ addressPayment.detail }} <span v-if="addressPayment.detail">,</span> 
+                {{ addressPayment.war }} <span v-if="addressPayment.war">,</span> 
+                {{ addressPayment.dis }} <span v-if="addressPayment.dis">,</span>  
+                {{ addressPayment.pro }}
+              </div>
+            </h4>
+          </div>
+          
+
+          <div class="col-2 d-flex justify-content-end"><button @click="setInputAddress(true)" class="btnn">Thêm</button></div>
+        </div>
 
         <div class="row bar">
           <div class="col-sm-6 col-7 text-center">
@@ -62,10 +88,6 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-1"></div>
-          <input class="inp col-10" v-model="address" type="text" placeholder="Nhập địa chỉ nhận hàng">
-        </div>
 
         <div>
           <div class="col-12 d-flex justify-content-end">
@@ -86,26 +108,29 @@ import axios from 'axios';
 import { mapActions, mapMutations, mapState } from 'vuex';
 import serverUrl from '@/axios';
 import Thank from '@/components/Thank.vue';
+import Address from './Address.vue';
 
 export default {
   name: 'Payment',
   components: {
-    Thank
+    Thank,
+    Address,
   },
   data() {
     return {
       imgUrl: serverUrl + "/upload/productImage/",
-      address: null,
+      specificAddress: "",
     }
   },
   methods: {
-    ...mapMutations(['setShowThank']),
+    ...mapMutations(['setShowThank', 'setInputAddress']),
     ...mapActions(['getCart']),
 
     async order() { 
       let data = {
-        full_address: this.address,
+        full_address: this.addressPayment.detail + " ," + this.addressPayment.war + " ," + this.addressPayment.dis + " , " + this.addressPayment.pro
       } 
+      console.log(data.full_address);
       await axios.post('create-order', data, { withCredentials: true });
 
       await new Promise(() => setTimeout(() => {
@@ -127,12 +152,15 @@ export default {
         i++;
       }
       return [totalsalePrice, totalPrice];
-    }
+    },
 
   },
   computed: {
-    ...mapState(['user', 'allFoods', 'cartItem', 'showThank']),
-  },  
+    ...mapState(['user', 'allFoods', 'cartItem', 'showThank', 'inputAddress', 'addressPayment']),
+
+
+  }, 
+
 
 }
 </script>
@@ -142,6 +170,20 @@ export default {
 .payment {
   padding: 2rem 20%;
   background-color: #fff;
+  form {
+    select {
+      outline: none;
+      appearance: none;
+      height: 4rem;
+      font-size: 1.5rem;
+      font-weight: 500;
+      border-radius: 0.7rem;
+      text-align: center;
+      option {
+        height: 4rem;
+      }
+    }
+  }
 }
 
 .box {
@@ -182,11 +224,9 @@ export default {
       margin: 1rem 0;
       border-radius: 0.7rem;
       input {
-        height: 5rem;
-        font-size: 2rem;
-        border-radius: 0.7rem;
-        // color: #27ae60;
-        padding-left: 1rem;
+        &::placeholder {
+          text-align: center;
+        }
       }
     }
 
@@ -250,6 +290,10 @@ export default {
       }
     }
   }
+}
+
+.address {
+  font-size: 2rem;
 }
 
 

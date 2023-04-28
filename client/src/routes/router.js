@@ -12,7 +12,7 @@ import Myorder from '../pages/Myorder.vue';
 import Cart from '../pages/Cart.vue';
 import Info from '../pages/Info.vue';
 import Admin from '../pages/Admin/Admin.vue';
-import Payment from '../pages/Payment.vue';
+import Payment from '../pages/Payment/Payment.vue';
 import AllOrder from '../pages/Admin/AllOrder.vue';
 import OrderDetail from '../pages/Admin/OrderDetail.vue';
 

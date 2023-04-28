@@ -25,4 +25,6 @@ export default {
   showMyOrder: true,
   showOrderDetail: true,
   showThank: true,
+  inputAddress: false,
+  addressPayment: [],
 };
