@@ -1,13 +1,13 @@
 <template>
   <div class="shopping-cart">
     <RouterLink to="/menu" style=" text-align: center; color: #fff;">
-      <button class="btnn" @click="setShowProduct(false)">
+      <button class="btnn fw-bold" @click="setShowProduct(false)">
         <i class="fa fa-arrow-left"></i> Menu
       </button>
     </RouterLink>
 
     <div class="heading">
-      <span>Giỏ hàng của bạn</span>
+      <span class="fw-bold">Giỏ hàng của bạn</span>
       <h3>Free ship trong vòng bán kính 5km</h3>
     </div>
 
@@ -19,31 +19,31 @@
           </div>
 
           <div class="image d-flex justify-content-center">
-            <img src="../assets/images/notfound.png" alt="">
+            <img src="@/assets/images/notfound.png" alt="">
           </div>
         </div>
 
         <div v-else class="box-content">
           <div class="row bar">
             <div class="col-md-4 col-9 text-center">
-              <h4>Sản phẩm</h4>
+              <h4 class="fw-bold">Sản phẩm</h4>
             </div>
             
 
             <div class="col-md-2 col-3 text-center">
-              <h4>Đơn giá</h4>
+              <h4 class="fw-bold">Đơn giá</h4>
             </div>
 
             <div class="col-md-2 d-md-inline d-none text-center">
-              <h4>Số lượng</h4>
+              <h4 class="fw-bold">Số lượng</h4>
             </div>
 
             <div class="col-md-2 d-md-inline d-none text-center">
-              <h4>Số tiền</h4>
+              <h4 class="fw-bold">Số tiền</h4>
             </div>
 
             <div class="col-md-2 d-md-inline d-none text-center">
-              <h4>Thao tác</h4>
+              <h4 class="fw-bold">Thao tác</h4>
             </div>
           </div>
           <div v-for="(p, index) in cartItem" :key="index">
@@ -53,31 +53,31 @@
               </div>
               
               <div class="centre col-md-2 col-sm-5 col-5 desc">
-                <h4 class="item-name">{{ p.name }}</h4>
+                <h4 class="item-name fw-bold">{{ p.name }}</h4>
               </div>  
               
               <div class="centre text-center col-md-2 col-sm-3 col-3 item-price">
-                <h4 class="sale-price">{{ parseInt(p.salePrice) }}</h4>
-                <h4 class="sale-price sale" v-if="p.price != p.salePrice">{{ p.price }}</h4>
+                <h4 class="sale-price fw-bold">{{ parseInt(p.salePrice) }}</h4>
+                <h4 class="sale-price fw-bold sale" v-if="p.price != p.salePrice">{{ p.price }}</h4>
               </div>
 
               <div class="centre col-md-2 col-sm-7 col-7 mt-md-0 mt-4 item-qtt">
-                <button class="btnn" @click="decrease(index)" :disabled="p.quantity < 1"><i class="fa-solid fa-minus"></i></button>
-                <input type="text" id="iQuantity" class="form-control item-quantity" 
+                <button class="btn btn-danger" @click="decrease(index)" :disabled="p.quantity < 1"><i class="fa-solid fa-minus"></i></button>
+                <input type="text" id="iQuantity" class="form-control fw-bold item-quantity " 
                   :value="p.quantity" min="1" max="100"
                   oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                   @change="changeQty($event, index)"
                   >
-                <button class="btnn" @click="increase(index)"><i class="fa-solid fa-plus"></i></button>
+                <button class="btn btn-info" @click="increase(index)"><i class="fa-solid fa-plus"></i></button>
               </div>
 
               <div class="centre col-md-2 d-md-flex d-none cal-total">
-                <h4 class="item-total"> {{ p.quantity * p.salePrice }}</h4>
+                <h4 class="item-total fw-bold"> {{ p.quantity * p.salePrice }}</h4>
               </div>
 
               <div class="centre col-md-2 col-sm-5 col-5 mt-md-0 mt-4 delete">
-                <button class="btnn" @click="deleteProduct(index)">
-                  <p class="">Xóa</p> 
+                <button class="btn btn-danger btn-xl" @click="deleteProduct(index)">
+                  <p class="fw-bold">Xóa</p> 
                 </button>
               </div>
             </div>
@@ -86,18 +86,18 @@
 
           <div class="row col-12">
             <div class="col-md-8 col-sm-9 col-9 d-flex justify-content-end">
-              <h4>Tổng thanh toán ( {{ cartItem.length }} sản phẩm ) :</h4>
+              <h4 class="fw-bold">Tổng thanh toán ( {{ cartItem.length }} sản phẩm ) :</h4>
             </div>
 
             <div class="col-md-2 col-sm-3 col-3 centre">
-              <h4>{{ calTotal()[0] }}</h4>
+              <h4 class="fw-bold">{{ calTotal()[0] }}</h4>
             </div>
           </div> 
 
           <div class="">
             <div class="col-12 d-flex justify-content-end">
                 <RouterLink to="/payment" @click="postPayment()" style=" text-align: center; color: #fff;">
-                  <button class="btnn checkout-btn" :disabled="cartItem.length ? false : true">
+                  <button class="btnn checkout-btn fw-bold" :disabled="cartItem.length ? false : true">
                     <i class="fa fa-shopping-cart"></i> Mua hàng
                   </button>
                 </RouterLink>
@@ -118,7 +118,7 @@ import axios from 'axios';
 import { mapActions, mapMutations, mapState } from 'vuex';
 import serverUrl from '@/axios';
 
-import Alert from '../components/AlertCart.vue';
+import Alert from './AlertCart.vue';
 
 export default {
   name: 'Cart',
@@ -254,9 +254,10 @@ export default {
       display: flex;
       // align-items: flex-end;
       button {
-        display: flex;
-        height: 3rem;
-        align-items: center;
+        padding: .7rem 1.8rem;
+          font-size: 1.7rem;
+          cursor: pointer;
+          color: #fff;
         p {
           margin: 0;
           &:nth-child(2) {
@@ -279,6 +280,7 @@ export default {
       display: flex;
       flex-direction: row;
       button {
+        color: white;
         width: 3rem;
         height: 3rem;
         display: flex;

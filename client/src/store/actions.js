@@ -1,4 +1,3 @@
-import router from "@/routes/router";
 import axios from "axios"
 
 export default {

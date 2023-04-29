@@ -174,7 +174,6 @@ export default {
 
   created() {
     this.orderDetail = this.allOrder[this.$route.params.id - 1];
-    console.log(this.orderDetail);
   }
 
 }

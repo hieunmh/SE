@@ -9,7 +9,7 @@ import Promotion from '../pages/Promotion.vue';
 import Table from '../pages/Table.vue';
 import Register from '../pages/Register.vue';
 import Myorder from '../pages/Myorder.vue';
-import Cart from '../pages/Cart.vue';
+import Cart from '../pages/Cart/Cart.vue';
 import Info from '../pages/Info.vue';
 import Admin from '../pages/Admin/Admin.vue';
 import Payment from '../pages/Payment/Payment.vue';

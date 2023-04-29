@@ -25,6 +25,9 @@ export default {
   showMyOrder: true,
   showOrderDetail: true,
   showThank: true,
+  showEditpro: false,
+  showDeletePro: false,
+
   inputAddress: false,
   addressPayment: [],
 };

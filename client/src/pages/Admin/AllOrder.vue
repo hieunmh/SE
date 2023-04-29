@@ -3,8 +3,8 @@
     <div class="box">
       <div class="box-content">
         <div class="">
-          <RouterLink to="/admin"><button class="btnn col-6">Quản Lý Menu</button></RouterLink>
-          <RouterLink to="/admin/allorder"><button class="btnn col-6" :disabled="true">Đơn bán</button></RouterLink>
+          <RouterLink to="/admin"><button class="btnn col-6 fw-bold" >Quản Lý Sản Phẩm</button></RouterLink>
+          <RouterLink to="/admin/allorder"><button class="btnn col-6 fw-bold" :disabled="true">Quản Lý Đơn Hàng</button></RouterLink>
         </div>
 
         <div class="row bar">

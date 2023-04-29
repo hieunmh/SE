@@ -69,5 +69,11 @@ export default {
   },
   setAddress(state, address) {
     state.addressPayment = address;
-  }
+  },
+  setShowEditpro(state, showEditpro) {
+    state.showEditpro = showEditpro;
+  },
+  setShowDeletePro(state, showDeletePro) {
+    state.showDeletePro = showDeletePro;
+  },
 };

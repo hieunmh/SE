@@ -50,7 +50,7 @@
 				<i class="fa-solid fa-magnifying-glass" @click="search()"></i>
 			</RouterLink>
 			<RouterLink to="/menu">
-				<input type="text" class="search-input" v-model="searchName" @keyup.enter="search(), scrollToTop()" placeholder="Tìm kiếm . . .">
+				<input type="text" class="search-input fw-bold" v-model="searchName" @keyup.enter="search(), scrollToTop()" placeholder="Tìm kiếm . . .">
 			</RouterLink>
 			<!-- <div class="row filter-dropdown" @click="">
 				<div class="fa fa-sliders dropDown"></div>

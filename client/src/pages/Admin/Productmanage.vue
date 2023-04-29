@@ -1,24 +1,37 @@
 <template>
   <div class="product-manage">
+    <div v-if="showEditpro">
+      <EditProduct :editdata="editData"></EditProduct>
+    </div>
+
+    <div v-if="showDeletePro">
+      <AlertDeleteProduct :index="id"></AlertDeleteProduct>
+    </div>
+
     <div class="box">
       <div class="">
-        <button class="btnn col-6" :disabled="true">Quản Lý Menu</button>
-        <RouterLink to="/admin/allorder"><button class="btnn col-6">Đơn Bán</button></RouterLink>
+        <button class="btnn col-6 fw-bold" :disabled="true">Quản Lý Sản Phẩm</button>
+        <RouterLink to="/admin/allorder"><button class="btnn col-6 fw-bold">Quản Lý Đơn Hàng</button></RouterLink>
       </div>
 
       <div class="box-content">
+        
+        <div class="row add-product d-flex justify-content-center">
+          <button class="btn btn-outline-success col-12 text-center fw-bold">Thêm sản phẩm mới</button>
+        </div>
+
         <div class="row bar">
           <div class="col-7">
-            <h4 class="text-center">Thông tin sản phẩm</h4>
+            <h4 class="text-center fw-bold">Thông tin sản phẩm</h4>
           </div>
 
           <div class="col-2">
-            <h4 class="text-center">Đơn giá</h4>
+            <h4 class="text-center fw-bold">Đơn giá</h4>
           </div>
 
 
           <div class="col-3">
-            <h4 class="text-center">chi tiết</h4>
+            <h4 class="text-center fw-bold">chi tiết</h4>
           </div>
         </div>
 
@@ -28,19 +41,20 @@
             <img :src="`${imgUrl}${p.image}`" alt="">
           </div>
 
-          <div class="centre col-4 desc">
-            <h4 class="item-name">{{ p.name }}</h4>
+          <div class="centre col-4 desc ">
+            <h4 class="item-name fw-bold">{{ p.name }}</h4>
           </div>
 
 
           <div class="centre col-2 cal-total">
-            <h4 class="item-total text-dark text-decoration-line-through"
+            <h4 class="item-total text-dark text-decoration-line-through fw-bold"
               v-if="parseInt(p.price) != parseInt(p.salePrice)"> {{ p.price }}</h4>
-            <h4 class="item-total">{{ parseInt(p.salePrice) }}</h4>
+            <h4 class="item-total fw-bold">{{ parseInt(p.salePrice) }}</h4>
           </div>
 
-          <div class="centre col-3 delete">
-            <button class="btnn">xem</button>
+          <div class="centre col-3 detail">
+            <button class="btn btn-info fw-bold" @click="showEditProduct(index)">sửa</button>
+            <button class="mt-2 btn btn-danger fw-bold" @click="showAlertDeleteProduct(index)">xóa</button>
           </div>
         </div>
 
@@ -74,9 +88,15 @@
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
 import serverUrl from '@/axios';
+import EditProduct from './EditProduct.vue';
+import AlertDeleteProduct from './AlertDeleteProduct.vue';
 
 export default {
   name: "Admin",
+  components: {
+    EditProduct,
+    AlertDeleteProduct
+  },
 
   data() {
     return {
@@ -85,13 +105,25 @@ export default {
       pageNum: 0,
       perPage: 6,
       imgUrl: serverUrl + "/upload/productImage/",
+      editData: [],
+      id: null,
     }
   },
 
   methods: {
-    ...mapMutations(['scrollToTop']),
+    ...mapMutations(['scrollToTop' , 'setShowEditpro', 'setShowDeletePro']),
     ...mapActions(['getAllOrder', 'getProducts']),
 
+    showEditProduct(index) {
+      this.editData = this.currentPage[index];
+      this.setShowEditpro(true);
+    },
+
+    showAlertDeleteProduct(index) {
+      console.log(this.currentPage[index].id);
+      this.id = this.currentPage[index].id;
+      this.setShowDeletePro(true);
+    },
 
     setPage(value) {
       this.pageNum = value;
@@ -134,7 +166,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['admin', 'allFoods']),
+    ...mapState(['admin', 'allFoods', 'showEditpro', 'showDeletePro']),
 
     currentPage() {
       return this.allFoods.slice(this.pageNum * this.perPage, this.pageNum * this.perPage + this.perPage);
@@ -173,6 +205,14 @@ export default {
       padding: 0;
       border-image: none;
 
+      .add-product {
+        button {
+          width: 25rem;
+          font-size: 2rem;
+          font-weight: 500;
+        }
+      }
+
       .row {
         background-color: #f1f1f1;
         padding: 2rem 0;
@@ -198,46 +238,18 @@ export default {
         }
       }
 
-      .item-qtt {
-        display: flex;
-        flex-direction: row;
-
-        button {
-          width: 3rem;
-          height: 3rem;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-
-          i {
-            padding: 0;
-          }
-        }
-
-        input {
-          text-align: center;
-          height: 3rem;
-          width: 4rem;
-          font-size: 1.5rem;
-          text-decoration: none;
-        }
-      }
-
       .cal-total {
         h4 {
           color: #ee4d2d;
         }
       }
-
-      .item-price {
-        .sale-price {
-          width: 10rem;
-          font-size: 1.5rem;
-        }
-
-        .sale {
-          text-decoration: line-through;
-          color: rgba($color: #000000, $alpha: 0.5);
+      
+      .detail {
+        button {
+          padding: .7rem 1.8rem;
+          font-size: 1.7rem;
+          cursor: pointer;
+          color: #fff;
         }
       }
     }

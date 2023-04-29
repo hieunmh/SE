@@ -16,23 +16,23 @@
         </div>
 
         <div class="row priceFilter">
-          <input type="text" class="filter-item col-sm-4 col-6" v-model="priceRangeFrom" placeholder="Từ VNĐ" @keypress.enter="filterPriceRange()" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-          <input type="text" class="filter-item col-sm-4 col-6" v-model="priceRangeTo" placeholder="Đến VNĐ" @keypress.enter="filterPriceRange()" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-          <input type="button" class="filter-item col-sm-2 col-6" @click="filterPriceRange()" value="Áp dụng" >
-          <input type="button" class="filter-item col-sm-2 col-6" @click="deletePriceRange()" value="Xóa lọc">
+          <input type="text" class="filter-item col-lg-4 col-md-3 col-6 fw-bold" v-model="priceRangeFrom" placeholder="Từ VNĐ" @keypress.enter="filterPriceRange()" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          <input type="text" class="filter-item col-lg-4 col-md-3 col-6 fw-bold" v-model="priceRangeTo" placeholder="Đến VNĐ" @keypress.enter="filterPriceRange()" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          <input type="button" class="filter-item col-lg-2 col-md-3 col-6 fw-bold" @click="filterPriceRange()" value="Áp dụng" >
+          <input type="button" class="filter-item col-lg-2 col-md-3 col-6 fw-bold" @click="deletePriceRange()" value="Xóa lọc">
         </div>
 
         <div class="row box-container">
-          <div v-for="(p, index) in currentPage" :key="index" class="col-lg-3 col-md-4 col-6">
+          <div v-for="(p, index) in currentPage" :key="index" class="col-xl-3 col-md-4 col-6">
             <div class="box" @click="showDetail(index)">
               <div class="image">
                 <img :src="`${imgUrl}${p.image}`" alt="">
               </div>
 
               <div class="content">
-                <h3>{{ p.name }}</h3>
+                <h3 class="fw-bold">{{ p.name }}</h3>
 
-                <div class="price">
+                <div class="price fw-bold">
                   {{ parseFloat(p.price) }} VNĐ
                   <span></span>
                 </div>
@@ -282,20 +282,17 @@ input[type="button"] {
       border-radius: 0.7rem;
       font-size: 2rem;
       color: #27ae60;
-      font-weight: 500;
       &:nth-child(1) {
         border-right: none;
       }
       &::placeholder {
         color: rgba($color: #27ae60, $alpha: 1.0);
-        font-weight: 500;
         // text-align: center;
       }
     }
     input[type = "button"] {
       background-color: #27ae60;
       color: #fff;
-      font-weight: 500;
       &:hover {
         background-color: #ee4d2d;
         border-color: #ee4d2d;
@@ -306,7 +303,6 @@ input[type="button"] {
   .menu-tabs {
     margin: 0;
     margin-bottom: 1rem;
-    flex: 0 0 100%;
     max-width: 100%;
     text-align: center;
     background-color: #27ae60;

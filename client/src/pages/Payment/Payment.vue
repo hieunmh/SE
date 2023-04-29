@@ -15,15 +15,15 @@
         <button class="btnn" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i></button>
 
         <div class="row">
-          <div class="col-12" style="height: 4rem; color: #ee4d2d;"><h3><i class="fa-solid fa-location-dot"></i> Địa chỉ nhận hàng</h3></div>
+          <div class="col-12" style="height: 4rem; color: #ee4d2d;"><h3 class="fw-bold"><i class="fa-solid fa-location-dot"></i> Địa chỉ nhận hàng</h3></div>
 
           <div class="col-10 d-flex justify-content-start">
-            <h3 class="col-6 d-flex flex-column justify-content-center">
+            <h3 class="col-6 d-flex flex-column justify-content-center fw-bold">
               {{ user.userName }} (+84) {{ user.telephone.substring(1, 4) }} {{ user.telephone.substring(4, 7) }} {{ user.telephone.substring(7, 10) }}
             </h3>
 
             <h4 class="col-6 d-flex flex-column justify-content-center">
-              <div>
+              <div class="fw-bold">
                 {{ addressPayment.detail }} <span v-if="addressPayment.detail">,</span> 
                 {{ addressPayment.war }} <span v-if="addressPayment.war">,</span> 
                 {{ addressPayment.dis }} <span v-if="addressPayment.dis">,</span>  
@@ -33,24 +33,24 @@
           </div>
           
 
-          <div class="col-2 d-flex justify-content-end"><button @click="setInputAddress(true)" class="btnn">Thêm</button></div>
+          <div class="col-2 d-flex justify-content-end"><button @click="setInputAddress(true)" class="btnn fw-bold">Thêm</button></div>
         </div>
 
         <div class="row bar">
           <div class="col-sm-6 col-7 text-center">
-            <h4>Sản phẩm</h4>
+            <h4 class="fw-bold">Sản phẩm</h4>
           </div>
 
           <div class="col-2 d-sm-inline d-none text-center">
-            <h4>Đơn giá</h4>
+            <h4 class="fw-bold">Đơn giá</h4>
           </div>
 
           <div class="col-2 text-center">
-            <h4>Số lượng</h4>
+            <h4 class="fw-bold">Số lượng</h4>
           </div>
 
           <div class="col-sm-2 col-3 text-center">
-            <h4>Thành tiền</h4>
+            <h4 class="fw-bold">Thành tiền</h4>
           </div>
         </div>
         
@@ -60,31 +60,31 @@
           </div>
 
           <div class="centre col-sm-4 col-3 desc">
-            <h4 class="item-name">{{ p.name }}</h4>
+            <h4 class="item-name fw-bold">{{ p.name }}</h4>
           </div>
 
 
           <div class="centre col-sm-2 d-sm-flex d-none cal-total">
-            <h4 class="item-total"> {{ p.quantity * p.salePrice }}</h4>
+            <h4 class="item-total fw-bold"> {{ parseInt(p.salePrice) }}</h4>
           </div>
 
           <div class="centre col-sm-2 col-2  item-qtt">
-            <h4><span class="d-sm-none d-inline">x</span>{{ p.quantity }}</h4>
+            <h4 class="fw-bold"><span class="d-sm-none d-inline">x</span>{{ p.quantity }}</h4>
           </div>
 
           <div class="centre col-sm-2 col-3">
-            <h4>{{ p.quantity * p.salePrice }}</h4>
+            <h4 class="fw-bold">{{ p.quantity * p.salePrice }}</h4>
           </div>
         </div>
 
         <div class="row col-12">
 
           <div class="col-sm-10 col-9 d-flex justify-content-end">
-            <h4>Tổng số tiền ({{ cartItem.length }} sản phẩm): </h4>
+            <h4 class="fw-bold">Tổng số tiền ({{ cartItem.length }} sản phẩm): </h4>
           </div>
 
           <div class="col-sm-2 col-3 centre">
-            <h4>{{ calTotal()[0] }}</h4>
+            <h4 class="fw-bold">{{ calTotal()[0] }}</h4>
           </div>
         </div>
 
@@ -92,7 +92,7 @@
         <div>
           <div class="col-12 d-flex justify-content-end">
             <!-- <RouterLink to="/" @click="order()" style=" text-align: center; color: #fff;"> -->
-              <button @click="order()" class="btnn checkout-btn" :disabled="cartItem.length ? false : true">
+              <button @click="order()" class="btnn checkout-btn fw-bold" :disabled="cartItem.length ? false : true">
                 <i class="fa fa-shopping-cart"></i> Đặt hàng
               </button>
             <!-- </RouterLink> -->
