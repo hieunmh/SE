@@ -43,6 +43,7 @@
 
       <div>
         <button @click="setAddressPayment" class="btnn">Hoàn Thành</button>
+        <button @click="setInputAddress(false)" class="btnn">Hủy</button>
       </div>
     </div>
   </div>
@@ -78,7 +79,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['scrollToTop', 'setShowAlertEditInfo', 'setShowAlertEditPass', 'setInputAddress', 'setAddress']),
+    ...mapMutations(['scrollToTop', 'setInputAddress', 'setAddress']),
 
     async setAddressPayment() {
       let data = {

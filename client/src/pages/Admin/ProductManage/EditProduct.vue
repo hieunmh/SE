@@ -35,7 +35,7 @@ export default {
   props: ['editdata'],
   data() {
     return {
-      imgUrl: serverUrl + "/upload/productImage/",
+      imgUrl: serverUrl,
     }
   },
 
@@ -168,20 +168,21 @@ export default {
 }
 
 
-@media (max-width: 340px) {
-  .edit-product .edit-product-inner  {
-    width: 28rem;
-    .product-description {
-      .content {
-        top: 10%;
-        h2 {
-          font-size: 2rem;
-        }
-        div > p {
-          font-size: 2rem;
-        }
-      }
-    }
+@media (max-width: 992px) {
+  .edit-product {
+    padding: 2rem 15%;
+  }
+}
+
+@media (max-width: 767px) {
+  .edit-product {
+    padding: 2rem 10%;
+  }
+}
+
+@media (max-width: 576px) {
+  .edit-product {
+    padding: 2rem 5%;
   }
 }
 </style>

@@ -96,7 +96,7 @@
 
           <div class="">
             <div class="col-12 d-flex justify-content-end">
-                <RouterLink to="/payment" @click="postPayment()" style=" text-align: center; color: #fff;">
+                <RouterLink to="/payment" style=" text-align: center; color: #fff;">
                   <button class="btnn checkout-btn fw-bold" :disabled="cartItem.length ? false : true">
                     <i class="fa fa-shopping-cart"></i> Mua hàng
                   </button>
@@ -132,7 +132,7 @@ export default {
       ship: 15000,
       totalPrice: 0,
       index: null,
-      imgUrl: serverUrl + "/upload/productImage/",
+      imgUrl: serverUrl,
     }
   },
   methods: {
@@ -174,11 +174,6 @@ export default {
     async deleteProduct(index) {
       this.setShowAlert(true);
       this.index = index;
-    },
-
-    async postPayment() {
-      await axios.post('payment', {}, {withCredentials: true})
-      .then(res => console.log(res))
     },
 
     calTotal() {
@@ -288,6 +283,7 @@ export default {
         align-items: center;
         i {
           padding : 0;
+          font-size: 1.5rem;
         }
       }
       input {
@@ -326,14 +322,6 @@ export default {
   text-decoration: line-through;
 }
 
-.remove-btn {
-  font-size: 10px;
-  padding: 5px;
-  margin-top: 27px;
-  i {
-    padding-right: 5px;
-  }
-}
 
 @media (max-width: 992px) {
   .shopping-cart {

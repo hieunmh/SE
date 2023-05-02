@@ -27,6 +27,7 @@ export default {
   showThank: true,
   showEditpro: false,
   showDeletePro: false,
+  showAddPro: false,
 
   inputAddress: false,
   addressPayment: [],

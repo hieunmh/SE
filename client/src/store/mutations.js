@@ -76,4 +76,7 @@ export default {
   setShowDeletePro(state, showDeletePro) {
     state.showDeletePro = showDeletePro;
   },
+  setShowAddPro(state, showAddPro) {
+    state.showAddPro = showAddPro;
+  }
 };

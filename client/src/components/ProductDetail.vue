@@ -24,12 +24,12 @@
             <label class="col-xl-5 col-lg-12 col-md-12" for="qty">Số Lượng:</label>
 
             <div class="col-xl-7 col-lg-12 col-md-12 justify-content-center">
-              <button class="btnn" @click="decrease()" :disabled="qty < 2"><i class="fa-solid fa-minus"></i></button>
+              <button class="btn btn-danger" @click="decrease()" :disabled="qty < 2"><i class="fa-solid fa-minus"></i></button>
               <input type="text" name="qty" id="qty" :value="qty" min="1" max="100"
                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                @input="qty = $event.target.value"
                >
-              <button class="btnn" @click="increase($event)"><i class="fa-solid fa-plus"></i></button>
+              <button class="btn btn-info" @click="increase($event)"><i class="fa-solid fa-plus"></i></button>
             </div>
           </div>
 
@@ -75,7 +75,7 @@ export default {
   data() {
     return {
       qty: 1,
-      imgUrl: serverUrl + "/upload/productImage/",
+      imgUrl: serverUrl,
     }
   },
 
@@ -231,11 +231,13 @@ export default {
               width: 4rem;
               height: 4rem;
               margin: 0 0.5rem;
+              color: #fff;
               display: flex;
               justify-content: center;
               align-items: center;
               i {
                 padding: 0;
+                font-size: 2rem;
               }
             }
           }

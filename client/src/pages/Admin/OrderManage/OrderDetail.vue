@@ -7,18 +7,18 @@
         </div>
 
         <div class="row client-info">
-          <div class="col-6 text-center"><h3>ID: </h3></div>
+          <div class="col-6 text-center"><h3 class="fw-bold">ID: </h3></div>
 
-          <div class="col-6 text-center"><h3>{{ this.$route.params.id  }}</h3></div>
+          <div class="col-6 text-center"><h3 class="fw-bold">{{ this.$route.params.id  }}</h3></div>
 
-          <div class="col-6 text-center"><h3>tên khánh hàng:</h3></div>
+          <div class="col-6 text-center"><h3 class="fw-bold">tên khánh hàng:</h3></div>
 
-          <div class="col-6 text-center"><h3>{{ orderDetail.user.name }}</h3></div>
+          <div class="col-6 text-center"><h3 class="fw-bold">{{ orderDetail.user.name }}</h3></div>
 
-          <div class="col-6 text-center"><h3>số điện thoại:</h3></div>
+          <div class="col-6 text-center"><h3 class="fw-bold">số điện thoại:</h3></div>
 
           <div class="col-6 text-center">
-            <h3>
+            <h3 class="fw-bold">
               {{ orderDetail.user.telephone.substring(0, 4) + " - " 
                + orderDetail.user.telephone.substring(4, 7) + " - " 
                + orderDetail.user.telephone.substring(7, 10) }}
@@ -26,21 +26,21 @@
           </div>
 
           <div class="col-12 row text-center">
-            <h3 class="col-6 d-flex flex-column justify-content-center">Thời gian đặt đơn:</h3>
+            <h3 class="col-6 d-flex flex-column justify-content-center fw-bold">Thời gian đặt đơn:</h3>
             <div class="col-6 text-center">
-              <h3>{{ getTime(orderDetail.created_at)[2] + " - " + getTime(orderDetail.created_at)[1] + " - " + getTime(orderDetail.created_at)[0] }}</h3>
-              <h3>{{ getTime(orderDetail.created_at)[3] + " : " + getTime(orderDetail.created_at)[4] + " : " + getTime(orderDetail.created_at)[5] }}</h3>
+              <h3 class="fw-bold">{{ getTime(orderDetail.created_at)[2] + " - " + getTime(orderDetail.created_at)[1] + " - " + getTime(orderDetail.created_at)[0] }}</h3>
+              <h3 class="fw-bold">{{ getTime(orderDetail.created_at)[3] + " : " + getTime(orderDetail.created_at)[4] + " : " + getTime(orderDetail.created_at)[5] }}</h3>
             </div>
           </div>
 
 
-          <div class="col-6 text-center"><h3>Địa chỉ:</h3></div>
+          <div class="col-6 text-center"><h3 class="fw-bold">Địa chỉ:</h3></div>
 
-          <div class="col-6 text-center"><h3>{{ orderDetail.address }}</h3></div>  
+          <div class="col-6 text-center"><h3 class="fw-bold">{{ orderDetail.address }}</h3></div>  
 
-          <div class="col-6 text-center d-flex flex-column justify-content-center"><h3 class="">trạng thái:</h3></div>
+          <div class="col-6 text-center d-flex flex-column justify-content-center"><h3 class="fw-bold">trạng thái:</h3></div>
 
-          <div class="col-6 d-flex justify-content-center text-center">
+          <div class="col-6 d-flex justify-content-center text-center fw-bold">
             <select name="format" @input="updateStatus($event)">
               <option value="" selected>{{ orderDetail.status }}</option> 
               <option value="Đang xử lý" v-if="orderDetail.status != 'Đang xử lý'">Đang xử lý</option>
@@ -52,19 +52,19 @@
 
         <div class="row bar">
           <div class="col-sm-6 col-8 text-center">
-            <h4>Sản phẩm</h4>
+            <h4 class="fw-bold">Sản phẩm</h4>
           </div>
 
           <div class="col-sm-2 d-sm-inline d-none">
-            <h4 class="text-center">Đơn giá</h4>
+            <h4 class="text-center fw-bold">Đơn giá</h4>
           </div>
 
           <div class="col-sm-2 col-2">
-            <h4 class="text-center">Số lượng</h4>
+            <h4 class="text-center fw-bold">Số lượng</h4>
           </div>
 
           <div class="col-sm-2 col-2 text-center">
-            <h4>Thành tiền</h4>
+            <h4 class="fw-bold">Thành tiền</h4>
           </div>
         </div>
       
@@ -74,33 +74,33 @@
           </div>
 
           <div class="centre col-sm-4 col-4">
-            <h4 class="item-total d-sm-none d-inline text-dark text-decoration-line-through" v-if="parseInt(o.product.price) != parseInt(o.product.salePrice)"> {{ o.product.price }}</h4>
-            <h4 class="item-total d-sm-none d-inline">{{ parseInt(o.product.salePrice) }}</h4>
-            <h4 class="item-name">{{ o.product.name }}</h4>
+            <h4 class="item-total fw-bold d-sm-none d-inline text-dark text-decoration-line-through" v-if="parseInt(o.product.price) != parseInt(o.product.salePrice)"> {{ o.product.price }}</h4>
+            <h4 class="item-total fw-bold d-sm-none d-inline">{{ parseInt(o.product.salePrice) }}</h4>
+            <h4 class="item-name fw-bold">{{ o.product.name }}</h4>
           </div>
 
 
           <div class="centre col-sm-2 d-sm-flex d-none cal-total">
-            <h4 class="item-total text-dark text-decoration-line-through" v-if="parseInt(o.product.price) != parseInt(o.product.salePrice)"> {{ o.product.price }}</h4>
-            <h4>{{ parseInt(o.product.salePrice) }}</h4>
+            <h4 class="item-total text-dark text-decoration-line-through fw-bold" v-if="parseInt(o.product.price) != parseInt(o.product.salePrice)"> {{ o.product.price }}</h4>
+            <h4 class="fw-bold">{{ parseInt(o.product.salePrice) }}</h4>
           </div>
 
           <div class="centre col-sm-2 col-2  item-qtt">
-            <h4>{{ o.quantity }}</h4>
+            <h4 class="fw-bold">{{ o.quantity }}</h4>
           </div>
 
           <div class="centre col-2 delete">
-            <h4>{{ o.quantity * o.product.salePrice }}</h4>
+            <h4 class="fw-bold">{{ o.quantity * o.product.salePrice }}</h4>
           </div>
         </div>
 
         <div class="row col-12">
           <div class="col-10 d-flex justify-content-end">
-            <h4>Tổng số tiền ( {{ this.orderDetail.order_items.length }} sản phẩm ): </h4>
+            <h4 class="fw-bold">Tổng số tiền ( {{ this.orderDetail.order_items.length }} sản phẩm ): </h4>
           </div>
 
           <div class="col-2 centre">
-            <h4>{{ parseInt(orderDetail.total) }}</h4>
+            <h4 class="fw-bold">{{ parseInt(orderDetail.total) }}</h4>
           </div>
         </div>
       </div>
@@ -117,7 +117,7 @@ export default {
   name: "OrderDetail",
   data() {
     return {
-      imgUrl: serverUrl + "/upload/productImage/",
+      imgUrl: serverUrl,
       index: null,
       orderDetail: null,
     }

@@ -8,6 +8,10 @@
       <AlertDeleteProduct :index="id"></AlertDeleteProduct>
     </div>
 
+    <div v-if="showAddPro">
+      <AddProduct></AddProduct>
+    </div>
+
     <div class="box">
       <div class="">
         <button class="btnn col-6 fw-bold" :disabled="true">Quản Lý Sản Phẩm</button>
@@ -17,7 +21,7 @@
       <div class="box-content">
         
         <div class="row add-product d-flex justify-content-center">
-          <button class="btn btn-outline-success col-12 text-center fw-bold">Thêm sản phẩm mới</button>
+          <button class="btn btn-outline-success col-12 text-center fw-bold" @click="setShowAddPro(true)">Thêm sản phẩm mới</button>
         </div>
 
         <div class="row bar">
@@ -90,12 +94,14 @@ import { mapActions, mapMutations, mapState } from 'vuex';
 import serverUrl from '@/axios';
 import EditProduct from './EditProduct.vue';
 import AlertDeleteProduct from './AlertDeleteProduct.vue';
+import AddProduct from './AddProduct.vue';
 
 export default {
   name: "Admin",
   components: {
     EditProduct,
-    AlertDeleteProduct
+    AlertDeleteProduct,
+    AddProduct
   },
 
   data() {
@@ -104,14 +110,14 @@ export default {
       OrderId: [],
       pageNum: 0,
       perPage: 6,
-      imgUrl: serverUrl + "/upload/productImage/",
+      imgUrl: serverUrl,
       editData: [],
       id: null,
     }
   },
 
   methods: {
-    ...mapMutations(['scrollToTop' , 'setShowEditpro', 'setShowDeletePro']),
+    ...mapMutations(['scrollToTop' , 'setShowEditpro', 'setShowDeletePro', 'setShowAddPro']),
     ...mapActions(['getAllOrder', 'getProducts']),
 
     showEditProduct(index) {
@@ -166,7 +172,7 @@ export default {
   },
 
   computed: {
-    ...mapState(['admin', 'allFoods', 'showEditpro', 'showDeletePro']),
+    ...mapState(['admin', 'allFoods', 'showEditpro', 'showDeletePro', 'showAddPro']),
 
     currentPage() {
       return this.allFoods.slice(this.pageNum * this.perPage, this.pageNum * this.perPage + this.perPage);

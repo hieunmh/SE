@@ -94,7 +94,7 @@ export default {
       pageNum: 0,
       perPage: 12 ,
       prevCategoryClicked: "",
-      imgUrl: serverUrl + "/upload/productImage/",
+      imgUrl: serverUrl,
       priceRange: {
         from: "",
         to: "",

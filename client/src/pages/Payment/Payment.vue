@@ -29,11 +29,16 @@
                 {{ addressPayment.dis }} <span v-if="addressPayment.dis">,</span>  
                 {{ addressPayment.pro }}
               </div>
+
+              <div>
+
+              </div>
             </h4>
           </div>
           
 
-          <div class="col-2 d-flex justify-content-end"><button @click="setInputAddress(true)" class="btnn fw-bold">Thêm</button></div>
+          <div class="col-2 d-flex justify-content-end" v-if="!defaultAddress"><button @click="setInputAddress(true)" class="btnn fw-bold">Thêm</button></div>
+          <div class="col-2 d-flex justify-content-end" v-else><button @click="setInputAddress(true)" class="btnn fw-bold">Thay Đổi</button></div>
         </div>
 
         <div class="row bar">
@@ -118,8 +123,8 @@ export default {
   },
   data() {
     return {
-      imgUrl: serverUrl + "/upload/productImage/",
-      specificAddress: "",
+      imgUrl: serverUrl,
+      defaultAddress: null,
     }
   },
   methods: {
@@ -154,12 +159,24 @@ export default {
       return [totalsalePrice, totalPrice];
     },
 
+    async postPayment() {
+      await axios.post('payment', {}, { withCredentials: true })
+        .then((res) => {
+          this.defaultAddress = res.data.userAddress;
+          console.log(this.defaultAddress);
+        })
+    },
+
   },
   computed: {
     ...mapState(['user', 'allFoods', 'cartItem', 'showThank', 'inputAddress', 'addressPayment']),
 
 
   }, 
+
+  created() {
+    this.postPayment()
+  }
 
 
 }

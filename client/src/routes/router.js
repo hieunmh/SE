@@ -8,13 +8,13 @@ import About from '../pages/About.vue';
 import Promotion from '../pages/Promotion.vue';
 import Table from '../pages/Table.vue';
 import Register from '../pages/Register.vue';
-import Myorder from '../pages/Myorder.vue';
+import Myorder from '../pages/Order/Myorder.vue';
 import Cart from '../pages/Cart/Cart.vue';
 import Info from '../pages/Info.vue';
 import Admin from '../pages/Admin/Admin.vue';
 import Payment from '../pages/Payment/Payment.vue';
-import AllOrder from '../pages/Admin/AllOrder.vue';
-import OrderDetail from '../pages/Admin/OrderDetail.vue';
+import AllOrder from '../pages/Admin/OrderManage/AllOrder.vue';
+import OrderDetail from '../pages/Admin/OrderManage/OrderDetail.vue';
 
 
 const routes = [

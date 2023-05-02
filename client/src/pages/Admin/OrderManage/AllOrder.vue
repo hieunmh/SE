@@ -1,51 +1,45 @@
 <template>
-
-  <div v-if="!showMyOrder">
-    <MyOrderDetail :detailId="detailId"></MyOrderDetail>
-  </div>
-
-
-  <div v-else class="myorder">
+  <div class="allOrder">
     <div class="box">
       <div class="box-content">
-
-        <div>
-          <RouterLink to="/"><button class="btnn fw-bold"><i class="fa fa-arrow-left" style="margin-right: 0.5rem;"></i>Home</button></RouterLink>
+        <div class="">
+          <RouterLink to="/admin"><button class="btnn col-6 fw-bold" >Quản Lý Sản Phẩm</button></RouterLink>
+          <RouterLink to="/admin/allorder"><button class="btnn col-6 fw-bold" :disabled="true">Quản Lý Đơn Hàng</button></RouterLink>
         </div>
 
         <div class="row bar">
           <div class="col-1 text-center">
             <h4 class="fw-bold">ID</h4>
           </div>
-
           <div class="col-4 text-center">
-            <h4 class="fw-bold">Thời gian đặt đơn</h4>
+            <h4 class="fw-bold">tên khánh hàng</h4>
           </div>
 
           <div class="col-4 text-center">
-            <h4 class="fw-bold">trạng thái</h4>
+            <h4 class="fw-bold">Thời gian đặt đơn</h4>
           </div>
 
           <div class="col-3 text-center">
             <h4 class="fw-bold">chi tiết</h4>
           </div>
         </div>
-      
-        <div class="row" v-for="(order, index) in userOrder" :key="index">
-          <div class="centre col-1">
-            <h4>{{ index + 1 }}</h4>
+        
+        <div class="row" v-for="(order, index) in allOrder" :key="index">
+          <div class="centre col-1 fw-bold">
+            <h4>{{  index + 1 }}</h4>
           </div>
           <div class="centre col-4" style="">
+            <h4 class="text-center fw-bold">{{ order.user.name }}</h4>
+          </div>
+
+          <div class="centre col-4">
             <h4 class="text-center fw-bold">{{ getTime(order.created_at)[2] + " - " + getTime(order.created_at)[1] + " - " + getTime(order.created_at)[0] }}</h4>
             <h4 class="text-center fw-bold">{{ getTime(order.created_at)[3] + " : " + getTime(order.created_at)[4] + " :  " + getTime(order.created_at)[5] }}</h4>
           </div>
 
-          <div class="centre col-4">
-            <h4 class="text-center fw-bold">{{ order.status }}</h4>
-          </div>
-
           <div class="centre col-3">
-            <button class="btnn fw-bold" @click="showDetail(index)">xem</button>
+            <RouterLink :to="`/admin/allorder/order=${index + 1}`" @click="scrollToTop()"><button class="btnn fw-bold">xem</button></RouterLink>
+            <!-- <button class="btnn" @click="showOrder(index)">xem</button> -->
           </div>
         </div>
       </div>
@@ -54,29 +48,28 @@
 </template>
 
 <script>
-import axios from 'axios';
 import { mapActions, mapMutations, mapState } from 'vuex';
-import MyOrderDetail from '../components/MyOrderDetail.vue'
 
 export default {
+  name: "AllOrder",
   components: {
-    MyOrderDetail
+    
   },
   data() {
-    return {
-      detailId: null,
+    return {  
+      orderDetailId: null,
     }
   },
 
   methods: {
-    ...mapMutations(['scrollToTop', 'setShowMyOrder']),
-    ...mapActions(['getUserOrder']),
-
-    showDetail(index) {
-      this.detailId = this.userOrder[index];
-      this.setShowMyOrder(false);
-      this.scrollToTop();
+    ...mapMutations(['setShowOrderDetail', 'scrollToTop']),
+    ...mapActions(['getAllOrder']),
+    
+    showOrder(index) {
+      this.orderDetailId = this.allOrder[index];
+      this.setShowOrderDetail(false);
     },
+
 
     getTime(time) {
       let year = new Date(time).getFullYear();
@@ -105,23 +98,25 @@ export default {
       if (second <= 10) {
         second = "0" + second;
       }
-
+      
       return [year, month, date, hour, minute, second];
     }
+
   },
 
   computed: {
-    ...mapState(['user', 'userOrder', 'showMyOrder'])
+    ...mapState(['showOrderDetail', 'allOrder']),
+
   },
 
   created() {
-    this.getUserOrder()
-  }
+    this.getAllOrder();
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-.myorder {
+.allOrder {
   padding: 2rem 20%;
 
   .box {
@@ -207,20 +202,21 @@ export default {
 
 
 @media (max-width: 992px) {
-  .myorder {
+  .allOrder {
     padding: 2rem 15%;
   }
 }
 
 @media (max-width: 767px) {
-  .myorder {
+  .allOrder {
     padding: 2rem 10%;
   }
 }
 
 @media (max-width: 576px) {
-  .myorder {
+  .allOrder {
     padding: 2rem 5%;
   }
 }
+
 </style>
