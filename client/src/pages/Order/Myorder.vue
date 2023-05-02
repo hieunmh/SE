@@ -10,24 +10,24 @@
       <div class="box-content">
 
         <div>
-          <RouterLink to="/"><button class="btnn"><i class="fa fa-arrow-left" style="margin-right: 0.5rem;"></i>Home</button></RouterLink>
+          <RouterLink to="/"><button class="btnn fw-bold"><i class="fa fa-arrow-left" style="margin-right: 0.5rem;"></i>Home</button></RouterLink>
         </div>
 
         <div class="row bar">
           <div class="col-1 text-center">
-            <h4>ID</h4>
+            <h4 class="fw-bold">ID</h4>
           </div>
 
           <div class="col-4 text-center">
-            <h4>Thời gian đặt đơn</h4>
+            <h4 class="fw-bold">Thời gian đặt đơn</h4>
           </div>
 
           <div class="col-4 text-center">
-              <h4>trạng thái</h4>
-            </div>
+            <h4 class="fw-bold">trạng thái</h4>
+          </div>
 
           <div class="col-3 text-center">
-            <h4>chi tiết</h4>
+            <h4 class="fw-bold">chi tiết</h4>
           </div>
         </div>
       
@@ -36,16 +36,16 @@
             <h4>{{ index + 1 }}</h4>
           </div>
           <div class="centre col-4" style="">
-            <h4 class="text-center">{{ getTime(order.created_at)[2] + " - " + getTime(order.created_at)[1] + " - " + getTime(order.created_at)[0] }}</h4>
-            <h4 class="text-center">{{ getTime(order.created_at)[3] + " : " + getTime(order.created_at)[4] + " :  " + getTime(order.created_at)[5] }}</h4>
+            <h4 class="text-center fw-bold">{{ getTime(order.created_at)[2] + " - " + getTime(order.created_at)[1] + " - " + getTime(order.created_at)[0] }}</h4>
+            <h4 class="text-center fw-bold">{{ getTime(order.created_at)[3] + " : " + getTime(order.created_at)[4] + " :  " + getTime(order.created_at)[5] }}</h4>
           </div>
 
           <div class="centre col-4">
-            <h4 class="text-center">{{ order.status }}</h4>
+            <h4 class="text-center fw-bold">{{ order.status }}</h4>
           </div>
 
           <div class="centre col-3">
-            <button class="btnn" @click="showDetail(index)">xem</button>
+            <button class="btnn fw-bold" @click="showDetail(index)">xem</button>
           </div>
         </div>
       </div>
@@ -56,7 +56,7 @@
 <script>
 import axios from 'axios';
 import { mapActions, mapMutations, mapState } from 'vuex';
-import MyOrderDetail from '../components/MyOrderDetail.vue'
+import MyOrderDetail from './MyOrderDetail.vue'
 
 export default {
   components: {

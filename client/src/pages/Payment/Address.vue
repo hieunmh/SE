@@ -43,6 +43,7 @@
 
       <div>
         <button @click="setAddressPayment" class="btnn">Hoàn Thành</button>
+        <button @click="setInputAddress(false)" class="btnn">Hủy</button>
       </div>
     </div>
   </div>
@@ -50,6 +51,7 @@
 
 <script>
 import { mapMutations, mapState } from 'vuex';
+import axios from 'axios';
 
 export default {
   name: "Register",
@@ -77,9 +79,9 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['scrollToTop', 'setShowAlertEditInfo', 'setShowAlertEditPass', 'setInputAddress', 'setAddress']),
+    ...mapMutations(['scrollToTop', 'setInputAddress', 'setAddress']),
 
-    setAddressPayment() {
+    async setAddressPayment() {
       let data = {
         pro: this.address.pro,
         dis: this.address.dis.substring(2),
@@ -87,11 +89,17 @@ export default {
         detail: this.address.detail
       }
 
+      let data2 = {
+        city: data.war + " , " + data.dis + " , " + data.pro,
+        home_location: this.address.detail,
+      }
+
       this.setAddress(data);
       this.setInputAddress(false);
       // if (this.address.detail) {
       //   this.setInputAddress(false);
       // }
+      await axios.post('/payment/create-address', data2, { withCredentials : true})
     },
 
     setSelect(set) {

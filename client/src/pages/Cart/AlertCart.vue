@@ -5,8 +5,8 @@
         <h1>Bạn có chắc muốn bỏ sản phẩm này?</h1>
       </div>
       <div class="row">
-        <button class="btnn col-6" @click="deleteProduct">Có</button>
-        <button class="btnn col-6" @click="setShowAlert(false)">Không</button>
+        <button class="btn btn-info col-6" @click="deleteProduct">Có</button>
+        <button class="btn btn-danger col-6" @click="setShowAlert(false)">Không</button>
       </div>
     </div>
   </div>
@@ -26,9 +26,6 @@ import { mapMutations, mapState } from 'vuex';
     methods: {
       ...mapMutations(['setShowAlert']),
       
-      closeAlert() {
-        
-      },
       async deleteProduct() {
         let data = {
           product_id: this.cartItem[this.index].product_id,
@@ -62,7 +59,7 @@ import { mapMutations, mapState } from 'vuex';
     background-color: #fff;
     width: auto;
     height: auto;
-    border-radius: 0.5rem;
+    border-radius: 0.7rem;
     .row {
       width: 50rem;
       margin: 0;
@@ -71,12 +68,16 @@ import { mapMutations, mapState } from 'vuex';
         font-size: 2.5rem;
         margin: 2rem 0;
       }
-      .btnn {
+      .btn {
+        padding: .7rem 1.8rem;
+        font-size: 1.7rem;
+        cursor: pointer;
+        color: #fff;
         &:nth-child(1) {
-          border-radius: 0 0 0 0.5rem;
+          border-radius: 0 0 0 0.7rem;
         }
         &:nth-child(2) {
-          border-radius: 0 0 0.5rem 0;
+          border-radius: 0 0 0.7rem 0;
         }
       }
     }

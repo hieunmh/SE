@@ -10,9 +10,8 @@
 
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
-import serverUrl from '@/axios';
-import AllOrder from './AllOrder.vue';
-import Productmanage from './Productmanage.vue';
+import AllOrder from './OrderManage/AllOrder.vue';
+import Productmanage from './ProductManage/Productmanage.vue';
 
 export default {
   name: "Admin",
