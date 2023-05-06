@@ -162,8 +162,8 @@ export default {
     async postPayment() {
       await axios.post('payment', {}, { withCredentials: true })
         .then((res) => {
+          console.log(res.data);
           this.defaultAddress = res.data.userAddress;
-          console.log(this.defaultAddress);
         })
     },
 

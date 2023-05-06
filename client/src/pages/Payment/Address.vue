@@ -120,15 +120,12 @@ export default {
       this.showDistrict = false;
       this.showWard = false;
 
-      this.canInputDis = true;
     },
 
     showDis() {
       this.showProvince = false;
       this.showDistrict = true;
       this.showWard = false;
-
-      this.canInputWar = true;
     },
     
     showWa() {
@@ -193,25 +190,25 @@ export default {
     },
 
     async getProvince() {
-      await axios.get('https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1')
+      await axios.get('https://provinces.open-api.vn/api/?depth=1')
         .then((res) => {
-          this.provinces = res.data.data.data;
+          this.provinces = res.data;
         })
     },
 
-    async getDistrict(event) {
+    async getDistrict(event) { 
       let code = event.target.value;
-      await axios.get('https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=' + code + '&limit=-1')
+      await axios.get('https://provinces.open-api.vn/api/p/' + code + '?depth=2')
         .then((res) => {
-          this.districts = res.data.data.data;
+          this.districts = res.data.districts;
         })
     },
 
     async getWard(event) {
       let code = event.target.value;
-      await axios.get('https://vn-public-apis.fpo.vn/wards/getByDistrict?districtCode=' + code + '&limit=-1')
+      await axios.get('https://provinces.open-api.vn/api/d/' + code + '?depth=2')
         .then((res) => {
-          this.wards = res.data.data.data;
+          this.wards = res.data.wards;
         })
     },
 
