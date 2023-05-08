@@ -3,7 +3,6 @@ const {
   sequelize,
 } = require('../models');
 
-const { getCalculateTotal } = require('./cartController');
 
 // Chua hieu User_payment lam gi
 class paymentController {
@@ -22,13 +21,6 @@ class paymentController {
       // username, telephone, user_address
       try {
         const amountOfProducts = productInCart.length;
-        const getUserInfo = await User.findOne({
-          attributes: ['name', 'telephone'],
-          where: {
-            id: user_id,
-          },
-        });
-
         // get address user
         // lay san trong DB
         // Tao them nut bam de tao dia chi, roi luu vao DB
@@ -37,18 +29,14 @@ class paymentController {
             user_id,
           },
         });
-
         // get UserInfo, userAddress have or not
-        if (getUserInfo) {
-          return res.status(200).json({
-            success: 'Create order success!',
-            userInfo: getUserInfo,
-            userAddress: getUserAddress,
-            productInCart: productInCart,
-            amountOfProducts: amountOfProducts,
-            totalPrice: totalPrice,
-          });
-        }
+        return res.status(200).json({
+          success: 'Create order success!',
+          userAddress: getUserAddress,
+          productInCart: productInCart,
+          amountOfProducts: amountOfProducts,
+          totalPrice: totalPrice,
+        })
       } catch (error) {
         console.log(error);
         next(error);

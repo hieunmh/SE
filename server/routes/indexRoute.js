@@ -9,6 +9,8 @@ const categoryRouter = require('./categoryRoute');
 const cartRouter = require('./cartRoute');
 const orderRouter = require('./orderRoute');
 const paymentController = require('./paymentRoute');
+const discountController = require('./discountRoute');
+
 
 function routesInit(app) {
   app.use('/admin', adminRouter);
@@ -19,6 +21,7 @@ function routesInit(app) {
   app.use('/', cartRouter);
   app.use('/', paymentController);
   app.use('/', orderRouter);
+  app.use('/', discountController);
 }
 
 // export default routesInit;
