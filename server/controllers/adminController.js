@@ -14,7 +14,8 @@ class adminController {
     // search for category id in table product_category and discount_id in discount
     // get foreign key
 
-    let { name, desc, price, quantity, sold_number } = req.body;
+
+    let { name, desc, price, quantity, sold_number } = JSON.parse(req.body.document);
     price = parseInt(price);
 
     if (!name || !desc || !price || !quantity || !sold_number) {

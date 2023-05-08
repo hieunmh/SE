@@ -329,6 +329,7 @@ input[type="button"] {
   .box-container {
     padding: 0;
     .box {
+      height: 100%;
       border-radius: 0.7rem;
       margin: 0.7rem 0;
       position: relative;
