@@ -7,8 +7,10 @@ const {
 class categoryController {
   async getAllCategory(req, res, next) {
     try {
-      const categories = await Product_category.findAll();
-      res.send(categories);
+      const categories = await Product_category.findAll({
+        attributes: { exclude: ['created_at'] },
+      });
+      return res.status(200).send(categories);
     } catch (error) {
       console.log(error);
       next(error);

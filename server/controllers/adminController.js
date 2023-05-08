@@ -15,10 +15,10 @@ class adminController {
     // get foreign key
 
 
-    let { name, desc, price, quantity, sold_number } = JSON.parse(req.body.document);
+    let { name, desc, price, quantity, sold_number, category_id, discount_id} = JSON.parse(req.body.document);
     price = parseInt(price);
 
-    if (!name || !desc || !price || !quantity || !sold_number) {
+    if (!name || !desc || !price || !quantity || !sold_number || !category_id || !discount_id) {
       return res.status(400).json({
         msg: 'Please fill all !!!',
       });
@@ -28,13 +28,18 @@ class adminController {
         : null;
       console.log(formatMediaURL(file_path));
 
+      // create product 
       const result = await Product.findOrCreate({
         where: {
           name,
           desc,
           price,
+          quantity,
+          category_id,
+          discount_id
         },
         defaults: {
+          sold_number,
           image: formatMediaURL(file_path),
         },
       })

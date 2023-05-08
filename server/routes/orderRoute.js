@@ -3,7 +3,7 @@ const orderController = require('../controllers/orderController');
 const { isAuth, isAdmin } = require('../middleware/authenticate');
 const router = express.Router();
 
-router.get('/get-all-orders', isAuth, isAdmin, orderController.getAllOrders);
+router.get('admin/get-all-orders', isAuth, isAdmin, orderController.getAllOrders);
 router.post(
   '/admin/update-status',
   isAuth,

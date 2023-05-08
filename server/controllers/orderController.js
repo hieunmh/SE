@@ -9,7 +9,7 @@ const sequelize = require('sequelize');
 // provider ?
 
 class orderController {
-  // [GET] /get-all-orders - author: admin
+  // [GET] admin/get-all-orders - author: admin
   // get information of all orders
   //
   async getAllOrders(req, res, next) {
