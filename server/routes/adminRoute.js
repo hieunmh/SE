@@ -13,7 +13,7 @@ const router = express.Router();
 
 // variable
 const saved_image_folder = 'productImage';
-const upload_image_field = 'myImage';
+const upload_image_field = 'file';
 
 // Upload image with name: productImage
 // router.post('/product/add',isAuth, isAdmin, upload(saved_image_folder).single(upload_image_field),

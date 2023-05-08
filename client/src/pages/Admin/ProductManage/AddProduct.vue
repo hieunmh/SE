@@ -8,10 +8,12 @@
         </button>
 
 
-        <form id="form" @submit.prevent="sendFile" class="col-12 row image-upload" enctype="multipart/form-data">
-          <input type="text" v-model="proName" id="name" name="name" placeholder="ten san pham">
-          <input type="text" v-model="proDesc" id="desc" name="desc" placeholder="Mo ta">
-          <input type="text" v-model="proPrice" id="price" name="price" placeholder="Gia" class="" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+        <div class="col-12 row image-upload" enctype="multipart/form-data">
+          <input type="text" v-model="proName" name="name" placeholder="tên sản phẩm">
+          <input type="text" v-model="proDesc" name="desc" placeholder="mô tả">
+          <input type="text" v-model="proPrice"  name="price" placeholder="giá" class="" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          <input type="text" v-model="proQtt"  name="quantity" placeholder="số lượng" class="" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          <input type="text" v-model="proSoldNum"  name="soldNumber" placeholder="đã bán" class="" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
 
           <!-- <input type="file" ref="imageInput" @input="pickImage" value="" id="upload-image" accept="image/*"> -->
           <input type="file" name="myImage" accept="image/*" @change="handleFileUpload">
@@ -20,10 +22,9 @@
             <i class="fa-solid fa-file-arrow-up"></i>
             <img :src="`${previewImg}`" alt="">
           </label> -->
-          <input type="submit" class="btnn" value="Gui">
-        </form>
+        </div>
 
-        <!-- <button class="btnn" @click="addProduct">Them</button> -->
+        <button class="btnn" @click="addProduct">Thêm</button>
 
       </div>
     </div>
@@ -45,6 +46,8 @@ export default {
       proName: "",
       proDesc: "",
       proPrice: "",
+      proQtt: "",
+      proSoldNum: "",
       imgFile: null,
     }
   },
@@ -73,42 +76,28 @@ export default {
       this.imgFile = event.target.files[0];
     },
 
-    sendFile() {
+    async addProduct() {
       let body = {
         name: this.proName,
         desc: this.proDesc,
         price: this.proPrice,
+        quantity: this.proQtt,
+        sold_number: this.proSoldNum,
       }
       let formdata = new FormData();
       formdata.append('file', this.imgFile);
-      formdata.append('document', body);
-      axios({
+      formdata.append('document', JSON.stringify(body));
+
+
+      await axios({
         method: 'post',
         url: 'http://localhost:3000/admin/product/add',
         data: formdata,
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
       })
-      .then((res) => {
-        console.log(res.data);
-      })
+      
     },
-
-    // async addProduct() {
-    //   let body = {
-    //     name: this.proName,
-    //     desc: this.proDesc,
-    //     price: this.proPrice,
-    //   }
-    //   let formdata = new FormData();
-    //   formdata.append('file', this.imgFile);
-    //   // formdata.append('body', body);
-
-    //   await axios.post('/admin/product/add', formdata, { withCredentials: true})
-    //   .then((res) => {
-    //     console.log(res);
-    //   })
-    // },
 
 
   }
