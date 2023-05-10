@@ -48,7 +48,7 @@ INSERT INTO `products` (`name`, `desc`, `category_id`, `discount_id`, `price`, `
 ('Trà sữa dâu', '', 4, 1, 23000, 0, 10, 'upload/productImage/1681817352660.jpeg'),
 ('Lục trà xoài cheese', '', 4, 4, 35000, 0, 10, 'upload/productImage/1681817463522.jpeg'),
 ('Lục trà dâu cheese', '', 4, 4, 35000,  0, 10, 'upload/productImage/1681817523337.jpeg'),
-('Trà sữa matcha', '', 5, 1, 28000, 0, 10, 'upload/productImage/1681818412643.jpg'),
+('Trà sữa matcha', '', 4, 1, 28000, 0, 10, 'upload/productImage/1681818412643.jpg'),
 ('Cà phê nâu đá', '', 5, 2, 32000, 0, 10, 'upload/productImage/1681817689767.jpg'),
 ('Bạc xỉu', '', 5, 1, 34000, 0, 10, 'upload/productImage/1681817755225.jpg'),
 ('Latte nóng', '', 5, 1, 46000, 0, 10, 'upload/productImage/1681817821278.jpg'),

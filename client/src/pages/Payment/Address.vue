@@ -22,15 +22,15 @@
         </div>
         
         <div class="row">
-          <div v-if="showProvince" class="col-12 address-detail" style="height: 25vh; overflow-y: scroll; border: 1px solid #27ae60; cursor: pointer;">
+          <div v-if="showProvince" class="col-12 address-detail" style="height: 25vh; overflow-y: scroll; border: 1px solid #ffa31a; cursor: pointer;">
             <option v-for="(p, index) in provinces" :value="`${p.code}`" @click="setProvince($event)">{{ p.name }}</option>
           </div>
 
-          <div v-if="showDistrict" class="col-12 address-detail" style="height: 25vh; overflow-y: scroll; border: 2px solid #27ae60; cursor: pointer;">
+          <div v-if="showDistrict" class="col-12 address-detail" style="height: 25vh; overflow-y: scroll; border: 2px solid #ffa31a; cursor: pointer;">
             <option v-for="(d, index) in districts" :value="`${d.code}`" @click="setDistrict($event)">{{ d.name }}</option>
           </div>
 
-          <div v-if="showWard" class="col-12 address-detail" style="height: 25vh; overflow-y: scroll; border: 2px solid #27ae60; cursor: pointer;">
+          <div v-if="showWard" class="col-12 address-detail" style="height: 25vh; overflow-y: scroll; border: 2px solid #ffa31a; cursor: pointer;">
             <option v-for="(w, index) in wards" :value="`${w.code}`" @click="setWard($event)">{{ w.name }}</option>
           </div>
         </div>
@@ -38,12 +38,11 @@
 
       <div v-else class="d-flex flex-column" style="height: 30vh; margin-top: 0.5rem;">
         <input type="none" :disabled="inputDisabled" required="required" placeholder="Địa chỉ cụ thể" v-model="address.detail" style="font-size: 1.5rem;">
-
       </div>
 
-      <div>
-        <button @click="setAddressPayment" class="btnn">Hoàn Thành</button>
-        <button @click="setInputAddress(false)" class="btnn">Hủy</button>
+      <div class="d-flex justify-content-end button">
+        <button @click="setInputAddress(false)" class="">Trở lại</button>
+        <button @click="setAddressPayment" class="">Hoàn Thành</button>
       </div>
     </div>
   </div>
@@ -136,6 +135,7 @@ export default {
 
     setProvince(event) {
       this.canInputDis = true;
+      this.canInputWar = false;
       if (this.address.pro) {
         this.address.pro = "";
         this.address.dis = "";
@@ -242,8 +242,34 @@ export default {
     background-color: #fff;
     height: 45vh;
     width: 50rem;
+    border-radius: 0.7rem;
+    .button {
+      button {
+        padding: 0.5rem 1.5rem;
+        margin: 1rem 0rem;
+        margin-left:  1.5rem;
+        font-size: 1.7rem;
+        font-weight: 500;
+        &:nth-child(1) {
+          background-color: #fff;
+          border: 1px solid #ffa31a;
+          color: #ffa31a;
+          &:hover {
+            background-color: #ffa31a;
+            color: #fff;
+          }
+        }
+        &:nth-child(2) {
+          background-color: #ffa31a;
+          color: #fff;
+          &:hover {
+            background: #e69c00;
+          }
+        }
+      }
+    }
     input {
-      border: 1px solid #27ae60;
+      border: 1px solid #ffa31a;
       height: 4rem;
       width: 100%;
       padding-left: 1rem;
@@ -268,21 +294,22 @@ export default {
       padding: 0;
       padding: 0;
       height: 30vh;
+
       .row {
         padding: 0;
         margin: 0;
       }
       button {
         height: 3.5rem;
-        color: #27ae60;
+        color: #ffa31a;
       }
       button.active {
-        background-color: #27ae60;
+        background-color: #ffa31a;
         color: #fff;
       }
       button:disabled {
         background-color: #f1f1f1;
-        color: #27ae60;
+        color: #ffa31a;
       }
     }
 

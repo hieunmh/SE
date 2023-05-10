@@ -1,16 +1,15 @@
 <template>
   <div class="info">
-    <EditInfo v-if="showAlertEditInfo">
-      <button @click.prevent="setShowAlertEditInfo(false)" class="btnn">Hủy</button>
-    </EditInfo>
-
-    <ChangePass v-else-if="showAlertEditPass">
-      <button @click.prevent="setShowAlertEditPass(false)" class="btnn">Hủy</button>
-    </ChangePass>
-
     <div class="info-form">
-      <form @submit="handleSubmit" novalidate autocapitalize="off">
-        <h3>Thông tin tài khoản</h3>
+      <EditInfo v-if="showAlertEditInfo">
+        <button @click.prevent="setShowAlertEditInfo(false)" class="btnn">Hủy</button>
+      </EditInfo>
+
+      <ChangePass v-else-if="showAlertEditPass">
+        <button @click.prevent="setShowAlertEditPass(false)" class="btnn">Hủy</button>
+      </ChangePass>
+      <form v-else @submit="handleSubmit" novalidate autocapitalize="off">
+        <h3 class="text-center">Thông tin tài khoản</h3>
 
         <div class="form-group">
           <p class="form-control"></p>
@@ -32,9 +31,9 @@
         </div>
 
         <div class="form-group">
-          <button @click.prevent="setShowAlertEditInfo(true)" class="btnn">Chỉnh sửa thông tin</button>
-          <button @click.prevent="setShowAlertEditPass(true)" class="btnn">Đổi mật khẩu</button>
-          <RouterLink to="/" @click="scrollToTop()"><button class="btnn">Đến trang chủ</button></RouterLink>
+          <button @click.prevent="setShowAlertEditInfo(true)" class="">Chỉnh sửa thông tin</button>
+          <button @click.prevent="setShowAlertEditPass(true)" class="">Đổi mật khẩu</button>
+          <RouterLink to="/" @click="scrollToTop()"><button class="">Đến trang chủ</button></RouterLink>
         </div>
 
       </form>
@@ -75,22 +74,19 @@ export default {
 
 <style lang="scss">
 .info {
-  padding: 2rem 9%;
-  
-
   .info-form {
     background-color: #fff;
     height: 90vh;
+    background: linear-gradient(to right, rgba($color: #000, $alpha: 1) , rgba($color: #000, $alpha: 0.75));
 
     form {
       position: relative;
-      background-color: #f4f4f4;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       max-width: 40rem;
-      width: 150%;
-      box-shadow: -0.5rem -0.5rem 1rem rgba($color: #000000, $alpha: 0.1), 0.5rem 0.5rem 1rem rgba($color: #000000, $alpha: 0.1);
+      width: 100%;
+      // box-shadow: -0.5rem -0.5rem 1rem rgba($color: #000000, $alpha: 0.1), 0.5rem 0.5rem 1rem rgba($color: #000000, $alpha: 0.1);
       border: 0.1rem solid rgba($color: #000000, $alpha: 0.05);
       padding: 2rem;
       border-radius: 1rem;
@@ -100,7 +96,7 @@ export default {
         font-size: 2rem;
         font-weight: bolder;
         text-transform: uppercase;
-        color: #130f40;
+        color: #fff;
         margin: 0;
       }
 
@@ -113,13 +109,24 @@ export default {
 
       .form-group {
         position: relative;
+
         button {
+          width: 100%;
+          color: #fff;
+          font-size: 1.7em;
+          border-radius: 1rem;
+          padding: 1rem 0;
+          margin: 0.7rem 0;
+          background: linear-gradient(to right, #ffa31a, rgba($color: #ffa31a, $alpha: 0.8));
+          &:hover {
+            background: linear-gradient(to right, #e69c00, rgba($color: #e69c00 , $alpha: 0.8));
+          }
           a {
             color: #fff;
           }
         }
         i {
-          color: #27ae60;
+          color: #222831;
           font-size: 2rem;
           position: absolute;
           top: 1.5rem;

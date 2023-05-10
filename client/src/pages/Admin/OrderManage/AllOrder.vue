@@ -2,9 +2,9 @@
   <div class="allOrder">
     <div class="box">
       <div class="box-content">
-        <div class="">
-          <RouterLink to="/admin"><button class="btnn col-6 fw-bold" >Quản Lý Sản Phẩm</button></RouterLink>
-          <RouterLink to="/admin/allorder"><button class="btnn col-6 fw-bold" :disabled="true">Quản Lý Đơn Hàng</button></RouterLink>
+        <div class="manage">
+          <RouterLink to="/admin"><button class="col-6 fw-bold" >Quản Lý Sản Phẩm</button></RouterLink>
+          <RouterLink to="/admin/allorder"><button class="col-6 fw-bold" :disabled="true">Quản Lý Đơn Hàng</button></RouterLink>
         </div>
 
         <div class="row bar">
@@ -124,6 +124,31 @@ export default {
     width: 100%;
     margin-bottom: 20px;
     padding: 0;
+
+    .manage {
+      a {
+        &:nth-child(1) {
+          button {
+            border-radius: 0.7rem 0 0 0.7rem;
+          }
+        }
+        &:nth-child(2) {
+          button {
+            border-radius: 0 0.7rem 0.7rem 0;
+          }
+        }
+      }
+      button {
+        background: #f1f1f1;
+        color: #ffa31a;
+        font-size: 1.7rem;
+        padding: 0.7rem 0;
+      }
+      button:disabled {
+        background-color: #ffa31a;
+        color: #fff;
+      }
+    }
 
     .box-content {
       padding: 0;

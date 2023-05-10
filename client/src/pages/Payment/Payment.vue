@@ -12,7 +12,7 @@
     <div class="box">
       <div class="box-content">
 
-        <button class="btnn" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i></button>
+        <button class="" @click="$router.go(-1)"><i class="fa fa-arrow-left"></i></button>
 
         <div class="row">
           <div class="col-12" style="height: 4rem; color: #ee4d2d;"><h3 class="fw-bold"><i class="fa-solid fa-location-dot"></i> Địa chỉ nhận hàng</h3></div>
@@ -37,8 +37,8 @@
           </div>
           
 
-          <div class="col-2 d-flex justify-content-end" v-if="!defaultAddress"><button @click="setInputAddress(true)" class="btnn fw-bold">Thêm</button></div>
-          <div class="col-2 d-flex justify-content-end" v-else><button @click="setInputAddress(true)" class="btnn fw-bold">Thay Đổi</button></div>
+          <div class="col-2 d-flex justify-content-end" v-if="!defaultAddress"><button @click="setInputAddress(true)" class="fw-bold">Thêm</button></div>
+          <div class="col-2 d-flex justify-content-end" v-else><button @click="setInputAddress(true)" class="fw-bold">Thay Đổi</button></div>
         </div>
 
         <div class="row bar">
@@ -93,11 +93,10 @@
           </div>
         </div>
 
-
         <div>
           <div class="col-12 d-flex justify-content-end">
             <!-- <RouterLink to="/" @click="order()" style=" text-align: center; color: #fff;"> -->
-              <button @click="order()" class="btnn checkout-btn fw-bold" :disabled="cartItem.length ? false : true">
+              <button @click="order()" class="checkout-btn fw-bold" :disabled="cartItem.length ? false : true">
                 <i class="fa fa-shopping-cart"></i> Đặt hàng
               </button>
             <!-- </RouterLink> -->
@@ -135,7 +134,6 @@ export default {
       let data = {
         full_address: this.addressPayment.detail + " ," + this.addressPayment.war + " ," + this.addressPayment.dis + " , " + this.addressPayment.pro
       } 
-      console.log(data.full_address);
       await axios.post('create-order', data, { withCredentials: true });
 
       await new Promise(() => setTimeout(() => {
@@ -162,7 +160,6 @@ export default {
     async postPayment() {
       await axios.post('payment', {}, { withCredentials: true })
         .then((res) => {
-          console.log(res.data);
           this.defaultAddress = res.data.userAddress;
         })
     },
@@ -203,6 +200,17 @@ export default {
   }
 }
 
+.checkout-btn {
+  background-color: #ffa31a;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 1.7rem;
+  border-radius: 0.7rem;
+  &:hover {
+    background-color: #e69c00;
+  }
+}
+
 .box {
   margin: 0;
   margin-bottom: 20px;
@@ -227,13 +235,18 @@ export default {
     padding: 0;
     border-image: none;
 
-    .image {
-      width: 100%;
-
-      img {
-        width: 20rem;
+    > button {
+      background-color: #ffa31a;
+      font-size: 2rem;
+      color: #fff;
+      padding: 0.5rem 1.4rem;
+      border-radius: 0.7rem;
+      &:hover {
+        background-color: #e69c00;
       }
     }
+
+    
 
     .row {
       background-color: #f1f1f1;
@@ -243,6 +256,19 @@ export default {
       input {
         &::placeholder {
           text-align: center;
+        }
+      }
+
+      > div {
+        > button {
+          background-color: #ffa31a;
+          color: #fff;
+          padding: 0.5rem 1rem;
+          font-size: 1.7rem;
+          border-radius: 0.7rem;
+          &:hover {
+            background-color: #e69c00;
+          }
         }
       }
     }

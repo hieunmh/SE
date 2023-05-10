@@ -25,17 +25,14 @@ html {
 }
 
 html::-webkit-scrollbar {
-    width: 1rem;
+    width: 0rem;
+    background: rgba(0, 0, 0, 0.75)
 }
 
-html::-webkit-scrollbar-track {
-    background: #fff;
-}
-
-html::-webkit-scrollbar-thumb {
+/* html::-webkit-scrollbar-thumb {
     background: #27ae60;
     border-radius: 5rem;
-}
+} */
 
 .heading {
     text-align: center;
@@ -58,28 +55,41 @@ html::-webkit-scrollbar-thumb {
     font-size: 1.7rem;
     cursor: pointer;
     color: #fff;
-    background: #27ae60;
+    background: #ffa31a;
     border-radius: .5rem;
 }
 
 .btnn:hover {
-    background-color: #ee4d2d;
+    background-color: #e69c00;
     color: #fff;
 }
 
 .btnn:disabled {
     background-color: rgba(100, 100, 100, 1) !important;
     color: #fff;
+    cursor: not-allowed;
 }
 
 @media (max-width: 768px) {
     html {
         font-size: 55%;
     }
+    html::-webkit-scrollbar {
+        width: 0rem;
+    }
 }
 
 @media (max-width: 576px) {
     html {
         font-size: 50%;
+    }
+    html::-webkit-scrollbar {
+        width: 0rem;
+    }
+}
+
+@media (max-width: 280px) {
+    html::-webkit-scrollbar {
+        width: 0rem;
     }
 }

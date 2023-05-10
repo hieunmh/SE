@@ -1,7 +1,8 @@
 <template>
   <div class="header row">
     <RouterLink to="/" @click="outMenu()" class="logo col-md-3 col-2 d-flex justify-content-start">
-			<img src="../assets/images/taco-logo.png" />Hieuhub
+			<!-- <img src="../assets/images/taco-logo.png" />Hieuhub -->
+			<span style="font-size: 3rem;">Fea</span><span style="color: #ffa31a; text-transform: none; font-size: 3rem;">stly</span>
 		</RouterLink>
 
     <nav class="navbar col-md-6 d-md-flex justify-content-md-around justify-content-around">
@@ -13,10 +14,10 @@
     </nav>
 
     <div class="icons col-md-3 col-8	d-flex justify-content-md-end justify-content-end">
-			<div>
-				<span class="qttCart" v-if="cartLength > 0 && user.userName">{{ cartLength }}</span>
+			<div class="cart">
 				<RouterLink @click="outMenu()"	to="/cart">
-					<div class="cart"><i class="fas fa-shopping-cart"></i></div>
+					<div class="fas fa-shopping-cart"></div>
+					<span class="qttCart" v-if="cartLength > 0 && user.userName">{{ cartLength }}</span>
 				</RouterLink>
 			</div>
 
@@ -31,7 +32,7 @@
 			</div>
 			
 
-			<div v-else class="fas fa-user account logined" style="color: white;">
+			<div v-else class="fas fa-user account logined">
 				<ul class="drop-down-select">
 					<li><RouterLink @click="outMenu()" to="/info">
 						<!-- {{ user.userName.split(' ')[user.userName.split(' ').length - 1] }} -->Hồ sơ
@@ -136,13 +137,12 @@ export default {
 }
 
 .header {
-	position: sticky;
+	// position: sticky;
 	top: 0;
 	left: 0;
 	right: 0;
 	z-index: 100;
-	background: #fff;
-	box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.05);
+  background: linear-gradient(to right, rgba($color: #000, $alpha: 1), rgba($color: #000, $alpha: 0.75));
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -156,13 +156,13 @@ export default {
   i {
     position: absolute;
 		padding: 0 0.5rem;
-    border-top: 0.5rem solid #27ae60;
-    border-bottom: 0.5rem solid #27ae60;
+    border-top: 0.5rem solid #222831;
+    border-bottom: 0.5rem solid #222831;
     border-radius: 0.5rem;
     top: 0.6rem;
     left: 1.4rem;
     font-size: 1.8rem;
-    background-color: #27ae60;
+    background-color: #222831;
     color: white;
   }
   .search-input {
@@ -170,30 +170,13 @@ export default {
     width: 100%;
     height: 4rem;
     font-size: 15px;
-    color: #27ae60;
+    color: #222831;
     text-transform: none;
     background-color: #fff;
-    border: 2px solid #27ae60;
+    border: 2px solid #fff;
     border-radius: 0.7rem;
     &::placeholder {
-      color: #27ae60;
-    }
-  }
-  .filter-dropdown {
-    display: block;
-    border-radius: 1rem;
-    background-color: #27ae60;
-    color: #27ae60;
-    font-weight: 400;
-    margin-bottom: 0rem;
-    position: relative;
-    div {
-      position: absolute;
-      top: -2.9rem;
-      right: 2.2rem;
-      width: 2.5rem;
-      height: 2.5rem;
-      font-size:2rem;
+      color: #222831;
     }
   }
 }
@@ -202,7 +185,7 @@ export default {
 	.logo {
 		font-size: 2rem;
 		font-weight: bolder;
-		color: #130f40;
+		color: #fff;
 		img {
 			padding-right: 0.5rem;
 			color: #27ae60;
@@ -214,14 +197,14 @@ export default {
 		a {
 			font-size: 1.7rem;
 			margin: 0 1rem;
-			color: #666;
+			color: #fff;
 			z-index: 1;
 			&:hover {
-				color: #27ae60;
+				color: #ffa31a;
 			}
 		}
 		a.router-link-exact-active {
-			color: #ee4d2d;
+			color: #ffa31a;
 		}
 	}
 
@@ -233,9 +216,9 @@ export default {
 			width: 4.5rem;
 			line-height: 4.5rem;
 			font-size: 2rem;
-			background: #fff;
-			color: #27ae60;
-			border: 2px solid #27ae60;
+			background: transparent;
+			color: #fff;
+			border: 2px solid transparent;
 			border-radius: 0.5rem;
 			margin-left: 0.3rem;
 			cursor: pointer;
@@ -243,45 +226,54 @@ export default {
 			z-index: 50;
 			&:hover {
 				color: #fff;
-				background: #27ae60 !important;
-				div {
-					color: #fff;
-				}
-			} 
-			div {
+				border-color: 2px solid transparent;
+				color: #ffa31a;
+				
+			}
+			a {
 				width: 100%;
 				height: 100%;
-				color: #27ae60;
+				color: #fff;
 			}
 		}
+
+		.cart {
+			a {
+				&:hover {
+					color: #ffa31a;
+				}
+			}
+		}
+
 	
 		.qttCart {
 			position: absolute;
-			left: -1.3rem;
-			top: -1.4rem;
+			left: 2.3rem;
+			top: -0rem;
 			font-size: 1.2rem;
 			text-align: center;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
 			color: #fff;
-			z-index: 50;
+			// z-index: 10;
 			background-color: #d62e41;
-			width: 2.5rem;
-			height: 2.5rem;
+			width: 2rem;
+			height: 2rem;
 			border-radius: 2rem;
 		}
 
 		.account.logined {
-			border-color: #ee4d2d;
-			background-color: #ee4d2d;
+			border-color: transparent;
+			// background-color: #ee4d2d;
+			color: #ffa31a;
 		}
 
 		.account {
 
 			.drop-down-select {
 				display: none;
-				background-color: #27ae60;
+				background-color: #ffa31a;
 				padding: 0;
 				position: absolute;
 				margin-left: -5rem;
@@ -299,15 +291,15 @@ export default {
 				}
 			}
 			&:hover {
-				border:2px solid #27ae60;
+				border:2px solid transparent;
 				border-radius: 0.7rem;
 				.drop-down-select {
 					display: block;
 					a {
-						background-color: #27ae60;
+						background-color: #ffa31a;
 						border-radius: 0.7rem;
 						&:hover {
-							background-color: #ee4d2d;
+							background-color: #ffbe33;
 							color: white;
 						}
 					}
@@ -334,6 +326,7 @@ export default {
 @media (max-width: 767px) {
 	.header {
 		padding: 2rem 10%;
+		position: relative;
 		.navbar {
 			position: absolute;
 			top: 99%;
@@ -347,6 +340,7 @@ export default {
 				font-size: 2rem;
 				margin: 1rem;
 				display: block;
+				color: #222831;
 			}
 		}
 		.navbar.active {

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 
   export default {
     name: 'Alert',
@@ -25,6 +25,7 @@ import { mapMutations, mapState } from 'vuex';
     },
     methods: {
       ...mapMutations(['setShowAlert']),
+      ...mapActions(['getCart']),
       
       async deleteProduct() {
         let data = {
@@ -32,6 +33,7 @@ import { mapMutations, mapState } from 'vuex';
         }
         await axios.post('remove-product-cart', data, { withCredentials: true });
         this.cartItem.splice(this.index, 1);
+        this.getCart();
         this.setShowAlert(false);
       }
   

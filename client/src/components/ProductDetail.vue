@@ -33,10 +33,9 @@
             </div>
           </div>
 
-          <button class="btnn addToCart" @click="addToCart($event)">
+          <button class="addToCart" @click="addToCart($event)">
             <p class="fa-solid fa-cart-plus"></p>
             <p class="">Thêm vào giỏ hàng</p>
-            <!-- <i class="fa-sharp fa-solid fa-cart-plus"></i> -->
           </button>
         </div>
       </div>
@@ -52,7 +51,7 @@
       <div class="row" style="margin-top: 3rem;">
         <h2 class="col-12 text-center">Vui lòng đăng nhập để sử dụng tính năng này</h2>
         <div class="col-4"></div>
-        <RouterLink @click="setShowProduct(false)" class="btnn col-4 text-center" to="login">Đăng Nhập</RouterLink>
+        <RouterLink @click="setShowProduct(false)" class=" col-4 text-center" to="login">Đăng Nhập</RouterLink>
         <div class="col-4"></div>
       </div>
     </div>
@@ -183,9 +182,16 @@ export default {
         color: #fff;
 
         .addToCart {
+          background-color: #ffa31a;
+          color: #fff;
+          padding: 0.3rem 1rem;
+          border-radius: 0.7rem;
           font-size: 1.8rem;
           margin-top: 1.5rem;
           display: flex; 
+          &:hover {
+            background-color: #e69c00;
+          }
           p {
             height: 3rem;
             display: flex;

@@ -29,10 +29,10 @@ export default {
   },
 
   async getAllOrder(context) {
-    await axios.get('get-all-orders', {withCredentials: true})
-    .then((res) => {
-      context.commit("setAllOrder", res.data.Orders);
-    })
+    await axios.get('admin/get-all-orders', { withCredentials: true })
+      .then((res) => {
+        context.commit("setAllOrder", res.data.Orders);
+      });
   },
 
   async getUserOrder(context) {
