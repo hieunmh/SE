@@ -13,9 +13,9 @@
     </div>
 
     <div class="box">
-      <div class="">
-        <button class="btnn col-6 fw-bold" :disabled="true">Quản Lý Sản Phẩm</button>
-        <RouterLink to="/admin/allorder"><button class="btnn col-6 fw-bold">Quản Lý Đơn Hàng</button></RouterLink>
+      <div class="manage">
+        <RouterLink to="/admin"><button class="col-6 fw-bold" disabled="true" >Quản Lý Sản Phẩm</button></RouterLink>
+        <RouterLink to="/admin/allorder"><button class="col-6 fw-bold">Quản Lý Đơn Hàng</button></RouterLink>
       </div>
 
       <div class="box-content">
@@ -207,6 +207,31 @@ export default {
     margin-bottom: 20px;
     padding: 0;
 
+    .manage {
+      a {
+        &:nth-child(1) {
+          button {
+            border-radius: 0.7rem 0 0 0.7rem;
+          }
+        }
+        &:nth-child(2) {
+          button {
+            border-radius: 0 0.7rem 0.7rem 0;
+          }
+        }
+      }
+      button {
+        background: #f1f1f1;
+        color: #ffa31a;
+        font-size: 1.7rem;
+        padding: 0.7rem 0;
+      }
+      button:disabled {
+        background-color: #ffa31a;
+        color: #fff;
+      }
+    }
+
     .box-content {
       padding: 0;
       border-image: none;
@@ -275,13 +300,13 @@ export default {
     color: white;
 
     i {
-      color: #27ae60;
+      color: #222831;
     }
   }
 
   button.highlight {
     color: #fff;
-    background-color: #27ae60;
+    background-color: #222831;
     border-radius: 2rem;
   }
 

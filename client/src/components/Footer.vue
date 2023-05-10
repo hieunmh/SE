@@ -78,14 +78,14 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
-  background-color: #f1f1f1;
+  background-color: #222831;
   padding: 2rem 9%;
   .letter {
     text-align: center;
     margin-bottom: 2rem;
     h3 {
       font-size: 3rem;
-      color: #130f40;
+      color: #fff;
       padding-bottom: 1rem;
     }
     form {
@@ -99,17 +99,17 @@ export default {
         width: 100%;
         padding: 1rem 1.2rem;
         font-size: 1.5rem;
-        color: #130f40;
+        color: #fff;
         text-transform: none;
       }
       input[type="submit"] {
         padding: 0 2rem;
         font-size: 1.5rem;
         color: #fff;
-        background: #27ae60;
+        background: #ffa31a;
         cursor: pointer;
         &:hover {
-          background-color: #f38609;
+          background-color: #ffa31a;
         }
       }
     }
@@ -121,28 +121,28 @@ export default {
     .box {
       h3 {
         font-size:  2rem;
-        color: #130f40;
+        color: #fff;
         padding: 1rem 0;
       }
       p {
         font-size: 1.5rem;
-        color: #666;
+        color: #fff;
         padding: 1rem 0;
       }
       a {
         display: block;
         font-size: 1.5rem;
-        color: #666;
+        color: #fff;
         padding: 1rem 0;
         &:hover {
-          color: #27ae60;
+          color: #fff;
           i {
             padding-right: 2rem;
           }
         }
         i {
           padding-right: 0.5rem;
-          color: #27ae60;
+          color: #ffa31a;
         }
       }
     }
@@ -151,6 +151,7 @@ export default {
     padding-top: 1rem;
     text-align: center;
     .share {
+      color: #fff;
       margin: 1.5rem 0;
       a {
         height: 4.5rem;
@@ -159,10 +160,10 @@ export default {
         font-size: 2rem;
         border-radius: 1rem;
         margin: 0.3rem;
-        color: #fff;
-        background-color: #27ae60;
+        color: #222831;
+        background-color: #fff;
         &:hover {
-          background: #f38609;
+          background: #ffa31a;
         }
       }
     }

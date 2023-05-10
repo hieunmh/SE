@@ -6,13 +6,13 @@
   <div class="menu" @click.self="">
     <div class="row">      
       <div class="col-12">
-        <div class="row menu-tabs">
-          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="0" value="Tất cả">
-          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="1" value="Mì phở">
-          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="2" value="Cơm hộp">
-          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="3" value="Bánh">
-          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="4" value="Trà sữa">
-          <input type="button" class="menu-tab-item  col-lg-2 col-md-4 col-6" @click="filterProduct($event)" id="5" value="Cà phê">
+        <div class="menu-tabs">
+          <input type="button" class="menu-tab-item active" @click="filterProduct($event)" id="0" value="Tất cả">
+          <input type="button" class="menu-tab-item" @click="filterProduct($event)" id="1" value="Mì phở">
+          <input type="button" class="menu-tab-item" @click="filterProduct($event)" id="2" value="Cơm hộp">
+          <input type="button" class="menu-tab-item" @click="filterProduct($event)" id="3" value="Bánh">
+          <input type="button" class="menu-tab-item" @click="filterProduct($event)" id="4" value="Trà sữa">
+          <input type="button" class="menu-tab-item" @click="filterProduct($event)" id="5" value="Cà phê">
         </div>
 
         <div class="row priceFilter">
@@ -93,7 +93,6 @@ export default {
 
       pageNum: 0,
       perPage: 12 ,
-      prevCategoryClicked: "",
       imgUrl: serverUrl,
       priceRange: {
         from: "",
@@ -147,12 +146,13 @@ export default {
 
     filterProduct(event) {
       this.pageNum = 0;
-      if (this.productObj.category != event.target.id && this.prevCategoryClicked != "") {
-        this.prevCategoryClicked.target.style.background = "#27ae60";
+      let menu_tab = document.querySelectorAll('.menu-tab-item');
+      for (let i = 0; i < menu_tab.length; i++) {
+        menu_tab[i].classList.remove('active')
       }
+      event.target.classList.add('active')
       this.productObj.category = event.target.id; 
-      this.prevCategoryClicked = event;
-      event.target.style.background = "#057835fa";
+      // event.target.style.background = "#e69c00";
     },
 
     async filterPriceRange() {
@@ -228,7 +228,7 @@ export default {
   },
 
   created() {
-    this.getCategory();
+    // this.getCategory();
     // this.getProducts();
   }
 }
@@ -270,68 +270,81 @@ input[type="button"] {
   // background-color: #fff;
 
   .priceFilter {
-    background-color: #27ae60;
+    background-color: #222831;
     margin: 0;
     margin-bottom: 2rem;
     max-width: 100%;
     border-radius: 0.7rem;
     text-align: center;
     .filter-item {
-      padding: 0.8rem 1rem;
-      border: 5px solid #27ae60;
+      padding: 0.5rem 1rem;
+      border: 5px solid #222831;
       border-radius: 0.7rem;
-      font-size: 2rem;
-      color: #27ae60;
+      font-size: 1.5rem;
+      color: #222831;
       &:nth-child(1) {
         border-right: none;
       }
       &::placeholder {
-        color: rgba($color: #27ae60, $alpha: 1.0);
+        color: rgba($color: #222831, $alpha: 1.0);
         // text-align: center;
       }
     }
     input[type = "button"] {
-      background-color: #27ae60;
+      background-color: #222831;
       color: #fff;
       &:hover {
-        background-color: #ee4d2d;
-        border-color: #ee4d2d;
+        background-color: #ffa31a;
+        border-color: #ffa31a;
       }
     }
   }
   
   .menu-tabs {
-    margin: 0;
+    // margin: 0;
     margin-bottom: 1rem;
-    max-width: 100%;
+    // max-width: 100%;
     text-align: center;
-    background-color: #27ae60;
+    // background-color: #222831;
     border-radius: 0.7rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    justify-content: space-around;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+    list-style-type: none;
     .menu-tab-item {
       cursor: pointer;
-      padding: 0.8rem 0;
-      border-radius: 0.7rem;
+      padding: 1rem 3rem;
+      border-radius: 3rem;
       font-size: 1.7rem;
-      color: whitesmoke;
+      color: #000;
       font-weight: 500;
       text-transform: capitalize;
       transition: all 0.3s ease;
-      &:hover {
-        background-color: #ee4d2d !important;
-      }
+      // background-color: #222831;
+      
       p {
         padding: none;
         margin: none;
       }
+    }
+    
+    .menu-tab-item.active {
+      background-color: #ffa31a;
+      color: #fff;
     }
   }
 
   .box-container {
     padding: 0;
     .box {
-      height: 100%;
       border-radius: 0.7rem;
       margin: 0.7rem 0;
+      height: 95%;
       position: relative;
       background-color: #d9d9d9;
       text-align: center;
@@ -346,6 +359,7 @@ input[type="button"] {
       }
 
       .content {
+        // background: linear-gradient(to bottom, #f1f2f3 25px, #222831 25px);
         h3 {
           font-size: 1.8rem;
           height: 4rem;
@@ -377,12 +391,12 @@ input[type="button"] {
       border-radius: 4rem;
       color: white;
       i {
-        color: #27ae60;
+        color: #222831;
       }
     }
     button.highlight {
       color: #fff;
-      background-color: #27ae60;
+      background-color: #222831;
       border-radius: 2rem;
     }
     button {

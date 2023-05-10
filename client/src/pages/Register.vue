@@ -9,41 +9,41 @@
         <h3>Tạo tài khoản</h3>
 
         <div class = "form-group">
-          <input type="text" class = "form-control" required="require" v-model="registerForm.name">
+          <input type="text" class="form-control" required="require" id="0" v-model="registerForm.name" @input="hideError">
           <i class="fa-solid fa-user"></i>
           <span class="sp">Nhập tên của bạn</span>
           <p class="error-mess" v-if="errorObj.nameErr.length >0">{{  errorObj.nameErr[0]  }}</p>
         </div>
         
         <div class = "form-group">
-          <input type="text" class = "form-control" required="require" v-model="registerForm.email">
+          <input type="text" class="form-control" required="require" id="1" v-model="registerForm.email" @input="hideError">
           <i class="fa-regular fa-envelope"></i>
           <span class="sp">Nhập mail của bạn</span>
           <p class="error-mess" v-if="errorObj.emailErr.length > 0">{{  errorObj.emailErr[0] }}</p>
         </div>
 
         <div class = "form-group">
-          <input type="password" class = "form-control" required="require" v-model="registerForm.password">
+          <input type="password" class="form-control" required="require" id="2" v-model="registerForm.password" @input="hideError">
           <i class="fa-solid fa-lock"></i>
           <span>Nhập mật khẩu của bạn</span>
           <p class="error-mess" v-if="errorObj.passwordErr.length > 0">{{ errorObj.passwordErr[0] }}</p>
         </div>
 
         <div class = "form-group">
-          <input type="password" class = "form-control" required="require" v-model="registerForm.confirm">
+          <input type="password" class="form-control" required="require" id="3" v-model="registerForm.confirm" @input="hideError">
           <i class="fa-solid fa-lock"></i>
           <span>Nhập lại mật khẩu của bạn</span>
           <p class="error-mess" v-if="errorObj.confirmErr.length > 0">{{ errorObj.confirmErr[0] }}</p>
         </div>
 
         <div class = "form-group">
-          <input type="tel" class = "form-control" required="require" v-model="registerForm.telephone">
+          <input type="tel" class="form-control" required="require" id="4" v-model="registerForm.telephone" @input="hideError">
           <i class="fa-solid fa-phone"></i>
           <span>Nhập số điện thoại của bạn</span>
           <p class="error-mess" v-if="errorObj.phoneErr.length > 0">{{ errorObj.phoneErr[0] }}</p>
         </div>
         <div class="form-group">
-          <input type="submit" value="Đăng ký" class="btnn">
+          <input type="submit" value="Đăng ký" class="">
           <p>Đã có tài khoản? <RouterLink @click="scrollToTop()" to="/login">Đăng nhập</RouterLink></p>
         </div>
 
@@ -83,6 +83,25 @@ import Loading from '@/components/Loading.vue';
 
     methods: {
       ...mapMutations(['scrollToTop', 'setUser', 'setShowLoading']),
+
+        hideError(event) {
+        let index = event.target.id;
+        if (index == 0) {
+          this.errorObj.nameErr = [];
+        }
+        if (index == 1) {
+          this.errorObj.emailErr = [];
+        }
+        if (index == 2) {
+          this.errorObj.passwordErr = [];
+        }
+        if (index == 3) {
+          this.errorObj.confirmErr = [];
+        }
+        if (index == 4) {
+          this.errorObj.phoneErr = [];
+        }
+      },
 
       async register() {
         let data = await axios.post('/register', this.registerForm, {withCredentials: true});
@@ -192,10 +211,11 @@ import Loading from '@/components/Loading.vue';
 
 <style lang="scss">
 .register {
-  padding: 2rem 9%;
+  // padding: 2rem 9%;
   .register-form {
     background-color: #fff;
     height: 90vh;
+    background: linear-gradient(to right, rgba($color: #000, $alpha: 1) , rgba($color: #000, $alpha: 0.75));
     form {
       position: relative;
       background-color: #f4f4f4;
@@ -204,6 +224,7 @@ import Loading from '@/components/Loading.vue';
       transform: translate(-50%, -50%);
       max-width: 40rem;
       width: 100%;
+      height: 65rem;
       box-shadow: -0.5rem -0.5rem 1rem rgba($color: #000000, $alpha: 0.1),  0.5rem 0.5rem 1rem rgba($color: #000000, $alpha: 0.1);
       border: 0.1rem solid rgba($color: #000000, $alpha: 0.05);
       padding: 2rem;
@@ -226,7 +247,9 @@ import Loading from '@/components/Loading.vue';
       }
       
       .form-group {
+        height: 6.3rem;
         position: relative;
+        margin: 0;
         .error-mess {
           font-size: 1.5rem;
           color: rgba($color: #f32f2f, $alpha: 1.0);
@@ -234,49 +257,64 @@ import Loading from '@/components/Loading.vue';
           padding-top: 5px;
         }
         i {
-          color: #27ae60;
+          color: #222831;
           font-size: 2rem;
           position: absolute;
           top: 1.5rem;
           left: 1rem;
         }
         span {
-          font-size: 2rem;
+          font-size: 1.7rem;
           position: absolute;
           top: 1rem;
           left: 4rem;
           color: rgba($color: #000000, $alpha: 0.3);
           pointer-events: none;
           margin: 0;
+          transition: 0.5s;
         }
         input {
           // margin-top: 2rem;
           margin-bottom: 0;
           &:focus {
             ~ span {
-              background-color: #f4f4f4;
-              color: #27ae60;
-              transform: translateX(-2rem) translateY(-2.5rem);
-              border: 2px solid #27ae60;
+              background-color: #222831;
+              color: #fff;
+              transform: translateX(0rem) translateY(-2.5rem);
               font-size: 1.5rem;
-              border-radius: 20px;
-              padding: 0px 8px;
+              border-radius: 0.7rem;
+              padding: 0.2rem 0.8rem;
+              letter-spacing: 0.3rem;
               
             }
           }
           &:valid {
             ~ span {
-              background-color: #f4f4f4;
-              color: #27ae60;
-              transform: translateX(-2rem) translateY(-2.5rem);
-              border: 2px solid #27ae60;
+              background-color: #222831;
+              color: #fff;
+              transform: translateX(0rem) translateY(-2.5rem);
               font-size: 1.5rem;
-              border-radius: 20px;
-              padding: 0 8px;
+              border-radius: 0.7rem;
+              padding: 0.2rem 0.8rem;
+              letter-spacing: 0.3rem;
             }
           }
         }
+
+        input[type="submit"] {
+          margin-top: 2rem;
+          width: 100%;
+          color: #fff;
+          font-size: 2rem;
+          padding: 0.7rem;
+          border-radius: 1rem;
+          background: linear-gradient(to right, #ffa31a, rgba($color: #ffa31a, $alpha: 0.8));
+          &:hover {
+            background: linear-gradient(to right, #e69c00, rgba($color: #e69c00 , $alpha: 0.8));
+          }
+        }
       }
+
       .form-control {
         height: 5rem;
         margin: 3rem 0;
@@ -289,10 +327,11 @@ import Loading from '@/components/Loading.vue';
         width: 100%;
         border: none;
         box-shadow: inset 0.2rem 0.2rem 0.2rem #b3b3b3, inset -0.2rem -0.2rem 0.2rem #fff;
-        }
+      }
+      
       p {
         text-align: center;
-        padding-top: 1rem;
+        padding: 0;
         font-size: 1.5rem;
         color: #666;
         margin: 0;

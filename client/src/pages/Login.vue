@@ -1,39 +1,37 @@
 <template>
-    <!-- <div v-if="showLoading">
-      <Loading></Loading>
-    </div> -->
-  
   <div class = "login">
     <div class = "login-form">
       <form @submit.prevent="handleSubmit" novalidate autocomplete="off">
-        <h3>Hieuhub</h3>
+        <h1 class="text-center"><span style="font-size: 3rem;">Fea</span><span style="color: #ffa31a; text-transform: none; font-size: 3rem;">stly</span></h1>
 
-        <div v-if="errors.length" class="error-box">
-          <ul>
-            <li v-for="error in errors" :key="error">{{ error }}</li>
-          </ul>
+        <div class="" style="height: 7rem;">
+          <h1 class="text-center">LOGIN</h1>
         </div>
 
-        <div class = "form-group">
-          <input type="text" class = "form-control" id="" required="require" v-model="loginForm.email">
+
+        <div class="form-group">
+          <input type="text" class = "form-control" id="0" required="require" v-model="loginForm.email" @input="hideError">
           <i class="fa-regular fa-envelope"></i>
-          <span>Nhập mail của bạn</span>
+          <span>Email</span>
+          <p class="error-box" v-if="errors.length > 0">{{ errors[0] }}</p>
         </div>
 
-        <div class = "form-group">
-          <input type="password" class = "form-control" id="" required="require" v-model="loginForm.password">
+        <div class="form-group">
+          <input type="password" class = "form-control" id="1" required="require" v-model="loginForm.password" @input="hideError">
           <i class="fas fa-lock"></i>
-          <span>Nhập mật khẩu của bạn</span>
+          <span>Password</span>
+          <p class="error-box" v-if="errors.length > 0">{{ errors[1] }}</p>
         </div>
 
-        <div class = "form-group">
-          <input type="submit" class = "btnn" id="" value="Đăng nhập">
+        <div class="form-group">
+          <input type="submit" class = "" id="" value="Đăng nhập">
           <p>Chưa có tài khoản? <RouterLink @click="scrollToTop()" to="/register">Đăng ký</RouterLink></p>
         </div>
       </form>
     </div>
   </div>
 </template>
+
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
 import axios from 'axios';
@@ -59,6 +57,11 @@ export default {
   methods: {
     ...mapMutations(['scrollToTop', 'setUser', 'setAdmin', 'setLogged', 'setShowLoading']),
     ...mapActions(['getCart']),
+
+    hideError(event) {
+      let index = event.target.id;
+      this.errors[index] = null;
+    },
 
     async login() {
       let data = await axios.post('/login', this.loginForm, { withCredentials: true });
@@ -111,87 +114,104 @@ export default {
 
 }
 </script>
+
 <style lang="scss">
 .login {
-  padding: 2rem 9%;
+  // padding: 2rem 9%;
   .login-form {
     background-color: #fff;
     height: 90vh;
+    background: linear-gradient(to right, rgba($color: #000, $alpha: 1) , rgba($color: #000, $alpha: 0.75));
     form {
       background-color: #f4f4f4;
       position: relative;
-      top: 50%;
+      top: 40%;
       left: 50%;
       transform: translate(-50%, -50%);
       max-width: 40rem;
       width: 100%;
-      box-shadow: -0.5rem -0.5rem 1rem rgba($color: #000000, $alpha: 0.1),  0.5rem 0.5rem 1rem rgba($color: #000000, $alpha: 0.1);
+      height: 50rem;
       border: 0.1rem solid rgba($color: #000000, $alpha: 0.05);
       padding: 2rem;
+      // box-shadow: 16px 16px 32px #c8c8c8,
+      //   -16px -16px 32px #fefefe;
       border-radius: 1rem;
       animation: fadeUp 0.4s linear;
       .error-box {
-        background-color: #fff9fa;
         box-sizing: border-box;
-        border: 2px solid rgba($color: #ff424f, $alpha: 0.2);
-        border-radius: 1rem;
-        font-size: 12px;
-        margin-bottom: 20px;
-        ul {
-          list-style-type: none;
-          margin: 0;
-          padding: 10px 0;
-          li {
-            padding-left: 10px;
-            color: rgb(182, 0, 0);
-          }
-        }
+        font-size: 1.5rem;
+        padding: 0;
+        // margin-bottom: 20px;
+        padding-left: 10px;
+        color: rgb(182, 0, 0);
+        
       }
       .form-group {
+        height: 8.8rem;
         position: relative;
+        margin: 0;
         i {
           font-size: 2rem;
           position: absolute;
           top: 1.5rem;
           left: 1rem;
-          color: #27ae60;
+          color: #222831;
         }
+
         span {
-          font-size: 2em;
+          text-transform: uppercase;
+          letter-spacing: 0.2rem;
+          font-size: 1.7em;
           position: absolute;
           top: 1rem;
           left: 4rem;
           color: rgba($color: #000000, $alpha: 0.3);
           pointer-events: none;
+          transition: 0.5s;
         }
+        input[type="submit"] {
+          margin-top: 1rem;
+          width: 100%;
+          color: #fff;
+          font-size: 2rem;
+          padding: 0.7rem;
+          border-radius: 1rem;
+          background: linear-gradient(to right, #ffa31a, rgba($color: #ffa31a, $alpha: 0.8));
+          &:hover {
+            background: linear-gradient(to right, #e69c00, rgba($color: #e69c00 , $alpha: 0.8));
+          }
+        }
+
         input {
+          font-size: 2rem;
+          margin: 1rem 0;
           &:focus {
             ~ span {
-              background-color: #f4f4f4;
-              color: #27ae60;
-              transform: translateX(-2rem) translateY(-2.5rem);
-              border: 2px solid #27ae60;
+              background-color: #222831;
+              color: #fff;
+              transform: translateX(0rem) translateY(-2.5rem);
               font-size: 1.5rem;
-              border-radius: 20px;
-              padding: 0 8px;
+              border-radius: 0.7rem;
+              padding: 0.2rem 0.8rem;
+              letter-spacing: 0.3rem;
             }
           }
           &:valid {
             ~ span {
-              background-color: #f4f4f4;
-              color: #27ae60;
-              transform: translateX(-2rem) translateY(-2.5rem);
-              border: 2px solid #27ae60;
+              background-color: #222831;
+              color: #fff;
+              transform: translateX(0rem) translateY(-2.5rem);
               font-size: 1.5rem;
-              border-radius: 20px;
-              padding: 0 8px;
+              border-radius: 0.7rem;
+              padding: 0.2rem 0.8rem;
+              letter-spacing: 0.3rem;
             }
           }
         }
       }
-      h3 {
+      h1 {
         padding-bottom: 1rem;
-        font-size: 2rem;
+        font-size: 3rem;
         font-weight: bolder;
         text-transform: uppercase;
         color: #130f40;
@@ -226,7 +246,7 @@ export default {
         a {
           color: #27ae60;
           &:hover {
-            color: #f38609;
+            color: #ffa31a;
             text-decoration: underline;
           }
         }
@@ -244,7 +264,6 @@ export default {
     background-color: #f4f4f4;
     color: #27ae60;
     transform: translateX(-2rem) translateY(-2.5rem);
-    border: 2px solid #27ae60;
     font-size: 1.2rem;
     border-radius: 20px;
     padding: 0px 8px;
@@ -254,7 +273,6 @@ export default {
     background-color: #f4f4f4;
     color: #27ae60;
     transform: translateX(-2rem) translateY(-2.5rem);
-    border: 2px solid #27ae60;
     font-size: 1.2rem;
     border-radius: 20px;
     padding: 0px 8px;

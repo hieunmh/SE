@@ -13,10 +13,9 @@
         <RouterLink to="/menu" class="btnn">Menu</RouterLink>
       </div>
 
-      <!-- <div class="image">
-        <img src="../assets/images/b.png" class="home-img-1">
-        <img src="../assets/images/a.png" class="home-img-2">
-      </div> -->
+      <div class="image">
+        <img src="../assets/images/hero-bg.png	" class="home-img-1">
+      </div>
     </div>
     
     <div class="home-category row">
@@ -114,7 +113,7 @@ export default {
 
 /** home main */
 .home-main {
-	padding: 2rem 20%;
+	// padding: 2rem 20%;
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap-reverse;
@@ -140,20 +139,17 @@ export default {
 		}
 	}
 	.image {
-		flex: 1 1 41rem;
-		margin: 2rem 0;
+		// position: absolute;
+		margin: 0;
 		pointer-events: none;
+		// object-fit: cover;
+  	object-position: 100%;
+  	background: linear-gradient(to right, rgba($color: #000, $alpha: 1), rgba($color: #000, $alpha: 0.75));
+		
 		.home-img-1 {
 			width: 100%;
-			margin-top: 5rem;
 		}
 	}
-	.home-img-2 {
-			position: absolute;
-			top: -15rem;
-			right: -15rem;
-			width: 80vw;
-		}
 }
 
 /** home category */
@@ -264,7 +260,7 @@ export default {
 
 @media (max-width: 992px) {
 	
-	.home-main, .home-category, .home-banner {
+	 .home-category, .home-banner {
 		padding: 2rem 15%;
 	}
 	.home-banner .grid-banner .grid .content p {
@@ -278,7 +274,7 @@ export default {
 
 
 @media (max-width: 767px) {
-	.home-main, .home-category, .home-banner {
+	.home-category, .home-banner {
 		padding: 2rem 10%;
 	}
 	.home-main {
@@ -307,7 +303,7 @@ export default {
 			}
 		}
 	}
-	.home-main, .home-category, .home-banner {
+	.home-category, .home-banner {
 		padding: 2rem 5%;
 	}
 }

@@ -8,7 +8,7 @@
       <VueBasicAlert :duration="200" :closeIn="700" ref="alert" />
 
       <form novalidate autocapitalize="off">
-        <h3>Chỉnh sửa thông tin</h3>
+        <h3 class="text-center">Chỉnh sửa thông tin</h3>
 
         <div class="form-group">
           <input type="text" class="form-control" required="require" v-model="editInfoForm.name">
@@ -18,14 +18,14 @@
         </div>
 
         <div class="form-group">
-          <input type="tel" class="form-control" required="require" v-model="editInfoForm.telephone">
+          <input type="tel" class="form-control" required="require" v-model="editInfoForm.telephone" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
           <i class="fa-solid fa-phone"></i>
           <span>Nhập số điện thoại của bạn</span>
           <p class="error-mess" v-if="errorObj.phoneErr.length > 0">{{ errorObj.phoneErr[0] }}</p>
         </div>
 
         <div class="form-group">
-          <RouterLink to="/"><button @click="handleEdit" class="btnn">Lưu</button></RouterLink>
+          <RouterLink to="/"><button @click="handleEdit" class="">Lưu</button></RouterLink>
           <slot></slot>
         </div>
 
@@ -139,7 +139,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .editInfo {
   z-index: 99;
   position: fixed;
@@ -155,7 +155,7 @@ export default {
 
   .editInfo-form {
     background-color: transparent;
-    height: 45vh;
+    height: 100%;
     width: 40rem;
 
     form {
@@ -189,8 +189,27 @@ export default {
       }
 
       .form-group {
+        height: 6.3rem;
         position: relative;
+        &:last-child {
+          height: 10rem;
+        }
 
+        button {
+          width: 100%;
+          color: #fff;
+          font-size: 1.7em;
+          border-radius: 1rem;
+          padding: 1rem 0;
+          margin: 0.7rem 0;
+          background: linear-gradient(to right, #ffa31a, rgba($color: #ffa31a, $alpha: 0.8));
+          &:hover {
+            background: linear-gradient(to right, #e69c00, rgba($color: #e69c00 , $alpha: 0.8));
+          }
+          a {
+            color: #fff;
+          }
+        }
         .error-mess {
           font-size: 1.5rem;
           color: rgba($color: #f32f2f, $alpha: 1.0);
@@ -199,7 +218,7 @@ export default {
         }
 
         i {
-          color: #27ae60;
+          color: #222831;
           font-size: 2rem;
           position: absolute;
           top: 1.5rem;
@@ -207,7 +226,7 @@ export default {
         }
 
         span {
-          font-size: 2rem;
+          font-size: 1.7rem;
           position: absolute;
           top: 1rem;
           left: 4rem;
@@ -222,26 +241,25 @@ export default {
 
           &:focus {
             ~span {
-              background-color: #f4f4f4;
-              color: #27ae60;
-              transform: translateX(-2rem) translateY(-2.5rem);
-              border: 2px solid #27ae60;
+              background-color: #222831;
+              color: #fff;
+              transform: translateX(0rem) translateY(-2.5rem);
               font-size: 1.5rem;
-              border-radius: 20px;
-              padding: 0px 8px;
-
+              border-radius: 0.7rem;
+              padding: 0.2rem 0.8rem;
+              letter-spacing: 0.3rem;
             }
           }
 
           &:valid {
             ~span {
-              background-color: #f4f4f4;
-              color: #27ae60;
-              transform: translateX(-2rem) translateY(-2.5rem);
-              border: 2px solid #27ae60;
+              background-color: #222831;
+              color: #fff;
+              transform: translateX(0rem) translateY(-2.5rem);
               font-size: 1.5rem;
-              border-radius: 20px;
-              padding: 0 8px;
+              border-radius: 0.7rem;
+              padding: 0.2rem 0.8rem;
+              letter-spacing: 0.3rem;
             }
           }
         }

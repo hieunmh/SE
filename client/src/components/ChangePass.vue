@@ -4,7 +4,7 @@
   <div class="changePass">
     <div class="changePass-form">
       <form @submit="handleSubmit" novalidate autocapitalize="off">
-        <h3>Đổi mật khẩu</h3>
+        <h3 class="text-center">Đổi mật khẩu</h3>
 
         <div class="form-group">
           <input type="text" class="form-control" required="require" v-model="changePassForm.oldPW">
@@ -126,7 +126,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .changePass {
   z-index: 99;
   position: fixed;
@@ -176,8 +176,11 @@ export default {
       }
 
       .form-group {
+        height: 6.3rem;
         position: relative;
-
+        &:last-child {
+          height: 10rem;
+        }
         .error-mess {
           font-size: 1.5rem;
           color: rgba($color: #f32f2f, $alpha: 1.0);
@@ -186,7 +189,7 @@ export default {
         }
 
         i {
-          color: #27ae60;
+          color: #222831;
           font-size: 2rem;
           position: absolute;
           top: 1.5rem;
@@ -194,7 +197,7 @@ export default {
         }
 
         span {
-          font-size: 2rem;
+          font-size: 1.7rem;
           position: absolute;
           top: 1rem;
           left: 4rem;
@@ -209,26 +212,26 @@ export default {
 
           &:focus {
             ~span {
-              background-color: #f4f4f4;
-              color: #27ae60;
-              transform: translateX(-2rem) translateY(-2.5rem);
-              border: 2px solid #27ae60;
+              background-color: #222831;
+              color: #fff;
+              transform: translateX(0rem) translateY(-2.5rem);
               font-size: 1.5rem;
-              border-radius: 20px;
-              padding: 0px 8px;
+              border-radius: 0.7rem;
+              padding: 0.2rem 0.8rem;
+              letter-spacing: 0.3rem;
 
             }
           }
 
           &:valid {
             ~span {
-              background-color: #f4f4f4;
-              color: #27ae60;
-              transform: translateX(-2rem) translateY(-2.5rem);
-              border: 2px solid #27ae60;
+              background-color: #222831;
+              color: #fff;
+              transform: translateX(0rem) translateY(-2.5rem);
               font-size: 1.5rem;
-              border-radius: 20px;
-              padding: 0 8px;
+              border-radius: 0.7rem;
+              padding: 0.2rem 0.8rem;
+              letter-spacing: 0.3rem;
             }
           }
         }

@@ -1,13 +1,13 @@
 <template>
   <div class="shopping-cart">
     <RouterLink to="/menu" style=" text-align: center; color: #fff;">
-      <button class="btnn fw-bold" @click="setShowProduct(false)">
+      <button class="fw-bold" @click="setShowProduct(false)">
         <i class="fa fa-arrow-left"></i> Menu
       </button>
     </RouterLink>
 
     <div class="heading">
-      <span class="fw-bold">Giỏ hàng của bạn</span>
+      <span class="fw-bold" style="color: #ffa31a;">Giỏ hàng của bạn</span>
       <h3>Free ship trong vòng bán kính 5km</h3>
     </div>
 
@@ -15,7 +15,7 @@
       <div class="box">
         <div class="box-content row" v-if="cartItem.length == 0">
           <div class="content text-center">
-            <h2 style="color: #057835fa;">Bạn không có sản phẩm nào trong giỏ hàng, đến menu để mua hàng!</h2>
+            <h2 style="color: #ffa31a;">Bạn không có sản phẩm nào trong giỏ hàng, đến menu để mua hàng!</h2>
           </div>
 
           <div class="image d-flex justify-content-center">
@@ -97,7 +97,7 @@
           <div class="">
             <div class="col-12 d-flex justify-content-end">
                 <RouterLink to="/payment" style=" text-align: center; color: #fff;">
-                  <button class="btnn checkout-btn fw-bold" :disabled="cartItem.length ? false : true">
+                  <button class="checkout-btn fw-bold" :disabled="cartItem.length ? false : true">
                     <i class="fa fa-shopping-cart"></i> Mua hàng
                   </button>
                 </RouterLink>
@@ -204,6 +204,29 @@ export default {
 .shopping-cart {
   padding: 2rem 20%;
   background-color: #fff;
+  > a {
+    > button {
+      background-color: #ffa31a;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      font-size: 1.7rem;
+      border-radius: 0.7rem;
+      &:hover {
+        background-color: #e69c00;
+      }
+    }
+  }
+}
+
+.checkout-btn {
+  background-color: #ffa31a;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-size: 1.7rem;
+  border-radius: 0.7rem;
+  &:hover {
+    background-color: #e69c00;
+  }
 }
 
 .box {

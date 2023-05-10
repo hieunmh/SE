@@ -18,7 +18,7 @@ class adminController {
     let { name, desc, price, quantity, sold_number, category_id, discount_id} = JSON.parse(req.body.document);
     price = parseInt(price);
 
-    if (!name || !desc || !price || !quantity || !sold_number || !category_id || !discount_id) {
+    if (!name || !desc || !price || !quantity || !category_id || !discount_id) {
       return res.status(400).json({
         msg: 'Please fill all !!!',
       });
