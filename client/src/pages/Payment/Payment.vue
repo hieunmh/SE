@@ -63,14 +63,14 @@
 
           <div class="centre col-sm-4 col-3 desc">
             <h4 class="item-total d-sm-none d-inline text-dark text-decoration-line-through fw-bold"
-              v-if="parseInt(p.price) != parseInt(p.salePrice)">{{ p.price.toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
-            <h4 class="item-total d-sm-none d-inline fw-bold">{{ parseInt(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
+              v-if="parseInt(p.price) != parseInt(p.salePrice)">{{ p.price.toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
+            <h4 class="item-total d-sm-none d-inline fw-bold">{{ parseInt(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
             <h4 class="item-name fw-bold">{{ p.name }}</h4>
           </div>
 
 
           <div class="centre col-sm-2 d-sm-flex d-none cal-total">
-            <h4 class="item-total fw-bold"> {{ parseInt(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
+            <h4 class="item-total fw-bold"> {{ parseInt(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
           </div>
 
           <div class="centre col-sm-2 col-2  item-qtt">
@@ -78,7 +78,7 @@
           </div>
 
           <div class="centre col-sm-2 col-3">
-            <h4 class="fw-bold">{{ (p.quantity * p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
+            <h4 class="fw-bold">{{ (p.quantity * p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
           </div>
         </div>
 
@@ -89,7 +89,7 @@
           </div>
 
           <div class="col-sm-2 col-3 centre">
-            <h4 class="fw-bold">{{ calTotal()[0].toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
+            <h4 class="fw-bold">{{ calTotal()[0].toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
           </div>
         </div>
 

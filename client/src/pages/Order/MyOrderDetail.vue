@@ -73,7 +73,7 @@
 
           <div class="centre col-sm-4 col-4">
             <h4 class="item-total d-sm-none d-inline text-dark text-decoration-line-through fw-bold"
-              v-if="parseInt(o.product.price) != parseInt(o.product.salePrice)"> {{ o.product.price.toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
+              v-if="parseInt(o.product.price) != parseInt(o.product.salePrice)"> {{ o.product.price.toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
             <h4 class="item-total d-sm-none d-inline fw-bold">{{ parseInt(o.product.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
             <h4 class="item-name fw-bold">{{ o.product.name }}</h4>
           </div>
@@ -81,8 +81,8 @@
 
           <div class="centre col-sm-2 d-sm-flex d-none cal-total">
             <h4 class="item-total text-dark text-decoration-line-through fw-bold"
-              v-if="parseInt(o.product.price) != parseInt(o.product.salePrice)"> {{ (o.product.price).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
-            <h4 class="fw-bold">{{ parseInt(o.product.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
+              v-if="parseInt(o.product.price) != parseInt(o.product.salePrice)"> {{ (o.product.price).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
+            <h4 class="fw-bold">{{ parseInt(o.product.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
           </div>
 
           <div class="centre col-sm-2 col-2  item-qtt">
@@ -90,7 +90,7 @@
           </div>
 
           <div class="centre col-2 delete">
-            <h4 class="fw-bold">{{ (o.quantity * o.product.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
+            <h4 class="fw-bold">{{ (o.quantity * o.product.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
           </div>
         </div>
 
@@ -100,7 +100,7 @@
           </div>
 
           <div class="col-2 centre">
-            <h4 class="fw-bold">{{ parseInt(detailId.total).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
+            <h4 class="fw-bold">{{ parseInt(detailId.total).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
           </div>
         </div>
       </div>

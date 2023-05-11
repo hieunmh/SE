@@ -14,15 +14,14 @@
     </nav>
 
     <div class="icons col-md-3 col-8	d-flex justify-content-md-end justify-content-end">
+			<div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu"></div>	
+
 			<div class="cart">
 				<RouterLink @click="outMenu()"	to="/cart">
 					<div class="fas fa-shopping-cart"></div>
 					<span class="qttCart" v-if="cartLength > 0 && user.userName">{{ cartLength }}</span>
 				</RouterLink>
 			</div>
-
-			<div id="menu-btn" class="fas fa-bars menu-btn" @click="showMenu">
-			</div>	
 
 			<div v-if="!user.userName" class="fas fa-user account">
 				<ul class="drop-down-select">

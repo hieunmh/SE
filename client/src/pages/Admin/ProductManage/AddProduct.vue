@@ -58,7 +58,7 @@
 
             <label for="upload-image">Thêm hình ảnh</label>
 
-            <button class="col-12 btnn button" :disabled="disable" @click="addProduct">Thêm</button>
+            <button class="col-12 btnn button" :disabled="calDisable" @click="addProduct">Thêm</button>
           </div>
         </div>
 
@@ -77,6 +77,9 @@ import VueBasicAlert from 'vue-basic-alert';
 
 export default {
   name: "AddProduct",
+  components: {
+    VueBasicAlert
+  },
   data() {
     return {
       imgUrl: serverUrl,
@@ -90,7 +93,6 @@ export default {
       proDisID: null,
       proDisName: null,
       imgFile: null,
-      disable: false,
       allDiscount: [],
       showDis: false,
       showCate: false,
@@ -181,6 +183,13 @@ export default {
   computed: { 
     ...mapState(['category']),
 
+    calDisable() {
+      let disable = true;
+      if (this.proName && this.proDesc && this.proPrice && this.proQtt && this.proDisID && this.proCate && this.imgFile) {
+        disable = false;
+      }
+      return disable;
+    },
     
   },
 
@@ -194,11 +203,11 @@ export default {
 <style lang="scss" scoped>
 .add-product {
   position: fixed;
-  top: -10rem;
+  top: -15rem;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 49;
+  z-index: 100;
   background-color: rgba(0, 0, 0, 0.2);
   display: flex;
   align-items: center;
