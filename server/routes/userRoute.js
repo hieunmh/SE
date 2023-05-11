@@ -15,6 +15,7 @@ router.post('/logout', isAuth, userController.logout);
 router.post('/register', isAlreadyLogin, userController.register);
 router.post('/edit-info', isAuth, userController.updateUserInfo);
 router.post('/change-password', isAuth, userController.updatePassword);
+router.get('/admin/all-user', isAuth, isAdmin, userController.getAllUser);
 
 // export default router;
 module.exports = router;
