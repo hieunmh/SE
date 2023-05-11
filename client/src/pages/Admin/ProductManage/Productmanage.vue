@@ -52,8 +52,8 @@
 
           <div class="centre col-2 cal-total">
             <h4 class="item-total text-dark text-decoration-line-through fw-bold"
-              v-if="parseInt(p.price) != parseInt(p.salePrice)"> {{ p.price.toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
-            <h4 class="item-total fw-bold">{{ parseInt(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
+              v-if="parseInt(p.price) != parseInt(p.salePrice)"> {{ p.price.toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
+            <h4 class="item-total fw-bold">{{ parseInt(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
           </div>
 
           <div class="centre col-3 detail">
@@ -126,7 +126,6 @@ export default {
     },
 
     showAlertDeleteProduct(index) {
-      console.log(this.currentPage[index].id);
       this.id = this.currentPage[index].id;
       this.setShowDeletePro(true);
     },

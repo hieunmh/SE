@@ -12,8 +12,8 @@
         </div>
 
         <div class="row priceFilter">
-          <input type="text" class="filter-item col-lg-4 col-md-3 col-6 fw-bold" v-model="priceRangeFrom" placeholder="Từ VNĐ" @keypress.enter="filterPriceRange()" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-          <input type="text" class="filter-item col-lg-4 col-md-3 col-6 fw-bold" v-model="priceRangeTo" placeholder="Đến VNĐ" @keypress.enter="filterPriceRange()" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          <input type="text" class="filter-item col-lg-4 col-md-3 col-6 fw-bold" v-model="priceRangeFrom" placeholder="&#8363; Từ" @keypress.enter="filterPriceRange()" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+          <input type="text" class="filter-item col-lg-4 col-md-3 col-6 fw-bold" v-model="priceRangeTo" placeholder="&#8363; Đến" @keypress.enter="filterPriceRange()" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
           <input type="button" class="filter-item col-lg-2 col-md-3 col-6 fw-bold" @click="filterPriceRange()" value="Áp dụng" >
           <input type="button" class="filter-item col-lg-2 col-md-3 col-6 fw-bold" @click="deletePriceRange()" value="Xóa lọc">
         </div>
@@ -25,12 +25,16 @@
                 <img :src="`${imgUrl}${p.image}`" alt="">
               </div>
 
-              <div class="content">
-                <h3 class="fw-bold">{{ p.name }}</h3>
+              <div class="content pt-3">
+                <h3 class="fw-bold" style="height: 4rem;">{{ p.name }}</h3>
 
-                <div class="price fw-bold">
-                  {{ parseFloat(p.price).toLocaleString("it-IT", { style: "currency", currency: "VND" }) }}
-                  <span></span>
+                <div v-if="parseInt(p.salePrice) != p.price" class="price fw-bold pt-3 row">
+                  <h3 class="col-6 text-center d-flex justify-content-end text-decoration-line-through text-secondary">{{ parseFloat(p.price).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h3>
+                  <h3 class="col-6 text-center d-flex justify-content-start">{{ parseFloat(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h3>
+                </div>
+
+                <div v-else class="price fw-bold pt-3 row">
+                  <h3 class="col-12 text-center">{{ parseFloat(p.price).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h3>
                 </div>
               </div>
             </div>
@@ -338,13 +342,6 @@ input[type="button"] {
 
       .content {
         // background: linear-gradient(to bottom, #f1f2f3 25px, #222831 25px);
-        h3 {
-          font-size: 1.8rem;
-          height: 4rem;
-          color: #000;
-          margin: 0 1rem;
-          margin-top: 1rem;
-        }
         .price  {
           font-size: 1.8rem;
           color: #ee4d2d;
