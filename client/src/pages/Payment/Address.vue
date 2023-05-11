@@ -97,7 +97,7 @@ export default {
       this.setInputAddress(false);
       // if (this.address.detail) {
       //   this.setInputAddress(false);
-      // }
+      // }  
       await axios.post('/payment/create-address', data2, { withCredentials : true})
     },
 

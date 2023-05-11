@@ -88,7 +88,7 @@ html::-webkit-scrollbar {
     }
 }
 
-@media (max-width: 280px) {
+@media (min-width: 280px) {
     html::-webkit-scrollbar {
         width: 0rem;
     }

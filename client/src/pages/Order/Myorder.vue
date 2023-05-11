@@ -115,7 +115,7 @@ export default {
   },
 
   created() {
-    this.getUserOrder()
+    this.getUserOrder();
   }
 }
 </script>

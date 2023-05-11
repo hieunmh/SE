@@ -1,8 +1,5 @@
 <template>
-
-  <div v-if="!showThank">
-    <Thank></Thank>
-  </div>
+  <VueBasicAlert :duration="200" :closeIn="700" ref="alert" />
 
   <div v-if="inputAddress">
     <Address></Address>
@@ -18,20 +15,20 @@
           <div class="col-12" style="height: 4rem; color: #ee4d2d;"><h3 class="fw-bold"><i class="fa-solid fa-location-dot"></i> Địa chỉ nhận hàng</h3></div>
 
           <div class="col-10 d-flex justify-content-start">
-            <h3 class="col-6 d-flex flex-column justify-content-center fw-bold">
+            <h3 class="col-5 d-flex flex-column justify-content-center fw-bold">
               {{ user.userName }} (+84) {{ user.telephone.substring(1, 4) }} {{ user.telephone.substring(4, 7) }} {{ user.telephone.substring(7, 10) }}
             </h3>
 
-            <h4 class="col-6 d-flex flex-column justify-content-center">
-              <div class="fw-bold">
+            <h4 class="col-7 d-flex flex-column justify-content-center">
+              <div class="fw-bold" v-if="addressPayment.detail && addressPayment.war && addressPayment.dis && addressPayment.pro">
                 {{ addressPayment.detail }} <span v-if="addressPayment.detail">,</span> 
                 {{ addressPayment.war }} <span v-if="addressPayment.war">,</span> 
                 {{ addressPayment.dis }} <span v-if="addressPayment.dis">,</span>  
                 {{ addressPayment.pro }}
               </div>
 
-              <div>
-
+              <div v-else class="fw-bold" v-for="(add, index) in defaultAddress" :key="index">
+                {{ add.home_location }} <span v-if="add.home_location">,</span> {{ add.city }}
               </div>
             </h4>
           </div>
@@ -111,19 +108,19 @@
 import axios from 'axios';
 import { mapActions, mapMutations, mapState } from 'vuex';
 import serverUrl from '@/axios';
-import Thank from '@/components/Thank.vue';
 import Address from './Address.vue';
+import VueBasicAlert from 'vue-basic-alert';
 
 export default {
   name: 'Payment',
   components: {
-    Thank,
     Address,
+    VueBasicAlert
   },
   data() {
     return {
       imgUrl: serverUrl,
-      defaultAddress: null,
+      defaultAddress: [],
     }
   },
   methods: {
@@ -131,16 +128,24 @@ export default {
     ...mapActions(['getCart']),
 
     async order() { 
-      let data = {
-        full_address: this.addressPayment.detail + " ," + this.addressPayment.war + " ," + this.addressPayment.dis + " , " + this.addressPayment.pro
+      let data = {}
+      if (this.addressPayment.length == 0) {
+        data = {
+          full_address: this.defaultAddress[0].home_location + ", " + this.defaultAddress[0].city,
+        }
+      }
+      else {
+        data = {
+          full_address: this.addressPayment.detail + " ," + this.addressPayment.war + " ," + this.addressPayment.dis + " , " + this.addressPayment.pro
+        }
       } 
+
       await axios.post('create-order', data, { withCredentials: true });
 
       await new Promise(() => setTimeout(() => {
-        this.setShowThank(true);
         this.$router.push("/");
       }, 1000)).then(
-        this.setShowThank(false),
+        this.$refs.alert.showAlert("Cảm ơn bạn đã mua hàng !"),
         this.getCart()
       )
     },
@@ -160,7 +165,7 @@ export default {
     async postPayment() {
       await axios.post('payment', {}, { withCredentials: true })
         .then((res) => {
-          this.defaultAddress = res.data.userAddress;
+          this.defaultAddress = res.data.userAddress.slice(-1);
         })
     },
 
@@ -172,7 +177,7 @@ export default {
   }, 
 
   created() {
-    this.postPayment()
+    this.postPayment();
   }
 
 
@@ -207,7 +212,7 @@ export default {
   font-size: 1.7rem;
   border-radius: 0.7rem;
   &:hover {
-    background-color: #e69c00;
+    background-color: #e66c00;
   }
 }
 
@@ -242,7 +247,7 @@ export default {
       padding: 0.5rem 1.4rem;
       border-radius: 0.7rem;
       &:hover {
-        background-color: #e69c00;
+        background-color: #e66c00;
       }
     }
 
@@ -267,7 +272,7 @@ export default {
           font-size: 1.7rem;
           border-radius: 0.7rem;
           &:hover {
-            background-color: #e69c00;
+            background-color: #e66c00;
           }
         }
       }

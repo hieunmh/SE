@@ -53,7 +53,7 @@ export default {
 
         if (data.data.role) {
           this.setAdmin("admin");
-          this.getCategory();
+          // this.getCategory();
         }
 
         else {
