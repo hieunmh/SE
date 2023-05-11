@@ -44,7 +44,14 @@ class cartController {
           'product_id',
           sequelize.col('Product.name'),
           sequelize.col('Product.price'),
-          [sequelize.literal('price*(1-discount_percent)'), 'salePrice'],
+          [
+            sequelize.fn(
+              'round',
+              sequelize.literal('price*(1-discount_percent)'),
+              0,
+            ),
+            'salePrice',
+          ],
           'quantity',
           sequelize.col('Product.image'),
         ],

@@ -3,7 +3,6 @@ const {
   sequelize,
 } = require('../models');
 
-
 // Chua hieu User_payment lam gi
 class paymentController {
   // [POST] /payment
@@ -36,7 +35,7 @@ class paymentController {
           productInCart: productInCart,
           amountOfProducts: amountOfProducts,
           totalPrice: totalPrice,
-        })
+        });
       } catch (error) {
         console.log(error);
         next(error);

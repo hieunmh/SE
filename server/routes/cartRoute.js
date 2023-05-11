@@ -6,11 +6,11 @@ const router = express.Router();
 
 router.get('/cart', isAuth, cartController.getCart);
 
-router.post('/add-to-cart', cartController.addToCart);
+router.post('/add-to-cart', isAuth, cartController.addToCart);
 
-router.post('/remove-product-cart', cartController.removeProduct);
+router.post('/remove-product-cart', isAuth, cartController.removeProduct);
 
-router.put('/edit-product-cart', cartController.updateProductInCart);
+router.put('/edit-product-cart', isAuth, cartController.updateProductInCart);
 
 //to do
 // tang giam quantity product in cart

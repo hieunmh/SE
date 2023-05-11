@@ -4,10 +4,29 @@ const session = require('express-session');
 const {
   models: { User, Cart_item },
 } = require('../models/');
+const { where } = require('sequelize');
 
 // bcrypt
 const saltRounds = 10;
 class userController {
+  // [GET] /admin/all-user
+  async getAllUser(req, res, next) {
+    try {
+      const getUsers = await User.findAll({
+        attributes: ['name', 'telephone', 'role'],
+        where: {
+          role: 0,
+        },
+      });
+      if (getUsers) {
+        return res.status(200).send(getUsers);
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  }
+
   // [GET] /info
   async getInfo(req, res, next) {
     // check whether or not login

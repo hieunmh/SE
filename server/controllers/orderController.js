@@ -39,7 +39,14 @@ class orderController {
                 'name',
                 'image',
                 'price',
-                [sequelize.literal('price*(1-discount_percent)'), 'salePrice'],
+                [
+                  sequelize.fn(
+                    'round',
+                    sequelize.literal('price*(1-discount_percent)'),
+                    0,
+                  ),
+                  'salePrice',
+                ],
               ],
               include: {
                 model: Discount,
@@ -48,6 +55,7 @@ class orderController {
             },
           },
         ],
+        order: [['created_at', 'DESC']],
       });
       if (Orders.length) {
         return res.status(200).json({
@@ -85,7 +93,14 @@ class orderController {
               'name',
               'image',
               'price',
-              [sequelize.literal('price*(1-discount_percent)'), 'salePrice'],
+              [
+                sequelize.fn(
+                  'round',
+                  sequelize.literal('price*(1-discount_percent)'),
+                  0,
+                ),
+                'salePrice',
+              ],
             ],
             include: {
               model: Discount,
@@ -94,6 +109,7 @@ class orderController {
           },
         },
         where: { user_id },
+        order: [['created_at', 'DESC']],
       });
       if (Orders.length) {
         return res.status(200).json({
