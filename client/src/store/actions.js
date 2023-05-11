@@ -14,7 +14,7 @@ export default {
   async getCategory(context) {
     await axios.get('all-category', { withCredentials: true })
     .then((res) => {
-      context.commit("setCategory", res.data.slice(0, 5));
+      context.commit("setCategory", res.data);
     })
 
   },

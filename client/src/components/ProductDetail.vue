@@ -51,7 +51,7 @@
       <div class="row" style="margin-top: 3rem;">
         <h2 class="col-12 text-center">Vui lòng đăng nhập để sử dụng tính năng này</h2>
         <div class="col-4"></div>
-        <RouterLink @click="setShowProduct(false)" class=" col-4 text-center" to="login">Đăng Nhập</RouterLink>
+        <RouterLink @click="setShowProduct(false)" class="btnn col-4 text-center" to="login">Đăng Nhập</RouterLink>
         <div class="col-4"></div>
       </div>
     </div>

@@ -98,8 +98,8 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['setShowAddPro', ,'getProduct']),
-    ...mapActions(['getCategory']),
+    ...mapMutations(['setShowAddPro']),
+    ...mapActions(['getCategory', 'getProducts']),
 
     async getDiscount() {
       await axios.get('/all-discount', {withCredentials: true})
@@ -160,24 +160,28 @@ export default {
       formdata.append('document', JSON.stringify(body));
 
 
-      await axios({
-        method: 'post',
-        url: 'http://localhost:3000/admin/product/add',
-        data: formdata,
-        withCredentials: true,
-        headers: { "Content-Type": "multipart/form-data" },
-      })
 
       await new Promise(() => setTimeout(() => {
         this.setShowAddPro(false);
-      }, 700)).then(this.$refs.alert.showAlert("Thêm sản phẩm thành công !"),
-        this.getProduct());
+      }, 1000)).then(
+        await axios({
+          method: 'post',
+          url: 'http://localhost:3000/admin/product/add',
+          data: formdata,
+          withCredentials: true,
+          headers: { "Content-Type": "multipart/form-data" },
+        }),
+        this.getProducts(),
+        this.$refs.alert.showAlert("Thêm sản phẩm thành công !"),
+      );
     },
 
   },
 
   computed: { 
-    ...mapState(['category'])
+    ...mapState(['category']),
+
+    
   },
 
   created() {

@@ -8,11 +8,7 @@
       <div class="col-12">
         <div class="menu-tabs">
           <input type="button" class="menu-tab-item active" @click="filterProduct($event)" id="0" value="Tất cả">
-          <input type="button" class="menu-tab-item" @click="filterProduct($event)" id="1" value="Mì phở">
-          <input type="button" class="menu-tab-item" @click="filterProduct($event)" id="2" value="Cơm hộp">
-          <input type="button" class="menu-tab-item" @click="filterProduct($event)" id="3" value="Bánh">
-          <input type="button" class="menu-tab-item" @click="filterProduct($event)" id="4" value="Trà sữa">
-          <input type="button" class="menu-tab-item" @click="filterProduct($event)" id="5" value="Cà phê">
+          <input type="button" class="menu-tab-item" @click="filterProduct($event)" v-for="(cate, index) in category" :key="index" :id="`${cate.id}`" :value="`${cate.name}`">
         </div>
 
         <div class="row priceFilter">
@@ -228,7 +224,7 @@ export default {
   },
 
   created() {
-    // this.getCategory();
+    this.getCategory();
     // this.getProducts();
   }
 }

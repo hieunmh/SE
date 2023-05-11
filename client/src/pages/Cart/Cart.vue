@@ -192,8 +192,14 @@ export default {
   computed: {
     ...mapState(['user', 'allFoods', 'cartItem', 'showAlert']),
   },
-  mounted() {
-    this.getCart();
+  created() {
+    // if (user.name) {
+    //   this.getCart();
+    // }
+    if (this.user.userName) {
+      this.getCart();
+    }
+    // this.getCart();
   }
 
 }
@@ -212,7 +218,7 @@ export default {
       font-size: 1.7rem;
       border-radius: 0.7rem;
       &:hover {
-        background-color: #e69c00;
+        background-color: #e66c00;
       }
     }
   }
@@ -225,7 +231,8 @@ export default {
   font-size: 1.7rem;
   border-radius: 0.7rem;
   &:hover {
-    background-color: #e69c00;
+    background-color: #e66c00;
+    // filter: brightness(80%);
   }
 }
 
