@@ -16,8 +16,8 @@
         <div class="content">
           <h2 class="w-100 text-center">{{ p.name }}</h2>
           <div>
-            <p class="nosale" v-if="p.price != parseInt(p.salePrice)">{{ p.price }} VNĐ</p>
-            <p >{{ parseInt(p.salePrice) }} VNĐ</p>
+            <p class="nosale" v-if="p.price != parseInt(p.salePrice)">{{ p.price.toLocaleString("it-IT", { style: "currency", currency: "VND" }) }}</p>
+            <p >{{ parseInt(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }) }}</p>
           </div>
 
           <div class="row quantity">

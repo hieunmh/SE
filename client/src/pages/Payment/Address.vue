@@ -42,7 +42,7 @@
 
       <div class="d-flex justify-content-end button">
         <button @click="setInputAddress(false)" class="">Trở lại</button>
-        <button @click="setAddressPayment" class="">Hoàn Thành</button>
+        <button @click="setAddressPayment" class="" :disabled="address.pro && address.dis && address.war && address.detail ? false : true">Hoàn Thành</button>
       </div>
     </div>
   </div>
@@ -264,6 +264,9 @@ export default {
           color: #fff;
           &:hover {
             background: #e69c00;
+          }
+          &:disabled {
+            cursor: not-allowed;
           }
         }
       }
