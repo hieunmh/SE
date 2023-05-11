@@ -62,12 +62,15 @@
           </div>
 
           <div class="centre col-sm-4 col-3 desc">
+            <h4 class="item-total d-sm-none d-inline text-dark text-decoration-line-through fw-bold"
+              v-if="parseInt(p.price) != parseInt(p.salePrice)">{{ p.price.toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
+            <h4 class="item-total d-sm-none d-inline fw-bold">{{ parseInt(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
             <h4 class="item-name fw-bold">{{ p.name }}</h4>
           </div>
 
 
           <div class="centre col-sm-2 d-sm-flex d-none cal-total">
-            <h4 class="item-total fw-bold"> {{ parseInt(p.salePrice) }}</h4>
+            <h4 class="item-total fw-bold"> {{ parseInt(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
           </div>
 
           <div class="centre col-sm-2 col-2  item-qtt">
@@ -75,7 +78,7 @@
           </div>
 
           <div class="centre col-sm-2 col-3">
-            <h4 class="fw-bold">{{ p.quantity * p.salePrice }}</h4>
+            <h4 class="fw-bold">{{ (p.quantity * p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
           </div>
         </div>
 
@@ -86,14 +89,14 @@
           </div>
 
           <div class="col-sm-2 col-3 centre">
-            <h4 class="fw-bold">{{ calTotal()[0] }}</h4>
+            <h4 class="fw-bold">{{ calTotal()[0].toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}</h4>
           </div>
         </div>
 
         <div>
           <div class="col-12 d-flex justify-content-end">
             <!-- <RouterLink to="/" @click="order()" style=" text-align: center; color: #fff;"> -->
-              <button @click="order()" class="checkout-btn fw-bold" :disabled="cartItem.length ? false : true">
+              <button @click="order()" class="checkout-btn fw-bold" :disabled="cartItem.length && !calDisable ? false : true">
                 <i class="fa fa-shopping-cart"></i> Đặt hàng
               </button>
             <!-- </RouterLink> -->
@@ -128,7 +131,8 @@ export default {
     ...mapActions(['getCart']),
 
     async order() { 
-      let data = {}
+      let data = {};
+
       if (this.addressPayment.length == 0) {
         data = {
           full_address: this.defaultAddress[0].home_location + ", " + this.defaultAddress[0].city,
@@ -139,6 +143,7 @@ export default {
           full_address: this.addressPayment.detail + " ," + this.addressPayment.war + " ," + this.addressPayment.dis + " , " + this.addressPayment.pro
         }
       } 
+
 
       await axios.post('create-order', data, { withCredentials: true });
 
@@ -173,6 +178,13 @@ export default {
   computed: {
     ...mapState(['user', 'allFoods', 'cartItem', 'showThank', 'inputAddress', 'addressPayment']),
 
+    calDisable() {
+      let disable = true;
+      if (this.addressPayment.length != 0 || this.defaultAddress.length != 0) {
+        disable = false;
+      }
+      return disable;
+    },
 
   }, 
 
@@ -214,6 +226,10 @@ export default {
   &:hover {
     background-color: #e66c00;
   }
+}
+
+.checkout-btn:disabled {
+  cursor: not-allowed;
 }
 
 .box {

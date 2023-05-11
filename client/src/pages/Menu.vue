@@ -29,7 +29,7 @@
                 <h3 class="fw-bold">{{ p.name }}</h3>
 
                 <div class="price fw-bold">
-                  {{ parseFloat(p.price) }} VNĐ
+                  {{ parseFloat(p.price).toLocaleString("it-IT", { style: "currency", currency: "VND" }) }}
                   <span></span>
                 </div>
               </div>
@@ -225,6 +225,7 @@ export default {
 
   created() {
     this.getCategory();
+    this.productObj.category = ""
     // this.getProducts();
   }
 }
@@ -241,29 +242,10 @@ input[type="button"] {
   outline: inherit;
 }
 
-.unselect-btn {
-  background: transparent;
-  padding-right: 10px;  
-  cursor: pointer;
-  color: inherit;
-  display: none;
-}
-
-.filter-section {
-  width: 100%;
-}
-
-.filter-heading {
-  padding-top: 25px;
-  text-align: center;
-  h1 {
-    color: #27ae60;
-  }
-}
-
 .menu {
   padding: 2rem 20%;
   // background-color: #fff;
+  
 
   .priceFilter {
     background-color: #222831;
@@ -419,21 +401,7 @@ input[type="button"] {
   }
 }
 
-@media (max-width: 575px) {
-
-  .search-box {
-    i {
-      top: 0.5rem;
-      left: 0.5rem;
-    }
-  }
-  .search-box, .filter-heading, .filter-section {
-    width: auto;
-  }
-  .filter-option {
-    width: 100%;
-  }
-  
+@media (max-width: 575px) {  
   .menu {
     padding: 2rem 5%;
   }

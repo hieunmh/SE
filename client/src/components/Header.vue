@@ -62,7 +62,7 @@
 
 <script>
 import axios from 'axios';
-import { mapMutations, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 import LoadingSearch from '../components/LoadingSearch.vue';
 
 export default {
@@ -80,7 +80,8 @@ export default {
 	},
 
 	methods: {
-		...mapMutations(['setUser', 'setAdmin', 'setLogged', 'scrollToTop', 'setShowAlertEditInfo', 'setShowLoading', 'setShowProduct', 'setShowSearchLoading']),
+		...mapMutations(['setUser', 'setAdmin', 'setLogged', 'scrollToTop', 'setShowAlertEditInfo', 'setShowLoading', 'setShowProduct', 'setShowSearchLoading', 'setCartItem']),
+		...mapActions(['getCart']),
 
 		showMenu() {
 			let nav_bar = document.querySelector('.header .navbar');
@@ -94,6 +95,7 @@ export default {
 		async handleLogout() {
 			await axios.post('/logout',{},  {withCredentials: true});
 			this.setUser([]);
+			this.setCartItem([]);
 			this.setShowProduct(false);
 			this.setShowLoading(true);
 
