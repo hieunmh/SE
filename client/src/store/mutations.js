@@ -78,5 +78,12 @@ export default {
   },
   setShowAddPro(state, showAddPro) {
     state.showAddPro = showAddPro;
+  },
+  setShowDeleteUser(state, showDeleteUser) {
+    state.showDeleteUser = showDeleteUser;
+  },
+
+  setAllUser(state, allUser) {
+    state.allUser = allUser;
   }
 };

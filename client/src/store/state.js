@@ -28,7 +28,8 @@ export default {
   showEditpro: false,
   showDeletePro: false,
   showAddPro: false,
-
+  showDeleteUser: false,
   inputAddress: false,
   addressPayment: [],
+  allUser: [],
 };

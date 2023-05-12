@@ -3,8 +3,9 @@
     <div class="box">
       <div class="box-content">
         <div class="manage">
-          <RouterLink to="/admin"><button class="col-6 fw-bold" >Quản Lý Sản Phẩm</button></RouterLink>
-          <RouterLink to="/admin/allorder"><button class="col-6 fw-bold" :disabled="true">Quản Lý Đơn Hàng</button></RouterLink>
+          <RouterLink to="/admin"><button class="col-4 fw-bold" >Quản Lý Sản Phẩm</button></RouterLink>
+          <RouterLink to="/admin/allorder"><button class="col-4 fw-bold" :disabled="true">Quản Lý Đơn Hàng</button></RouterLink>
+          <RouterLink to="/admin/usermanage"><button class="col-4 fw-bold">Quản Lý Đơn Hàng</button></RouterLink>
         </div>
 
         <div class="row bar">
@@ -133,6 +134,11 @@ export default {
           }
         }
         &:nth-child(2) {
+          button {
+            border-radius: 0 0 0 0;
+          }
+        }
+        &:nth-child(3) {
           button {
             border-radius: 0 0.7rem 0.7rem 0;
           }

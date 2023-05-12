@@ -106,7 +106,6 @@ import Loading from '@/components/Loading.vue';
       async register() {
         let data = await axios.post('/register', this.registerForm, {withCredentials: true});
         let err = data.data.msg;
-        console.log(data.data);
         if (err === 'Email đã tồn tại') {
           this.errorObj.emailErr.push(err);
         }
@@ -209,7 +208,7 @@ import Loading from '@/components/Loading.vue';
   }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .register {
   // padding: 2rem 9%;
   .register-form {

@@ -15,6 +15,7 @@ import Admin from '../pages/Admin/Admin.vue';
 import Payment from '../pages/Payment/Payment.vue';
 import AllOrder from '../pages/Admin/OrderManage/AllOrder.vue';
 import OrderDetail from '../pages/Admin/OrderManage/OrderDetail.vue';
+import Usermanage from '../pages/Admin/Usermanage/Usermanage.vue';
 
 
 const routes = [
@@ -32,6 +33,8 @@ const routes = [
   { path: "/admin/allorder", name: "AllOrder", component: AllOrder },
   { path: "/admin/allorder/order=:id", name: "OrderDetail", component: OrderDetail },
   { path: "/payment", name: "Payment", component: Payment },
+  { path: "/payment", name: "Payment", component: Payment },
+  { path: "/admin/usermanage", name: "UserManage", component: Usermanage },
 ];
 
 const router = createRouter({

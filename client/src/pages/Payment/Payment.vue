@@ -96,7 +96,7 @@
         <div>
           <div class="col-12 d-flex justify-content-end">
             <!-- <RouterLink to="/" @click="order()" style=" text-align: center; color: #fff;"> -->
-              <button @click="order()" class="checkout-btn fw-bold" :disabled="cartItem.length && !calDisable ? false : true">
+              <button @click.prevent="order()" class="checkout-btn fw-bold" >
                 <i class="fa fa-shopping-cart"></i> Đặt hàng
               </button>
             <!-- </RouterLink> -->
@@ -131,28 +131,32 @@ export default {
     ...mapActions(['getCart']),
 
     async order() { 
-      let data = {};
-
-      if (this.addressPayment.length == 0) {
-        data = {
-          full_address: this.defaultAddress[0].home_location + ", " + this.defaultAddress[0].city,
-        }
+      if (this.addressPayment.length == 0 || !this.defaultAddress) {
+        this.$refs.alert.showAlert("Vui lòng thêm địa chỉ của bạn !");
       }
       else {
-        data = {
-          full_address: this.addressPayment.detail + " ," + this.addressPayment.war + " ," + this.addressPayment.dis + " , " + this.addressPayment.pro
+        let data = {};
+
+        if (this.addressPayment.length == 0) {
+          data = {
+            full_address: this.defaultAddress[0].home_location + ", " + this.defaultAddress[0].city,
+          }
         }
-      } 
+        else {
+          data = {
+            full_address: this.addressPayment.detail + " ," + this.addressPayment.war + " ," + this.addressPayment.dis + " , " + this.addressPayment.pro
+          }
+        }
 
+        await axios.post('create-order', data, { withCredentials: true });
 
-      await axios.post('create-order', data, { withCredentials: true });
-
-      await new Promise(() => setTimeout(() => {
-        this.$router.push("/");
-      }, 1000)).then(
-        this.$refs.alert.showAlert("Cảm ơn bạn đã mua hàng !"),
-        this.getCart()
-      )
+        await new Promise(() => setTimeout(() => {
+          this.$router.push("/");
+        }, 1000)).then(
+          this.$refs.alert.showAlert("Cảm ơn bạn đã mua hàng !"),
+          this.getCart()
+        )
+      }
     },
 
     calTotal() {

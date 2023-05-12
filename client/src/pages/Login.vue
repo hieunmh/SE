@@ -115,7 +115,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .login {
   // padding: 2rem 9%;
   .login-form {

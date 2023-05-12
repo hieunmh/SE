@@ -44,5 +44,12 @@ export default {
 
   setLoading(context) {
     context.commit("setLoading", false);
-  } 
+  },
+
+  async getAllUser(context) {
+    await axios.get('/admin/all-user', { withCredentials: true })
+    .then((res) => {
+      context.commit("setAllUser", res.data);
+    })
+  }
 }
