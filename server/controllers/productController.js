@@ -236,18 +236,18 @@ class productController {
   async modifyProduct(req, res, next) {
     const IDProduct = req.params.id;
 
-    // Change value of Product : name, desc, price, discountPercent
-    const { name, desc, price, discountPercent, quantity } = req.body;
+    // Change value of Product : name, desc, price, discount_id
+    const { name, desc, price, discount_id, quantity } = req.body;
 
     // if nothing changes, do nothing
-    if (!name && !desc && !price && !discountPercent && !quantity) {
+    if (!name && !desc && !price && !discount_id && !quantity) {
       res.status(400).json({ message: 'Nothing changed' });
     }
 
     try {
       // check whether product exist or not
       const checkIdExist = await Product.findOne({
-        attributes: ['name', 'desc', 'price', 'discount_id'],
+        attributes: ['name', 'desc', 'price'],
         where: {
           id: IDProduct,
         },
@@ -262,7 +262,7 @@ class productController {
 
         // if one of this values isn't changed, what will be updated ?
         const result = Product.update(
-          { name, desc, price, discountPercent, quantity },
+          { name, desc, price, discount_id, quantity },
           {
             where: {
               id: IDProduct,
