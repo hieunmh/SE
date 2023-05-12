@@ -13,7 +13,7 @@ class userController {
   async getAllUser(req, res, next) {
     try {
       const getUsers = await User.findAll({
-        attributes: ['name', 'telephone', 'role'],
+        attributes: ['id', 'name', 'telephone', 'role'],
         where: {
           role: 0,
         },
@@ -24,6 +24,38 @@ class userController {
     } catch (error) {
       console.log(error);
       next(error);
+    }
+  }
+
+  // [POST] /admin/delete-user
+  async deleteUser(req, res, next) {
+    const {id} = req.body;
+    if (!id) {
+      return res.status(400).json({
+        msg: "Bad request!"
+      })
+    } else {
+      const query = await User.destroy({
+        where: {
+          id,
+        },
+      })
+        .then((data) => {
+          console.log(data);
+          if (data == 1) {
+            return res.status(200).json({
+              success: 'Deleted Success!',
+            });
+          } else {
+            return res.status(400).json({
+              success: "You can't delete this order!",
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          next(err);
+        });
     }
   }
 

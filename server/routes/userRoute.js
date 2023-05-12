@@ -16,6 +16,8 @@ router.post('/register', isAlreadyLogin, userController.register);
 router.post('/edit-info', isAuth, userController.updateUserInfo);
 router.post('/change-password', isAuth, userController.updatePassword);
 router.get('/admin/all-user', isAuth, isAdmin, userController.getAllUser);
+router.post('/admin/delete-user', isAuth, isAdmin, userController.deleteUser);
+
 
 // export default router;
 module.exports = router;

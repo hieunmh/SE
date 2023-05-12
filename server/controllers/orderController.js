@@ -131,7 +131,7 @@ class orderController {
     const cartProduct = req.session.cart;
     const totalPrice = req.session.totalPrice;
 
-    // Home_location + ', ' City
+    // Home_location + ', ' + City
     const full_address = req.body.full_address;
 
     //check products in cart. if having nothing => fail
