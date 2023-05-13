@@ -15,7 +15,7 @@
 
         <div class="content">
           <h2 class="w-100 text-center">{{ p.name }}</h2>
-          <div>
+          <div style="height: 10rem;" class="d-flex flex-column justify-content-center">
             <p class="nosale" v-if="p.price != parseInt(p.salePrice)">{{ p.price.toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</p>
             <p >{{ parseInt(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</p>
             <!-- <h3>{{ p.discount.name }}</h3> -->

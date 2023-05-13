@@ -87,22 +87,22 @@ export default {
       let minute = new Date(time).getMinutes();
       let second = new Date(time).getSeconds();
 
-      if (month <= 10) {
+      if (month < 10) {
         month = "0" + month;
       }
 
-      if (date <= 10) {
+      if (date < 10) {
         date = "0" + date;
       }
 
-      if (parseInt(hour) <= 10) {
+      if (parseInt(hour) < 10) {
         hour = "0" + hour;
       }
-      if (minute <= 10) {
+      if (minute < 10) {
         minute = "0" + minute;
       }
 
-      if (second <= 10) {
+      if (second < 10) {
         second = "0" + second;
       }
 

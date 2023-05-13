@@ -132,7 +132,7 @@ export default {
     ...mapActions(['getCart']),
 
     async order() { 
-      if (this.addressPayment.length == 0 || !this.defaultAddress) {
+      if (this.addressPayment.length == 0 && this.defaultAddress.length == 0) {
         this.$refs.alert.showAlert("Vui lòng thêm địa chỉ của bạn !");
       }
       else {
@@ -195,6 +195,7 @@ export default {
 
   created() {
     this.postPayment();
+    console.log(this.defaultAddress.length);
   }
 
 

@@ -14,9 +14,9 @@
 
     <div class="box">
       <div class="manage">
-        <RouterLink to="/admin"><button class="col-4 fw-bold" disabled="true" >Quản Lý Sản Phẩm</button></RouterLink>
-        <RouterLink to="/admin/allorder"><button class="col-4 fw-bold">Quản Lý Đơn Hàng</button></RouterLink>
-        <RouterLink to="/admin/usermanage"><button class="col-4 fw-bold">Quản Lý Người Dùng</button></RouterLink>
+        <RouterLink to="/admin"><button class="col-4 fw-bold" disabled="true" >Sản Phẩm</button></RouterLink>
+        <RouterLink to="/admin/allorder"><button class="col-4 fw-bold">Đơn Hàng</button></RouterLink>
+        <RouterLink to="/admin/usermanage"><button class="col-4 fw-bold">Người Dùng</button></RouterLink>
       </div>
 
       <div class="box-content">
@@ -26,7 +26,7 @@
         </div>
 
         <div class="row bar">
-          <div class="col-7">
+          <div class="col-6">
             <h4 class="text-center fw-bold">Thông tin sản phẩm</h4>
           </div>
 
@@ -34,8 +34,12 @@
             <h4 class="text-center fw-bold">Đơn giá</h4>
           </div>
 
+          <div class="col-2">
+            <h4 class="text-center fw-bold">Đã bán</h4>
+          </div>
 
-          <div class="col-3">
+
+          <div class="col-2">
             <h4 class="text-center fw-bold">chi tiết</h4>
           </div>
         </div>
@@ -46,7 +50,7 @@
             <img :src="`${imgUrl}${p.image}`" alt="">
           </div>
 
-          <div class="centre col-4 desc ">
+          <div class="centre col-3 desc ">
             <h4 class="item-name fw-bold">{{ p.name }}</h4>
           </div>
 
@@ -57,7 +61,11 @@
             <h4 class="item-total fw-bold">{{ parseInt(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
           </div>
 
-          <div class="centre col-3 detail">
+          <div class="centre col-2">
+            <h4 class="fw-bold">{{ p.sold_number }}</h4>
+          </div>
+
+          <div class="centre col-2 detail">
             <button class="btn btn-info fw-bold" @click="showEditProduct(index)">sửa</button>
             <button class="mt-2 btn btn-danger fw-bold" @click="showAlertDeleteProduct(index)">xóa</button>
           </div>
@@ -348,7 +356,7 @@ export default {
   }
 }
 
-@media (max-width: 400px) {
+@media (max-width: 450px) {
   .product-manage {
     .box {
       .box-content {
@@ -359,8 +367,17 @@ export default {
             border-radius: 0.7rem;
           }
         }
+        .detail {
+          button {  
+            // scale: 60%;
+            width: 3.5rem;
+            font-size: 1.5rem;
+            padding: 0.5rem 0.5rem;
+          }
+        }
       }
     }
   }
 }
+
 </style>
