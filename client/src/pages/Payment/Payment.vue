@@ -1,5 +1,5 @@
 <template>
-  <VueBasicAlert :duration="200" :closeIn="700" ref="alert" />
+  <VueBasicAlert :duration="200" :closeIn="1500" ref="alert" />
 
   <div v-if="inputAddress">
     <Address></Address>
@@ -15,9 +15,10 @@
           <div class="col-12" style="height: 4rem; color: #ee4d2d;"><h3 class="fw-bold"><i class="fa-solid fa-location-dot"></i> Địa chỉ nhận hàng</h3></div>
 
           <div class="col-10 d-flex justify-content-start">
-            <h3 class="col-5 d-flex flex-column justify-content-center fw-bold">
-              {{ user.userName }} (+84) {{ user.telephone.substring(1, 4) }} {{ user.telephone.substring(4, 7) }} {{ user.telephone.substring(7, 10) }}
-            </h3>
+            <div class="col-5 d-flex flex-column justify-content-center">
+              <h3 class="fw-bold">{{ user.userName }}</h3>
+              <h3 class="fw-bold">(+84) {{ user.telephone.substring(1, 4) }} {{ user.telephone.substring(4, 7) }} {{ user.telephone.substring(7, 10) }}</h3>
+            </div>
 
             <h4 class="col-7 d-flex flex-column justify-content-center">
               <div class="fw-bold" v-if="addressPayment.detail && addressPayment.war && addressPayment.dis && addressPayment.pro">
@@ -62,9 +63,9 @@
           </div>
 
           <div class="centre col-sm-4 col-3 desc">
-            <h4 class="item-total d-sm-none d-inline text-dark text-decoration-line-through fw-bold"
+            <h4 class="item-total d-sm-none d-inline text-secondary text-decoration-line-through fw-bold"
               v-if="parseInt(p.price) != parseInt(p.salePrice)">{{ p.price.toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
-            <h4 class="item-total d-sm-none d-inline fw-bold">{{ parseInt(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
+            <h4 class="item-total d-sm-none d-inline fw-bold" style="color: #ee4d2d;">{{ parseInt(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
             <h4 class="item-name fw-bold">{{ p.name }}</h4>
           </div>
 
@@ -152,9 +153,9 @@ export default {
 
         await new Promise(() => setTimeout(() => {
           this.$router.push("/");
+          this.getCart();
         }, 1000)).then(
           this.$refs.alert.showAlert("Cảm ơn bạn đã mua hàng !"),
-          this.getCart()
         )
       }
     },

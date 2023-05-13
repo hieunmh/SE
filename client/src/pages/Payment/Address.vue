@@ -313,6 +313,7 @@ export default {
       button:disabled {
         background-color: #f1f1f1;
         color: #ffa31a;
+        cursor: not-allowed;
       }
     }
 
