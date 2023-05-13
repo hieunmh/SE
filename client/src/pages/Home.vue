@@ -7,8 +7,8 @@
     <div class="home-main">
       <div class="content">
         <h3 v-if="user.userName">Xin chào {{ user.userName }}</h3>
-				<h3 v-else>SIUUUUUU</h3>
-        <p>asd</p>
+				<h3 v-else>Heloooo</h3>
+        <p>pedro lopez gonzalez</p>
         <RouterLink to="/menu" class="btnn">Menu</RouterLink>
       </div>
 
@@ -129,15 +129,19 @@ export default {
 			color: #27ae60;
 		}
 		h3 {
-			font-size: 4rem;
+			font-size: 6rem;
 			color: #fff;
 			padding-top: 1rem;
 		}
 		p {
-			font-size: 1.4rem;
+			font-size: 3rem;
 			color: #ffa31a;
 			line-height: 2;
 			padding: 1rem 0;
+		}
+		a {
+			font-size: 2.5rem;
+			padding: 1rem 5rem;
 		}
 	}
 	.image {

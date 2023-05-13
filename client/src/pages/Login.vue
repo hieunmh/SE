@@ -61,6 +61,9 @@ export default {
     hideError(event) {
       let index = event.target.id;
       this.errors[index] = null;
+      if (this.errors[0] == "Sai email hoặc mật khẩu") {
+        this.errors[0] = null;
+      }
     },
 
     async login() {

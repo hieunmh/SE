@@ -2,9 +2,9 @@
   <div class="user-manage">
     <div class="box">
       <div class="manage">
-        <RouterLink to="/admin"><button class="col-4 fw-bold">Quản Lý Sản Phẩm</button></RouterLink>
-        <RouterLink to="/admin/allorder"><button class="col-4 fw-bold">Quản Lý Đơn Hàng</button></RouterLink>
-        <RouterLink to="/admin/usermanage"><button class="col-4 fw-bold" :disabled="true">Quản Lý Người Dùng</button></RouterLink>
+        <RouterLink to="/admin"><button class="col-4 fw-bold">Sản Phẩm</button></RouterLink>
+        <RouterLink to="/admin/allorder"><button class="col-4 fw-bold">Đơn Hàng</button></RouterLink>
+        <RouterLink to="/admin/usermanage"><button class="col-4 fw-bold" :disabled="true">Người Dùng</button></RouterLink>
       </div>
 
       <div class="box-content">

@@ -41,7 +41,7 @@
               </div>
 
               <div class="salePercent" v-if="p.discount.name !='NONE'">
-                <h4 class="m-0">{{ p.discount.name }}</h4>
+                <h4 class="m-0"><i class="fa-solid fa-tag"></i> {{ p.discount.name }}</h4>
               </div>
             </div>
           </div>
@@ -347,10 +347,16 @@ input[type="button"] {
         position: absolute;
         top: 0rem;
         right: 0rem;
-        padding: 0.5rem 0.5rem;
+        padding: 1rem 1rem;
         background-color: #ffa31a;
         color: #fff;
-        border-radius: 0 0.7rem 0 0;
+        border-radius: 0 0.7rem 0 0.7rem;
+        h4 {
+          font-size: 2rem;
+        }
+        // i {
+        //   font-size: 2rem;
+        // }
       }
       .image {
         img {

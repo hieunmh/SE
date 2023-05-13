@@ -57,8 +57,8 @@
               </div>  
               
               <div class="centre text-center col-md-2 col-sm-3 col-3 item-price">
-                <h4 class="sale-price fw-bold">{{ parseInt(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
                 <h4 class="sale-price fw-bold sale" v-if="p.price != p.salePrice">{{ p.price.toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
+                <h4 class="sale-price fw-bold">{{ parseInt(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
               </div>
 
               <div class="centre col-md-2 col-sm-7 col-7 mt-md-0 mt-4 item-qtt">
