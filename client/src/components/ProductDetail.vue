@@ -34,7 +34,7 @@
             </div>
           </div>
 
-          <button class="addToCart" @click="addToCart($event)">
+          <button class="addToCart" @click.prevent="addToCart($event)">
             <p class="fa-solid fa-cart-plus"></p>
             <p class="">Thêm vào giỏ hàng</p>
           </button>
@@ -76,6 +76,7 @@ export default {
     return {
       qty: 1,
       imgUrl: serverUrl,
+
     }
   },
 
@@ -83,22 +84,34 @@ export default {
     ...mapMutations(['setShowProduct']),
     ...mapActions(['getCart']),
 
-    async addToCart() {
-      let data = {
-        // user_id: this.user.userId,
-        product_id: this.product.id,
-        name: this.product.name,
-        price: this.product.price,
-        salePrice: (1 - this.product.discount.discount_percent) * this.product.price,
-        quantity: this.qty,
-        image: this.product.image,
+    async addToCart(event) {
+      if (this.product.quantity <= this.product.sold_number) {
+        event.preventDefault();
+        await new Promise(() => setTimeout(() => {
+          this.setShowProduct(false);
+        }, 700)).then(
+          this.$refs.alert.showAlert("Sản phẩm đã hết hàng !"),
+        )
+        
+      } 
+      else {
+        let data = {
+          product_id: this.product.id,
+          name: this.product.name,
+          price: this.product.price,
+          salePrice: (1 - this.product.discount.discount_percent) * this.product.price,
+          quantity: this.qty,
+          image: this.product.image,
+        }
+
+        await new Promise(() => setTimeout(() => {
+          this.setShowProduct(false);
+        }, 700)).then(
+          await axios.post('add-to-cart', data, { withCredentials: true }),
+          this.$refs.alert.showAlert("Thêm vào giỏ hàng thành công !"),
+          this.getCart()
+        );
       }
-      
-      await axios.post('add-to-cart', data, {withCredentials: true});
-      await new Promise(() => setTimeout(() => {
-        this.setShowProduct(false);
-      }, 700)).then(this.$refs.alert.showAlert("Thêm vào giỏ hàng thành công !"), 
-      this.getCart());
       
     },
 

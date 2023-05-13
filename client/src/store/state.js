@@ -27,6 +27,7 @@ export default {
   showThank: true,
   showEditpro: false,
   showDeletePro: false,
+  showDeleteOrder: false,
   showAddPro: false,
   showDeleteUser: false,
   inputAddress: false,

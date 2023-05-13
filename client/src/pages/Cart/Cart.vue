@@ -193,13 +193,9 @@ export default {
     ...mapState(['user', 'allFoods', 'cartItem', 'showAlert']),
   },
   created() {
-    // if (user.name) {
-    //   this.getCart();
-    // }
     if (this.user.userName) {
       this.getCart();
     }
-    // this.getCart();
   }
 
 }

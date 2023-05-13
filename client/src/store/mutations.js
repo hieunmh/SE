@@ -85,5 +85,8 @@ export default {
 
   setAllUser(state, allUser) {
     state.allUser = allUser;
+  },
+  setShowDeleteOrder(state, showDeleteOrder) {
+    state.showDeleteOrder = showDeleteOrder;
   }
 };
