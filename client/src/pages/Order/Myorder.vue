@@ -5,9 +5,15 @@
   </div>
 
 
+
   <div v-else class="myorder">
+
+    <div v-if="showDeleteOrder">
+      <DeleteOrder :deleteId="deleteId"></DeleteOrder>
+    </div>
+
     <div class="box">
-      <div class="box-content">
+      <div v-if="userOrder"  class="box-content">
 
         <div>
           <RouterLink to="/"><button class="btnn fw-bold"><i class="fa fa-arrow-left" style="margin-right: 0.5rem;"></i>Home</button></RouterLink>
@@ -44,8 +50,21 @@
             <h4 class="text-center fw-bold">{{ order.status }}</h4>
           </div>
 
-          <div class="centre col-3">
-            <button class="btnn fw-bold" @click="showDetail(index)">xem</button>
+          <div class="centre col-3 detail">
+            <button class="btn btn-info fw-bold" @click="showDetail(index)">xem</button>
+            <button class="btn btn-danger fw-bold mt-2" @click="showCancelOrder(index)">hủy</button>
+          </div>
+        </div>
+      </div>
+
+      <div v-else class="box-content">
+        <div class="image">
+          <RouterLink to="/menu"><button class="btnn fw-bold"><i class="fa fa-arrow-left" style="margin-right: 0.5rem;"></i>Menu</button></RouterLink>
+          <div>
+            <img src="@/assets/images/no-orders.png" alt="">
+          </div>
+          <div>
+            <p class="" style="font-size: 2rem; font-weight: 500;">Bạn không có sản phẩm nào trong đơn hàng !</p>
           </div>
         </div>
       </div>
@@ -56,20 +75,23 @@
 <script>
 import axios from 'axios';
 import { mapActions, mapMutations, mapState } from 'vuex';
-import MyOrderDetail from './MyOrderDetail.vue'
+import MyOrderDetail from './MyOrderDetail.vue';
+import DeleteOrder from './DeleteOrder.vue';
 
 export default {
   components: {
-    MyOrderDetail
+    MyOrderDetail,
+    DeleteOrder
   },
   data() {
     return {
       detailId: null,
+      deleteId: null,
     }
   },
 
   methods: {
-    ...mapMutations(['scrollToTop', 'setShowMyOrder']),
+    ...mapMutations(['scrollToTop', 'setShowMyOrder', 'setShowDeleteOrder', 'setUserOrder']),
     ...mapActions(['getUserOrder']),
 
     showDetail(index) {
@@ -77,6 +99,13 @@ export default {
       this.setShowMyOrder(false);
       this.scrollToTop();
     },
+
+    showCancelOrder(index) {
+      this.deleteId = this.userOrder[index];
+      this.setShowDeleteOrder(true);
+      this.scrollToTop();
+    },
+    
 
     getTime(time) {
       let year = new Date(time).getFullYear();
@@ -111,12 +140,15 @@ export default {
   },
 
   computed: {
-    ...mapState(['user', 'userOrder', 'showMyOrder'])
+    ...mapState(['user', 'userOrder', 'showMyOrder', 'showDeleteOrder', 'userOrderLength'])
   },
 
+  
   created() {
     this.getUserOrder();
-  }
+    // console.log(this.userOrderLength);
+  },
+  
 }
 </script>
 
@@ -133,6 +165,23 @@ export default {
     .box-content {
       padding: 0;
       border-image: none;
+
+      .detail {
+        button {
+          width: 7rem;
+          padding: .7rem 1.8rem;
+          font-size: 1.7rem;
+          cursor: pointer;
+          color: #fff;
+        }
+      }
+      .image {
+        display: flex;
+        flex-direction: column;
+        div {
+          margin: auto auto;
+        }
+      }
 
       .row {
         background-color: #f1f1f1;

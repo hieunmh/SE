@@ -19,7 +19,7 @@
         </div>
 
         <div class="row box-container">
-          <div v-for="(p, index) in currentPage" :key="index" class="col-xl-3 col-md-4 col-6">
+          <div v-if="currentPage.length > 0" v-for="(p, index) in currentPage" :key="index" class="col-xl-3 col-md-4 col-6">
             <div class="box" @click="showDetail(index)">
               <div class="image">
                 <img :src="`${imgUrl}${p.image}`" alt="">
@@ -43,11 +43,19 @@
               <div class="salePercent" v-if="p.discount.name !='NONE'">
                 <h4 class="m-0"><i class="fa-solid fa-tag"></i> {{ p.discount.name }}</h4>
               </div>
+
+              <div class="sold-out">
+                <p class="m-0" v-if="p.quantity <= p.sold_number">Hết hàng</p>
+              </div>
             </div>
+          </div>
+
+          <div v-else class="d-flex justify-content-center">
+            <img src="@/assets/images/notfound.png" alt="">
           </div>
         </div>
 
-        <div class="action-row">
+        <div v-if="currentPage.length > 0" class="action-row">
           <button @click="previousToFirst()" class="action-btn decrease-btn">
             <i class="fa-solid fa-angles-left"></i>
           </button>
@@ -354,9 +362,21 @@ input[type="button"] {
         h4 {
           font-size: 2rem;
         }
-        // i {
-        //   font-size: 2rem;
-        // }
+      }
+
+      .sold-out {
+        position: absolute;
+        top: 10rem;
+        left: 0;
+        right: 0;
+        margin: 0 4rem;
+        p {
+          font-size: 2rem;
+          color: #fff;
+          padding: 0.5rem 1rem;
+          background-color: #222831;
+          border-radius: 0.7rem;
+        }
       }
       .image {
         img {

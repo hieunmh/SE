@@ -195,7 +195,6 @@ export default {
 
   created() {
     this.postPayment();
-    console.log(this.defaultAddress.length);
   }
 
 

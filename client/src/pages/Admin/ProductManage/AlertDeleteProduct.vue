@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 import axios from 'axios';
 import VueBasicAlert from 'vue-basic-alert'
 
@@ -46,7 +46,7 @@ export default {
 
   },
   computed: {
-    ...mapState(['allFoods'])
+
   }
 }
 </script>
