@@ -25,8 +25,8 @@
                 <img :src="`${imgUrl}${p.image}`" alt="">
               </div>
 
-              <div class="content pt-3">
-                <h3 class="fw-bold" style="height: 4rem;">{{ p.name }}</h3>
+              <div class="content">
+                <h3 class="fw-bold" style="height: 5rem; padding-top: 2rem;">{{ p.name }}</h3>
 
                 <div v-if="parseInt(p.salePrice) != p.price" class="price fw-bold pt-3 row">
                   <h3 class="col-6 text-center d-flex justify-content-end text-decoration-line-through text-secondary">{{ parseFloat(p.price).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h3>
@@ -36,6 +36,12 @@
                 <div v-else class="price fw-bold pt-3 row">
                   <h3 class="col-12 text-center">{{ parseFloat(p.price).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h3>
                 </div>
+
+                <h4 class="text-dark" style="height: 4rem; font-weight: 500;">Đã bán {{ p.sold_number }}</h4>
+              </div>
+
+              <div class="salePercent" v-if="p.discount.name !='NONE'">
+                <h4 class="m-0">{{ p.discount.name }}</h4>
               </div>
             </div>
           </div>
@@ -322,8 +328,12 @@ input[type="button"] {
   }
 
   .box-container {
+    // .col-xl-3ms {
+    //   width: 20%;
+    // }
     padding: 0;
     .box {
+      position: relative;
       border-radius: 0.7rem;
       margin: 0.7rem 0;
       height: 95%;
@@ -332,6 +342,15 @@ input[type="button"] {
       text-align: center;
       &:hover {
         box-shadow: 0px 5px 5px rgba($color: #000000, $alpha: 0.3);
+      }
+      .salePercent {
+        position: absolute;
+        top: 0rem;
+        right: 0rem;
+        padding: 0.5rem 0.5rem;
+        background-color: #ffa31a;
+        color: #fff;
+        border-radius: 0 0.7rem 0 0;
       }
       .image {
         img {

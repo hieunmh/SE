@@ -26,7 +26,7 @@ export default {
       right: 0;
       bottom: 0;
       z-index: 1000;
-      background-color: rgba(255, 255, 255, 1);
+      background: linear-gradient(to right, rgba($color: #000, $alpha: 1), rgba($color: #000, $alpha: 0.75));
       display: flex;
       align-items: center;
       justify-content: center;

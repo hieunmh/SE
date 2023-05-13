@@ -1,65 +1,53 @@
 <template>
-  <div class="product-manage">
-    <div v-if="showEditpro">
-      <EditProduct :editdata="editData"></EditProduct>
-    </div>
-
-    <div v-if="showDeletePro">
-      <AlertDeleteProduct :index="id"></AlertDeleteProduct>
-    </div>
-
-    <div v-if="showAddPro">
-      <AddProduct></AddProduct>
-    </div>
-
+  <div class="user-manage">
     <div class="box">
       <div class="manage">
-        <RouterLink to="/admin"><button class="col-4 fw-bold" disabled="true" >Quản Lý Sản Phẩm</button></RouterLink>
+        <RouterLink to="/admin"><button class="col-4 fw-bold">Quản Lý Sản Phẩm</button></RouterLink>
         <RouterLink to="/admin/allorder"><button class="col-4 fw-bold">Quản Lý Đơn Hàng</button></RouterLink>
-        <RouterLink to="/admin/usermanage"><button class="col-4 fw-bold">Quản Lý Người Dùng</button></RouterLink>
+        <RouterLink to="/admin/usermanage"><button class="col-4 fw-bold" :disabled="true">Quản Lý Người Dùng</button></RouterLink>
       </div>
 
       <div class="box-content">
-        
-        <div class="row add-product d-flex justify-content-center">
-          <button class="btn btn-outline-success col-12 text-center fw-bold" @click="setShowAddPro(true)">Thêm sản phẩm mới</button>
-        </div>
+
+        <AlertDeleteUser :userId = "userid" v-if="showDeleteUser"></AlertDeleteUser>
 
         <div class="row bar">
-          <div class="col-7">
-            <h4 class="text-center fw-bold">Thông tin sản phẩm</h4>
+          <div class="col-1">
+            <h4 class="text-center fw-bold">ID</h4>
+          </div>
+
+          <div class="col-5">
+            <h4 class="text-center fw-bold">Tên Khánh Hàng</h4>
+          </div>
+
+          <div class="col-4">
+            <h4 class="text-center fw-bold">Số điện thoại</h4>
           </div>
 
           <div class="col-2">
-            <h4 class="text-center fw-bold">Đơn giá</h4>
-          </div>
-
-
-          <div class="col-3">
-            <h4 class="text-center fw-bold">chi tiết</h4>
+            <h4 class="text-center fw-bold">Thao tác</h4>
           </div>
         </div>
 
 
-        <div v-for="(p, index) in currentPage" :key="index" class="row">
-          <div class="centre col-3 image-box" style="">
-            <img :src="`${imgUrl}${p.image}`" alt="">
-          </div>
+        <div  class="row" v-for="(user, index) in allUser" :key="index">
 
-          <div class="centre col-4 desc ">
-            <h4 class="item-name fw-bold">{{ p.name }}</h4>
+          <div class="centre col-1 desc ">
+            <h4 class="item-name fw-bold">{{ index + 1 }}</h4>
           </div>
 
 
-          <div class="centre col-2 cal-total">
-            <h4 class="item-total text-secondary text-decoration-line-through fw-bold"
-              v-if="parseInt(p.price) != parseInt(p.salePrice)"> {{ p.price.toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
-            <h4 class="item-total fw-bold">{{ parseInt(p.salePrice).toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
+          <div class="centre col-5 cal-total">
+            <h4 class="text-center fw-bold">{{ user.name }}</h4>
           </div>
 
-          <div class="centre col-3 detail">
-            <button class="btn btn-info fw-bold" @click="showEditProduct(index)">sửa</button>
-            <button class="mt-2 btn btn-danger fw-bold" @click="showAlertDeleteProduct(index)">xóa</button>
+          <div class="centre col-4 cal-total">
+            <h4 class="text-center fw-bold">{{ user.telephone }}</h4>
+          </div>
+
+          <div class="centre col-2 detail">
+            <!-- <button class="btn btn-info fw-bold" @click="">sửa</button> -->
+            <button class="mt-2 btn btn-danger fw-bold" @click="showDelete(index)">xóa</button>
           </div>
         </div>
 
@@ -93,42 +81,32 @@
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
 import serverUrl from '@/axios';
-import EditProduct from './EditProduct.vue';
-import AlertDeleteProduct from './AlertDeleteProduct.vue';
-import AddProduct from './AddProduct.vue';
+import axios from 'axios';
+
+import AlertDeleteUser from './AlertDeleteUser.vue';
+
 
 export default {
-  name: "ProductManage",
+  name: "Usermanage",
   components: {
-    EditProduct,
-    AlertDeleteProduct,
-    AddProduct
+    AlertDeleteUser
   },
 
   data() {
     return {
-      allOrder: [],
-      OrderId: [],
       pageNum: 0,
       perPage: 6,
-      imgUrl: serverUrl,
-      editData: [],
-      id: null,
+      userid: null,
     }
   },
 
   methods: {
-    ...mapMutations(['scrollToTop' , 'setShowEditpro', 'setShowDeletePro', 'setShowAddPro']),
-    ...mapActions(['getAllOrder', 'getProducts']),
+    ...mapMutations(['scrollToTop', 'setShowDeleteUser', 'setShowDeleteUser']),
+    ...mapActions(['getAllUser']),
 
-    showEditProduct(index) {
-      this.editData = this.currentPage[index];
-      this.setShowEditpro(true);
-    },
-
-    showAlertDeleteProduct(index) {
-      this.id = this.currentPage[index].id;
-      this.setShowDeletePro(true);
+    showDelete(index) {
+      this.userid = this.allUser[index].id;
+      this.setShowDeleteUser(true);
     },
 
     setPage(value) {
@@ -172,33 +150,32 @@ export default {
   },
 
   computed: {
-    ...mapState(['admin', 'allFoods', 'showEditpro', 'showDeletePro', 'showAddPro']),
+    ...mapState(['admin', 'showDeleteUser', 'allUser']),
 
     currentPage() {
-      return this.allFoods.slice(this.pageNum * this.perPage, this.pageNum * this.perPage + this.perPage);
+      return this.allUser.slice(this.pageNum * this.perPage, this.pageNum * this.perPage + this.perPage);
     },
 
     calculatePages() {
-      if (this.allFoods.length % this.perPage != 0) {
-        return Math.floor((this.allFoods.length) / this.perPage) + 1;
+      if (this.allUser.length % this.perPage != 0) {
+        return Math.floor((this.allUser.length) / this.perPage) + 1;
       }
       else {
-        return this.allFoods.length / this.perPage;
+        return this.allUser.length / this.perPage;
       }
     },
 
   },
 
   created() {
-    // this.getAllOrder();
-    // this.getProducts();
+    this.getAllUser();
   }
 
 }
 </script>
 
 <style lang="scss" scoped>
-.product-manage {
+.user-manage {
   padding: 2rem 20%;
 
   .box {
@@ -214,23 +191,27 @@ export default {
             border-radius: 0.7rem 0 0 0.7rem;
           }
         }
+
         &:nth-child(2) {
           button {
             border-radius: 0 0 0 0;
           }
         }
+
         &:nth-child(3) {
           button {
             border-radius: 0 0.7rem 0.7rem 0;
           }
         }
       }
+
       button {
         background: #f1f1f1;
         color: #ffa31a;
         font-size: 1.7rem;
         padding: 0.7rem 0;
       }
+
       button:disabled {
         background-color: #ffa31a;
         color: #fff;
@@ -279,7 +260,7 @@ export default {
           color: #ee4d2d;
         }
       }
-      
+
       .detail {
         button {
           padding: .7rem 1.8rem;
@@ -331,25 +312,25 @@ export default {
 
 
 @media (max-width: 992px) {
-  .product-manage {
+  .user-manage {
     padding: 2rem 15%;
   }
 }
 
 @media (max-width: 767px) {
-  .product-manage {
+  .user-manage {
     padding: 2rem 10%;
   }
 }
 
 @media (max-width: 576px) {
-  .product-manage {
+  .user-manage {
     padding: 2rem 5%;
   }
 }
 
 @media (max-width: 400px) {
-  .product-manage {
+  .user-manage {
     .box {
       .box-content {
         .image-box {

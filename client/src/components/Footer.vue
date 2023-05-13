@@ -78,7 +78,7 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
-  background-color: #222831;
+  background: linear-gradient(to right, rgba($color: #000, $alpha: 1), rgba($color: #000, $alpha: 0.75));
   padding: 2rem 9%;
   .letter {
     text-align: center;

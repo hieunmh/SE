@@ -9,7 +9,6 @@
           <i class="fa-solid fa-xmark"></i>
         </button>
 
-
         <div class="row upload" enctype="multipart/form-data" @click.self="this.showDis = false, this.showCate = false">
 
           <div class="upload-group col-12">
@@ -25,13 +24,6 @@
             <span>giá</span>
           </div>
 
-          <div class="upload-group col-12">
-            <input type="text" class="upload-control" required="require" v-model="proQtt" name="quantity"
-              @click.self="this.showDis = false, this.showCate = false"
-              oninput="this.value = this.value.replace(/[^0-9]/g, '')">
-            <span>số lượng</span>
-          </div>
-
           <div class="upload-group dad col-12">
             <input type="text" class="upload-control" required="require" v-model="proDisName" name="quantity"
               @click="this.showDis = true, this.showCate = false">
@@ -41,18 +33,16 @@
                 dis.name }}</option>
             </div>
           </div>
-
-          <div class="upload-group dad col-12">
-            <input type="text" class="upload-control" required="require" v-model="proCateName" name="quantity"
-              @click="this.showCate = true">
-            <span>danh mục</span>
-            <div class="discount col-12" v-if="showCate">
-              <option v-for="(cate, index) in category" :key="index" :value="`${cate.id}`" @click="setCate">{{ cate.name }}</option>
-            </div>
+          
+          <div class="upload-group col-12">
+            <input type="text" class="upload-control" required="require" v-model="proQtt" name="quantity"
+              @click.self="this.showDis = false, this.showCate = false"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <span>số lượng</span>
           </div>
 
-          <div class="col-12" style="margin-top: 3rem;">
-            <button class="col-12 btnn button" style="margin-top: 3rem;" :disabled="calDisable" @click="editProduct">Hoàn thành</button>
+          <div class="col-12">
+            <button class="col-12 btn btn-info fw-bold" style="margin-top: 3rem;"  @click="editProduct">Hoàn thành</button>
           </div>
         </div>
 
@@ -70,7 +60,7 @@ import axios from 'axios';
 import VueBasicAlert from 'vue-basic-alert';
 
 export default {
-  name: "AddProduct",
+  name: "EditProduct",
   props: ['editdata'],
   components: {
     VueBasicAlert
@@ -103,8 +93,18 @@ export default {
         name: this.proName,
         desc: this.proDesc,
         price: this.proPrice,
-
+        discount_id: this.proDisID,
+        quantity: this.proQtt
       }
+
+      await new Promise(() => setTimeout(() => {
+        this.setShowEditpro(false);
+      }, 700)).then(
+        await axios.put('admin/product/' + this.editdata.id + '/modify', data, { withCredentials: true }),
+        this.$refs.alert.showAlert("Chỉnh sửa sửa sản phẩm thành công !"),
+        this.getProducts()
+      )
+
     },
 
     setAttribute() {
@@ -112,6 +112,7 @@ export default {
       this.proPrice = this.editdata.price;
       this.proDisName = this.editdata.discount.name;
       this.proQtt = this.editdata.quantity;
+      this.proDisID = this.editdata.discount.id;
       let id = this.category.filter(cate => cate.id == this.editdata.category_id)[0];
       this.proCateName = id.name;
     },
@@ -178,7 +179,7 @@ export default {
     position: relative;
     background-color: #fff;
     max-width: 40rem;
-    height: 50rem;
+    height: 40rem;
     border-radius: 1rem;
 
     button {
@@ -209,6 +210,7 @@ export default {
     }
 
     .upload {
+      margin-top: 1rem;
       .dad {
         position: relative;
 
@@ -307,11 +309,10 @@ export default {
         }
       }
 
-      .button {
-        margin-top: 2rem;
-        background-color: #25cff2 !important;
+      .btn {
+        // margin-top: 1rem;
         color: #fff;
-        font-size: 1.5rem;
+        font-size: 1.7rem;
         padding: 1rem 2rem;
         text-align: center;
         border-radius: 1rem;

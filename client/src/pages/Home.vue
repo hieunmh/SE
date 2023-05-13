@@ -6,10 +6,9 @@
   <div class="">
     <div class="home-main">
       <div class="content">
-        <span>Home page</span>
         <h3 v-if="user.userName">Xin chào {{ user.userName }}</h3>
 				<h3 v-else>SIUUUUUU</h3>
-        <p>Welcome to the League of Draven</p>
+        <p>asd</p>
         <RouterLink to="/menu" class="btnn">Menu</RouterLink>
       </div>
 
@@ -114,6 +113,7 @@ export default {
 /** home main */
 .home-main {
 	// padding: 2rem 20%;
+	position: relative;
 	display: flex;
 	align-items: center;
 	flex-wrap: wrap-reverse;
@@ -121,19 +121,21 @@ export default {
 	position: relative;
 	overflow: hidden;
 	.content {
-		flex: 1 1 41rem;
+		position: absolute;
+		top: 4rem;
+		left: 20%;
 		span {
 			font-size: 2rem;
 			color: #27ae60;
 		}
 		h3 {
 			font-size: 4rem;
-			color: #130f40;
+			color: #fff;
 			padding-top: 1rem;
 		}
 		p {
 			font-size: 1.4rem;
-			color: #666;
+			color: #ffa31a;
 			line-height: 2;
 			padding: 1rem 0;
 		}
