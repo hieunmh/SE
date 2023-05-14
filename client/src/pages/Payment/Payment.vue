@@ -84,13 +84,35 @@
         </div>
 
         <div class="row col-12">
-
           <div class="col-sm-10 col-9 d-flex justify-content-end">
             <h4 class="fw-bold">Tổng số tiền ({{ cartItem.length }} sản phẩm): </h4>
           </div>
 
           <div class="col-sm-2 col-3 centre">
             <h4 class="fw-bold">{{ calTotal()[0].toLocaleString("it-IT", { style: "currency", currency: "VND" }).slice(0, -3) }}&#8363;</h4>
+          </div>
+        </div>
+
+        <div class="row payment-method col-12">
+          <div class="col-sm-5 col-12 d-sm-flex justify-content-sm-end d-flex justify-content-center">
+            <h4 class="fw-bold d-flex flex-column justify-content-center">phương thức thanh toán:</h4>
+          </div>
+
+          <div class="col-sm-3 col-12 mt-sm-0 mt-1">
+            <div class="text-center pay-method" @click="setPaymentMethod($event), showQR()">Thanh toán bằng QR</div>
+          </div>
+
+          <div class="col-sm-4 col-12 mt-sm-0 mt-3">
+            <div class="text-center pay-method" @click="setPaymentMethod($event), hideQR()">Thanh toán khi nhận hàng</div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-sm-5 d-sm-flex d-none qr-image d-flex flex-column justify-content-center align-items-center">
+            <h1 class="">Quét mã để thanh toán</h1>
+          </div>
+          <div class="col-sm-4 col-12 d-flex flex-column justify-content-center align-items-center qr-image">
+            <img class="" src="@/assets/images/QR.jpg" alt="">
           </div>
         </div>
 
@@ -178,6 +200,29 @@ export default {
           this.defaultAddress = res.data.userAddress.slice(-1);
         })
     },
+
+    setPaymentMethod(event) {
+      let pay = document.querySelectorAll('.pay-method');
+      for (let i = 0; i < pay.length; i++) {
+        pay[i].classList.remove('active');
+      }
+
+      event.target.classList.add('active');
+    },
+
+    showQR() {
+      let qr = document.querySelectorAll('.qr-image');
+      for (let i = 0; i < qr.length; i++) {
+        qr[i].classList.add('active')
+      }
+    },
+
+    hideQR() {
+      let qr = document.querySelectorAll('.qr-image');
+      for (let i = 0; i < qr.length; i++) {
+        qr[i].classList.remove('active')
+      }
+    }
 
   },
   computed: {
@@ -358,6 +403,43 @@ export default {
         color: rgba($color: #000000, $alpha: 0.5);
       }
     }
+  }
+}
+
+.payment-method {
+  > div {
+      div {
+        width: 100%;
+        font-size: 1.5rem;
+        color: #000000;
+        border: 1px solid gray;
+        border-radius: 0.7rem;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+      }
+      div.active {
+        border: 1px solid #ffa31a;
+        background-color: #ffa31a;
+        color: #fff;
+      }
+  }
+}
+
+.qr-image {
+  img {
+    display: none;
+  }
+  h1 {
+    display: none;
+  }
+}
+.qr-image.active {
+  img {
+    width: 25rem;
+    display: block;
+  }
+  h1 {
+    display: block;
   }
 }
 

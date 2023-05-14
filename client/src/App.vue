@@ -87,6 +87,7 @@ export default {
     this.checkLogin();
     this.getProducts();
     this.setLoading();
+    this.getCategory();
   },
 }
 </script>

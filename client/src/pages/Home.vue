@@ -19,33 +19,33 @@
     
     <div class="home-category row">
       <RouterLink to="/" class="box col-lg-2 col-md-4 col-sm-6">
-        <img src="../assets/images/banhxeo.png" alt="">
-        <h3>Bánh xèo</h3>
+        <img src="../assets/images/mypho.png" alt="">
+        <h3>{{ category[0].name }}</h3>
       </RouterLink>
 
       <RouterLink to="/" class="box col-lg-2 col-md-4 col-sm-6">
-				<img src="../assets/images/banhxeo.png" alt="">
-				<h3>Bánh xèo</h3>
+				<img src="../assets/images/comhop.png" alt="">
+				<h3>{{ category[1].name }}</h3>
       </RouterLink>
 
       <RouterLink to="/" class="box col-lg-2 col-md-4 col-sm-6">
-        <img src="../assets/images/dessert.png" alt="">
-        <h3>Salad</h3>
+        <img src="../assets/images/banhmy.png" alt="">
+        <h3>{{ category[2].name }}</h3>
       </RouterLink>
 
       <RouterLink to="/" class="box col-lg-2 col-md-4 col-sm-6">
-        <img src="../assets/images/dessert.png" alt="">
-        <h3>Salad</h3>
+        <img src="../assets/images/trasua.png" alt="">
+        <h3>{{ category[3].name }}</h3>
       </RouterLink>
 
       <RouterLink to="/" class="box col-lg-2 col-md-4 col-sm-6">
-        <img src="../assets/images/drink.png" alt="">
-        <h3>7 Up</h3>
+        <img src="../assets/images/caphe.png" alt="">
+        <h3>{{ category[4].name }}</h3>
       </RouterLink>
 
       <RouterLink to="/" class="box col-lg-2 col-md-4 col-sm-6">
-        <img src="../assets/images/drink.png" alt="">
-        <h3>7 Up</h3>
+        <img src="../assets/images/nuocngot.png" alt="">
+        <h3>{{ category[5].name }}</h3>
       </RouterLink>
     </div>
 
@@ -98,13 +98,13 @@ export default {
 		...mapMutations(['scrollToTop', 'setShowLoading']),
 	},
 	computed: {
-		...mapState(['user', 'showLoading']),		
+		...mapState(['user', 'showLoading', 'category']),		
 	},
 	mounted() {
 		setTimeout(() => {
 			this.setShowLoading(false);
 		}, 1000);
-	}
+	},
 	
 }
 </script>
