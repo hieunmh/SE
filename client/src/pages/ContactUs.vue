@@ -5,7 +5,7 @@
         <div class="m-md-0 d-sm-inline justify-content-start mb-sm-3">
           <div>
             <i class="fa-solid fa-house"></i>
-            <p>144 Xuân Thủy, Cầu Giấy Hà Nội</p>
+            <p>144 Xuân Thủy, Cầu Giấy, Hà Nội</p>
           </div>
         </div>
 
@@ -20,6 +20,13 @@
           <div>
             <i class="fa-solid fa-envelope"></i>
             <p>21020121@vnu.edu.vn</p>
+          </div>
+        </div>
+
+        <div class="m-md-0 d-sm-inline justify-content-start mb-sm-3">
+          <div>
+            <i class="fa-brands fa-facebook"></i>
+            <p><a href="https://facebook.com">facebook/feastly</a></p>
           </div>
         </div>
       </div>
@@ -66,7 +73,7 @@
           color: #fff;
           font-size: 3rem;
           margin: 0;
-          // margin-top: 1rem;
+          margin-top: 0.5rem;
           margin-right: 2rem;
           padding: 0;
 
@@ -75,6 +82,10 @@
           margin: 0;
           font-size: 2.5rem;
           color: #ffa31a;
+          a {
+            color: #ffa31a;
+          }
+          
         }
         &:nth-child(3) {
           p {

@@ -71,7 +71,7 @@ export default {
 	},
 
 	methods: {
-		...mapMutations(['setUser', 'setAdmin', 'setLogged', 'scrollToTop', 'setShowAlertEditInfo', 'setShowLoading', 'setShowProduct', 'setShowSearchLoading', 'setCartItem']),
+		...mapMutations(['setUser', 'setAddress', 'setAdmin', 'setLogged', 'scrollToTop', 'setShowAlertEditInfo', 'setShowLoading', 'setShowProduct', 'setShowSearchLoading', 'setCartItem']),
 		...mapActions(['getCart']),
 
 		showMenu() {
@@ -93,6 +93,7 @@ export default {
 			setTimeout(() => {
 				this.setShowLoading(false);
 				this.setAdmin(null);
+				this.setAddress([]);
 				this.setLogged(false);
 			}, 1000);
 		},
