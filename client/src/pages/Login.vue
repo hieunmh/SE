@@ -133,7 +133,7 @@ export default {
       transform: translate(-50%, -50%);
       max-width: 40rem;
       width: 100%;
-      height: 50rem;
+      height: 45rem;
       border: 0.1rem solid rgba($color: #000000, $alpha: 0.05);
       padding: 2rem;
       // box-shadow: 16px 16px 32px #c8c8c8,

@@ -72,7 +72,7 @@ export default {
         })
       }
       else {
-        if (router.currentRoute.value.path.includes("admin") || router.currentRoute.value.path.includes("payment")) {
+        if (router.currentRoute.value.path.includes("admin") || router.currentRoute.value.path.includes("payment") || router.currentRoute.value.path.includes("info")) {
           router.push('/');
         }
       }

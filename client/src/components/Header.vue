@@ -7,10 +7,8 @@
 
     <nav class="navbar col-md-6 d-md-flex justify-content-md-around justify-content-around">
       <RouterLink @click="outMenu()" to="/"><h3>Home</h3></RouterLink>
-      <!-- <RouterLink @click="scrollToTop()" to="/about">About</RouterLink> -->
       <RouterLink @click="scrollToTop()" to="/menu"><h3>Menu</h3></RouterLink>
-      <!-- <RouterLink @click="scrollToTop()" to="/promotion">Promotions</RouterLink> -->
-      <RouterLink @click="outMenu()" to="/table"><h3>Contact Us</h3></RouterLink>
+      <RouterLink @click="outMenu()" to="/contactus"><h3>Contact Us</h3></RouterLink>
     </nav>
 
     <div class="icons col-md-3 col-8	d-flex justify-content-md-end justify-content-end">
@@ -33,10 +31,7 @@
 
 			<div v-else class="fas fa-user account logined">
 				<ul class="drop-down-select">
-					<li><RouterLink @click="outMenu()" to="/info">
-						<!-- {{ user.userName.split(' ')[user.userName.split(' ').length - 1] }} -->Hồ sơ
-					</RouterLink></li>
-					<!-- <li><RouterLink @click="outMenu()" to="/info">Tài khoản của tôi</RouterLink></li> -->
+					<li><RouterLink @click="outMenu()" to="/info">Hồ sơ</RouterLink></li>
 					<li v-if="admin"><RouterLink @click.prevent="outMenu()" to="/admin">Quản lý</RouterLink></li>
 					<li><RouterLink @click="outMenu()" to="/myorder">Đơn mua</RouterLink></li>
 					<li><RouterLink @click="handleLogout" to="/">Đăng xuất</RouterLink></li>
@@ -52,9 +47,6 @@
 			<RouterLink to="/menu">
 				<input type="text" class="search-input fw-bold" v-model="searchName" @keyup.enter="search(), scrollToTop()" placeholder="Tìm kiếm . . .">
 			</RouterLink>
-			<!-- <div class="row filter-dropdown" @click="">
-				<div class="fa fa-sliders dropDown"></div>
-			</div> -->
 		</div>
   </div>
 </template>

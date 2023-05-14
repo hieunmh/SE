@@ -10,22 +10,14 @@
 
     <div class="box-container">
       <div class="box">
-        <h3>Menu</h3>
-        <RouterLink to="/menu"><i class="fas fa-arrow-right"></i>Bánh xèo</RouterLink>
-        <RouterLink to="/menu"><i class="fas fa-arrow-right"></i>Bánh xèo</RouterLink>
-        <RouterLink to="/menu"><i class="fas fa-arrow-right"></i> Salad</RouterLink>
-        <RouterLink to="/menu"><i class="fas fa-arrow-right"></i> Salad</RouterLink>
-        <RouterLink to="/menu"><i class="fas fa-arrow-right"></i> Seven up</RouterLink>
-        <RouterLink to="/menu"><i class="fas fa-arrow-right"></i> Seven up</RouterLink>
+        <h3>danh mục</h3>
+        <RouterLink to="/menu" v-for="(cate, index) in category" :key="index" @click="scrollToTop()"><i class="fas fa-arrow-right"></i>{{ cate.name }}</RouterLink>
       </div>
 
       <div class="box">
-        <h3>Hieu dep trai</h3>
-        <!-- <RouterLink @click="scrollToTop()" to="/"><i class="fas fa-arrow-right"></i> Home</RouterLink> -->
-        <!-- <RouterLink to="/about"><i class="fas fa-arrow-right"></i> About</RouterLink> -->
-        <!-- <RouterLink to="/promotion"><i class="fas fa-arrow-right"></i> Promotions</RouterLink>  -->
+        <h3>Link</h3>
         <RouterLink @click="scrollToTop()" to="/menu"><i class="fas fa-arrow-right"></i> Menu</RouterLink>
-        <RouterLink @click="scrollToTop()" to="/table"><i class="fas fa-arrow-right"></i> Book table</RouterLink>
+        <RouterLink @click="scrollToTop()" to="/contactus"><i class="fas fa-arrow-right"></i>Contact Us</RouterLink>
       </div>
 
       <div class="box">
@@ -56,7 +48,7 @@
       </div>
 
       <div class="share">
-        <div class="far fa-copyright"> Copyright by Nguyen Minh Hieu</div>
+        <div class="far fa-copyright"> Copyright  by  Nguyen  Minh  Hieu</div>
       </div>
     </div>
   </div>
@@ -70,7 +62,7 @@ export default {
     ...mapMutations(['scrollToTop'])
   },
   computed: {
-    ...mapState(['user'])
+    ...mapState(['user', 'category'])
   }
 
 }
@@ -151,6 +143,7 @@ export default {
     padding-top: 1rem;
     text-align: center;
     .share {
+      letter-spacing: 0.2rem;
       color: #fff;
       margin: 1.5rem 0;
       a {
