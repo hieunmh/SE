@@ -152,7 +152,7 @@ export default {
   .product-detail-inner {
     position: relative;
     background-color: #fff;
-    width: 35rem;
+    width: 40rem;
     // border-radius: 2rem;
     box-shadow: 1rem 1rem 1rem  rgba($color: #f1f1f1, $alpha: 1),
                 -1rem -1rem 1rem  rgba($color: #f1f1f1, $alpha: 1),
@@ -178,6 +178,7 @@ export default {
       .image {
         img {
           filter: brightness(60%);
+          aspect-ratio: 1 / 1;
           width: 100%;
           border-radius: 1rem;
         }

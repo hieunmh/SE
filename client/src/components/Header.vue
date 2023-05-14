@@ -10,7 +10,7 @@
       <!-- <RouterLink @click="scrollToTop()" to="/about">About</RouterLink> -->
       <RouterLink @click="scrollToTop()" to="/menu"><h3>Menu</h3></RouterLink>
       <!-- <RouterLink @click="scrollToTop()" to="/promotion">Promotions</RouterLink> -->
-      <RouterLink @click="outMenu()" to="/table"><h3>Table</h3></RouterLink>
+      <RouterLink @click="outMenu()" to="/table"><h3>Contact Us</h3></RouterLink>
     </nav>
 
     <div class="icons col-md-3 col-8	d-flex justify-content-md-end justify-content-end">

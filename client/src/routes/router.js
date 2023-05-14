@@ -4,9 +4,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Home from '../pages/Home.vue';
 import Login from '../pages/Login.vue';
 import Menu from '../pages/Menu.vue';
-import About from '../pages/About.vue';
-import Promotion from '../pages/Promotion.vue';
-import Table from '../pages/Table.vue';
+import ContactUs from '../pages/ContactUs.vue';
 import Register from '../pages/Register.vue';
 import Myorder from '../pages/Order/Myorder.vue';
 import Cart from '../pages/Cart/Cart.vue';
@@ -22,9 +20,7 @@ const routes = [
   { path: "/", name: "Home", component: Home },
   { path: "/login", name: "Login", component: Login },
   { path: "/menu", name: "Menu", component: Menu },
-  { path: "/about", name: "About", component: About },
-  { path: "/promotion", name: "Promotion", component: Promotion },
-  { path: "/table", name: "Table", component: Table },
+  { path: "/table", name: "Table", component: ContactUs },
   { path: "/register", name: "Register", component: Register },
   { path: "/cart", name: "Cart", component: Cart },
   { path: "/myorder", name: "Myorder", component: Myorder },

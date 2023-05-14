@@ -6,9 +6,9 @@ INSERT INTO `product_category` (`name`, `description`) VALUES
 ('Bánh', 'Bán bánh bánh mì lo lo cho em'),
 ('Trà Sữa', 'Thức uống cho kẻ sỉ tinh'),
 ('Cà Phê', 'Không say không về'), 
-('Đồ Ăn', 'Tùy loại'),
-('Đồ Uống', ''),
-('Đồ Chiên', 'Chưa chắc đã giòn đâu');
+('Nước Ngọt', 'Tùy loại');
+-- ('Đồ Uống', ''),
+-- ('Đồ Chiên', 'Chưa chắc đã giòn đâu');
 
 INSERT INTO `discount` (`name`, `description`, `discount_percent`) VALUES 
 ('NONE', 'Đéo giảm', 0),
@@ -55,7 +55,13 @@ INSERT INTO `products` (`name`, `desc`, `category_id`, `discount_id`, `price`, `
 ('Caramel Macchiato', '', 5, 1, 50000, 1, 10, 'upload/productImage/1681817952029.jpeg'),
 ('Americano chanh leo', '', 5, 1, 35000, 40, 50, 'upload/productImage/1681818145995.jpeg'),
 ('Esperesso nâu đá', '', 5, 1, 50000, 45, 45, 'upload/productImage/1681818215981.jpeg'),
-('Cappuccino', '', 5, 3, 52000, 135, 200, 'upload/productImage/1681817873766.jpg');
+('Cappuccino', '', 5, 3, 52000, 135, 200, 'upload/productImage/1681817873766.jpg'),
+('Nước mía', '', 6, 1, 15000, 135, 200, 'upload/productImage/1684031070371.jpg'),
+('Coca', '', 6, 1, 12000, 50, 100, 'upload/productImage/1684031217783.jpg'),
+('Pepsi', '', 6, 2, 15000, 50, 100, 'upload/productImage/1684031385480.jpg'),
+('Sprite(lon)', '', 6, 3, 15000, 50, 200, 'upload/productImage/1684032932879.jpg');
+
+
 
 INSERT INTO `users` (`email`, `password`, `name`, `telephone`, `role`) VALUES 
 ('admin@gmail.com', '$2b$10$iDOGulq.CY.YtBD96mA7lO0pPZHZ14i054D0E7AluwYXP1kkvJ0Ya', 'admin', '0987654321', 1), -- password = 123456

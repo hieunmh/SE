@@ -37,7 +37,12 @@ export default {
     async deleteOrder(event) {
       if (this.deleteId.status.toLowerCase() != 'đang xử lý') {
         event.preventDefault();
-        this.$refs.alert.showAlert("Hủy đơn hàng không thành công !");
+        
+        await new Promise(() => setTimeout(() => {
+          this.setShowDeleteOrder(false);
+        }, 1000)).then(
+          this.$refs.alert.showAlert("Hủy đơn hàng không thành công !"),
+        )
       }
 
       else {

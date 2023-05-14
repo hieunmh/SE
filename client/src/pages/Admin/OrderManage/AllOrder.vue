@@ -25,7 +25,7 @@
           </div>
         </div>
         
-        <div class="row" v-for="(order, index) in allOrder" :key="index">
+        <div class="row" v-for="(order, index) in currentPage" :key="index">
           <div class="centre col-1 fw-bold">
             <h4>{{  index + 1 }}</h4>
           </div>
@@ -40,8 +40,30 @@
 
           <div class="centre col-3">
             <RouterLink :to="`/admin/allorder/order=${index + 1}`" @click="scrollToTop()"><button class="btnn fw-bold">xem</button></RouterLink>
-            <!-- <button class="btnn" @click="showOrder(index)">xem</button> -->
           </div>
+        </div>
+
+        <div class="action-row">
+          <button @click="previousToFirst()" class="action-btn decrease-btn">
+            <i class="fa-solid fa-angles-left"></i>
+          </button>
+
+          <button @click="previous()" class="action-btn decrease-btn">
+            <i class="fa-solid fa-angle-left"></i>
+          </button>
+
+          <div v-for="(page, index) in calculatePages" :key="index" class="d-inline">
+            <button v-if="index == pageNum" class="highlight" @click="setPage(index)">{{ index + 1 }}</button>
+            <button v-else @click="setPage(index)">{{ index + 1 }}</button>
+          </div>
+
+          <button @click="next()" class="action-btn increase-btn">
+            <i class="fa-solid fa-angle-right"></i>
+          </button>
+
+          <button @click="nextToLast()" class="action-btn increase-btn">
+            <i class="fa-solid fa-angles-right"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -59,6 +81,8 @@ export default {
   data() {
     return {  
       orderDetailId: null,
+      perPage: 6,
+      pageNum: 0,
     }
   },
 
@@ -101,12 +125,63 @@ export default {
       }
       
       return [year, month, date, hour, minute, second];
-    }
+    },
+    setPage(value) {
+      this.pageNum = value;
+      this.scrollToTop();
+    },
+
+    previous() {
+      if (this.pageNum == 0) {
+        document.querySelectorAll('.decrease-btn').disabled = true;
+      }
+      else {
+        document.querySelectorAll('.decrease-btn').disabled = false;
+        this.pageNum--;
+      }
+      this.scrollToTop();
+    },
+
+    previousToFirst() {
+      this.pageNum = 0;
+      this.scrollToTop();
+    },
+
+    next() {
+      if (this.pageNum == this.calculatePages - 1) {
+        document.querySelectorAll('.increase-btn').disabled = true;
+      }
+      else {
+        document.querySelectorAll('.increase-btn').disabled = false;
+        this.pageNum++;
+      }
+      this.scrollToTop();
+    },
+
+    nextToLast() {
+      this.pageNum = this.calculatePages - 1;
+      this.scrollToTop();
+    },
+
+
 
   },
 
   computed: {
     ...mapState(['showOrderDetail', 'allOrder']),
+
+    currentPage() {
+      return this.allOrder.slice(this.pageNum * this.perPage, this.pageNum * this.perPage + this.perPage);
+    },
+
+    calculatePages() {
+      if (this.allOrder.length % this.perPage != 0) {
+        return Math.floor((this.allOrder.length) / this.perPage) + 1;
+      }
+      else {
+        return this.allOrder.length / this.perPage;
+      }
+    },
 
   },
 
@@ -231,6 +306,40 @@ export default {
   }
 }
 
+.action-row {
+  padding-top: 30px;
+  max-width: 100%;
+  text-align: center;
+  font-size: 2rem;
+
+  .action-btn {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 4rem;
+    color: white;
+
+    i {
+      color: #222831;
+    }
+  }
+
+  button.highlight {
+    color: #fff;
+    background-color: #222831;
+    border-radius: 2rem;
+  }
+
+  button {
+    background-color: #fff;
+    width: 4rem;
+    height: 4rem;
+    margin: 0rem 1rem;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
 
 @media (max-width: 992px) {
   .allOrder {
