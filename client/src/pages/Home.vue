@@ -6,9 +6,9 @@
   <div class="">
     <div class="home-main">
       <div class="content">
-        <h3 v-if="user.userName">Xin chào {{ user.userName }}</h3>
-				<h3 v-else>Heloooo</h3>
-        <p>pedro lopez gonzalez</p>
+        <h3 class="" v-if="user.userName">Xin chào {{ user.userName }}</h3>
+				<h3 class="" v-else>Heloooo</h3>
+        <p>Đồ ăn tươi ngon đến tận nhà chỉ trong vài cú nhấp chuột - trải nghiệm mua sắm thú vị và tiện lợi ngay hôm nay!</p>
         <RouterLink to="/menu" class="btnn">Menu</RouterLink>
       </div>
 
@@ -81,6 +81,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { mapMutations, mapState } from 'vuex';
 import Loading from '../components/Loading.vue';
@@ -108,6 +109,7 @@ export default {
 	
 }
 </script>
+
 <style lang="scss" scoped>
 
 /** home main */
@@ -122,8 +124,9 @@ export default {
 	overflow: hidden;
 	.content {
 		position: absolute;
-		top: 4rem;
-		left: 20%;
+		top: 1rem;
+
+		padding: 0 20%;
 		span {
 			font-size: 2rem;
 			color: #27ae60;
@@ -135,9 +138,10 @@ export default {
 		}
 		p {
 			font-size: 3rem;
-			color: #ffa31a;
+			color: #fff;
 			line-height: 2;
 			padding: 1rem 0;
+			// padding-right: 50%;
 		}
 		a {
 			font-size: 2.5rem;
@@ -265,6 +269,10 @@ export default {
 }
 
 @media (max-width: 992px) {
+
+	.home-main .content p {
+		font-size: 2.3rem;
+	}
 	
 	 .home-category, .home-banner {
 		padding: 2rem 15%;
@@ -284,10 +292,10 @@ export default {
 		padding: 2rem 10%;
 	}
 	.home-main {
-		.home-img-2 {
-			top: 0;
-			right: 0;
-			width: 100%;
+		.content {
+			h3 {
+				font-size: 3rem;
+			}
 		}
 	}
   .home-banner {
@@ -302,7 +310,7 @@ export default {
 	.home-main {
 		.content {
 			h3 {
-				font-size: 3rem;
+				font-size: 2.5rem;
 			}
 			p {
 				font-size: 1.5rem;
@@ -311,6 +319,19 @@ export default {
 	}
 	.home-category, .home-banner {
 		padding: 2rem 5%;
+	}
+}
+
+@media (max-width: 360px) {
+	.home-main {
+		.content {
+			h3 {
+				font-size: 1.7rem;
+			}
+			p {
+				font-size: 1.1rem;
+			}
+		}
 	}
 }
 </style>

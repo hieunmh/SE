@@ -44,7 +44,7 @@
         </div>
         <div class="form-group">
           <input type="submit" value="Đăng ký" class="">
-          <p>Đã có tài khoản? <RouterLink @click="scrollToTop()" to="/login">Đăng nhập</RouterLink></p>
+          <p class="mt-4">Đã có tài khoản? <RouterLink @click="scrollToTop()" to="/login">Đăng nhập</RouterLink></p>
         </div>
 
       </form>

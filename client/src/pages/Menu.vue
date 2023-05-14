@@ -379,10 +379,16 @@ input[type="button"] {
         }
       }
       .image {
+        overflow: hidden;
+        border-radius: 0.7rem;
         img {
           width: 100%;
           aspect-ratio: 1 / 1;
           border-radius: 0.7rem;
+          &:hover {
+            border-radius: 0.7rem;
+            transform: scale(1.1);
+          }
         }
       }
 

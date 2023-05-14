@@ -44,7 +44,7 @@
   </div>
 
   <div v-else class="product-detail">
-    <div class="product-detail-inner">
+    <div class="product-detail-inner" style="height: 15rem;">
       <button class="out" @click="setShowProduct(false)">
         <i class="fa-solid fa-xmark"></i>
       </button>
@@ -52,7 +52,7 @@
       <div class="row" style="margin-top: 3rem;">
         <h2 class="col-12 text-center">Vui lòng đăng nhập để sử dụng tính năng này</h2>
         <div class="col-4"></div>
-        <RouterLink @click="setShowProduct(false)" class="btnn col-4 text-center" to="login">Đăng Nhập</RouterLink>
+        <RouterLink @click="setShowProduct(false)" class="btnn col-4 mt-3 text-center" to="login">Đăng Nhập</RouterLink>
         <div class="col-4"></div>
       </div>
     </div>
