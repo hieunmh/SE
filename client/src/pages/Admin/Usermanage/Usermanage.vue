@@ -30,7 +30,7 @@
         </div>
 
 
-        <div  class="row" v-for="(user, index) in allUser" :key="index">
+        <div  class="row" v-for="(user, index) in currentPage" :key="index">
 
           <div class="centre col-1 desc ">
             <h4 class="item-name fw-bold">{{ index + 1 }}</h4>
@@ -95,7 +95,7 @@ export default {
   data() {
     return {
       pageNum: 0,
-      perPage: 6,
+      perPage: 4,
       userid: null,
     }
   },
